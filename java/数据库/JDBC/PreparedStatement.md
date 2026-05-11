@@ -1,0 +1,55 @@
+---
+title: PreparedStatement
+description: JDBC PreparedStatement 参数化查询，防 SQL 注入、预编译复用、BLOB 大字段读写
+---
+
+# PreparedStatement 参数化查询
+
+**本文你会学到**：
+
+- `PreparedStatement` 相比 `Statement` 的两大优势（防注入 + 预编译）
+- 参数化查询、插入、更新的标准写法
+- 同一 `PreparedStatement` 对象的多次复用
+- BLOB 大字段的读写方法
+
+## 💡 概念与优势
+
+### 为什么要用 PreparedStatement？
+
+1. `防 SQL 注入`：参数通过占位符 `?` 绑定，驱动对参数值进行转义，彻底防止注入攻击
+2. `预编译性能`：SQL 结构只解析、编译一次，多次执行只需替换参数值，减少数据库解析开销
+
+## 🔐 参数化 CRUD 操作
+
+### 参数化查询
+
+### 参数化插入
+
+### 参数化更新
+
+### 防 SQL 注入对比验证
+
+## ⚡ 预编译复用与大字段
+
+### 同一条 SQL 要执行多次怎么办？——预编译复用
+
+同一个 `PreparedStatement` 对象可通过重新绑定参数多次执行，SQL 只编译一次。
+
+### 怎样在数据库存储文件？——Blob 大字段读写
+
+`PreparedStatement` 通过 `setBytes()` / `setBinaryStream()` 写入二进制大对象（BLOB），通过 `getBytes()` / `getBinaryStream()` 读取。典型场景：存储图片、文档、音频等文件数据。
+
+| 方法 | 适用场景 |
+|------|---------|
+| `setBytes(int, byte[])` | 小文件，数据已在内存中（推荐） |
+| `setBinaryStream(int, InputStream)` | 大文件，流式写入，不占用内存 |
+| `getBytes(String)` | 读取小文件，直接返回 `byte[]` |
+| `getBinaryStream(String)` | 读取大文件，返回 `InputStream` |
+
+!!! warning "BLOB 大小限制"
+
+    MySQL 默认 `max_allowed_packet` 为 64 MB，存储超大文件建议使用对象存储（OSS/S3），数据库只存元数据和文件路径。
+
+!!! tip "优先使用 PreparedStatement"
+
+    任何含用户输入的 SQL 都应使用 `PreparedStatement`。即使是内部系统无注入风险的场景，预编译带来的性能提升和代码可读性提升也值得优先选择 `PreparedStatement`。

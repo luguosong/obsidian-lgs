@@ -1,0 +1,16 @@
+# Obsidian
+.obsidian/
+.trash/
+
+# Claude Code
+.claude/
+
+# System
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temp
+*.tmp
+*.bak
+~$*
