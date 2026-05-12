@@ -304,3 +304,142 @@ Agent 会自动完成以下操作：
 > - **计划太粗糙** — "修改路由文件"这种描述对 subagent 毫无用处，它没有上下文。计划必须包含完整代码
 > - **跳过计划审查** — 计划的质量直接决定最终代码的质量。花 5 分钟审查计划，能省 50 分钟调试
 > - **计划里有占位符** — 任何 "TBD"、"TODO"、"后续完善" 都是计划失败。要么现在写清楚，要么这个任务不该出现在计划里
+
+## 执行方式选择
+
+计划就绪后，Agent 会问你一个关键问题：怎么执行？
+
+### 方案 A：Subagent 驱动（推荐）
+
+```mermaid
+graph LR
+    A[主 Agent] -->|Task 1| B1[Subagent 1]
+    A -->|Task 2| B2[Subagent 2]
+    A -->|Task 3| B3[Subagent 3]
+    B1 -->|Spec 审查| C1[审查 Agent]
+    B2 -->|Spec 审查| C2[审查 Agent]
+    B3 -->|Spec 审查| C3[审查 Agent]
+    C1 -->|代码质量审查| D1[审查 Agent]
+    C2 -->|代码质量审查| D2[审查 Agent]
+    C3 -->|代码质量审查| D3[审查 Agent]
+```
+
+每个任务派给一个全新的 subagent，完成后经过**两阶段审查**：
+1. **Spec 审查** — 是否按计划实现了
+2. **代码质量审查** — 代码本身好不好
+
+**优点：** 每个 subagent 是全新上下文，不会累积误解；两阶段审查漏检率低
+**缺点：** 消耗更多 token
+
+> [!tip] 什么时候选 Subagent 驱动
+> 任务数 ≥ 3 个，或者任务之间比较独立。这是 Superpowers 作者推荐的方式。
+
+### 方案 B：内联执行
+
+在当前会话中按顺序执行任务，每完成一批后在检查点暂停，等你确认后继续。
+
+**优点：** 省 token，你可以实时观察和干预
+**缺点：** context window 会随着执行逐渐"腐化"，后面的任务质量可能下降
+
+> [!tip] 什么时候选内联执行
+> 任务数 ≤ 2 个，或者你的环境不支持 subagent。
+
+### 场景演示
+
+> [!agent] Agent
+> 计划已就绪，共 6 个任务。你想怎么执行？
+>
+> A) Subagent 驱动（推荐）— 每个任务独立执行，两阶段审查
+> B) 内联执行 — 在当前会话中批量执行，带检查点
+>
+> 我推荐 A。6 个任务数量适中，Subagent 驱动能保证每个任务的上下文干净。
+
+> [!user] 你
+> A
+
+> [!agent] Agent
+> 好的，启动 Subagent 驱动模式。开始执行 Task 1...
+
+## 第 4 站：测试驱动开发（test-driven-development）
+
+### 为什么需要这一站
+
+传统开发流程：写代码 → 写测试 → 测试过了就行。
+TDD 流程：写测试 → 看着它失败 → 写最少代码 → 看着它通过 → 重构。
+
+区别在哪？**传统流程中，测试是为已有代码量身定做的——它几乎不可能失败。** 而 TDD 要求测试**先于代码存在**，这迫使你在写实现之前就想清楚"正确的行为是什么"。
+
+Superpowers 的 TDD skill 执行一个不可妥协的铁律：
+
+> **没有失败的测试，就不允许写生产代码。** 先于测试编写的代码必须删除。
+
+### 怎么运作
+
+```mermaid
+graph TD
+    A[写一个失败的测试] --> B[运行测试，确认它失败]
+    B --> C[写最少的代码让测试通过]
+    C --> D[运行测试，确认它通过]
+    D --> E{需要重构?}
+    E -->|是| F[重构]
+    F --> D
+    E -->|否| G[提交]
+    G --> H[下一个任务]
+```
+
+每个 subagent 在执行任务时，严格遵循 RED-GREEN-REFACTOR 循环：
+
+1. **RED** — 写测试，运行，确认失败（证明测试有效）
+2. **GREEN** — 写最少实现，运行，确认通过（不多写一行代码）
+3. **REFACTOR** — 消除重复，改善命名，但保持测试通过
+
+### 场景演示
+
+> [!agent] Agent（Subagent 1 — 执行 Task 1: API 路由骨架）
+>
+> **RED 阶段：** 写失败测试
+>
+> ```typescript
+> // __tests__/api/export.test.ts
+> import { GET } from '@/app/api/todos/export/route';
+>
+> test('返回 200 和 markdown 内容类型', async () => {
+>   const request = new Request('http://localhost/api/todos/export?status=all');
+>   const response = await GET(request);
+>   expect(response.status).toBe(200);
+>   expect(response.headers.get('content-type')).toBe('text/markdown');
+> });
+> ```
+>
+> 运行测试... ❌ 失败：`Cannot find module '@/app/api/todos/export/route'`
+>
+> **GREEN 阶段：** 写最少实现
+>
+> ```typescript
+> // app/api/todos/export/route.ts
+> export async function GET(request: Request) {
+>   return new Response('', {
+>     headers: { 'content-type': 'text/markdown' }
+>   });
+> }
+> ```
+>
+> 运行测试... ✅ 通过
+>
+> Task 1 完成，进入审查。
+
+### 最佳实践
+
+> [!best-practice] 人类 Partner 在 TDD 中做什么
+> - **不要催 Agent 跳过 RED 阶段** — 看着测试失败是 TDD 的核心，它证明测试真的能捕获错误
+> - **关注"最少的代码"** — 如果 GREEN 阶段写了超过 10 行代码，可能写多了。TDD 中的"最少"是真的最少——硬编码返回值也是合法的 GREEN 代码
+> - **重构阶段才是写好代码的时候** — 不要在 GREEN 阶段追求优雅，先让它通过
+
+> [!caution] 常见反模式
+> - **先写实现再补测试** — 这是 Superpowers 最严厉禁止的行为。skill 中明确写道："先于测试编写的代码必须删除"
+> - **测试实现细节而非行为** — 比如测试"函数调用了 3 次数据库"，而不是"返回了正确的结果"。这种测试一重构就碎
+> - **跳过"看着测试失败"这一步** — 如果测试第一次跑就通过了，说明测试可能写错了（或者功能已经存在了）
+> - **在 RED 阶段写太多代码** — 只写一个测试，不要一次写 5 个。一个 RED → 一个 GREEN → 下一个 RED
+
+> [!tip] 更多 TDD 反模式
+> 详细的测试反模式清单（如"测试 mock 行为而非真实行为"、"生产代码中添加仅供测试的方法"等），请参考 Superpowers 的 `testing-anti-patterns.md`。
