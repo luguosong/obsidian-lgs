@@ -178,3 +178,129 @@ Content-Disposition: attachment; filename="todos-2026-05-12.md"
 
 > [!tip] 多大的项目需要 brainstorming？
 > **所有项目。** Superpowers 明确指出："This is too simple to need a design" 是最大的反模式。即使是一行改动，brainstorming 也能确保理解正确。
+
+## 第 2 站：隔离工作区（using-git-worktrees）
+
+### 为什么需要这一站
+
+想象你正在开发导出功能，写到一半，线上出了个紧急 bug 需要修。你的分支上已经改了十几个文件，这时候切回去修 bug 会非常混乱。
+
+**git worktree** 解决这个问题——它在同一个仓库里创建一个独立的目录，每个目录对应不同的分支。你可以同时打开两个终端窗口，一个写新功能，一个修 bug，互不干扰。
+
+### 怎么运作
+
+```mermaid
+graph LR
+    A[设计完成] --> B[Agent 检测 git 仓库]
+    B --> C[创建 worktree]
+    C --> D[切换到 worktree 目录]
+    D --> E[运行项目设置]
+    E --> F[验证测试基线干净]
+    F --> G[进入下一站]
+```
+
+Agent 会自动完成以下操作：
+
+1. 检测你当前是否已在隔离环境中（已有 worktree 或 detached HEAD）
+2. 创建新的 worktree，目录通常在 `.worktrees/` 下
+3. 切换到新目录，后续所有工作都在这里进行
+4. 自动检测并运行项目设置（如 `npm install`、数据库迁移）
+5. 跑一遍测试套件，确认基线是干净的
+
+### 场景演示
+
+> [!agent] Agent
+> 设计已确认。我现在创建一个 git worktree 来隔离开发工作。
+>
+> ```bash
+> git worktree add .worktrees/todo-export feature/todo-export
+> ```
+>
+> 已切换到 `.worktrees/todo-export/`。正在运行项目设置...
+>
+> ```bash
+> npm install  # 安装依赖
+> npx prisma migrate dev  # 运行数据库迁移
+> npm test     # 验证测试基线
+> ```
+>
+> ✅ 27 个测试全部通过，基线干净。可以开始实施计划了。
+
+> [!user] 你
+> （这一站基本不需要你做什么，Agent 全自动完成）
+
+### 最佳实践
+
+> [!best-practice] 什么时候需要手动干预
+> - 如果项目设置脚本有交互式提示（如数据库连接配置），Agent 可能需要你提供信息
+> - 如果测试基线本身就有失败用例，Agent 会报告并询问是否继续——通常应该先修好基线
+
+> [!caution] 常见陷阱
+> - **在 worktree 外操作** — 确保后续所有文件操作都在 worktree 目录中进行。Agent 会自动处理这一点
+> - **忽略测试基线失败** — 如果基线测试就失败了，后续的 TDD 流程会无法判断是测试写错了还是实现写错了
+
+> [!tip] 并行开发
+> worktree 的真正威力在于并行。你可以在一个 worktree 里让 Agent 开发功能 A，同时开另一个 Claude 会话在不同的 worktree 里开发功能 B。
+
+## 第 3 站：编写实施计划（writing-plans）
+
+### 为什么需要这一站
+
+设计文档告诉你"做什么"，但 Agent 还需要知道"每一步具体怎么做"。writing-plans skill 把设计拆成一系列 **2-5 分钟的微型任务**，每个任务包含精确的文件路径、完整代码和验证步骤。
+
+为什么拆这么细？因为 subagent（执行任务的子 Agent）每次启动时是**全新上下文**——它不记得之前的对话。计划必须自包含到"一个热情有余、判断力不足的初级工程师都能跟着做"的程度。
+
+### 怎么运作
+
+好的计划长这样：
+
+| 元素 | 要求 | 反例 |
+|------|------|------|
+| 文件路径 | 精确到行号 | "修改相关文件" |
+| 代码 | 完整可运行 | "添加适当的错误处理" |
+| 测试 | 先写测试再写实现 | "写完代码后补测试" |
+| 命令 | 带预期输出 | "运行测试" |
+| 禁止 | 不允许任何 TODO、TBD、占位符 | "后续再完善" |
+
+### 场景演示
+
+> [!agent] Agent
+> 设计已确认，现在我把工作拆分成实施计划。以下是任务列表：
+>
+> **Task 1:** 创建 API 路由骨架
+> - 文件：`app/api/todos/export/route.ts`
+> - 测试：`__tests__/api/export.test.ts`
+>
+> **Task 2:** 实现 Markdown 格式化逻辑
+> - 文件：`lib/export/markdown-formatter.ts`
+> - 测试：`__tests__/lib/export/markdown-formatter.test.ts`
+>
+> **Task 3:** 连接数据库查询
+> - 文件：修改 `app/api/todos/export/route.ts`
+> - 测试：补充 `__tests__/api/export.test.ts`
+>
+> **Task 4:** 添加前端导出按钮组件
+> - 文件：`components/TodoExportButton.tsx`
+> - 测试：`__tests__/components/TodoExportButton.test.tsx`
+>
+> **Task 5:** 集成到 TodoList 页面
+> - 文件：修改 `app/todos/page.tsx`
+> - 测试：`__tests__/integration/export-flow.test.ts`
+>
+> **Task 6:** 处理边界情况（空列表、网络错误）
+> - 文件：修改多处
+> - 测试：补充各处测试
+>
+> 计划已保存到 `docs/superpowers/plans/2026-05-12-todo-export.md`。
+
+### 最佳实践
+
+> [!best-practice] 审查计划时要看什么
+> - **任务粒度** — 每个任务应该小到 2-5 分钟能完成。如果一个任务超过 10 行代码，应该拆分
+> - **测试先行** — 每个任务的第一步都是"写失败测试"，如果某个任务没有测试步骤，那就有问题
+> - **依赖顺序** — 后面的任务用到的函数/组件，前面的任务应该已经定义好
+
+> [!caution] 常见陷阱
+> - **计划太粗糙** — "修改路由文件"这种描述对 subagent 毫无用处，它没有上下文。计划必须包含完整代码
+> - **跳过计划审查** — 计划的质量直接决定最终代码的质量。花 5 分钟审查计划，能省 50 分钟调试
+> - **计划里有占位符** — 任何 "TBD"、"TODO"、"后续完善" 都是计划失败。要么现在写清楚，要么这个任务不该出现在计划里
