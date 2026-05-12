@@ -9,15 +9,15 @@ tags:
 
 # SDK 集成
 
-> SDK 集成就像把 Copilot 的"大脑"拆成标准零件——你不用自己造 AI，只需把对应模块嵌入产品即可。
+> SDK 集成就像把 [[Copilot]] 的"大脑"拆成标准零件——你不用自己造 AI，只需把对应模块嵌入产品即可。
 
 > [!note]
 >
-> Copilot SDK 目前处于 public preview 阶段，功能和可用性可能随时变化。
+> [[Copilot]] SDK 目前处于 public preview 阶段，功能和可用性可能随时变化。
 
 ## 概述
 
-Copilot SDK 通过 JSON-RPC 协议与 Copilot CLI 通信，将 CLI 的核心能力暴露为可编程 API。SDK 提供两种集成模式：
+[[Copilot]] SDK 通过 JSON-RPC 协议与 [[Copilot]] CLI 通信，将 CLI 的核心能力暴露为可编程 API。SDK 提供两种集成模式：
 
 | 模式 | 说明 | 适用场景 |
 |------|------|---------|
@@ -189,7 +189,7 @@ const client = new CopilotClient({ cliPath: getCLIPath() });
 
 ## Local CLI
 
-使用用户系统上已安装的 Copilot CLI——最快的上手方式，无需任何认证代码或基础设施。
+使用用户系统上已安装的 [[Copilot]] CLI——最快的上手方式，无需任何认证代码或基础设施。
 
 > [!tip]
 >
@@ -197,7 +197,7 @@ const client = new CopilotClient({ cliPath: getCLIPath() });
 
 ### 工作原理
 
-当用户安装并登录 Copilot CLI 后，凭证存储在系统 keychain 中。SDK 自动将 CLI 作为子进程启动，复用已存储的凭证：
+当用户安装并登录 [[Copilot]] CLI 后，凭证存储在系统 keychain 中。SDK 自动将 CLI 作为子进程启动，复用已存储的凭证：
 
 - SDK 自动启动 CLI，无需任何配置
 - 认证使用系统 keychain 中的用户凭证
@@ -262,11 +262,11 @@ SDK 涵盖以下核心能力：
 
 | 类别 | 代表功能 |
 |------|---------|
-| 会话管理 | `createSession()`、`resumeSession()`、`destroy()`、`listSessions()` |
+| [[会话管理]] | `createSession()`、`resumeSession()`、`destroy()`、`listSessions()` |
 | 消息收发 | `send()`、`sendAndWait()`、`abort()`、`getMessages()` |
 | 工具系统 | `registerTools()`、`onPreToolUse` / `onPostToolUse` hook |
 | 模型切换 | `listModels()`、`session.setModel()`、`session.rpc.model.getCurrent()` |
-| MCP 服务器 | 本地 stdio 和远程 HTTP/SSE 服务器连接 |
+| [[MCP 服务器]] | 本地 stdio 和远程 HTTP/SSE 服务器连接 |
 | 事件订阅 | `on()`、`once()`，支持 40+ 事件类型和 streaming |
 | 上下文压缩 | `infiniteSessions` 自动压缩、手动 `session.rpc.compaction.compact()` |
 | 计划管理 | `session.rpc.plan.read()` / `update()` / `delete()` |
@@ -278,7 +278,7 @@ SDK 涵盖以下核心能力：
 | 会话导出 | `--share`、`--share-gist` |
 | 交互式 UI | `/help`、`/clear`、`/agent`、`/diff`、`/feedback`、`/model` |
 | 权限快捷方式 | `--yolo`、`--allow-all-paths`、`--allow-all-urls` |
-| 非交互模式 | `-p`（prompt 模式）、`--continue`、`--silent` |
+| 非[[交互模式]] | `-p`（prompt 模式）、`--continue`、`--silent` |
 
 ### 常见替代方案
 

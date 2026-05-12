@@ -1,13 +1,13 @@
 # DWG 导出 GIS 按 CAD 图层过滤 — 设计文档
 
 **日期**: 2026-04-14
-**分支**: feat-zfs
+**分支**: [[feat-zfs]]
 
 ## 背景
 
 当前 `ExportGisModal` 里的"选择图层"Checkbox 列的是 `gisStore.featureLayers`（GIS 侧导入的 MapServer 要素图层），与"要导出哪些 CAD 图层"完全无关。即便用户勾选，`Cmd_GIS_EXPORT` 也只读取 `format` 和 `path`，第三个参数被静默丢弃；`ConvertDWGToGIS` 始终遍历整个 ModelSpace 全量输出。
 
-目标：让用户在导出时按 CAD 图层过滤，只导出勾选的图层实体。
+目标：让用户在导出时按 CAD [[图层过滤]]，只导出勾选的图层实体。
 
 ## 设计决策
 

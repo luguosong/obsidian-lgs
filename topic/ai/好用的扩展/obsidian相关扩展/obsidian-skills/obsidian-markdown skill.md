@@ -13,13 +13,13 @@ tags:
 # obsidian-markdown
 
 > [!summary]
-> 创建和编辑 **Obsidian Flavored Markdown（OFM）** 文件，覆盖 wikilinks、嵌入、callout、properties、标签、块引用、数学公式等 Obsidian 专属语法。
+> 创建和编辑 **[[Obsidian]] Flavored Markdown（OFM）** 文件，覆盖 wikilinks、嵌入、callout、properties、标签、块引用、数学公式等 [[Obsidian]] 专属语法。
 
 **触发词**：`创建 Obsidian 笔记`、`wikilink`、`callout`、`frontmatter`、`properties`、`.md 文件`
 
 ## 与标准 Markdown 的区别
 
-OFM 在标准 Markdown 之上扩展了 Obsidian 独有功能：wikilinks（双向链接）、嵌入（`![[...]]`）、callout（`> [!type]`）、properties（YAML frontmatter）、标签（`#tag`）。
+OFM 在标准 Markdown 之上扩展了 [[Obsidian]] 独有功能：wikilinks（双向链接）、嵌入（`![[...]]`）、callout（`> [!type]`）、properties（YAML frontmatter）、标签（`#tag`）。
 
 ## 核心语法
 

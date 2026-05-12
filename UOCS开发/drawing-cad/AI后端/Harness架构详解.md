@@ -2,15 +2,15 @@
 
 > 核心思路：**"评估一个 AI Agent = 评估模型 + Harness。模型是商品，Harness 才是护城河。"**
 
-借鉴《Claude Code 论文（2604.14228v1）》七大设计视角，本项目采用 Harness Engineering 架构模式，将 LLM 调用作为最小盒子，围绕它构建工具编排、上下文管理、Prompt 装配、Memory 系统、视觉记忆管线、多模型架构、硬件许可、审图编排、错误恢复、扩展机制等系统层。
+借鉴《[[Claude Code]] 论文（2604.14228v1）》七大设计视角，本项目采用 Harness Engineering 架构模式，将 LLM 调用作为最小盒子，围绕它构建工具编排、上下文管理、Prompt 装配、Memory 系统、视觉记忆管线、多模型架构、硬件许可、审图编排、错误恢复、[[扩展机制]]等系统层。
 
 ## 技术栈
 
 | 项 | 值 |
 |---|---|
-| Spring Boot | 3.5.7 |
-| Spring AI | 1.1.2 |
-| Spring AI Alibaba | 1.1.2.2 |
+| [[Spring Boot]] | 3.5.7 |
+| [[Spring AI]] | 1.1.2 |
+| [[Spring AI]] Alibaba | 1.1.2.2 |
 | Java | 17 |
 | 向量数据库 | Qdrant（端口 18140/18141） |
 | Embedding | Ollama bge-m3（本地）/ DashScope text-embedding-v3/v4（云端） |
@@ -279,7 +279,7 @@ app.thinking-budget: 500     # 推理 token 预算
 
 | 工具 | 说明 |
 |------|------|
-| `execute_js_code` | 执行 LLM 生成的 JS 代码（CadCodeExecutor 沙箱） |
+| `execute_js_code` | 执行 LLM 生成的 JS 代码（[[CadCodeExecutor 沙箱]]） |
 | `execute_scr_script` | 执行 SCR 脚本 |
 
 #### analysis（10 个）
@@ -293,7 +293,7 @@ app.thinking-budget: 500     # 推理 token 预算
 | `detect_title_blocks` | DwgAnalysisTools | 图框检测 |
 | `extract_building_info` | DwgAnalysisTools | 提取建筑信息 |
 | `measure_entities` | DwgAnalysisTools | 测量实体 |
-| `search_wasm_api` | WasmApiSearchTool | WASM API 目录语义检索（防幻觉） |
+| `search_wasm_api` | WasmApiSearchTool | [[WASM API]] 目录语义检索（防幻觉） |
 | `get_wasm_class_methods` | WasmApiSearchTool | 获取指定 WASM 类的全部方法 |
 | `web_search` | DwgWebSearchTools | DashScope enable_search 实时搜索，独立轻量 ChatModel，API Key 未配置时优雅降级 |
 
@@ -413,7 +413,7 @@ marker 协议字段：`readRequest / cadCode / scrScript / atomicRequest / captu
 |------|------|--------|--------|
 | L1 会话记忆 | `SessionMemory` + `SessionMemoryStore` | 单次会话 | `sessions/{id}.json` |
 | L2 项目记忆 | `ProjectMemory` + `ProjectMemoryStore` | 同一 DWG 指纹 | Redis `project_memory:{fingerprint}` |
-| L3 图纸记忆 | `DrawingMemory` + `DrawingMemoryStore` | 跨会话知识沉淀 | Qdrant + Redis |
+| L3 [[图纸记忆]] | `DrawingMemory` + `DrawingMemoryStore` | 跨会话知识沉淀 | Qdrant + Redis |
 
 ### DrawingMemory（13 个 Section）
 
@@ -427,11 +427,11 @@ marker 协议字段：`readRequest / cadCode / scrScript / atomicRequest / captu
 | `staleness` | 系统 | 过期标记 |
 | `application-form` | 前端 | 规划报建表单（12 字段） |
 | `spatial-constraints` | Stage C | 用地红线句柄/退让线 |
-| `main-area` | Stage B | 主体区自然语言描述 |
-| `main-area-bbox` | Stage B | 主体区边界（世界坐标） |
-| `redline-pick-zone` | Stage B | 红线最佳拾取区域（世界坐标） |
-| `legend-items` | Stage B | 图例视觉描述列表 |
-| `indicator-rows` | Stage B | 技经表指标行 |
+| `main-area` | [[Stage B]] | 主体区自然语言描述 |
+| `main-area-bbox` | [[Stage B]] | 主体区边界（世界坐标） |
+| `redline-pick-zone` | [[Stage B]] | 红线最佳拾取区域（世界坐标） |
+| `legend-items` | [[Stage B]] | 图例视觉描述列表 |
+| `indicator-rows` | [[Stage B]] | 技经表指标行 |
 
 ### L1 会话事件日志
 
@@ -492,7 +492,7 @@ marker 协议字段：`readRequest / cadCode / scrScript / atomicRequest / captu
 
 **关键特性**：
 - 多目标单次调用：一次视觉请求可定位多个对象
-- 图例引导：Stage B 的 `LegendResult` 提供视觉线索（颜色/线型/线宽）
+- 图例引导：[[Stage B]] 的 `LegendResult` 提供视觉线索（颜色/线型/线宽）
 - 选择策略优先级：拐角/顶点 > 可见退让线 > 文字标注区域
 
 **端点**：`POST /api/ai/drawing-memory/{clientId}/{fileId}/object-locate`
@@ -582,7 +582,7 @@ Payload 包含：`license_id / session_id / issued_at / expires_at / max_concurr
 
 ## RAG 知识库：RagService
 
-`service/RagService.java` 通过 Spring AI VectorStore（Qdrant `drawing_knowledge` 集合）提供三类知识检索：`searchCode` / `searchDocs` / `searchStandard`。
+`service/RagService.java` 通过 [[Spring AI]] VectorStore（Qdrant `drawing_knowledge` 集合）提供三类知识检索：`searchCode` / `searchDocs` / `searchStandard`。
 
 | 组件 | 职责 |
 |------|------|
@@ -619,7 +619,7 @@ Payload 包含：`license_id / session_id / issued_at / expires_at / max_concurr
 - `record_review_finding`（DwgReviewTools）：记录合规发现
 - `generate_review_report`（DwgReviewTools）：生成结构化报告
 - `search_standards`（DwgAnalysisTools）：标准检索
-- DrawingMemory 视觉数据（Stage B 技经表/图例）通过 `DrawingMemorySection` 注入 Prompt
+- DrawingMemory 视觉数据（[[Stage B]] 技经表/图例）通过 `DrawingMemorySection` 注入 Prompt
 
 ### 报告生成与去重
 
@@ -631,7 +631,7 @@ Payload 包含：`license_id / session_id / issued_at / expires_at / max_concurr
 - `scripts/build_api_catalog.py` 扫描 `drawingweb/Wrappers/` 生成 `api_catalog.json`
 - `search_wasm_api` @Tool 供 LLM 查询精确 API 签名，幻觉率下降 ≥80%
 
-**L2 · Skills Recipes**（`service/SkillRecipeLoader`）
+**L2 · [[Skills]] Recipes**（`service/SkillRecipeLoader`）
 - 扫描 `classpath:skills/*.md`，按 `RequestIntent` 建索引
 
 **L3 · 原子 Tool**（`tool/atomic/DwgAtomicTools`，12 个工具）
@@ -650,7 +650,7 @@ Payload 包含：`license_id / session_id / issued_at / expires_at / max_concurr
 
 **LLM 流式容错**：`QueryEngine` 覆盖 timeout / connection closed/reset / EOF / broken pipe / 429 / 500–503，重试 1 次。
 
-**CadCodeExecutor 沙箱保护**（前端侧）：`cadCodeWorker.js` 预检 + `wrapPdbWithCallCounter` Proxy 限制调用深度。
+**[[CadCodeExecutor 沙箱]]保护**（前端侧）：`cadCodeWorker.js` 预检 + `wrapPdbWithCallCounter` Proxy 限制调用深度。
 
 ## 可观测性与链路追踪
 
@@ -684,7 +684,7 @@ Payload 包含：`license_id / session_id / issued_at / expires_at / max_concurr
 `tool/mcp/` 三件套将外部 MCP server 工具动态注册为虚拟 @Tool：
 
 - **`McpProperties`**：`@ConfigurationProperties("app.mcp")`，支持多 server，默认 `enabled: false`
-- **`McpToolCallback`**：Spring AI `ToolCallback` 实现，代理 MCP JSON-RPC 2.0
+- **`McpToolCallback`**：[[Spring AI]] `ToolCallback` 实现，代理 MCP JSON-RPC 2.0
 - **`McpToolAdapter`**：`SmartLifecycle` Bean，命名空间前缀 `mcp_{server}__` 防冲突
 
 ## 代码目录
@@ -848,11 +848,11 @@ src/main/java/com/lvjian/drawingai/
 | P13 | 精确性增强（ToolRegistry 动态路由 + DimensionReport 摘要契约 + ProjectMemory + DrawingStateSection 三档） |
 | P14 | 高效性增强（MicroCompactor/ToolResultFolder + batch_read_dwg + MarkerAckController） |
 | P15 | 健壮性增强（SessionEventLog + ResumeController + TraceController + Hook 事件三件套） |
-| P16 | 扩展机制（MCP 接入 + BackpressureController + Hook 三件套） |
+| P16 | [[扩展机制]]（MCP 接入 + BackpressureController + Hook 三件套） |
 | P17 | drawingweb 修改报告（API 覆盖分析 / 性能改进空间 / C++ 插桩指南） |
 | P18 | WASM 知识库（build_api_catalog.py + WasmApiSearchTool + SkillRecipeLoader + DwgAtomicTools 12 个 + DwgAtomicAdapter） |
 | P19 | 多模型架构（ModelResolverService 4 角色 + 多供应商 + DashScope Thinking Mode + Embedding 双供应商） |
-| P20 | 视觉记忆管线（Stage A 全图分析 + Stage B 区域精读 + Stage C 目标定位 + 3 个 PromptBuilder + DrawingMemory 扩展至 13 section） |
-| P21 | License Gate（SM2 三级密钥 + 6 步验证 + SM3 硬件指纹 + 会话管理 + 厂商 CLI） |
+| P20 | 视觉记忆管线（Stage A 全图分析 + [[Stage B]] 区域精读 + Stage C 目标定位 + 3 个 PromptBuilder + DrawingMemory 扩展至 13 section） |
+| P21 | [[License Gate]]（SM2 三级密钥 + 6 步验证 + SM3 硬件指纹 + [[会话管理]] + 厂商 CLI） |
 | P22 | 规划审查工具链（DwgPlanningTools + identify_land_boundary 三阶段验证 + 规划报建表单） |
 | P23 | 意图驱动统一编排（移除 streamReviewByDimension → buildChatOptionsForIntent 排除集过滤） |

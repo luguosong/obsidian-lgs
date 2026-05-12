@@ -19,11 +19,11 @@ tags:
 > - **替代**：RFC 5208
 
 > [!abstract] 摘要
-> 本文档定义了私钥信息的语法及其内容类型。私钥信息包括指定公钥算法的私钥和一组属性。密码消息语法 (CMS)（RFC 5652 定义）可用于对非对称密钥格式内容类型进行数字签名、摘要、认证或加密。本文档替代 RFC 5208。
+> 本文档定义了私钥信息的语法及其内容类型。私钥信息包括指定公钥算法的私钥和一组属性。[[密码消息语法 (CMS)]]（RFC 5652 定义）可用于对非对称密钥格式内容类型进行[[数字签名]]、摘要、认证或加密。本文档替代 RFC 5208。
 
 ## 1. 引言
 
-本文档定义了私钥信息的语法及其密码消息语法 (CMS) [RFC5652] 内容类型。私钥信息包括指定公钥算法的私钥和一组属性。CMS 可用于对非对称密钥格式内容类型进行数字签名、摘要、认证或加密。本文档替代 PKCS #8 v1.2 [RFC5208]。
+本文档定义了私钥信息的语法及其[[密码消息语法 (CMS)]] [RFC5652] 内容类型。私钥信息包括指定公钥算法的私钥和一组属性。CMS 可用于对非对称密钥格式内容类型进行[[数字签名]]、摘要、认证或加密。本文档替代 PKCS #8 v1.2 [RFC5208]。
 
 ### 1.1. 需求术语
 
@@ -31,7 +31,7 @@ tags:
 
 ### 1.2. ASN.1 语法记法
 
-密钥包使用 ASN.1 [X.680]、[X.681]、[X.682] 和 [X.683] 定义。
+密钥包使用 [[ASN.1]] [X.680]、[X.681]、[X.682] 和 [X.683] 定义。
 
 ### 1.3. 相对 RFC 5208 的更新摘要
 
@@ -111,7 +111,7 @@ OneAsymmetricKey 重命名了 [RFC5208] 中定义的 PrivateKeyInfo 语法。新
 
 本节给出加密私钥信息的语法，被 [P12] 使用。
 
-加密私钥信息的 ASN.1 类型为 EncryptedPrivateKeyInfo：
+加密私钥信息的 [[ASN.1]] 类型为 EncryptedPrivateKeyInfo：
 
 ```asn1
 EncryptedPrivateKeyInfo ::= SEQUENCE {
@@ -139,11 +139,11 @@ EncryptedPrivateKeyInfo 的字段用法如下：
 
 CMS 保护内容类型 [RFC5652] 和 [RFC5083] 可用于为 AsymmetricKeyPackage 提供安全保护：
 
-- **SignedData**：对 AsymmetricKeyPackage 应用数字签名。
-- **EncryptedData**：使用对称加密加密 AsymmetricKeyPackage（发送方和接收方已共享加密密钥）。
-- **EnvelopedData**：使用对称加密加密 AsymmetricKeyPackage（发送方和接收方不共享加密密钥）。
-- **AuthenticatedData**：使用消息认证码保护 AsymmetricKeyPackage，密钥管理方式与 EnvelopedData 类似。
-- **AuthEnvelopedData**：使用支持认证加密的算法保护 AsymmetricKeyPackage，密钥管理方式与 EnvelopedData 类似。
+- **SignedData**：对 AsymmetricKeyPackage 应用[[数字签名]]。
+- **EncryptedData**：使用[[对称加密]]加密 AsymmetricKeyPackage（发送方和接收方已共享加密密钥）。
+- **EnvelopedData**：使用[[对称加密]]加密 AsymmetricKeyPackage（发送方和接收方不共享加密密钥）。
+- **AuthenticatedData**：使用消息认证码保护 AsymmetricKeyPackage，[[密钥管理]]方式与 EnvelopedData 类似。
+- **AuthEnvelopedData**：使用支持认证加密的算法保护 AsymmetricKeyPackage，[[密钥管理]]方式与 EnvelopedData 类似。
 
 ## 5. 其他私钥格式考虑
 
@@ -182,7 +182,7 @@ CMS 保护内容类型 [RFC5652] 和 [RFC5083] 可用于为 AsymmetricKeyPackage
 
 ## 7. IANA 考虑
 
-本文档使用对象标识符来标识 CMS 内容类型和附录 A 中的 ASN.1 模块。CMS 内容类型 OID 注册在 DoD arc 中。ASN.1 模块 OID 注册在 RSADSI 委派给 SMIME 工作组的 arc 中。IANA 无需对此文档或任何预期更新采取进一步行动。
+本文档使用对象标识符来标识 CMS 内容类型和附录 A 中的 [[ASN.1]] 模块。CMS 内容类型 OID 注册在 DoD arc 中。[[ASN.1]] 模块 OID 注册在 RSADSI 委派给 SMIME 工作组的 arc 中。IANA 无需对此文档或任何预期更新采取进一步行动。
 
 ### 7.1. 媒体子类型 application/pkcs8 注册
 
@@ -205,14 +205,14 @@ CMS 保护内容类型 [RFC5652] 和 [RFC5083] 可用于为 AsymmetricKeyPackage
 
 - \[RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
 - \[RFC4648] Josefsson, S., "The Base16, Base32, and Base64 Data Encodings", RFC 4648, October 2006.
-- \[RFC5652] Housley, R., "Cryptographic Message Syntax (CMS)", STD 70, RFC 5652, September 2009.
-- \[RFC5911] Hoffman, P. and J. Schaad, "New ASN.1 Modules for CMS and S/MIME", RFC 5911, June 2010.
-- \[RFC5912] Hoffman, P. and J. Schaad, "New ASN.1 Modules for PKIX", RFC 5912, June 2010.
-- \[X.680] ITU-T X.680 (2002) — ASN.1: Specification of Basic Notation.
-- \[X.681] ITU-T X.681 (2002) — ASN.1: Information Object Specification.
-- \[X.682] ITU-T X.682 (2002) — ASN.1: Constraint Specification.
-- \[X.683] ITU-T X.683 (2002) — ASN.1: Parameterization of ASN.1 Specifications.
-- \[X.690] ITU-T X.690 (2002) — ASN.1 Encoding Rules: BER, CER and DER.
+- \[RFC5652] Housley, R., "Cryptographic Message Syntax [[(CMS)]]", STD 70, RFC 5652, September 2009.
+- \[RFC5911] Hoffman, P. and J. Schaad, "New [[ASN.1]] Modules for CMS and [[S/MIME]]", RFC 5911, June 2010.
+- \[RFC5912] Hoffman, P. and J. Schaad, "New [[ASN.1]] Modules for PKIX", RFC 5912, June 2010.
+- \[X.680] ITU-T X.680 (2002) — [[ASN.1]]: Specification of Basic Notation.
+- \[X.681] ITU-T X.681 (2002) — [[ASN.1]]: Information Object Specification.
+- \[X.682] ITU-T X.682 (2002) — [[ASN.1]]: Constraint Specification.
+- \[X.683] ITU-T X.683 (2002) — [[ASN.1]]: Parameterization of [[ASN.1]] Specifications.
+- \[X.690] ITU-T X.690 (2002) — [[ASN.1]] Encoding Rules: BER, CER and DER.
 
 ### 8.2. 资料性引用
 
@@ -226,7 +226,7 @@ CMS 保护内容类型 [RFC5652] 和 [RFC5083] 可用于为 AsymmetricKeyPackage
 
 ## 附录 A. ASN.1 模块
 
-本附录提供了本规范中描述的结构的规范性 ASN.1 定义。
+本附录提供了本规范中描述的结构的规范性 [[ASN.1]] 定义。
 
 ```asn1
 AsymmetricKeyPackageModuleV1

@@ -22,7 +22,7 @@ tags:
 
 ## 📥 安装 Harbor
 
-Harbor 通过 Docker Compose 部署，需要 Docker Engine 20.10+ 和 Docker Compose 1.18+。
+Harbor 通过 [[Docker Compose]] 部署，需要 Docker Engine 20.10+ 和 [[Docker Compose]] 1.18+。
 
 ### 下载安装包
 

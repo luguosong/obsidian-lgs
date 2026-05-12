@@ -123,7 +123,7 @@ JDK 内置了多个 Provider，每个负责不同领域的安全服务。Java 9 
 | `SUN` | 标准 JCA 服务（`MessageDigest`、`Signature` 等基础实现） |
 | `SunRsaSign` | RSA 签名算法 |
 | `SunEC` | 椭圆曲线密码学（ECC） |
-| `SunJSSE` | SSL/TLS 实现（Java Secure Socket Extension） |
+| `SunJSSE` | SSL/TLS 实现（Java Secure [[Socket]] Extension） |
 | `SunJCE` | JCE 服务（`Cipher`、`Mac`、`KeyAgreement`） |
 | `SunJGSS` | Java Generic Security Services（Kerberos 等） |
 | `SunSASL` | 简单认证与安全层 |
@@ -172,8 +172,8 @@ graph TD
 
 | JCA 引擎类 | 对应密码学原语 | 典型算法 | 相关笔记 |
 |-----------|--------------|---------|---------|
-| `Cipher` | 对称/非对称加密 | AES-GCM、RSA-OAEP | 「[对称加密](../symmetric-encryption/)」 |
-| `Signature` | 数字签名 | ECDSA、EdDSA、RSA-PSS | 「[数字签名](../digital-signatures/)」 |
+| `Cipher` | 对称/非[[对称加密]] | AES-GCM、RSA-OAEP | 「[对称加密](../symmetric-encryption/)」 |
+| `Signature` | [[数字签名]] | ECDSA、EdDSA、RSA-PSS | 「[数字签名](../digital-signatures/)」 |
 | `MessageDigest` | 散列函数 | SHA-256、SHA3-256 | 「[散列函数与完整性保护](../hashing-and-integrity/)」 |
 | `Mac` | 消息认证码（MAC） | HMAC-SHA256、GMAC | 「[散列函数与完整性保护](../hashing-and-integrity/)」 |
 | `KeyAgreement` | 密钥协商 | ECDH、X25519 | — |
@@ -191,7 +191,7 @@ graph TD
 | 需要 EdDSA、SM2/SM3/SM4、AES-CCM 等扩展算法 | `Bouncy Castle`（`BC`） | 算法覆盖最全，更新活跃 |
 | 政府/金融合规（FIPS 140-2/3） | `Bouncy Castle FIPS`（`BCFIPS`）或 OS 级 FIPS 模式 | 需要 FIPS 认证，不可用标准 BC |
 | 密钥必须保存在硬件安全模块（HSM） | `SunPKCS11` + HSM 厂商驱动 | 硬件隔离，密钥不出 HSM |
-| 云端密钥管理 | AWS KMS / GCP Cloud HSM 等 SDK | 将加密计算卸载到云端，密钥零接触 |
+| 云端[[密钥管理]] | AWS KMS / GCP Cloud HSM 等 SDK | 将加密计算卸载到云端，密钥零接触 |
 
 💡 **经验原则**：能不加依赖就不加。`SunJCE` 对 AES-GCM、HMAC、RSA、ECDSA 的支持已能覆盖绝大多数业务场景。只有当你需要 `SunJCE` 不支持的算法（如国密 SM 系列）或需要 FIPS 认证时，才引入 `Bouncy Castle`。
 
@@ -244,9 +244,9 @@ graph TD
 
 | JAR 包 | 覆盖协议 |
 |--------|---------|
-| `bcpkix` | CMS、PKCS#10、PKCS#12、X.509 证书、OCSP、TSP、CMP 等 |
-| `bcpg` | OpenPGP |
-| `bcmail` | S/MIME |
+| `bcpkix` | CMS、[[PKCS#10]]、[[PKCS#12]]、X.509 证书、OCSP、TSP、CMP 等 |
+| `bcpg` | [[OpenPGP]] |
+| `bcmail` | [[S/MIME]] |
 | `bctls` | TLS/DTLS（包含 BCJSSE Provider）
 
 ### 安装 Bouncy Castle
@@ -263,7 +263,7 @@ graph TD
 </dependency>
 ```
 
-如果你需要处理证书、S/MIME 等，还要加上对应的 Supporting API 依赖（如 `bcpkix-jdk18on`）。
+如果你需要处理证书、[[S/MIME]] 等，还要加上对应的 Supporting API 依赖（如 `bcpkix-jdk18on`）。
 
 添加依赖后，有两种方式让 JVM 识别 BC Provider：
 
@@ -462,7 +462,7 @@ SecureRandom ivRandom = SecureRandom.getInstance("NonceAndIV", "BC");
 | 2^192 | AES-192 | ✅ 长期安全 |
 | 2^256 | AES-256 | ✅ 超长期安全 |
 
-NIST SP 800-57 对常用对称密码的安全强度给出了权威评估：
+NIST SP [[800-57]] 对常用对称密码的安全强度给出了权威评估：
 
 | 算法 | 密钥长度 | 安全强度 |
 |------|---------|---------|
@@ -487,7 +487,7 @@ NIST SP 800-57 对常用对称密码的安全强度给出了权威评估：
 
 negligible 函数 $\varepsilon(n)$ 的精确定义是：增长速度比任何多项式的倒数都快。直觉上，negligible ≈ "在实践中等于零"——比如 $2^{-100}$ 的概率比宇宙中原子数量分之一还小，完全可以忽略。
 
-为什么用"位数"表达安全强度？因为 $n$ 位安全强度意味着攻击者需要 $O(2^n)$ 次运算才能攻破——当 $n \geq 128$ 时，$\varepsilon(n)$ 是 negligible 的。NIST SP 800-57 的安全强度表（112/128/192/256 位）就是基于这个量化标准。
+为什么用"位数"表达安全强度？因为 $n$ 位安全强度意味着攻击者需要 $O(2^n)$ 次运算才能攻破——当 $n \geq 128$ 时，$\varepsilon(n)$ 是 negligible 的。NIST SP [[800-57]] 的安全强度表（112/128/192/256 位）就是基于这个量化标准。
 
 💡 你可以理解为：AES-128 提供的安全保证是"即使攻击者有无限的预算，也只能以 $2^{-128}$ 的概率猜对密钥"——这比任何现实中需要担心的事情都小。
 
@@ -495,7 +495,7 @@ negligible 函数 $\varepsilon(n)$ 的精确定义是：增长速度比任何多
 
 AE 安全的密码等价于一个"理想加密接口"：密文只是一个不透明的句柄，消息通过安全通道直接传输——攻击者既看不懂密文，也无法篡改密文。
 
-这个等价性有重要的实践意义：开发者应该使用 AE 模式（GCM/CCM/EAX）而不是手动组合 `Cipher` + `Mac`。"手动组合 = 自定义加密协议 = 自找麻烦"——即使你正确地实现了 Encrypt-then-MAC，也容易在密钥管理、IV 处理、错误恢复等细节上犯错。
+这个等价性有重要的实践意义：开发者应该使用 AE 模式（GCM/CCM/EAX）而不是手动组合 `Cipher` + `Mac`。"手动组合 = 自定义加密协议 = 自找麻烦"——即使你正确地实现了 Encrypt-then-MAC，也容易在[[密钥管理]]、IV 处理、错误恢复等细节上犯错。
 
 💡 如果你不确定用哪个模式，就用 `AES/GCM/NoPadding`。它是目前最广泛部署的 AEAD 模式，有硬件加速支持，且 Java 7+ 原生支持。
 

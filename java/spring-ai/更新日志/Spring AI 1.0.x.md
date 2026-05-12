@@ -27,8 +27,8 @@ tags:
 ### Bug 修复
 
 - Milvus 向量存储 `doDelete` ID 列表字符串转义修复
-- MCP Server `ObjectMapper` 配置错误
-- MCP Server 和 Spring WebMvc 自动配置问题（修复了之前错误的修复）
+- [[MCP Server]] `ObjectMapper` 配置错误
+- [[MCP Server]] 和 Spring WebMvc 自动配置问题（修复了之前错误的修复）
 - ChatClientAdvisor 集成测试更新为显式 `conversationId`
 - Anthropic 聊天客户端函数回调集成测试修复
 
@@ -60,7 +60,7 @@ tags:
 
 ### 依赖升级
 
-- Spring Boot → 3.5.14
+- [[Spring Boot]] → 3.5.14
 
 ---
 
@@ -103,7 +103,7 @@ tags:
 
 ### 依赖升级
 
-- Spring Boot → 3.5.11
+- [[Spring Boot]] → 3.5.11
 
 ---
 
@@ -188,7 +188,7 @@ tags:
 - MySQL 聊天记忆表 schema
 - Chroma 复杂 metadata 处理
 - 向量存储 metadata 类型支持
-- 可配置工具执行异常处理
+- 可配置工具执行[[异常处理]]
 - SQL Server 聊天记忆集成测试
 
 ### Bug 修复重点
@@ -206,4 +206,4 @@ tags:
 - Chroma 集合创建日志
 - OpenAiAudioTranscriptionResponseMetadata.toString 异常
 - getMimeType 无限递归
-- McpToolCallback 根异常处理
+- McpToolCallback 根[[异常处理]]

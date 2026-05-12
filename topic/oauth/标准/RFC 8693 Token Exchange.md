@@ -20,7 +20,7 @@ Information about the current status of this document, any errata, and how to pr
 
 A security token is a set of information that facilitates the sharing of identity and security information in heterogeneous environments or across security domains. Examples of security tokens include JSON Web Tokens (JWTs) \[\] and Security Assertion Markup Language (SAML) 2.0 assertions \[\]. Security tokens are typically signed to achieve integrity and sometimes also encrypted to achieve confidentiality. Security tokens are also sometimes described as assertions, such as in \[\].[¶](#section-1-1)
 
-A Security Token Service (STS) is a service capable of validating security tokens provided to it and issuing new security tokens in response, which enables clients to obtain appropriate access credentials for resources in heterogeneous environments or across security domains. Web Service clients have used WS-Trust \[\] as the protocol to interact with an STS for token exchange. While WS-Trust uses XML and SOAP, the trend in modern Web development has been towards RESTful (Representational State Transfer) patterns and JSON. The OAuth 2.0 Authorization Framework \[\] and OAuth 2.0 Bearer Tokens \[\] have emerged as popular standards for authorizing third-party applications' access to HTTP and RESTful resources. The conventional OAuth 2.0 interaction involves the exchange of some representation of resource owner authorization for an access token, which has proven to be an extremely useful pattern in practice. However, its input and output are somewhat too constrained as is to fully accommodate a security token exchange framework.[¶](#section-1-2)
+A Security Token Service (STS) is a service capable of validating security tokens provided to it and issuing new security tokens in response, which enables clients to obtain appropriate access credentials for resources in heterogeneous environments or across security domains. Web Service clients have used WS-Trust \[\] as the protocol to interact with an STS for token exchange. While WS-Trust uses XML and SOAP, the trend in modern Web development has been towards RESTful (Representational State Transfer) patterns and JSON. The OAuth 2.0 Authorization Framework \[\] and OAuth 2.0 [[Bearer Token]]s \[\] have emerged as popular standards for authorizing third-party applications' access to HTTP and RESTful resources. The conventional OAuth 2.0 interaction involves the exchange of some representation of resource owner authorization for an access token, which has proven to be an extremely useful pattern in practice. However, its input and output are somewhat too constrained as is to fully accommodate a security token exchange framework.[¶](#section-1-2)
 
 This specification defines a protocol extending OAuth 2.0 that enables clients to request and obtain security tokens from authorization servers acting in the role of an STS. Similar to OAuth 2.0, this specification focuses on client developer simplicity and requires only an HTTP client and JSON parser, which are nearly universally available in modern development environments. The STS protocol defined in this specification is not itself RESTful (an STS doesn't lend itself particularly well to a REST approach) but does utilize communication patterns and data formats that should be familiar to developers accustomed to working with RESTful systems.[¶](#section-1-3)
 
@@ -74,7 +74,7 @@ OPTIONAL. A URI that indicates the target service or resource where the client i
 
 audience
 
-OPTIONAL. The logical name of the target service where the client intends to use the requested security token. This serves a purpose similar to the `resource` parameter but with the client providing a logical name for the target service. Interpretation of the name requires that the value be something that both the client and the authorization server understand. An OAuth client identifier, a SAML entity identifier \[\], and an OpenID Connect Issuer Identifier \[\] are examples of things that might be used as `audience` parameter values. However, `audience` values used with a given authorization server must be unique within that server to ensure that they are properly interpreted as the intended type of value. Multiple `audience` parameters may be used to indicate that the issued token is intended to be used at the multiple audiences listed. The `audience` and `resource` parameters may be used together to indicate multiple target services with a mix of logical names and resource URIs.[¶](#section-2.1-4.6)
+OPTIONAL. The logical name of the target service where the client intends to use the requested security token. This serves a purpose similar to the `resource` parameter but with the client providing a logical name for the target service. Interpretation of the name requires that the value be something that both the client and the authorization server understand. An OAuth client identifier, a SAML entity identifier \[\], and an [[OpenID Connect]] Issuer Identifier \[\] are examples of things that might be used as `audience` parameter values. However, `audience` values used with a given authorization server must be unique within that server to ensure that they are properly interpreted as the intended type of value. Multiple `audience` parameters may be used to indicate that the issued token is intended to be used at the multiple audiences listed. The `audience` and `resource` parameters may be used together to indicate multiple target services with a mix of logical names and resource URIs.[¶](#section-2.1-4.6)
 
 scope
 
@@ -140,7 +140,7 @@ OPTIONAL if the scope of the issued security token is identical to the scope req
 
 refresh\_token
 
-OPTIONAL. A refresh token will typically not be issued when the exchange is of one temporary credential (the subject\_token) for a different temporary credential (the issued token) for use in some other context. A refresh token can be issued in cases where the client of the token exchange needs the ability to access a resource even when the original credential is no longer valid (e.g., user-not-present or offline scenarios where there is no longer any user entertaining an active session with the client). Profiles or deployments of this specification should clearly document the conditions under which a client should expect a refresh token in response to `urn:ietf:params:oauth:grant-type:token-exchange` grant type requests.[¶](#section-2.2.1-2.12)
+OPTIONAL. A refresh token will typically not be issued when the exchange is of one temporary credential (the subject\_token) for a different temporary credential (the issued token) for use in some other context. A refresh token can be issued in cases where the client of the token exchange needs the ability to access a resource even when the original credential is no longer valid (e.g., user-not-present or offline scenarios where there is no longer any user entertaining an active session with the client). [[Profile]]s or deployments of this specification should clearly document the conditions under which a client should expect a refresh token in response to `urn:ietf:params:oauth:grant-type:token-exchange` grant type requests.[¶](#section-2.2.1-2.12)
 
 #### 2.2.2.
 
@@ -257,7 +257,7 @@ Note that for tokens that are binary in nature, the URI used for conveying them 
 
 ## 4.
 
-It is useful to have defined mechanisms to express delegation within a token as well as to express authorization to delegate or impersonate. Although the token exchange protocol described herein can be used with any type of token, this section defines claims to express such semantics specifically for JWTs and in an OAuth 2.0 Token Introspection \[\] response. Similar definitions for other types of tokens are possible but beyond the scope of this specification.[¶](#section-4-1)
+It is useful to have defined mechanisms to express delegation within a token as well as to express authorization to delegate or impersonate. Although the token exchange protocol described herein can be used with any type of token, this section defines claims to express such semantics specifically for JWTs and in an OAuth 2.0 [[Token Introspection]] \[\] response. Similar definitions for other types of tokens are possible but beyond the scope of this specification.[¶](#section-4-1)
 
 Note that the claims not established herein but used in examples and descriptions, such as `iss`, `sub`, `exp`, etc., are defined by \[\].[¶](#section-4-2)
 
@@ -485,7 +485,7 @@ IANA has registered the following Claims in the "JSON Web Token Claims" subregis
 
 ### 7.5.
 
-IANA has registered the following values in the "OAuth Token Introspection Response" registry of the "OAuth Parameters" registry \[\]. The "OAuth Token Introspection Response" registry was established by \[\].[¶](#section-7.5-1)
+IANA has registered the following values in the "OAuth [[Token Introspection]] Response" registry of the "OAuth Parameters" registry \[\]. The "OAuth [[Token Introspection]] Response" registry was established by \[\].[¶](#section-7.5-1)
 
 - Name: act [¶](#section-7.5-2.1)
 - Description: Actor [¶](#section-7.5-2.2)
@@ -510,23 +510,23 @@ IANA, "OAuth Parameters", < [https://www.iana.org/assignments/oauth-parameters](
 
 \[JWT\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
 \[RFC2119\]
 
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, < [https://www.rfc-editor.org/info/rfc2119](https://www.rfc-editor.org/info/rfc2119) >.
 
-\[RFC3986\]
+\[RFC[[3986]]\]
 
-Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
+Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC [[3986]], DOI 10.17487/RFC[[3986]], January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
 
 \[RFC6749\]
 
 Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/RFC6749, October 2012, < [https://www.rfc-editor.org/info/rfc6749](https://www.rfc-editor.org/info/rfc6749) >.
 
-\[RFC7662\]
+\[RFC[[7662]]\]
 
-Richer, J., Ed., "OAuth 2.0 Token Introspection", RFC 7662, DOI 10.17487/RFC7662, October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
+Richer, J., Ed., [["OAuth 2.0]] [[Token Introspection]]", RFC [[7662]], DOI 10.17487/RFC[[7662]], October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
 
 \[RFC8174\]
 
@@ -548,35 +548,35 @@ Cantor, S., Kemp, J., Philpott, R., and E. Maler, "Assertions and Protocol for t
 
 \[OAUTH-RESOURCE\]
 
-Campbell, B., Bradley, J., and H. Tschofenig, "Resource Indicators for OAuth 2.0", Work in Progress, Internet-Draft, draft-ietf-oauth-resource-indicators-08, 11 September 2019, < [https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08](https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08) >.
+Campbell, B., Bradley, J., and H. Tschofenig, "[[Resource Indicators]] for OAuth 2.0", Work in Progress, Internet-Draft, draft-ietf-oauth-resource-indicators-08, 11 September 2019, < [https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08](https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08) >.
 
 \[OAUTH-SECURITY\]
 
-Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, "OAuth 2.0 Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-13, 8 July 2019, < [https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13) >.
+Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, [["OAuth 2.0]] Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-13, 8 July 2019, < [https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13) >.
 
 \[OpenID.Core\]
 
-Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0", November 2014, < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0", November [[2014]], < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
 \[RFC6755\]
 
 Campbell, B. and H. Tschofenig, "An IETF URN Sub-Namespace for OAuth", RFC 6755, DOI 10.17487/RFC6755, October 2012, < [https://www.rfc-editor.org/info/rfc6755](https://www.rfc-editor.org/info/rfc6755) >.
 
-\[RFC6819\]
+\[RFC[[6819]]\]
 
-Lodderstedt, T., Ed., McGloin, M., and P. Hunt, "OAuth 2.0 Threat Model and Security Considerations", RFC 6819, DOI 10.17487/RFC6819, January 2013, < [https://www.rfc-editor.org/info/rfc6819](https://www.rfc-editor.org/info/rfc6819) >.
+Lodderstedt, T., Ed., McGloin, M., and P. Hunt, [["OAuth 2.0]] [[Threat Model]] and Security Considerations", RFC [[6819]], DOI 10.17487/RFC[[6819]], January 2013, < [https://www.rfc-editor.org/info/rfc6819](https://www.rfc-editor.org/info/rfc6819) >.
 
-\[RFC7521\]
+\[RFC[[7521]]\]
 
-Campbell, B., Mortimore, C., Jones, M., and Y. Goland, "Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7521, DOI 10.17487/RFC7521, May 2015, < [https://www.rfc-editor.org/info/rfc7521](https://www.rfc-editor.org/info/rfc7521) >.
+Campbell, B., Mortimore, C., Jones, M., and Y. Goland, "[[Assertion Framework]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7521]], DOI 10.17487/RFC[[7521]], May 2015, < [https://www.rfc-editor.org/info/rfc7521](https://www.rfc-editor.org/info/rfc7521) >.
 
-\[RFC7523\]
+\[RFC[[7523]]\]
 
-Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
+Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7523]], DOI 10.17487/RFC[[7523]], May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
 
 \[WS-Trust\]
 

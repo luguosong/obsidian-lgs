@@ -3,14 +3,14 @@ title: Spring Boot 日志
 description: Spring Boot 日志配置实战 — 默认日志、application.yml 配置、Logback 扩展与切换 Log4j2
 ---
 
-**前置知识**：本文假设你已经了解[[SLF4J]]日志门面的基本用法和[[Logback]]日志框架的核心概念（`Logger` / `Appender` / `Layout`）。Spring Boot 的日志体系正是基于这套组合构建的。
+**前置知识**：本文假设你已经了解[[SLF4J]]日志门面的基本用法和[[Logback]][[日志框架]]的[[核心概念]]（`Logger` / `Appender` / `Layout`）。Spring Boot 的日志体系正是基于这套组合构建的。
 
 **本文你会学到**：
 
 - Spring Boot 默认的日志架构——为什么引入 `spring-boot-starter` 就自动拥有日志能力
 - `application.yml` 中各项日志配置的含义——级别、格式、文件输出、归档策略、日志组
 - `logback-spring.xml` 扩展配置——按环境区分日志行为、读取 Spring 配置属性
-- 如何将默认的 Logback 切换为 Log4j2——排除依赖、引入新依赖、添加配置文件
+- 如何将默认的 [[Logback]] 切换为 [[Log4j2]]——排除依赖、引入新依赖、添加配置文件
 - 实际项目中最容易踩的日志陷阱——依赖冲突、桥接器循环、配置文件加载时机
 
 ## 🏗️ Spring Boot 的默认日志
@@ -49,10 +49,10 @@ graph LR
 | 层次 | 组件 | 说明 |
 |------|------|------|
 | 门面 | `SLF4J API`（`slf4j-api`） | 业务代码只依赖这个接口 |
-| 实现 | `Logback`（`logback-classic`） | 原生实现 SLF4J，无需适配器 |
-| 桥接器 | `jul-to-slf4j` / `jcl-over-slf4j` / `log4j-over-slf4j` | 将旧 API 的日志调用重定向到 SLF4J |
+| 实现 | `Logback`（`logback-classic`） | 原生实现 [[SLF4J]]，无需适配器 |
+| 桥接器 | `jul-to-slf4j` / `jcl-over-slf4j` / `log4j-over-slf4j` | 将旧 API 的日志调用重定向到 [[SLF4J]] |
 
-💡 桥接器的意义：即使你的项目依赖了使用 JUL 或 Log4j 1.x API 的第三方库，它们的日志也会被自动路由到 SLF4J → Logback 管道，实现统一输出。这一切由 `spring-boot-starter` 自动引入，你无需手动配置。
+💡 桥接器的意义：即使你的项目依赖了使用 JUL 或 [[Log4j]] 1.x API 的第三方库，它们的日志也会被自动路由到 [[SLF4J]] → [[Logback]] 管道，实现统一输出。这一切由 `spring-boot-starter` 自动引入，你无需手动配置。
 
 ### 默认日志格式
 
@@ -144,7 +144,7 @@ logging:
 
 ### 日志归档
 
-当日志文件不断增长时，归档策略可以防止磁盘被撑满。Spring Boot 内置了基于 Logback 的归档配置：
+当日志文件不断增长时，归档策略可以防止磁盘被撑满。Spring Boot 内置了基于 [[Logback]] 的归档配置：
 
 ``` yaml title="application.yml — 日志归档配置"
 logging:
@@ -195,25 +195,25 @@ logging:
 
 ## 🎨 Logback 扩展配置
 
-当 `application.yml` 中的配置无法满足需求时（比如需要按环境区分 Appender、使用过滤器、配置异步日志），就需要编写 Logback 原生配置文件了。Spring Boot 提供了 `logback-spring.xml` 扩展，在标准 Logback 配置的基础上增加了 Spring 特有功能。
+当 `application.yml` 中的配置无法满足需求时（比如需要按环境区分 Appender、使用过滤器、配置异步日志），就需要编写 [[Logback]] 原生配置文件了。Spring Boot 提供了 `logback-spring.xml` 扩展，在标准 [[Logback]] 配置的基础上增加了 Spring 特有功能。
 
 ### logback-spring.xml vs logback.xml
 
 | 对比维度 | `logback.xml` | `logback-spring.xml` |
 |---------|--------------|---------------------|
-| 加载者 | Logback 框架自身 | Spring Boot |
+| 加载者 | [[Logback]] 框架自身 | Spring Boot |
 | 加载时机 | Spring Boot 应用启动之前 | Spring Boot 初始化之后 |
-| Spring Profile 支持 | 不支持（无法使用 `<springProfile>`） | 支持 |
+| Spring [[Profile]] 支持 | 不支持（无法使用 `<springProfile>`） | 支持 |
 | Spring 属性读取 | 不支持（无法使用 `<springProperty>`） | 支持 |
 | 推荐程度 | 不推荐在 Spring Boot 项目中使用 | **推荐** |
 
 !!! warning "命名不要搞错"
 
-    如果你在 Spring Boot 项目中使用了 `logback.xml`（而不是 `logback-spring.xml`），Spring Boot 的日志配置（如 `logging.level.*`、`logging.pattern.*`）将不会生效，因为 Logback 框架先于 Spring Boot 加载了 `logback.xml`。
+    如果你在 Spring Boot 项目中使用了 `logback.xml`（而不是 `logback-spring.xml`），Spring Boot 的日志配置（如 `logging.level.*`、`logging.pattern.*`）将不会生效，因为 [[Logback]] 框架先于 Spring Boot 加载了 `logback.xml`。
 
 ### 按环境区分配置：springProfile
 
-当你需要开发环境和生产环境使用不同的日志策略时，`<springProfile>` 标签可以按 Spring Profile 有条件地加载配置：
+当你需要开发环境和生产环境使用不同的日志策略时，`<springProfile>` 标签可以按 Spring [[Profile]] 有条件地加载配置：
 
 `name` 属性支持多种写法：
 
@@ -231,7 +231,7 @@ logging:
 
 ### 读取 Spring 配置属性：springProperty
 
-当你需要在 Logback 配置中引用 `application.yml` 里定义的属性时，`<springProperty>` 提供了桥梁：
+当你需要在 [[Logback]] 配置中引用 `application.yml` 里定义的属性时，`<springProperty>` 提供了桥梁：
 
 ``` xml title="logback-spring.xml — springProperty 示例"
 <!-- 从 Spring 配置中读取属性，供 Logback 使用 -->
@@ -253,18 +253,18 @@ logging:
 
 | 属性 | 说明 |
 |------|------|
-| `scope` | 作用域，通常为 `context`（整个 Logback 上下文可见） |
-| `name` | 在 Logback 中引用时使用的变量名 |
+| `scope` | 作用域，通常为 `context`（整个 [[Logback]] 上下文可见） |
+| `name` | 在 [[Logback]] 中引用时使用的变量名 |
 | `source` | `application.yml` 中的属性路径 |
 | `defaultValue` | Spring 配置中未找到时的默认值 |
 
 ## 🔄 切换为 Log4j2
 
-虽然 Logback 是 Spring Boot 的默认选择，但在某些场景下你可能想切换到 Log4j2（比如需要 Log4j2 的异步日志性能优势、或者团队更熟悉 Log4j2 的配置方式）。切换分三步：排除默认 Logback、引入 Log4j2 starter、添加配置文件。
+虽然 [[Logback]] 是 Spring Boot 的默认选择，但在某些场景下你可能想切换到 [[Log4j2]]（比如需要 [[Log4j2]] 的异步日志性能优势、或者团队更熟悉 [[Log4j2]] 的配置方式）。切换分三步：排除默认 [[Logback]]、引入 [[Log4j2]] starter、添加配置文件。
 
 ### 排除默认 Logback 并引入 Log4j2
 
-`spring-boot-starter` 内部通过 `spring-boot-starter-logging` 引入了 Logback。切换的第一步是在依赖中排除它，然后引入 `spring-boot-starter-log4j2`：
+`spring-boot-starter` 内部通过 `spring-boot-starter-logging` 引入了 [[Logback]]。切换的第一步是在依赖中排除它，然后引入 `spring-boot-starter-log4j2`：
 
 ``` xml title="pom.xml — 切换到 Log4j2"
 <dependencies>
@@ -290,11 +290,11 @@ logging:
 
 排除 `spring-boot-starter-logging` 会移除以下依赖：
 
-- `logback-classic`（Logback 实现）
-- `logback-core`（Logback 核心）
+- `logback-classic`（[[Logback]] 实现）
+- `logback-core`（[[Logback]] 核心）
 - `jul-to-slf4j` / `log4j-over-slf4j` / `jcl-over-slf4j`（桥接器）
 
-`spring-boot-starter-log4j2` 会重新引入 `slf4j-api` 和 Log4j2 的 SLF4J 桥接实现，业务代码中的 `org.slf4j.Logger` 无需任何修改。
+`spring-boot-starter-log4j2` 会重新引入 `slf4j-api` 和 [[Log4j2]] 的 [[SLF4J]] 桥接实现，业务代码中的 `org.slf4j.Logger` 无需任何修改。
 
 ### 添加 Log4j2 配置文件
 
@@ -317,7 +317,7 @@ logging:
 </Configuration>
 ```
 
-切换完成后，所有 `application.yml` 中的 `logging.*` 配置依然有效——Spring Boot 会自动适配 Log4j2。
+切换完成后，所有 `application.yml` 中的 `logging.*` 配置依然有效——Spring Boot 会自动适配 [[Log4j2]]。
 
 ## ⚠️ 常见陷阱
 
@@ -325,7 +325,7 @@ logging:
 
 ### 多次引入 SLF4J 实现导致冲突
 
-当 classpath 中存在多个 SLF4J 实现时（比如同时引入了 `logback-classic` 和 `log4j-slf4j-impl`），启动时会看到这样的警告：
+当 classpath 中存在多个 [[SLF4J]] 实现时（比如同时引入了 `logback-classic` 和 `log4j-slf4j-impl`），启动时会看到这样的警告：
 
 ``` text title="多实现冲突警告"
 SLF4J: Class path contains multiple SLF4J providers.
@@ -334,7 +334,7 @@ SLF4J: Found provider [org.apache.logging.slf4j.SLF4JServiceProvider]
 SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
 ```
 
-根因是某个第三方依赖传递引入了另一个 SLF4J 实现。解决方法是用 `mvn dependency:tree` 找到冲突来源，然后排除：
+根因是某个第三方依赖传递引入了另一个 [[SLF4J]] 实现。解决方法是用 `mvn dependency:tree` 找到冲突来源，然后排除：
 
 ``` xml title="排除传递依赖中的 SLF4J 实现"
 <dependency>
@@ -351,7 +351,7 @@ SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
 
 ### 桥接器循环依赖
 
-这是一个更隐蔽的问题：`log4j-over-slf4j`（把 Log4j API 的调用桥接到 SLF4J）和 `slf4j-over-log4j`（把 SLF4J 的调用桥接到 Log4j）如果同时存在，就会形成死循环：
+这是一个更隐蔽的问题：`log4j-over-slf4j`（把 [[Log4j]] API 的调用桥接到 [[SLF4J]]）和 `slf4j-over-log4j`（把 [[SLF4J]] 的调用桥接到 [[Log4j]]）如果同时存在，就会形成死循环：
 
 ```mermaid
 graph LR
@@ -364,7 +364,7 @@ graph LR
     class Log4j node2
 ```
 
-这两个桥接器的作用完全相反，同时存在会导致 `StackOverflowError`。Spring Boot 默认引入的是 `log4j-over-slf4j`（把旧 Log4j API 的日志桥接到 SLF4J），如果你又手动加了 `slf4j-over-log4j`，就中招了。
+这两个桥接器的作用完全相反，同时存在会导致 `StackOverflowError`。Spring Boot 默认引入的是 `log4j-over-slf4j`（把旧 [[Log4j]] API 的日志桥接到 [[SLF4J]]），如果你又手动加了 `slf4j-over-log4j`，就中招了。
 
 !!! danger "务必检查"
 
@@ -376,10 +376,10 @@ graph LR
 
 | 配置文件 | 加载者 | 加载时机 | `application.yml` 日志配置是否生效 |
 |---------|-------|---------|-------------------------------|
-| `logback.xml` | Logback 框架 | Spring Boot 启动**之前** | **不生效** |
+| `logback.xml` | [[Logback]] 框架 | Spring Boot 启动**之前** | **不生效** |
 | `logback-spring.xml` | Spring Boot | Spring 上下文初始化**之后** | **正常生效** |
 
-实际后果：如果你用了 `logback.xml`，在 `application.yml` 中设置 `logging.level.com.luguosong=DEBUG` 可能完全不生效——因为 Logback 在 Spring Boot 读取配置之前就已经按照 `logback.xml` 初始化完成了。
+实际后果：如果你用了 `logback.xml`，在 `application.yml` 中设置 `logging.level.com.luguosong=DEBUG` 可能完全不生效——因为 [[Logback]] 在 Spring Boot 读取配置之前就已经按照 `logback.xml` 初始化完成了。
 
 **结论**：在 Spring Boot 项目中，始终使用 `logback-spring.xml`。
 

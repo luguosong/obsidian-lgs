@@ -19,13 +19,13 @@ tags:
 - ⚖️ Hook 与 Git Hook 的区别
 - ⚙️ 高级特性（Prompt Hook、HTTP Hook）与已知限制
 
-打个比方：Hook 就像是你给 Copilot 安装的`自动感应器`——在特定时刻（会话开始、工具调用前后、出错时）自动触发你预设的操作。比如，每次 Copilot 修改文件后自动运行格式化工具，每次会话结束时自动记录日志。
+打个比方：Hook 就像是你给 [[Copilot]] 安装的`自动感应器`——在特定时刻（会话开始、工具调用前后、出错时）自动触发你预设的操作。比如，每次 [[Copilot]] 修改文件后自动运行格式化工具，每次会话结束时自动记录日志。
 
 ---
 
 ## ❓ 为什么需要 Hook？
 
-没有 Hook 的情况下，Copilot 的行为只能通过 prompt 和指令来间接影响。但有些操作需要`强制执行`——比如"每次写完代码必须格式化"或"出错时必须通知我"。这些需求超出了 prompt 控制的范围，Hook 正是为此而生。
+没有 Hook 的情况下，[[Copilot]] 的行为只能通过 prompt 和指令来间接影响。但有些操作需要`强制执行`——比如"每次写完代码必须格式化"或"出错时必须通知我"。这些需求超出了 prompt 控制的范围，Hook 正是为此而生。
 
 ---
 
@@ -61,7 +61,7 @@ tags:
 
 > [!tip] Hook 可以提交到 Git
 >
-> 与 Git Hook 不同（`.git/hooks/` 不被版本控制），Copilot Hook 放在 `.github/hooks/` 中，可以提交到 Git 让团队共享。
+> 与 Git Hook 不同（`.git/hooks/` 不被版本控制），[[Copilot]] Hook 放在 `.github/hooks/` 中，可以提交到 Git 让团队共享。
 
 除了仓库级 Hook，还有其他几种存放位置（1.0.8 / 1.0.11 新增）：
 
@@ -107,7 +107,7 @@ tags:
 | `event` | ✅ | 触发事件名称（见上方生命周期表） |
 | `steps` | ✅ | 步骤数组，每步包含一个 `command` |
 | `steps[].command` | ✅ | 要执行的 shell 命令 |
-| `matcher` | ❌ | 嵌套 matcher/hooks 结构，细粒度匹配工具名称（1.0.6 新增），示例见下方。注意：`matcher` 中的正则表达式仅对**完全匹配**的工具名称生效（1.0.36 修复，此前 `matcher` 字段会被忽略） |
+| `matcher` | ❌ | 嵌套 matcher/hooks 结构，细粒度匹配工具名称（1.0.6 新增），示例见下方。注意：`matcher` 中的[[正则表达式]]仅对**完全匹配**的工具名称生效（1.0.36 修复，此前 `matcher` 字段会被忽略） |
 | `url` | ❌ | HTTP Hook 目标 URL（1.0.35 新增），设置后 Hook 会将 JSON payload POST 到该 URL 而非运行本地命令 |
 | `permissionDecision` | ❌ | `preToolUse` 专用：设为 `allow` 时自动批准，设为 `ask` 时请求用户确认（1.0.4 / 1.0.18 改进） |
 | `timeout` | ❌ | 步骤超时时间（秒），`timeoutSec` 的别名（1.0.2 新增） |
@@ -140,7 +140,7 @@ tags:
 
 > [!info] 跨工具兼容
 >
-> Hook 配置文件格式兼容 VS Code、Claude Code 和 Copilot CLI（1.0.6 改进）——同一份 Hook 配置无需修改即可在三个工具中使用。支持 Claude Code 的嵌套 `matcher/hooks` 结构。
+> Hook 配置文件格式兼容 VS Code、[[Claude Code]] 和 [[Copilot]] CLI（1.0.6 改进）——同一份 Hook 配置无需修改即可在三个工具中使用。支持 [[Claude Code]] 的嵌套 `matcher/hooks` 结构。
 
 > [!info] HTTP Hook（1.0.35 新增）
 >
@@ -218,16 +218,16 @@ tags:
 
 ## ⚖️ Hook vs Git Hook
 
-你可能已经熟悉 Git Hook（如 `pre-commit`），Copilot Hook 和它类似但作用于不同层面：
+你可能已经熟悉 Git Hook（如 `pre-commit`），[[Copilot]] Hook 和它类似但作用于不同层面：
 
-| 维度 | Copilot Hook | Git Hook |
+| 维度 | [[Copilot]] Hook | Git Hook |
 |------|-------------|----------|
-| `触发时机` | Copilot Agent 生命周期事件 | Git 操作事件（commit、push 等） |
+| `触发时机` | [[Copilot]] Agent 生命周期事件 | Git 操作事件（commit、push 等） |
 | `配置方式` | `.github/hooks/*.json` | `.git/hooks/*`（或 Husky 等工具） |
 | `提交到 Git` | ✅ | ❌（`.git/hooks/` 不跟踪） |
-| `用途` | 扩展 Copilot 行为 | 代码质量门禁 |
+| `用途` | 扩展 [[Copilot]] 行为 | 代码质量门禁 |
 
-两者可以互补：Git Hook 确保提交质量，Copilot Hook 增强 AI 辅助体验。
+两者可以互补：Git Hook 确保提交质量，[[Copilot]] Hook 增强 AI 辅助体验。
 
 ---
 
@@ -239,8 +239,8 @@ tags:
 
 | 格式 | 事件名写法 | 字段命名 | 适用场景 |
 |------|-----------|---------|---------|
-| **camelCase（CLI 默认）** | `sessionStart`、`preToolUse` | camelCase（如 `toolName`、`toolArgs`） | Copilot CLI 本地 Hook |
-| **VS Code 兼容** | `SessionStart`、`PreToolUse` | snake_case（如 `tool_name`、`tool_input`） | 需与 VS Code Copilot 扩展共享配置 |
+| **camelCase（CLI 默认）** | `sessionStart`、`preToolUse` | camelCase（如 `toolName`、`toolArgs`） | [[Copilot]] CLI 本地 Hook |
+| **VS Code 兼容** | `SessionStart`、`PreToolUse` | snake_case（如 `tool_name`、`tool_input`） | 需与 VS Code [[Copilot]] 扩展共享配置 |
 
 两种格式可以共存于同一配置文件中，不同事件可以使用不同格式。
 
@@ -274,7 +274,7 @@ tags:
 
 `permissionRequest` 在权限服务运行之前触发——早于规则检查、会话审批、自动允许/拒绝和用户提示。如果 Hook 返回 `behavior: "allow"` 或 `"deny"`，将**短路整个权限流程**，后续步骤不再执行。返回空输出则回退到正常的权限处理流程。
 
-支持可选的 `matcher` 正则表达式，仅对匹配 `toolName` 的请求触发 Hook（锚定为 `^(?:pattern)$`）。
+支持可选的 `matcher` [[正则表达式]]，仅对匹配 `toolName` 的请求触发 Hook（锚定为 `^(?:pattern)$`）。
 
 | 字段 | 可选值 | 说明 |
 |------|--------|------|
@@ -304,7 +304,7 @@ tags:
 
 ### notification Hook
 
-`notification` Hook 是异步 fire-and-forget 的，永远不会阻塞会话。通过可选的 `matcher` 正则表达式匹配 `notification_type`（锚定为 `^(?:pattern)$`）。
+`notification` Hook 是异步 fire-and-forget 的，永远不会阻塞会话。通过可选的 `matcher` [[正则表达式]]匹配 `notification_type`（锚定为 `^(?:pattern)$`）。
 
 **通知类型：**
 
@@ -323,7 +323,7 @@ tags:
 
 ## 🏢 组织级策略教程
 
-以下内容面向 DevOps 工程师、平台团队和工程负责人，展示如何通过 Hook 为团队建立安全合规的 Copilot CLI 使用策略。
+以下内容面向 DevOps 工程师、平台团队和工程负责人，展示如何通过 Hook 为团队建立安全合规的 [[Copilot]] CLI 使用策略。
 
 ### 策略定义流程
 
@@ -684,7 +684,7 @@ jq 'select(.event=="policyDeny")' .github/hooks/logs/audit.jsonl
 
 ### Prompt Hook
 
-`type: "prompt"` 类型的 Hook 可以自动提交文本，就像用户输入一样。**仅在 `sessionStart` 事件上支持，且仅对新交互式会话触发**——不会在恢复会话或非交互模式（`-p`）下触发。
+`type: "prompt"` 类型的 Hook 可以自动提交文本，就像用户输入一样。**仅在 `sessionStart` 事件上支持，且仅对新交互式会话触发**——不会在恢复会话或非[[交互模式]]（`-p`）下触发。
 
 ``` json
 {

@@ -13,7 +13,7 @@ tags:
 
 - 🎯 Sub-agent 是什么，为什么需要它（类比：「派出去调研的实习生，回来只汇报结论」）
 - 🧱 Sub-agent 的上下文隔离机制和配置方式
-- 🔧 如何创建自定义 Sub-agent（工具限制、模型选择、权限控制、MCP/Skills/记忆）
+- 🔧 如何创建自定义 Sub-agent（工具限制、模型选择、权限控制、MCP/[[Skills]]/记忆）
 - 🎮 运行管理：前台/后台运行、恢复已完成的 Sub-agent
 - 🔀 Fork 模式：继承主对话上下文的轻量子代理（实验性）
 - 🤝 Agent Teams 的协调机制，以及它与 Sub-agent 的本质区别
@@ -22,7 +22,7 @@ tags:
 
 ## 🤔 为什么需要 Sub-agent
 
-假设你正在和 Claude Code 讨论一个项目架构问题。聊到一半，你说「帮我看一下这个项目的数据库连接池是怎么配的」。Claude 开始翻文件、读代码，读了一大堆配置文件和工具类——这些中间过程全部挤进了你的**主对话上下文**。
+假设你正在和 [[Claude Code]] 讨论一个项目架构问题。聊到一半，你说「帮我看一下这个项目的数据库连接池是怎么配的」。Claude 开始翻文件、读代码，读了一大堆配置文件和工具类——这些中间过程全部挤进了你的**主对话上下文**。
 
 问题来了：上下文窗口是有限的。那些中间过程的代码片段、文件路径、调试输出，对你来说只是噪音，但它们实实在在地占用了上下文空间。等 Claude 把结论告诉你之后，这些中间信息依然留在上下文里，既浪费 token，又可能干扰后续对话。
 
@@ -48,7 +48,7 @@ tags:
 
 ### 上下文隔离
 
-Sub-agent 最核心的特性就是**上下文隔离**。每次调用 Sub-agent 时，Claude Code 会为它创建一个全新的上下文窗口，和主对话完全独立。
+Sub-agent 最核心的特性就是**上下文隔离**。每次调用 Sub-agent 时，[[Claude Code]] 会为它创建一个全新的上下文窗口，和主对话完全独立。
 
 ```mermaid
 graph TB
@@ -87,14 +87,14 @@ graph TB
 **不会继承**的内容：
 
 - ❌ 主对话的聊天历史（你和 Claude 之前聊了什么，Sub-agent 不知道）
-- ❌ 主对话的 Skills（除非在 Sub-agent 定义中显式声明）
+- ❌ 主对话的 [[Skills]]（除非在 Sub-agent 定义中显式声明）
 - ❌ 主对话的中间推理过程
 
 ⚠️ 这意味着你需要在任务描述中把 Sub-agent 需要知道的背景信息说清楚。不要假设它「已经知道」你在主对话里讨论过什么。
 
 ## 🔧 自定义 Sub-agent
 
-Claude Code 内置了几个 Sub-agent（`Explore`（v2.0.17 引入）、`Plan`、`general-purpose`），但你也可以创建自己的。自定义 Sub-agent 本质上是一个 **Markdown 文件 + YAML 前置配置**。
+[[Claude Code]] 内置了几个 Sub-agent（`Explore`（v2.0.17 引入）、`Plan`、`general-purpose`），但你也可以创建自己的。自定义 Sub-agent 本质上是一个 **Markdown 文件 + YAML 前置配置**。
 
 ### 管理命令：/agents
 
@@ -187,8 +187,8 @@ model: sonnet
 
 | 字段 | 必填 | 说明 |
 |------|------|------|
-| `skills` | ❌ | 预加载的 Skills 列表（完整内容直接注入上下文） |
-| `mcpServers` | ❌ | 此子代理专用的 MCP 服务器（服务器名字符串引用或内联定义） |
+| `skills` | ❌ | 预加载的 [[Skills]] 列表（完整内容直接注入上下文） |
+| `mcpServers` | ❌ | 此子代理专用的 [[MCP 服务器]]（服务器名字符串引用或内联定义） |
 | `memory` | ❌ | 持久记忆范围：`user`、`project`、`local` |
 | `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行（无变更时自动清理） |
 | `background` | ❌ | 设为 `true` 时始终后台运行 |
@@ -241,7 +241,7 @@ tools: Agent(worker, researcher), Read, Bash
 
 ### 模型选择策略
 
-Claude Code 按以下顺序解析 Sub-agent 的模型：
+[[Claude Code]] 按以下顺序解析 Sub-agent 的模型：
 
 1. `CLAUDE_CODE_SUBAGENT_MODEL` 环境变量（如果设置）
 2. 每次调用时传入的 `model` 参数
@@ -267,7 +267,7 @@ Claude Code 按以下顺序解析 Sub-agent 的模型：
 
 ### MCP 服务器限定
 
-`mcpServers` 字段让 Sub-agent 可以使用主对话中没有的 MCP 服务器。每个条目可以是**内联定义**（仅该 Sub-agent 可用）或**字符串引用**（复用已配置的服务器）：
+`mcpServers` 字段让 Sub-agent 可以使用主对话中没有的 [[MCP 服务器]]。每个条目可以是**内联定义**（仅该 Sub-agent 可用）或**字符串引用**（复用已配置的服务器）：
 
 ```yaml
 ---
@@ -284,11 +284,11 @@ mcpServers:
 ---
 ```
 
-💡 把 MCP 服务器定义在 Sub-agent 里而不是 `.mcp.json` 中，可以让工具描述只消耗 Sub-agent 的上下文，不挤占主对话。
+💡 把 [[MCP 服务器]]定义在 Sub-agent 里而不是 `.mcp.json` 中，可以让工具描述只消耗 Sub-agent 的上下文，不挤占主对话。
 
 ### Skills 预加载
 
-`skills` 字段在 Sub-agent 启动时将 Skill 完整内容注入其上下文，而不是只让 Claude 知道有这个 Skill。Sub-agent **不会继承**主对话的 Skills，必须显式列出：
+`skills` 字段在 Sub-agent 启动时将 Skill 完整内容注入其上下文，而不是只让 Claude 知道有这个 Skill。Sub-agent **不会继承**主对话的 [[Skills]]，必须显式列出：
 
 ```yaml
 ---
@@ -318,7 +318,7 @@ memory: project
 | `project` | `.claude/agent-memory/<name>/` | 项目专属，可提交 Git（推荐默认） |
 | `local` | `.claude/agent-memory-local/<name>/` | 项目专属，不提交 Git |
 
-启用记忆后，Sub-agent 的系统提示会包含记忆目录中 `MEMORY.md` 的前 200 行（或 25KB），以及策划 `MEMORY.md` 的说明。`Read`、`Write`、`Edit` 工具会自动启用，以便 Sub-agent 管理其记忆文件。
+启用记忆后，Sub-agent 的系统提示会包含记忆目录中 `MEMORY.md` 的前 200 行（或 25KB），以及策划 `MEMORY.md` 的说明。`Read`、`Write`、`Edit` 工具会自动启用，以便 Sub-agent 管理其[[记忆文件]]。
 
 💡 使用建议：让 Sub-agent 在完成任务后更新记忆——"Now that you're done, save what you learned to your memory." 随着时间积累，Sub-agent 会越来越有效。
 
@@ -433,7 +433,7 @@ exit 0
 Sub-agent 有两种运行模式：
 
 - **前台**（默认）：阻塞主对话直到完成。权限提示和澄清问题会传递给你
-- **后台**：并发运行，你可以继续工作。启动前 Claude Code 会预提示所需的工具权限，运行中自动拒绝未预先批准的操作。后台 Sub-agent 如果需要提问，该工具调用会失败但 Sub-agent 会继续
+- **后台**：并发运行，你可以继续工作。启动前 [[Claude Code]] 会预提示所需的工具权限，运行中自动拒绝未预先批准的操作。后台 Sub-agent 如果需要提问，该工具调用会失败但 Sub-agent 会继续
 
 你可以主动要求 Claude "run this in the background"，或按 **Ctrl+B** 将运行中的任务放到后台。
 
@@ -453,13 +453,13 @@ Sub-agent 有两种运行模式：
 [Claude 恢复同一个 Sub-agent，带着之前的完整上下文]
 ```
 
-Sub-agent 的转录独立于主对话持久化——即使主对话被压缩，Sub-agent 的转录不受影响。你可以通过恢复会话在重启 Claude Code 后继续之前的 Sub-agent。
+Sub-agent 的转录独立于主对话持久化——即使主对话被压缩，Sub-agent 的转录不受影响。你可以通过恢复会话在重启 [[Claude Code]] 后继续之前的 Sub-agent。
 
 ## 🔀 Fork 模式（实验性）
 
 Fork 是一种特殊的 Sub-agent，它**继承当前完整的对话历史**，而不是从头开始。这意味着 Fork 看到和你一样的上下文，你可以直接交给它一个辅助任务而不需要重新解释背景。
 
-Fork 模式需要 Claude Code v2.1.117+，通过环境变量启用：
+Fork 模式需要 [[Claude Code]] v2.1.117+，通过环境变量启用：
 
 **settings.json**
 
@@ -582,7 +582,7 @@ Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启
 | 组件 | 角色 |
 |------|------|
 | **Team Lead** | 主会话，负责创建团队、分配任务、综合结果 |
-| **Teammates** | 独立的 Claude Code 实例，各自处理分配的任务 |
+| **Teammates** | 独立的 [[Claude Code]] 实例，各自处理分配的任务 |
 | **Task List** | 共享任务列表，Teammate 认领和完成任务 |
 | **Mailbox** | Agent 之间的消息系统 |
 
@@ -601,11 +601,11 @@ Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启
 
 Teammate 遵守定义的 `tools` 和 `model`，定义的主体作为额外指示附加到 Teammate 的系统提示中。团队协调工具（`SendMessage`、任务管理）始终可用，不受 `tools` 限制。
 
-⚠️ Sub-agent 定义中的 `skills` 和 `mcpServers` 在作为 Teammate 运行时不被应用。Teammate 从项目和用户设置加载 Skills 和 MCP 服务器，与常规会话相同。
+⚠️ Sub-agent 定义中的 `skills` 和 `mcpServers` 在作为 Teammate 运行时不被应用。Teammate 从项目和用户设置加载 [[Skills]] 和 [[MCP 服务器]]，与常规会话相同。
 
 ### 上下文与通信
 
-每个 Teammate 有自己的上下文窗口。生成时加载与常规会话相同的项目上下文（`CLAUDE.md`、MCP 服务器、Skills），但**不继承 Lead 的对话历史**。
+每个 Teammate 有自己的上下文窗口。生成时加载与常规会话相同的项目上下文（`CLAUDE.md`、[[MCP 服务器]]、[[Skills]]），但**不继承 Lead 的对话历史**。
 
 **信息共享机制**：
 
@@ -720,15 +720,15 @@ Agent Teams 是实验性功能，当前有以下限制：
 
 ## 📦 官方内置 Agent
 
-Claude Code 随附了 5 个官方内置 Agent，可直接通过 `@"agent-name (agent)"` 语法或 `--agent` 参数使用：
+[[Claude Code]] 随附了 5 个官方内置 Agent，可直接通过 `@"agent-name (agent)"` 语法或 `--agent` 参数使用：
 
 | Agent | 模型 | 可用工具 | 用途 |
 |-------|------|---------|------|
 | `general-purpose` | inherit | 全部 | 复杂多步骤任务，研究、代码搜索和自主工作的默认选择 |
 | `Explore` | haiku | 只读（无 Write/Edit） | 快速代码库搜索和探索，优化了文件查找和代码库问答 |
 | `Plan` | inherit | 只读（无 Write/Edit） | 在写代码前进行预规划研究——在 plan mode 下探索代码库并设计实现方案 |
-| `statusline-setup` | sonnet | Read, Edit | 配置用户的 Claude Code 状态栏设置 |
-| `claude-code-guide` | haiku | Glob, Grep, Read, WebFetch, WebSearch | 回答关于 Claude Code 功能、Agent SDK 和 Claude API 的问题 |
+| `statusline-setup` | sonnet | Read, Edit | 配置用户的 [[Claude Code]] 状态栏设置 |
+| `claude-code-guide` | haiku | Glob, Grep, Read, WebFetch, WebSearch | 回答关于 [[Claude Code]] 功能、[[Agent SDK]] 和 Claude API 的问题 |
 
 💡 `Explore` 和 `Plan` 是使用最广泛的内置 Agent。`Explore` 适合需要快速了解代码库但不想消耗大量 token 的场景；`Plan` 适合复杂重构前先做只读探索和方案设计。
 

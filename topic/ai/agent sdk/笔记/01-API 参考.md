@@ -51,7 +51,7 @@ function startup(params?: {
 
 #### `tool()`
 
-创建类型安全的 MCP 工具定义，与 SDK MCP 服务器配合使用。
+创建类型安全的 MCP 工具定义，与 SDK [[MCP 服务器]]配合使用。
 
 ``` typescript
 function tool<Schema extends AnyZodRawShape>(
@@ -65,7 +65,7 @@ function tool<Schema extends AnyZodRawShape>(
 
 #### `createSdkMcpServer()`
 
-创建进程内 MCP 服务器实例。
+创建进程内 [[MCP 服务器]]实例。
 
 ``` typescript
 function createSdkMcpServer(options: {
@@ -97,7 +97,7 @@ function getSessionMessages(sessionId: string, options?: GetSessionMessagesOptio
 | `allowedTools` | `string[]` | `[]` | 自动批准的工具 |
 | `disallowedTools` | `string[]` | `[]` | 始终拒绝的工具 |
 | `canUseTool` | `CanUseTool` | `undefined` | 自定义权限函数 |
-| `mcpServers` | `Record<string, McpServerConfig>` | `{}` | MCP 服务器配置 |
+| `mcpServers` | `Record<string, McpServerConfig>` | `{}` | [[MCP 服务器]]配置 |
 | `agents` | `Record<string, AgentDefinition>` | `undefined` | 子代理定义 |
 | `maxTurns` | `number` | `undefined` | 最大代理轮次 |
 | `maxBudgetUsd` | `number` | `undefined` | 成本上限（USD） |
@@ -250,7 +250,7 @@ def get_session_messages(session_id, directory=None, limit=None, offset=0) -> li
 | `disallowed_tools` | `list[str]` | `[]` | 始终拒绝的工具 |
 | `can_use_tool` | `CanUseTool \| None` | `None` | 自定义权限回调 |
 | `model` | `str \| None` | `None` | Claude 模型 |
-| `mcp_servers` | `dict[str, McpServerConfig] \| str \| Path` | `{}` | MCP 服务器配置 |
+| `mcp_servers` | `dict[str, McpServerConfig] \| str \| Path` | `{}` | [[MCP 服务器]]配置 |
 | `agents` | `dict[str, AgentDefinition] \| None` | `None` | 子代理定义 |
 | `max_turns` | `int \| None` | `None` | 最大代理轮次 |
 | `cwd` | `str \| Path \| None` | `None` | 工作目录 |
@@ -290,7 +290,7 @@ Python `Message` 联合类型：
 
 | 维度 | TypeScript | Python |
 |:---|:---|:---|
-| **会话管理** | `query()` 内部维持会话，支持 `streamInput()` 多轮 | `query()` 每次新建会话；`ClaudeSDKClient` 维持多轮对话 |
+| **[[会话管理]]** | `query()` 内部维持会话，支持 `streamInput()` 多轮 | `query()` 每次新建会话；`ClaudeSDKClient` 维持多轮对话 |
 | **消息接收** | `for await (const msg of query(...))` 统一迭代 | `async for msg in query(...)` 或 `client.receive_response()` |
 | **会话发现** | 异步（`Promise`） | 同步（立即返回） |
 | **选项命名** | camelCase（`allowedTools`、`permissionMode`） | snake_case（`allowed_tools`、`permission_mode`） |

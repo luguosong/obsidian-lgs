@@ -5,7 +5,7 @@ _Exported on 2026/3/11 at GMT+8 11:26:50 from Cursor (2.6.13)_
 
 **User**
 
-如果我想在DrawingWebApp中增加 一个AI助手功能，希望实现Agent智能体的功能，用户可以根据描述，我就可以在当前图纸中画图。能给我一个开发方向吗？ 或者，互联网上有没有可以直接利用，后期我可以继续改进的文件，因为我的程序是模仿AutoCAD的，所有AutoCAD二维功能我都将实现的。
+如果我想在DrawingWebApp中增加 一个AI助手功能，希望实现Agent智能体的功能，用户可以根据描述，我就可以在当前图纸中画图。能给我一个开发方向吗？ 或者，互联网上有没有可以直接利用，后期我可以继续改进的文件，因为我的程序是模仿[[AutoCAD]]的，所有[[AutoCAD]]二维功能我都将实现的。
 
 ---
 
@@ -23,7 +23,7 @@ _Exported on 2026/3/11 at GMT+8 11:26:50 from Cursor (2.6.13)_
 
 通过分析代码，你已经具备了非常好的基础：
 
-1. **命令执行系统已完备** — `Viewer.execute(cmdName, args)` 可以调用所有 AutoCAD 命令（LINE, PLINE, CIRCLE, ARC, HATCH 等）
+1. **命令执行系统已完备** — `Viewer.execute(cmdName, args)` 可以调用所有 [[AutoCAD]] 命令（LINE, PLINE, CIRCLE, ARC, HATCH 等）
 2. **命令交互流程清晰** — 命令启动后通过 `providePointToCommandFromScreen()`、`provideKeywordToCommand()`、`provideEmptyInput()` 提供参数/坐标
 3. **全局 API 已暴露** — `window.__odaUi.safeExecute(cmd)` 和 `window.execute(name, args)` 可直接调用
 4. **AI 助手 UI 外壳已就位** — `AiAssistant.jsx` 已有基本的对话框架
@@ -185,7 +185,7 @@ class CommandExecutor {
 }
 ```
 
-**注意**：根据你现有代码，`executeCommandInternal` 调用 `appCore.ExecuteCommand(cmdName, vec)` 时传入的是 `VectorString`。你需要验证你的 C++ 后端是否支持 **一次性传入所有参数**（非交互模式），还是必须通过 `ProvideKeyword` / `ProvidePointFromScreen` 逐步喂入。如果是后者，你需要一个更复杂的序列化执行器，模拟用户的逐步交互。
+**注意**：根据你现有代码，`executeCommandInternal` 调用 `appCore.ExecuteCommand(cmdName, vec)` 时传入的是 `VectorString`。你需要验证你的 C++ 后端是否支持 **一次性传入所有参数**（非[[交互模式]]），还是必须通过 `ProvideKeyword` / `ProvidePointFromScreen` 逐步喂入。如果是后者，你需要一个更复杂的序列化执行器，模拟用户的逐步交互。
 
 ### System Prompt 设计（最关键的部分）
 
@@ -220,7 +220,7 @@ class CommandExecutor {
 
 ### 1. **OpenAI Function Calling** — 最成熟的方案
 
-你的 AutoCAD 命令天然适合作为 "tools/functions" 定义。OpenAI、Claude、Gemini 都支持 Function Calling，可以直接让 LLM 输出结构化的命令调用。
+你的 [[AutoCAD]] 命令天然适合作为 "tools/functions" 定义。OpenAI、Claude、Gemini 都支持 Function Calling，可以直接让 LLM 输出结构化的命令调用。
 
 ### 2. **LangChain.js** — Agent 框架
 
@@ -254,7 +254,7 @@ npm install ai @ai-sdk/openai
 
 ### 5. **DXF/AutoCAD 命令参考数据**
 
-你可以整理一份命令手册给 LLM 作为 system prompt 的一部分，或用 RAG（检索增强生成）方式。AutoCAD 的命令文档非常标准化，适合作为知识库。
+你可以整理一份命令手册给 LLM 作为 system prompt 的一部分，或用 RAG（检索增强生成）方式。[[AutoCAD]] 的命令文档非常标准化，适合作为知识库。
 
 ---
 
@@ -284,7 +284,7 @@ npm install ai @ai-sdk/openai
 
 **User**
 
- 你能不能去GitHub查找有没有现成的CAD命令抽象层（Command Abstraction Layer）的 命令描述 Schema， 因为ODA的Drawing使用很广泛，都是参考AutoCAD命令的。或者有没有"System Prompt 设计"
+ 你能不能去GitHub查找有没有现成的CAD命令抽象层（Command Abstraction Layer）的 命令描述 Schema， 因为ODA的Drawing使用很广泛，都是参考[[AutoCAD]]命令的。或者有没有"System Prompt 设计"
 
 ---
 
@@ -386,7 +386,7 @@ GitHub: https://github.com/ngk0/autocad-mcp
 
 GitHub: https://github.com/AnCode666/multiCAD-mcp
 
-三层架构设计，支持 AutoCAD/ZWCAD/GstarCAD/BricsCAD。它定义了**抽象接口 `CADInterface`**：
+三层[[架构设计]]，支持 [[AutoCAD]]/ZWCAD/GstarCAD/BricsCAD。它定义了**抽象接口 `CADInterface`**：
 
 ```python
 # core/cad_interface.py — Abstract base class
@@ -523,7 +523,7 @@ class CADInterface:
 
 2. **复用它的 `nlp_processor.py` 逻辑** — 中文颜色名映射、坐标提取正则、形状关键字等可以直接移植到 JavaScript。
 
-3. **关键差异**：这些 MCP 项目都是通过 COM 接口或 AutoLISP 与桌面 AutoCAD 通信的，而你是通过 **WASM + `viewer.execute(cmdName, vectorString)`** 调用的。所以你不需要 MCP 协议层，只需要把 LLM 输出的命令直接传给 `viewer.execute()` 即可。
+3. **关键差异**：这些 MCP 项目都是通过 COM 接口或 AutoLISP 与桌面 [[AutoCAD]] 通信的，而你是通过 **WASM + `viewer.execute(cmdName, vectorString)`** 调用的。所以你不需要 MCP 协议层，只需要把 LLM 输出的命令直接传给 `viewer.execute()` 即可。
 
 4. **最快路径**：在你的 `AiAssistant.jsx` 中集成 LLM API，用上述 System Prompt + Tool Schema，LLM 返回命令 JSON → 逐条调用 `window.__odaUi.safeExecute(cmd)` 或 `viewer.execute(name, args)` 执行。
 

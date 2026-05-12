@@ -147,7 +147,7 @@ openspec update
 
 撰写 proposal 时，请记住 OpenSpec 的理念：我们服务于各种 coding agent、模型和用场景的广泛用户群体。变更应该对所有人都适用。
 
-**欢迎 AI 生成的代码** — 前提是已经过测试和验证。包含 AI 生成代码的 PR 应说明使用的 coding agent 和模型（例如"使用 Claude Code 和 claude-opus-4-5-20251101 生成"）。
+**欢迎 AI 生成的代码** — 前提是已经过测试和验证。包含 AI 生成代码的 PR 应说明使用的 coding agent 和模型（例如"使用 [[Claude Code]] 和 claude-opus-4-5-20251101 生成"）。
 
 ### 开发
 

@@ -14,7 +14,7 @@ tags:
 # excalidraw-diagram
 
 > [!summary]
-> 从文本内容生成 Excalidraw 图表，输出 Obsidian-ready 的 `.md` 文件，包含内嵌的 Excalidraw JSON，可被 Obsidian Excalidraw 插件原生打开。
+> 从[[文本内容]]生成 Excalidraw 图表，输出 [[Obsidian]]-ready 的 `.md` 文件，包含内嵌的 Excalidraw JSON，可被 [[Obsidian]] Excalidraw 插件原生打开。
 
 **触发词**：`Excalidraw`、`画图`、`流程图`、`思维导图`、`可视化`、`diagram`
 
@@ -36,7 +36,7 @@ tags:
 1. 分析内容 → 识别概念、关系、层级
 2. 选择图表类型（参考上表）
 3. 生成 Excalidraw JSON
-4. 生成 Obsidian `.md` 文件（含 frontmatter）
+4. 生成 [[Obsidian]] `.md` 文件（含 frontmatter）
 5. 自动保存到当前目录
 6. 通知用户文件路径
 

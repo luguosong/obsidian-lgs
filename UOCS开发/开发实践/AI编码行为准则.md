@@ -1,6 +1,6 @@
 # AI 编码行为准则
 
-> **权威来源**：本文件。适用于所有 AI 编程工具（Claude Code、Copilot CLI 等）。
+> **权威来源**：本文件。适用于所有 AI 编程工具（[[Claude Code]]、[[Copilot]] CLI 等）。
 > 修改行为准则时只改本文件，不重复维护到各工具的指令文件。
 
 Behavioral guidelines to reduce common LLM coding mistakes.

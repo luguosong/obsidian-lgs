@@ -170,7 +170,7 @@ graph TD
 
 ## Linux 的应用场景
 
-- 🌐 **服务器**：全球 90%+ 的 Web 服务器、绝大多数云基础设施跑 Linux
+- 🌐 **服务器**：全球 90%+ 的 [[Web 服务器]]、绝大多数云基础设施跑 Linux
 - ☁️ **云计算**：AWS/GCP/Azure 的底层都是 Linux；容器（Docker）和 Kubernetes 也依赖 Linux 内核特性
 - 📱 **移动设备**：Android 基于 Linux 内核（约 30 亿设备）
 - 🤖 **嵌入式/IoT**：路由器、智能电视、树莓派、工控设备

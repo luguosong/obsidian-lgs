@@ -26,7 +26,7 @@ Mix-up attacks are a potential threat to all OAuth clients that interact with mu
 
 OAuth clients that interact with only one authorization server are not vulnerable to mix-up attacks. However, when such clients decide to add support for a second authorization server in the future, they become vulnerable and need to apply countermeasures to mix-up attacks.[¶](#section-1-4)
 
-Mix-up attacks aim to steal an authorization code or access token by tricking the client into sending the authorization code or access token to the attacker instead of the honest authorization or resource server. This marks a severe threat to the confidentiality and integrity of resources whose access is managed with OAuth. A detailed description and different variants of the mix-up attack class can be found in Section [4.4](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-19#section-4.4) of "OAuth 2.0 Security Best Current Practice" \[\] as well as in the original research first highlighting this attack class, "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in OpenID Connect" \[\] and "A Comprehensive Formal Security Analysis of OAuth 2.0" \[\].[¶](#section-1-5)
+Mix-up attacks aim to steal an authorization code or access token by tricking the client into sending the authorization code or access token to the attacker instead of the honest authorization or resource server. This marks a severe threat to the confidentiality and integrity of resources whose access is managed with OAuth. A detailed description and different variants of the mix-up attack class can be found in Section [4.4](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-19#section-4.4) of [["OAuth 2.0]] Security Best Current Practice" \[\] as well as in the original research first highlighting this attack class, "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in [[OpenID Connect]]" \[\] and "A Comprehensive Formal Security Analysis of OAuth 2.0" \[\].[¶](#section-1-5)
 
 This document defines a new parameter in the authorization response called `iss`. The `iss` parameter allows the authorization server to include its identity in the authorization response explicitly. The client can compare the value of the `iss` parameter to the issuer identifier of the authorization server (e.g., retrieved from its metadata) it believes it is interacting with. The `iss` parameter gives the client certainty about the authorization server's identity and enables it to send credentials such as authorization codes and access tokens only to the intended recipients.[¶](#section-1-6)
 
@@ -91,7 +91,7 @@ If clients interact with both authorization servers supporting this specificatio
 
 In general, clients that support this specification MAY accept authorization responses that do not contain the `iss` parameter or reject them and exclusively support authorization servers that provide the `iss` parameter in the authorization response. Local policy or configuration can determine when to accept such responses, and specific guidance is out of scope for this specification.[¶](#section-2.4-4)
 
-In OpenID Connect \[\] flows where an ID Token is returned from the authorization endpoint, the value in the `iss` parameter MUST always be identical to the `iss` claim in the ID Token.[¶](#section-2.4-5)
+In [[OpenID Connect]] \[\] flows where an ID Token is returned from the authorization endpoint, the value in the `iss` parameter MUST always be identical to the `iss` claim in the ID Token.[¶](#section-2.4-5)
 
 [Section 4.1.2](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2) of \[\] already mandates that clients that do not support this specification MUST ignore the unrecognized `iss` parameter.[¶](#section-2.4-6)
 
@@ -103,7 +103,7 @@ The `iss` parameter enables a client to decide if an authorization server "expec
 
 The issuer identifier contained in the authorization response is not cryptographically protected against tampering. In general, mechanisms such as JWTs (as specified in \[\]) could be used to protect the integrity of the authorization response. However, in mix-up attacks, the client generally receives the authorization response from an uncompromised authorization server. If an attacker can tamper with this authorization response before it is received by the client, the attacker would also have direct access to the authorization code. The attacker does not need to execute a mix-up attack to steal the authorization code. Therefore, integrity protection for the authorization response is not necessary to defend against mix-up attacks.[¶](#section-4-3)
 
-There are also alternative countermeasures to mix-up attacks. When an authorization response already includes an authorization server's issuer identifier by other means and this identifier is checked as laid out in, the use and verification of the `iss` parameter is not necessary and MAY be omitted. For example, this is the case when OpenID Connect response types that return an ID Token from the authorization endpoint (e.g., `response_type=code id_token`) or \[\] are used. However, if a client receives an authorization response that contains multiple issuer identifiers, the client MUST reject the response if these issuer identifiers do not match. The details of alternative countermeasures are outside of the scope of this specification.[¶](#section-4-4)
+There are also alternative countermeasures to mix-up attacks. When an authorization response already includes an authorization server's issuer identifier by other means and this identifier is checked as laid out in, the use and verification of the `iss` parameter is not necessary and MAY be omitted. For example, this is the case when [[OpenID Connect]] response types that return an ID Token from the authorization endpoint (e.g., `response_type=code id_token`) or \[\] are used. However, if a client receives an authorization response that contains multiple issuer identifiers, the client MUST reject the response if these issuer identifiers do not match. The details of alternative countermeasures are outside of the scope of this specification.[¶](#section-4-4)
 
 Mix-up attacks are only relevant to clients that interact with multiple authorization servers. However, clients interacting with only one authorization server might add support for a second authorization server in the future. By supporting multiple authorization servers, they become vulnerable to mix-up attacks and need to apply countermeasures.[¶](#section-4-5)
 
@@ -137,9 +137,9 @@ of RFC 9207, \[\], and [Section 4.1.1](https://www.rfc-editor.org/rfc/rfc7519#se
 
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, < [https://www.rfc-editor.org/info/rfc2119](https://www.rfc-editor.org/info/rfc2119) >.
 
-\[RFC3986\]
+\[RFC[[3986]]\]
 
-Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
+Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC [[3986]], DOI 10.17487/RFC[[3986]], January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
 
 \[RFC6749\]
 
@@ -149,15 +149,15 @@ Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/
 
 Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, < [https://www.rfc-editor.org/info/rfc8174](https://www.rfc-editor.org/info/rfc8174) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
 ### 6.2.
 
 \[arXiv.1508.04324\]
 
-Mainka, C., Mladenov, V., and J. Schwenk, "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in OpenID Connect", August 2015, < [https://arxiv.org/abs/1508.04324](https://arxiv.org/abs/1508.04324) >.
+Mainka, C., Mladenov, V., and J. Schwenk, "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in [[OpenID Connect]]", August 2015, < [https://arxiv.org/abs/1508.04324](https://arxiv.org/abs/1508.04324) >.
 
 \[arXiv.1601.01229\]
 
@@ -173,23 +173,23 @@ Lodderstedt, T. and B. Campbell, "Financial-grade API: JWT Secured Authorization
 
 \[OAUTH-SECURITY-TOPICS\]
 
-Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, "OAuth 2.0 Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-19, 16 December 2021, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-19](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-19) >.
+Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, [["OAuth 2.0]] Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-19, 16 December 2021, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-19](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-19) >.
 
 \[OIDC.Core\]
 
-Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0 incorporating errata set 1", November 2014, < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0 incorporating errata set 1", November [[2014]], < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
-\[RFC7591\]
+\[RFC[[7591]]\]
 
-Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol", RFC 7591, DOI 10.17487/RFC7591, July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
+Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, [["OAuth 2.0]] [[Dynamic Client Registration]] Protocol", RFC [[7591]], DOI 10.17487/RFC[[7591]], July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
 
-\[RFC9101\]
+\[RFC[[9101]]\]
 
-Sakimura, N., Bradley, J., and M. Jones, "The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)", RFC 9101, DOI 10.17487/RFC9101, August 2021, < [https://www.rfc-editor.org/info/rfc9101](https://www.rfc-editor.org/info/rfc9101) >.
+Sakimura, N., Bradley, J., and M. Jones, "The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)", RFC [[9101]], DOI 10.17487/RFC[[9101]], August 2021, < [https://www.rfc-editor.org/info/rfc9101](https://www.rfc-editor.org/info/rfc9101) >.
 
 ## Acknowledgements
 

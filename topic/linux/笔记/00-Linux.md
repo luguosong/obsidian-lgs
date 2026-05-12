@@ -25,23 +25,23 @@ tags:
 
 - **Shell 篇**
 
-    vim、Bash、重定向与管道、正则表达式、文本处理工具、Shell 脚本
+    vim、Bash、[[重定向与管道]]、[[正则表达式]]、[[文本处理工具]]、Shell 脚本
 
     [查看](shell/index.md)
 
 - **账户与权限**
 
-    用户/组管理、ACL、sudo 与 PAM
+    用户/组管理、ACL、[[sudo 与 PAM]]
 
     [查看](user-management/index.md)
 
 - **系统管理**
 
-    进程、SELinux、systemd、计划任务、日志、开机流程、系统配置
+    进程、SELinux、[[systemd]]、[[计划任务]]、日志、[[开机流程]]、系统配置
 
     [查看](process/index.md)
 
-- **软件安装**
+- **[[软件安装]]**
 
     源码编译安装、RPM/YUM/DNF（Red Hat）与 dpkg/APT（Debian）
 
@@ -49,19 +49,19 @@ tags:
 
 - **网络基础**
 
-    TCP/IP 协议、网络命令与诊断、网络安全基础、防火墙与 NAT
+    TCP/IP 协议、[[网络命令与诊断]]、[[网络安全基础]]、[[防火墙与 NAT]]
 
     [查看](network/index.md)
 
 - **服务器实战**
 
-    SSH、DHCP、NFS/Samba、NTP、DNS、Web 服务器、邮件、FTP
+    SSH、DHCP、NFS/Samba、NTP、DNS、[[Web 服务器]]、邮件、FTP
 
     [查看](network/services/ssh/index.md)
 
 - **系统编程**
 
-    Linux 编程接口、高级文件 I/O、进程生命周期、信号、IPC、线程、Socket
+    [[Linux 编程接口]]、[[高级文件 I/O]]、[[进程生命周期]]、信号、IPC、线程、[[Socket]]
 
     [查看](linux-api/index.md)
 

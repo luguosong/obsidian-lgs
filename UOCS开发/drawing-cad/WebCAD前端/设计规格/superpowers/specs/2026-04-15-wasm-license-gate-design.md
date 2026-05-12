@@ -731,7 +731,7 @@ Java 读 `/sys/class/dmi/id/product_uuid` 常因权限失败（需要 root 或 s
 ### 已知限制
 
 1. **WASM 补丁攻击**：专业对手用 wabt / wasm-tools 编辑 `.wasm` 二进制，将 `verifyCurrentToken` 改为始终 `return true`，然后搭个 nginx 托管。缓解措施：emscripten 的 `--closure 1`、`-O3`、strip debug symbols，且在多处交叉校验（不仅 OpenFile，未来可在核心几何计算前再校验一次）
-2. **并发计数不够精确**：`beforeunload` sendBeacon 是 best-effort，浏览器崩溃时名额不会即时释放，需等 5 分钟清理。若要精确，需要 WebSocket 心跳替代 `setInterval`（设计复杂度显著提高，暂不采纳）
+2. **并发计数不够精确**：`beforeunload` sendBeacon 是 best-effort，浏览器崩溃时名额不会即时释放，需等 5 分钟清理。若要精确，需要 Web[[Socket]] 心跳替代 `setInterval`（设计复杂度显著提高，暂不采纳）
 3. **时钟攻击**：WASM 用 `emscripten_date_now()` 取时间，若宿主机时间被调回，Token 可能被"复活"。缓解：服务器签 Token 时把 `issued_at` 写入，客户端记录"已见到的最大 issued_at"，若当前时间小于该值则拒绝（防时钟回滚）。未在 MVP 实现，列为 P2
 
 ### 变更与轮换
@@ -819,4 +819,4 @@ Session 事件（INFO 级别）：
 - **License 文件**：JSON 结构，含绑定信息，由根私钥签名
 - **Token**：5 分钟短期令牌，由客户私钥签名，WASM 在关键操作时校验
 - **硬件指纹**：`SM3(machine-id|MACs|mb-uuid)` 的 64-char hex
-- **GMT 0009**：国密 SM2 数字签名 Z 值计算标准，默认 userId = "1234567812345678"
+- **GMT 0009**：国密 SM2 [[数字签名]] Z 值计算标准，默认 userId = "1234567812345678"

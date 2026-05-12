@@ -33,7 +33,7 @@ status: approved
 
 - 其他 Agent 平台（Codex、Gemini 等）的具体安装步骤
 - Skill 源码分析
-- Superpowers 插件系统的内部实现
+- [[Superpowers]] 插件系统的内部实现
 
 ## 组织方式
 
@@ -78,7 +78,7 @@ status: approved
 | 层次 | 内容 | 目的 |
 |------|------|------|
 | 为什么 | skill 解决什么问题，没有它会怎样 | 建立动机 |
-| 怎么运作 | skill 的内部流程（Mermaid 或步骤列表） | 理解机制 |
+| 怎么运作 | skill 的内部流程（[[Mermaid]] 或步骤列表） | 理解机制 |
 | 场景演示 | Agent 与人类对话，用 callout 呈现 | 看到实际样子 |
 | 最佳实践 | 人类 partner 应该做什么、常见陷阱 | 实战指导 |
 
@@ -103,7 +103,7 @@ status: approved
 | Agent 对话 | `> [!agent]` / `> [!user]` callout |
 | 关键概念 | 首次出现加粗并附简短说明 |
 | 命令/代码 | 代码块，标注语言标识符 |
-| 流程图 | Mermaid 图 |
+| 流程图 | [[Mermaid]] 图 |
 | 警告/提示 | `> [!warning]` / `> [!tip]` callout |
 | 最佳实践 | `> [!best-practice]` callout |
 | 反模式 | `> [!caution]` callout |

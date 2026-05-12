@@ -54,7 +54,7 @@ invalid\_target
 
 The requested resource is invalid, missing, unknown, or malformed.[¶](#section-2-6.2)
 
-The authorization server SHOULD audience-restrict issued access tokens to the resource(s) indicated by the `resource` parameter. Audience restrictions can be communicated in JSON Web Tokens \[\] with the `aud` claim and the top-level member of the same name provides the audience restriction information in a Token Introspection \[\] response. The authorization server may use the exact `resource` value as the audience or it may map from that value to a more general URI or abstract identifier for the given resource.[¶](#section-2-7)
+The authorization server SHOULD audience-restrict issued access tokens to the resource(s) indicated by the `resource` parameter. Audience restrictions can be communicated in JSON Web Tokens \[\] with the `aud` claim and the top-level member of the same name provides the audience restriction information in a [[Token Introspection]] \[\] response. The authorization server may use the exact `resource` value as the audience or it may map from that value to a more general URI or abstract identifier for the given resource.[¶](#section-2-7)
 
 ### 2.1.
 
@@ -242,9 +242,9 @@ IANA, "OAuth Parameters", < [https://www.iana.org/assignments/oauth-parameters](
 
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, < [https://www.rfc-editor.org/info/rfc2119](https://www.rfc-editor.org/info/rfc2119) >.
 
-\[RFC3986\]
+\[RFC[[3986]]\]
 
-Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
+Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC [[3986]], DOI 10.17487/RFC[[3986]], January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
 
 \[RFC6749\]
 
@@ -260,21 +260,21 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 
 Sakimura, N. and J. Bradley, "The OAuth 2.0 Authorization Framework: JWT Secured Authorization Request (JAR)", Work in Progress, Internet-Draft, draft-ietf-oauth-jwsreq-20, 21 October 2019, < [https://tools.ietf.org/html/draft-ietf-oauth-jwsreq-20](https://tools.ietf.org/html/draft-ietf-oauth-jwsreq-20) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
 \[RFC7644\]
 
 Hunt, P., Ed., Grizzle, K., Ansari, M., Wahlstroem, E., and C. Mortimore, "System for Cross-domain Identity Management: Protocol", RFC 7644, DOI 10.17487/RFC7644, September 2015, < [https://www.rfc-editor.org/info/rfc7644](https://www.rfc-editor.org/info/rfc7644) >.
 
-\[RFC7662\]
+\[RFC[[7662]]\]
 
-Richer, J., Ed., "OAuth 2.0 Token Introspection", RFC 7662, DOI 10.17487/RFC7662, October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
+Richer, J., Ed., [["OAuth 2.0]] [[Token Introspection]]", RFC [[7662]], DOI 10.17487/RFC[[7662]], October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
 
 ## Acknowledgements
 

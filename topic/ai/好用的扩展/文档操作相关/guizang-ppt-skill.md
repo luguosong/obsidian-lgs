@@ -9,7 +9,7 @@ author:
 
 > 🌏 **English version: [README.en.md](https://github.com/op7418/guizang-ppt-skill/blob/main/README.en.md)**
 
-一个适配 Claude Code / Codex 等 Agent 环境的网页 PPT 技能,用于生成 **单文件 HTML 横向翻页 PPT** 、PPT 配图和多平台封面。
+一个适配 [[Claude Code]] / Codex 等 Agent 环境的网页 PPT 技能,用于生成 **单文件 HTML 横向翻页 PPT** 、PPT 配图和多平台封面。
 
 内置两套视觉系统:
 
@@ -54,14 +54,14 @@ npx skills add https://github.com/op7418/guizang-ppt-skill --skill guizang-ppt-s
 
 ### 方式二:把下面这段话直接发给 AI
 
-> 帮我安装 `guizang-ppt-skill` 这个 Claude Code skill。请按下面步骤做:
+> 帮我安装 `guizang-ppt-skill` 这个 [[Claude Code]] skill。请按下面步骤做:
 > 
 > 1. 确保 `~/.claude/skills/` 目录存在(不存在就创建)
 > 2. 执行 `git clone https://github.com/op7418/guizang-ppt-skill.git ~/.claude/skills/guizang-ppt-skill`
 > 3. 验证:`ls ~/.claude/skills/guizang-ppt-skill/` 应该看到 `SKILL.md` 、 `assets/` 、 `references/` 三项
 > 4. 告诉我安装好了,之后我说"做一份杂志风 PPT"之类的话就会触发这个 skill
 
-把这段话复制粘贴给 Claude Code / Cursor / 任何有 shell 权限的 AI Agent,它会自动完成安装。
+把这段话复制粘贴给 [[Claude Code]] / Cursor / 任何有 shell 权限的 AI Agent,它会自动完成安装。
 
 ### 方式三:手动命令行
 
@@ -71,7 +71,7 @@ git clone https://github.com/op7418/guizang-ppt-skill.git ~/.claude/skills/guiza
 
 ### 触发方式
 
-装好后,Claude Code 会在对话里自动发现并调用这个 skill。触发关键词:
+装好后,[[Claude Code]] 会在对话里自动发现并调用这个 skill。触发关键词:
 
 - "帮我做一份杂志风 PPT"
 - "帮我做一份瑞士风 PPT"
@@ -200,13 +200,13 @@ guizang-ppt-skill/
 4. **配图只做素材** — 生成图只保留核心照片 / 图表 / UI,不要把 PPT 页脚、标题和角标画进图片里
 5. **节奏靠 hero 页** — hero / non-hero 交替,才不累眼睛
 6. **低性能可退场** — 按 `B` 能切换到静态模式,动态效果不能成为阅读负担
-7. **术语统一** — Skills 就是 Skills,不中英混译
+7. **术语统一** — [[Skills]] 就是 [[Skills]],不中英混译
 8. **瑞士风必须守版式** — Style B 优先还原原始 22P 版式,不要为了"多样"发明不存在的页面
 
 ## 视觉参考
 
 - [*Monocle*](https://monocle.com/) 杂志的版式
-- YC Garry Tan "Thin Harness, Fat Skills"
+- YC Garry Tan "Thin Harness, Fat [[Skills]]"
 - Massimo Vignelli / Helvetica Forever / 瑞士国际主义网格系统
 - 歸藏线下分享 PPT 系列
 

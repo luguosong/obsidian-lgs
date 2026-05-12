@@ -71,7 +71,7 @@ tags:
 
 ### 依赖升级
 
-- Spring Boot 3.5.13 → 3.5.14
+- [[Spring Boot]] 3.5.13 → 3.5.14
 - Apache Tika 3.3.0、jsoup 1.22.1、Apache PDFBox 3.0.7
 
 ---
@@ -105,7 +105,7 @@ tags:
 - OpenAI 嵌入模型自定义维度支持
 - **ToolCallAdvisor 流式响应支持**
 - SimpleVectorStore 删除时支持过滤
-- **Anthropic Claude Skills API** 支持
+- **Anthropic Claude [[Skills]] API** 支持
 - Ollama 嵌入模型维度参数
 - JSON Schema 自定义（结构化输出和函数调用）
 - **Mistral AI 结构化输出**（JSON Schema）
@@ -123,7 +123,7 @@ tags:
 - 过滤表达式转换器全面修复（Redis、Neo4j、OpenSearch、Elasticsearch）
 - MongoDB 聊天记忆消息排序
 - Anthropic prompt caching 多块系统消息
-- ChromaApi 异常处理
+- ChromaApi [[异常处理]]
 - Neo4jVectorStore doAdd 忽略 sessionConfig
 
 ---
@@ -163,7 +163,7 @@ tags:
 - Google GenAI BOM 条目
 - ZhipuAI thinking 和 response_format 参数
 - ZhiPu 新模型：GLM-4.5、GLM-Z1
-- MCP Gateway Docker Compose 支持
+- MCP Gateway [[Docker Compose]] 支持
 - Bedrock Cohere chat enable 属性
 - EmbeddingOptions Builder 对齐 ChatOptions
 - AssistantMessage Builder 支持
@@ -173,7 +173,7 @@ tags:
 
 ### 依赖升级
 
-- Spring Boot 3.5.5 → 3.5.6
+- [[Spring Boot]] 3.5.5 → 3.5.6
 - MCP SDK 0.12.1 → 0.13.1
 
 ---
@@ -182,7 +182,7 @@ tags:
 
 **统计**：47 新特性 · 106 Bug 修复 · 70 文档改进 · 120 其他改进
 
-> [!info] 1.1 线的首个 Milestone，变更量最大
+> [!info] 1.1 线的首个 [[Milestone]]，变更量最大
 
 ### Breaking Changes
 
@@ -208,6 +208,6 @@ tags:
 - MySQL 聊天记忆 SPRING_AI_CHAT_MEMORY 表 schema
 - Streamable HTTP transport for MCP client
 - ChatClient#mutate 深拷贝 advisors
-- 可配置工具执行异常处理
+- 可配置工具执行[[异常处理]]
 - Kotlin data class JSON Schema 支持
 - MariaDB 相似度搜索评分

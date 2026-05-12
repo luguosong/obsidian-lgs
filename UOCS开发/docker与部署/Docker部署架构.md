@@ -4,10 +4,10 @@
 
 ## 为什么用 Docker Compose？
 
-UOCS 有 20+ 个服务（前端、后端、中间件、数据库），如果手动安装配置每个服务，新人入职可能要花一周搭环境。Docker Compose 的价值：
+UOCS 有 20+ 个服务（前端、后端、中间件、数据库），如果手动安装配置每个服务，新人入职可能要花一周搭环境。[[Docker Compose]] 的价值：
 
 1. **一条命令启动全部** — `docker compose up -d`
-2. **环境一致性** — 开发机和测试服务器用同一套配置
+2. **环境一致性** — 开发机和[[测试服务器]]用同一套配置
 3. **依赖隔离** — MySQL、Redis、Nacos 等中间件不用污染宿主机
 
 ## 服务拓扑
@@ -131,7 +131,7 @@ spring:
 | 容器 | 宿主机端口 | 容器端口 | 说明 |
 |------|-----------|---------|------|
 | server-gateway | 18010 | 8201 | API 网关 |
-| server-auth | 18011 | 8209 | OAuth2 授权 |
+| server-auth | 18011 | 8209 | [[OAuth2]] 授权 |
 | server-ra | 18012 | 8207 | RA 证书代理 |
 | drawing-ai-server | 18020 | 3001 | AI 审图后端 |
 
@@ -179,7 +179,7 @@ docker compose logs -f drawing-ai-server
 
 ### 只启动部分服务
 
-测试服务器当前只启动了 **infra + drawing-cad** 模块（10 个容器）。本地开发时也可以这样做：
+[[测试服务器]]当前只启动了 **infra + drawing-cad** 模块（10 个容器）。本地开发时也可以这样做：
 
 ```bash
 # 只启动基础设施（数据库 + 中间件）
@@ -209,14 +209,14 @@ spring:
 
 | 问题 | 原因 | 解决方案 |
 |------|------|---------|
-| AI Server 启动失败 | Spring AI 要求 API key 非空 | `.env` 设 `DRAWING_AI_API_KEY=sk-placeholder-for-startup` |
+| AI Server 启动失败 | [[Spring AI]] 要求 API key 非空 | `.env` 设 `DRAWING_AI_API_KEY=sk-placeholder-for-startup` |
 | AI Server 启动慢 | 冷启动需 2-3 分钟 | `start_period: 180s`，耐心等待 |
 | Nginx 返回 octet-stream | 自定义 `types {}` 覆盖了默认 MIME | 删除自定义 types 块 |
 | .env CRLF 行尾 | Windows SVN checkout 保留 CRLF | 服务器端用 SFTP 二进制修改 |
 
 ## 测试服务器同步
 
-本地修改 Docker 配置后，通过 SVN 同步到测试服务器（192.168.3.228）：
+本地修改 Docker 配置后，通过 SVN 同步到[[测试服务器]]（192.168.3.228）：
 
 ```mermaid
 graph LR
@@ -226,10 +226,10 @@ graph LR
     D --> E["docker compose up -d"]
 ```
 
-**重要**：AI 协作保护规则禁止未经用户明确指令就更新测试服务器。详见 [[运维规范]] 中的 "AI 协作保护规则"。
+**重要**：AI 协作保护规则禁止未经用户明确指令就更新[[测试服务器]]。详见 [[运维规范]] 中的 "AI 协作保护规则"。
 
 ## 下一步
 
 - 查看完整端口清单：[[服务端口清单]]
 - 了解运维规则和配置管理：[[运维规范]]
-- 测试服务器操作细节：[[测试服务器]]
+- [[测试服务器]]操作细节：[[测试服务器]]

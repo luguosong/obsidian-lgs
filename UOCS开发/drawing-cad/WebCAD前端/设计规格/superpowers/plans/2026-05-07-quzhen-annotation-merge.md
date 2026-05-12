@@ -4,7 +4,7 @@
 
 **Goal:** 将 `origin/quzhen` 分支的审查批注、iframe 嵌入协议、控规参数弹窗、UI 可见性控制等功能通过 `git merge -X ours` + 手动补丁合并至 `feat-zfs` 分支。
 
-**Architecture:** 使用 `git merge -X ours origin/quzhen` 自动处理无冲突文件（新建组件直接并入），再对 7 个双边均有改动的共享文件逐一手动补丁，以 feat-zfs 现有代码为基础插入 quzhen 的批注/审图/嵌入协议代码块。
+**Architecture:** 使用 `git merge -X ours origin/quzhen` 自动处理无冲突文件（新建组件直接并入），再对 7 个双边均有改动的共享文件逐一手动补丁，以 [[feat-zfs]] 现有代码为基础插入 quzhen 的批注/审图/嵌入协议代码块。
 
 **Tech Stack:** React 19, MobX 6, Vite 7, Ant Design 6, postMessage API
 
@@ -221,7 +221,7 @@ git commit -m "feat(store): add ReviewStore, register in RootStore"
 **Files:**
 - Modify: `src/stores/AnnotationStore.js`
 
-quzhen 在 feat-zfs 基础上新增：`DRAG_TOOLS` 导出常量、`pendingAnnotationParams` / `author` / `authorId` / `readOnly` / `hasUnsavedChanges` / `historyUrls` / `historyItems` / `historyLoading` / `historySets` 字段，以及 `setAuthor` / `setReadOnly` / `setHistoryUrls` / `setHistoryItems` / `loadHistoryAnnotations` / `persistToParent` 六个方法，并修改 `currentToolHint` getter、`startAnnotationTool`、`cancelAnnotationTool` 以支持 `pendingAnnotationParams`。
+quzhen 在 [[feat-zfs]] 基础上新增：`DRAG_TOOLS` 导出常量、`pendingAnnotationParams` / `author` / `authorId` / `readOnly` / `hasUnsavedChanges` / `historyUrls` / `historyItems` / `historyLoading` / `historySets` 字段，以及 `setAuthor` / `setReadOnly` / `setHistoryUrls` / `setHistoryItems` / `loadHistoryAnnotations` / `persistToParent` 六个方法，并修改 `currentToolHint` getter、`startAnnotationTool`、`cancelAnnotationTool` 以支持 `pendingAnnotationParams`。
 
 - [ ] **Step 1: 在 TOOL_HINTS 之前添加 DRAG_TOOLS 导出常量**
 

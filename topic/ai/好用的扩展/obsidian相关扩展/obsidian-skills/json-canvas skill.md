@@ -15,7 +15,7 @@ tags:
 # json-canvas
 
 > [!summary]
-> 创建和编辑 **JSON Canvas**（`.canvas`）文件——Obsidian 团队发起的开放标准（[jsoncanvas.org](https://jsoncanvas.org/)），支持节点、边、分组和样式，用于无限画布可视化。
+> 创建和编辑 **JSON [[Canvas]]**（`.canvas`）文件——[[Obsidian]] 团队发起的开放标准（[jsoncanvas.org](https://jsoncanvas.org/)），支持节点、边、分组和样式，用于无限画布可视化。
 
 **触发词**：`canvas 文件`、`JSON Canvas`、`.canvas`、`思维导图`、`架构图`、`无限画布`
 
@@ -155,7 +155,7 @@ tags:
 
 ## 相关笔记
 
-> [!tip] 增强版 Canvas Skill
+> [!tip] 增强版 [[Canvas]] Skill
 > [[axton-obsidian-visual-skills 套装总览]] 中的 [[obsidian-canvas-creator skill]] 是本 skill 的增强版，额外支持：
 > - 思维导图/自由布局两种模式
 > - 自动布局算法（放射树、网格分区、力导向）

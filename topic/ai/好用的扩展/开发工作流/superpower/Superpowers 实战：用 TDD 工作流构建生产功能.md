@@ -13,7 +13,7 @@ tags:
 
 ## 为什么选 Superpowers
 
-与其他 spec-driven development 框架（GSD、SpecKit、BDD）相比，Superpowers 的最大卖点是 **TDD（测试驱动开发）**：
+与其他 spec-driven development 框架（GSD、SpecKit、BDD）相比，[[Superpowers]] 的最大卖点是 **TDD（测试驱动开发）**：
 
 1. 先写测试，明确期望
 2. 实现代码让测试通过
@@ -45,17 +45,17 @@ graph TD
 
 ## 安装
 
-在 Claude Code 中运行：
+在 [[Claude Code]] 中运行：
 
 ```bash
 /plugin marketplace add obra/superpowers-marketplace
 /plugin install superpowers@superpowers-marketplace
 ```
 
-安装后通过 `plugins` 命令管理，可在 Install 标签页确认 Superpowers 已启用。
+安装后通过 `plugins` 命令管理，可在 Install 标签页确认 [[Superpowers]] 已启用。
 
 > [!warning] 已废弃命令
-> `/superpowers:write-plan`、`/superpowers:brainstorm` 等斜杠命令已废弃，应直接触发 Superpowers 附带的 skills（如 brainstorm skill）。
+> `/superpowers:write-plan`、`/superpowers:brainstorm` 等斜杠命令已废弃，应直接触发 [[Superpowers]] 附带的 skills（如 brainstorm skill）。
 
 ## 实战演示：Bookworm.ai Google Drive 重新同步
 
@@ -74,7 +74,7 @@ graph TD
    - 新增组件列表
    - 边界情况与处理方式
    - 验收标准
-4. **拆分实施计划** — 将 spec 转为 11 个任务，每个任务包含：
+4. **拆分[[实施计划]]** — 将 spec 转为 11 个任务，每个任务包含：
    - 要修改的文件
    - 测试用例（先写）
    - 实现步骤（后写）

@@ -21,7 +21,7 @@ Replace the Vision-guessing approach with **programmatic region scanning**: scan
 
 **File**: `src/services/CadCodeExecutor.js` (lines 314-323)
 
-Modify `forEachEntity` to automatically `cast` opened objects to `OdDbEntity` via `Module.OdDbEntity.cast(obj)`. This makes `.color()`, `.linetype()`, and other `OdDbEntity` methods directly accessible in the callback. Non-Entity objects (e.g., Dictionary) fall back to `OdDbObject`.
+Modify `forEachEntity` to automatically `cast` opened objects to `OdDbEntity` via `Module.OdDbEntity.cast(obj)`. This makes `.color()`, `.linetype()`, and other `OdDbEntity` methods directly accessible in the callback. Non-[[Entity]] objects (e.g., Dictionary) fall back to `OdDbObject`.
 
 ```js
 sandbox.forEachEntity = function (btr, callback) {
@@ -112,7 +112,7 @@ Update the description to reflect that `forEachEntity` now auto-casts to `OdDbEn
 ### Change 4: Update RAG examples
 
 **File**: `server/rag/code_examples/query_entity_attributes.js`
-- Update comments: "entity 是 OdDbObject 基类" → "entity 是 OdDbEntity（由 forEachEntity 自动 cast）"
+- Update comments: "entity 是 OdDbObject 基类" → "entity 是 OdDb[[Entity]]（由 forEach[[Entity]] 自动 cast）"
 
 **File**: `server/rag/code_examples/find_similar_entities.js`
 - Same comment update
@@ -134,7 +134,7 @@ Update the description to reflect that `forEachEntity` now auto-casts to `OdDbEn
 | File | Change |
 |------|--------|
 | `src/services/CadCodeExecutor.js` | Fix `forEachEntity` to cast to `OdDbEntity` |
-| `server/tools/cadTools.js` | Rewrite legend workflow + update forEachEntity docs + update code template |
+| `server/tools/cadTools.js` | Rewrite legend workflow + update forEach[[Entity]] docs + update code template |
 | `server/rag/code_examples/query_entity_attributes.js` | Update comments |
 | `server/rag/code_examples/find_similar_entities.js` | Update comments |
 | `server/rag/code_examples/scan_legend_region.js` | **New**: legend region scan example |

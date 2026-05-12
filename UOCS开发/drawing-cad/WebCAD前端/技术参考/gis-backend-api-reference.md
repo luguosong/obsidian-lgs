@@ -33,7 +33,7 @@
 ### 为什么需要后端代理？
 
 1. **CORS** — 内网 ArcGIS Server 通常未配置 CORS，浏览器直接请求会被拦截。
-2. **WASM 限制** — ODA WASM 引擎中的 libcurl 被 Emscripten 降级为 WebSocket，无法发起普通 HTTP 请求。
+2. **WASM 限制** — ODA WASM 引擎中的 libcurl 被 Emscripten 降级为 Web[[Socket]]，无法发起普通 HTTP 请求。
 
 ---
 

@@ -14,7 +14,7 @@ tags:
 # defuddle
 
 > [!summary]
-> 使用 **Defuddle CLI** 将网页 URL 转换为干净 Markdown，自动剥离导航、广告、侧边栏等冗余元素，**Token 节省 80-95%**。与 Obsidian Web Clipper 使用相同引擎。
+> 使用 **Defuddle CLI** 将网页 URL 转换为干净 Markdown，自动剥离导航、广告、侧边栏等冗余元素，**Token 节省 80-95%**。与 [[Obsidian]] Web Clipper 使用相同引擎。
 
 **触发词**：`抓取网页`、`保存文章`、`网页剪藏`、`读取 URL`、`总结在线文章`
 

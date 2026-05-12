@@ -29,14 +29,14 @@
 
 ### ② 纯 feat-zfs 独有文件（`-X ours` 自动保留）
 
-- `src/services/memory/`（RedlinePipeline、VisionMemoryPipeline 等）
+- `src/services/memory/`（RedlinePipeline、[[Vision]]MemoryPipeline 等）
 - `src/components/AiAssistant/DrawingMemoryPanel/`（MainAreaSection、CandidateObjectsList）
 - `src/stores/AppStore.js` 中内存管线相关状态
 - 其他 AI/内存管线相关文件（约 50 个）
 
 ### ③ 双边均有改动的共享文件（需手动补丁，共 7 个）
 
-| 文件 | feat-zfs 改动 | 需从 quzhen 插入的内容 |
+| 文件 | feat-zfs 改动 | 需从 [[quzhen]] 插入的内容 |
 |------|-------------|----------------------|
 | `src/stores/AnnotationStore.js` | 基础批注工具 | `DRAG_TOOLS` 常量、`author`/`authorId`/`readOnly`/`hasUnsavedChanges` 字段、`historyUrls`/`historyItems`/`historySets` 历史字段、`setAuthor`/`setReadOnly`/`setHistoryUrls`/`setHistoryItems`/`persistToParent` 方法 |
 | `src/stores/ReviewStore.js` | 基础审图 Store | `findings`/`dimensionCoverage`/`qualityScore` 字段、`showReportPanel`/`hideReportPanel`/`setFindings` 等方法 |
@@ -168,5 +168,5 @@ npm run build
 ## 冲突解决原则
 
 - **feat-zfs 优先**：所有 AI/内存管线/视觉记忆相关代码保持 feat-zfs 版本
-- **quzhen 叠加**：批注/审图/嵌入协议相关代码以 quzhen 版本为准，插入 feat-zfs 版本中
-- **SmartReviewTab**：quzhen 中已移除该 Tab，"AI 智能审图"按钮移入 ReviewFlowTab，遵循此决定
+- **[[quzhen]] 叠加**：批注/审图/嵌入协议相关代码以 [[quzhen]] 版本为准，插入 feat-zfs 版本中
+- **SmartReviewTab**：[[quzhen]] 中已移除该 Tab，"AI 智能审图"按钮移入 ReviewFlowTab，遵循此决定

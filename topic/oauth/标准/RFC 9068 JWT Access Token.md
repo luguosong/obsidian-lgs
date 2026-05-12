@@ -1,4 +1,4 @@
-| RFC 9068 | OAuth 2.0 Access Token JWT Profile | October 2021 |
+| RFC 9068 | OAuth 2.0 Access Token JWT [[Profile]] | October 2021 |
 | --- | --- | --- |
 | Bertocci | Standards Track | \[Page\] |
 
@@ -28,7 +28,7 @@ This specification aims to provide a standardized and interoperable profile as a
 
 Finally, this specification provides security and privacy considerations meant to prevent common mistakes and anti-patterns that are likely to occur in naive use of the JWT format to represent access tokens.[¶](#section-1-5)
 
-Please note: Although both this document and \[\] use JSON Web Tokens in the context of the OAuth2 framework, the two specifications differ in both intent and mechanics. Whereas \[\] defines how a JWT Bearer Token can be used to request an access token, this document describes how to encode access tokens in JWT format.[¶](#section-1-6)
+Please note: Although both this document and \[\] use JSON Web Tokens in the context of the [[OAuth2]] framework, the two specifications differ in both intent and mechanics. Whereas \[\] defines how a JWT [[Bearer Token]] can be used to request an access token, this document describes how to encode access tokens in JWT format.[¶](#section-1-6)
 
 ### 1.1.
 
@@ -171,9 +171,9 @@ If the request does not include a "resource" parameter, the authorization server
 
 For the purpose of facilitating validation data retrieval, it is RECOMMENDED here that authorization servers sign JWT access tokens with an asymmetric algorithm.[¶](#section-4-1)
 
-Authorization servers SHOULD use \[\] to advertise to resource servers their signing keys via "jwks\_uri" and what "iss" claim value to expect via the "issuer" metadata value. Alternatively, authorization servers implementing OpenID Connect MAY use the \[\] document for the same purpose. If an authorization server supports both OAuth 2.0 Authorization Server Metadata and OpenID Connect discovery, the values provided MUST be consistent across the two publication methods.[¶](#section-4-2)
+Authorization servers SHOULD use \[\] to advertise to resource servers their signing keys via "jwks\_uri" and what "iss" claim value to expect via the "issuer" metadata value. Alternatively, authorization servers implementing [[OpenID Connect]] MAY use the \[\] document for the same purpose. If an authorization server supports both OAuth 2.0 Authorization Server Metadata and [[OpenID Connect]] discovery, the values provided MUST be consistent across the two publication methods.[¶](#section-4-2)
 
-An authorization server MAY elect to use different keys to sign OpenID Connect ID Tokens and JWT access tokens. This specification does not provide a mechanism for identifying a specific key as the one used to sign JWT access tokens. An authorization server can sign JWT access tokens with any of the keys advertised via authorization server (AS) metadata or OpenID Connect discovery. See for further guidance on security implications.[¶](#section-4-3)
+An authorization server MAY elect to use different keys to sign [[OpenID Connect]] ID Tokens and JWT access tokens. This specification does not provide a mechanism for identifying a specific key as the one used to sign JWT access tokens. An authorization server can sign JWT access tokens with any of the keys advertised via authorization server (AS) metadata or [[OpenID Connect]] discovery. See for further guidance on security implications.[¶](#section-4-3)
 
 Resource servers receiving a JWT access token MUST validate it in the following manner.[¶](#section-4-4)
 
@@ -190,7 +190,7 @@ If the JWT access token includes authorization claims as described in, the resou
 
 ## 5.
 
-The JWT access token data layout described here is very similar to that of the id\_token as defined by \[\]. The explicit typing required in this profile, in line with the recommendations in \[\], helps the resource server to distinguish between JWT access tokens and OpenID Connect ID Tokens.[¶](#section-5-1)
+The JWT access token data layout described here is very similar to that of the id\_token as defined by \[\]. The explicit typing required in this profile, in line with the recommendations in \[\], helps the resource server to distinguish between JWT access tokens and [[OpenID Connect]] ID Tokens.[¶](#section-5-1)
 
 Authorization servers should prevent scenarios where clients can affect the value of the "sub" claim in ways that could confuse resource servers. For example, if the authorization server elects to use the client\_id as the "sub" value for access tokens issued using the client credentials grant, the authorization server should prevent clients from registering an arbitrary client\_id value, as this would allow malicious clients to select the sub of a high-privilege resource owner and confuse any authorization logic on the resource server relying on the "sub" value. For more details, please refer to [Section 4.14](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#section-4.14) of \[\].[¶](#section-5-2)
 
@@ -198,7 +198,7 @@ To prevent cross-JWT confusion, authorization servers MUST use a distinct identi
 
 Authorization servers should use particular care when handling requests that might lead to ambiguous authorization grants. For example, if a request includes multiple resource indicators, the authorization server should ensure that each scope string included in the resulting JWT access token, if any, can be unambiguously correlated to a specific resource among the ones listed in the "aud" claim. The details on how to recognize and mitigate this and other ambiguous situations is highly scenario dependent and hence is out of scope for this profile.[¶](#section-5-4)
 
-Authorization servers cannot rely on the use of different keys for signing OpenID Connect ID Tokens and JWT tokens as a method to safeguard against the consequences of leaking specific keys. Given that resource servers have no way of knowing what key should be used to validate JWT access tokens in particular, they have to accept signatures performed with any of the keys published in AS metadata or OpenID Connect discovery; consequently, an attacker just needs to compromise any key among the ones published to be able to generate and sign JWTs that will be accepted as valid by the resource server.[¶](#section-5-5)
+Authorization servers cannot rely on the use of different keys for signing [[OpenID Connect]] ID Tokens and JWT tokens as a method to safeguard against the consequences of leaking specific keys. Given that resource servers have no way of knowing what key should be used to validate JWT access tokens in particular, they have to accept signatures performed with any of the keys published in AS metadata or [[OpenID Connect]] discovery; consequently, an attacker just needs to compromise any key among the ones published to be able to generate and sign JWTs that will be accepted as valid by the resource server.[¶](#section-5-5)
 
 ## 6.
 
@@ -366,11 +366,11 @@ Specification Document(s):
 
 \[OpenID.Core\]
 
-Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0 incorporating errata set 1", November 2014, < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0 incorporating errata set 1", November [[2014]], < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
 
 \[OpenID.Discovery\]
 
-Sakimura, N., Bradley, J., Jones, M., and E. Jay, "OpenID Connect Discovery 1.0 incorporating errata set 1", November 2014, < [https://openid.net/specs/openid-connect-discovery-1\_0.html](https://openid.net/specs/openid-connect-discovery-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., and E. Jay, "[[OpenID Connect]] Discovery 1.0 incorporating errata set 1", November [[2014]], < [https://openid.net/specs/openid-connect-discovery-1\_0.html](https://openid.net/specs/openid-connect-discovery-1_0.html) >.
 
 \[RFC2046\]
 
@@ -388,17 +388,17 @@ Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/
 
 Freed, N., Klensin, J., and T. Hansen, "Media Type Specifications and Registration Procedures", BCP 13, RFC 6838, DOI 10.17487/RFC6838, January 2013, < [https://www.rfc-editor.org/info/rfc6838](https://www.rfc-editor.org/info/rfc6838) >.
 
-\[RFC7515\]
+\[RFC[[7515]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May 2015, < [https://www.rfc-editor.org/info/rfc7515](https://www.rfc-editor.org/info/rfc7515) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Signature (JWS)", RFC [[7515]], DOI 10.17487/RFC[[7515]], May 2015, < [https://www.rfc-editor.org/info/rfc7515](https://www.rfc-editor.org/info/rfc7515) >.
 
-\[RFC7518\]
+\[RFC[[7518]]\]
 
-Jones, M., "JSON Web Algorithms (JWA)", RFC 7518, DOI 10.17487/RFC7518, May 2015, < [https://www.rfc-editor.org/info/rfc7518](https://www.rfc-editor.org/info/rfc7518) >.
+Jones, M., "JSON Web Algorithms (JWA)", RFC [[7518]], DOI 10.17487/RFC[[7518]], May 2015, < [https://www.rfc-editor.org/info/rfc7518](https://www.rfc-editor.org/info/rfc7518) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
 \[RFC7643\]
 
@@ -408,17 +408,17 @@ Hunt, P., Ed., Grizzle, K., Wahlstroem, E., and C. Mortimore, "System for Cross-
 
 Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, < [https://www.rfc-editor.org/info/rfc8174](https://www.rfc-editor.org/info/rfc8174) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
-\[RFC8693\]
+\[RFC[[8693]]\]
 
-Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J., and C. Mortimore, "OAuth 2.0 Token Exchange", RFC 8693, DOI 10.17487/RFC8693, January 2020, < [https://www.rfc-editor.org/info/rfc8693](https://www.rfc-editor.org/info/rfc8693) >.
+Jones, M., Nadalin, A., Campbell, B., Ed., Bradley, J., and C. Mortimore, [["OAuth 2.0]] [[Token Exchange]]", RFC [[8693]], DOI 10.17487/RFC[[8693]], January 2020, < [https://www.rfc-editor.org/info/rfc8693](https://www.rfc-editor.org/info/rfc8693) >.
 
-\[RFC8707\]
+\[RFC[[8707]]\]
 
-Campbell, B., Bradley, J., and H. Tschofenig, "Resource Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707, February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
+Campbell, B., Bradley, J., and H. Tschofenig, "[[Resource Indicators]] for OAuth 2.0", RFC [[8707]], DOI 10.17487/RFC[[8707]], February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
 
 \[RFC8725\]
 
@@ -430,21 +430,21 @@ Sheffer, Y., Hardt, D., and M. Jones, "JSON Web Token Best Current Practices", B
 
 IANA, "Media Types", < [https://www.iana.org/assignments/media-types/](https://www.iana.org/assignments/media-types/) >.
 
-\[OAuth2.Security.BestPractices\]
+\[[[OAuth2]].Security.BestPractices\]
 
-Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, "OAuth 2.0 Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-18, 13 April 2021, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18) >.
+Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, [["OAuth 2.0]] Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-18, 13 April 2021, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
-\[RFC7523\]
+\[RFC[[7523]]\]
 
-Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
+Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7523]], DOI 10.17487/RFC[[7523]], May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
 
-\[RFC7662\]
+\[RFC[[7662]]\]
 
-Richer, J., Ed., "OAuth 2.0 Token Introspection", RFC 7662, DOI 10.17487/RFC7662, October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
+Richer, J., Ed., [["OAuth 2.0]] [[Token Introspection]]", RFC [[7662]], DOI 10.17487/RFC[[7662]], October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
 
 ## Acknowledgements
 

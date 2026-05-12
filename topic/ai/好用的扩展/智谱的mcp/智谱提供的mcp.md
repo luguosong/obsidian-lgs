@@ -13,7 +13,7 @@ tags:
 
 # 智谱 MCP Server
 
-智谱为 GLM Coding Plan 用户提供 4 个 MCP Server，覆盖视觉、搜索、网页读取、开源仓库能力。兼容 Claude Code、Cline、OpenCode 等客户端。
+智谱为 GLM Coding Plan 用户提供 4 个 MCP Server，覆盖视觉、搜索、网页读取、开源仓库能力。兼容 [[Claude Code]]、Cline、OpenCode 等客户端。
 
 ## 一览表
 

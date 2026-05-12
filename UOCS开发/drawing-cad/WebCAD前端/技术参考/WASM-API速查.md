@@ -11,7 +11,7 @@
 | `getViewAt0()` → `OdGsView*` | 获取第一个视图 |
 | `OpenFile(path)` / `CreateNewFile()` | 打开/创建文件 |
 | `ZoomExtents()` / `Zoom(factor)` / `Dolly(dx, dy)` | 视图操作 |
-| `ExecuteCommand(cmdStr)` | 执行 AutoCAD 命令（ASYNCIFY） |
+| `ExecuteCommand(cmdStr)` | 执行 [[AutoCAD]] 命令（ASYNCIFY） |
 | `ExecuteScript(code)` | 执行 SCR 脚本（ASYNCIFY） |
 | `ScreenToWorld(sx, sy)` / `WorldToScreen(wx, wy, wz)` | 坐标转换 |
 | `Update()` / `Redraw()` / `regenAll()` | 刷新显示 |
@@ -133,7 +133,7 @@ for (iter.start(); !iter.done(); iter.step()) {
 
 | 函数 | 说明 |
 |------|------|
-| `Module.odcmAcadPalette(background)` | 获取 AutoCAD 调色板 |
+| `Module.odcmAcadPalette(background)` | 获取 [[AutoCAD]] 调色板 |
 | `Module.oddbCreateEdgesFromEntity(entity)` | 从实体创建边缘数组 |
 | `Module.oddbAppendLoopFromPickPoint(hatch, x, y)` | 从拾取点添加填充边界环 |
 | `Module.createPolarArrayParameters(...)` / `createPathArrayParameters(...)` | 创建阵列参数 |

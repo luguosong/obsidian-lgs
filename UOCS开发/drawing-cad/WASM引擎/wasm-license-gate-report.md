@@ -10,7 +10,7 @@
 
 | 侧 | 状态 | 说明 |
 |---|---|---|
-| **后端（drawing-ai-server）** | ✅ **已完成** | 提交 `92eda17` `d1a287e`，Spring Boot 3.5 + WebFlux，国密 SM2/SM3 |
+| **后端（drawing-ai-server）** | ✅ **已完成** | 提交 `92eda17` `d1a287e`，[[Spring Boot]] 3.5 + WebFlux，国密 SM2/SM3 |
 | **前端（drawing-web-app）** | ✅ **已完成** | `LicenseStore.js`、`useWasmModule` 集成，Token 刷新心跳 |
 | **WASM（drawingweb C++）** | ❌ **待实施** | 本报告核心内容 |
 

@@ -13,7 +13,7 @@ source: https://github.com/gsd-build/get-shit-done
 # GSD 架构原理
 
 > [!abstract]
-> GSD 的核心技术是**多代理编排 + 上下文工程**。理解这两点是用好 GSD 的关键。
+> GSD 的核心技术是**多代理编排 + [[上下文工程]]**。理解这两点是用好 GSD 的关键。
 
 ## 为什么 AI 编程质量会劣化
 

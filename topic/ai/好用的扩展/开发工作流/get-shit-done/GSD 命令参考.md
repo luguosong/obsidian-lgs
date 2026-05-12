@@ -13,7 +13,7 @@ source: https://github.com/gsd-build/get-shit-done/blob/main/docs/COMMANDS.md
 # GSD 命令参考
 
 > [!note] 命令语法
-> - **Claude Code / Copilot / OpenCode / Kilo**：`/gsd-command-name [args]`
+> - **[[Claude Code]] / [[Copilot]] / OpenCode / Kilo**：`/gsd-command-name [args]`
 > - **Gemini CLI**：`/gsd:command-name [args]`（冒号命名空间）
 > - **Codex**：`$gsd-command-name [args]`
 

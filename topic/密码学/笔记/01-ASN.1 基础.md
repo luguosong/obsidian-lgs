@@ -24,7 +24,7 @@ tags:
 
 这一切的前提是：证书的二进制格式有一个**严格的、标准化的结构定义**。这个结构定义语言就是 ASN.1（Abstract Syntax Notation One，抽象语法记法 1）。
 
-⚙️ 想象 ASN.1 是密码学领域的"通用语言"——就像 JSON Schema 描述了 JSON 数据的结构，ASN.1 描述了密码学对象的结构。从算法参数、密钥编码到数字签名、加密消息，几乎所有 IETF 和 ITU-T 的密码学标准都用 ASN.1 来定义数据格式。
+⚙️ 想象 ASN.1 是密码学领域的"通用语言"——就像 JSON Schema 描述了 JSON 数据的结构，ASN.1 描述了密码学对象的结构。从算法参数、密钥编码到[[数字签名]]、加密消息，几乎所有 IETF 和 ITU-T 的密码学标准都用 ASN.1 来定义数据格式。
 
 ASN.1 标准最早由 ISO 和 CCITT（现在的 ITU-T）在 1980 年代初联合制定，主要标准包括 X.680（语法定义）及 X.681~X.693 等配套标准。好消息是，你不需要完整掌握整个 ASN.1 标准才能用它——在密码学实践中，用到的是很小的一个子集。
 
@@ -35,13 +35,13 @@ ASN.1 标准最早由 ISO 和 CCITT（现在的 ITU-T）在 1980 年代初联合
 | 标准 / 格式 | 说明 | 底层编码 |
 |------------|------|---------|
 | **X.509 证书**（RFC 5280） | 公钥、颁发者、有效期、扩展字段 | `DER` + Base64（`PEM`） |
-| **PKCS#8**（RFC 5958） | 私钥的通用封装（`PrivateKeyInfo`） | `DER` + Base64（`PEM`） |
-| **PKCS#12**（RFC 7292） | 密钥库（`.p12`/`.pfx`/`.jks`） | `DER` |
-| **PKCS#7 / CMS**（RFC 5652） | 数字签名信封（详见「CMS 与 S/MIME」） | `DER` |
-| `OCSP`（RFC 6960） | 在线证书状态检查 | `DER` over HTTP |
-| **CSR**（RFC 2986） | 证书签名请求（`CertificationRequest`） | `DER` + Base64（`PEM`） |
+| **[[PKCS#8]]**（RFC 5958） | 私钥的通用封装（`PrivateKeyInfo`） | `DER` + Base64（`PEM`） |
+| **[[PKCS#12]]**（RFC 7292） | 密钥库（`.p12`/`.pfx`/`.jks`） | `DER` |
+| **PKCS#7 / CMS**（RFC 5652） | [[数字签名]]信封（详见[[CMS 与 S/MIME]]） | `DER` |
+| `OCSP`（RFC [[6960]]） | 在线证书状态检查 | `DER` over HTTP |
+| **CSR**（RFC 2986） | [[证书签名请求]]（`CertificationRequest`） | `DER` + Base64（`PEM`） |
 
-🎯 `ASN.1` 之于密码学，就像 `JSON` 之于 REST API——两者都是**数据结构描述语言**。但 `ASN.1` 诞生于 1984 年，面向严格类型化、二进制高效传输的场景，而非人类可读性。`JSON` 牺牲效率换取可读性；`ASN.1` + `DER` 牺牲可读性换取**编码的严格唯一性**——这正是数字签名所需要的核心特性。
+🎯 `ASN.1` 之于密码学，就像 `JSON` 之于 REST API——两者都是**数据结构描述语言**。但 `ASN.1` 诞生于 1984 年，面向严格类型化、二进制高效传输的场景，而非人类可读性。`JSON` 牺牲效率换取可读性；`ASN.1` + `DER` 牺牲可读性换取**编码的严格唯一性**——这正是[[数字签名]]所需要的核心特性。
 
 💡 **`PEM` 的本质**：你常见的 `-----BEGIN CERTIFICATE-----` 文件并不是独立格式，它只是把 `DER` 编码的二进制数据做了 `Base64` 编码，再加上人类可读的头尾标记。`PEM` = `DER` + `Base64` + 头尾标记，这就是为什么删掉 `PEM` 头尾并解码 Base64，你就能得到原始的 `DER` 字节流。
 
@@ -248,7 +248,7 @@ AttributeValue ::= CHOICE {
 
 ## 📦 DER 编码规则
 
-ASN.1 定义了多种编码规则（BER、DER、CER、PER、OER 等），但密码学实践中**几乎只用 DER**（Distinguished Encoding Rules，唯一编码规则）。原因是：DER 保证同一份数据永远生成完全相同的字节序列——这对数字签名和 MAC 至关重要，因为签名验证方必须能精确重现签名时的编码。
+ASN.1 定义了多种编码规则（BER、DER、CER、PER、OER 等），但密码学实践中**几乎只用 DER**（Distinguished Encoding Rules，唯一编码规则）。原因是：DER 保证同一份数据永远生成完全相同的字节序列——这对[[数字签名]]和 MAC 至关重要，因为签名验证方必须能精确重现签名时的编码。
 
 ### TLV 结构（Tag-Length-Value）
 
@@ -441,11 +441,11 @@ BER（Basic Encoding Rules）比较宽松，允许同一数据产生多种编码
 
 ### 为什么 DER 对安全性至关重要？
 
-DER 的"同一份数据永远生成同一段字节"这个特性，不仅仅是为了方便——它是**数字签名安全性的基础**。
+DER 的"同一份数据永远生成同一段字节"这个特性，不仅仅是为了方便——它是**[[数字签名]]安全性的基础**。
 
 #### 签名与编码确定性
 
-数字签名的本质是对消息的哈希值签名。当消息是一个 ASN.1 结构（比如证书的 TBSCertificate）时，签名方对 TBSCertificate 的 DER 编码计算哈希，验证方也需要对 TBSCertificate 的 DER 编码计算哈希。如果编码不唯一——同一份逻辑数据可以产生多种合法的字节序列——验证方就无法重现签名方的哈希值。
+[[数字签名]]的本质是对消息的哈希值签名。当消息是一个 ASN.1 结构（比如证书的 TBSCertificate）时，签名方对 TBSCertificate 的 DER 编码计算哈希，验证方也需要对 TBSCertificate 的 DER 编码计算哈希。如果编码不唯一——同一份逻辑数据可以产生多种合法的字节序列——验证方就无法重现签名方的哈希值。
 
 ```
 签名方：H(DER_encode(TBS)) → 签名
@@ -516,7 +516,7 @@ BER 支持 `indefinite-length`（不定长）编码——用 `0x80` 作为长度
 | `BOOLEAN TRUE` 编码 | 任意非零值均合法 | 必须为 `0xFF` | 必须为 `0xFF` |
 | 字符串分段（Constructed） | 允许分段传输 | 禁止，必须为 Primitive 整体 | 允许分段（≥1000B 时） |
 | 编码唯一性 | ❌ 同一值可有多种编码 | ✅ 唯一确定 | ✅ 唯一确定 |
-| 典型用途 | 通用解析、向下兼容 | X.509、PKCS#8、CSR、签名 | LDAP、流式 S/MIME |
+| 典型用途 | 通用解析、向下兼容 | X.509、[[PKCS#8]]、CSR、签名 | LDAP、流式 [[S/MIME]] |
 
 `CER` 是专门为**流式处理大型数据**设计的——当不知道数据总长度时，不定长编码允许边产生边发送，无需先缓存全部内容。`DER` 则专为**签名可验证性**设计，任何对 `DER` 编码数据的签名都可以被独立重现和验证。
 
@@ -568,7 +568,7 @@ OID 的 DER 编码有一些特殊规则：
 |-----|------|
 | `1.2.840.113549.1.1.1` | RSA 加密（PKCS#1） |
 | `1.2.840.113549.1.1.11` | SHA-256 with RSA（RSA 签名） |
-| `1.2.840.113549.1.1.12` | SHA-384 with RSA |
+| `1.2.840.113549.1.1.12` | [[SHA-3]]84 with RSA |
 | `1.2.840.113549.1.1.13` | SHA-512 with RSA |
 | `1.2.840.10045.2.1` | EC 公钥 |
 | `1.2.840.10045.4.3.2` | ECDSA with SHA-256 |
@@ -729,7 +729,7 @@ if (padBits != 0) {
 }
 ```
 
-📌 **关联阅读**：更多签名相关的 `DER` 编码安全问题，见「数字签名」中的签名格式规范章节。
+📌 **关联阅读**：更多签名相关的 `DER` 编码安全问题，见[[数字签名]]中的签名格式规范章节。
 
 ### 解析 ASN.1 结构
 
@@ -956,14 +956,14 @@ public class BuildDer {
 }
 ```
 
-💡 **`PemObject` 类型字符串的约定**：`"CERTIFICATE"` / `"PRIVATE KEY"`（PKCS#8 未加密）/ `"ENCRYPTED PRIVATE KEY"`（PKCS#8 加密）/ `"PUBLIC KEY"`（SubjectPublicKeyInfo）/ `"CERTIFICATE REQUEST"`（CSR）。类型字符串不影响 `DER` 内容的解析，但错误的头部会让工具（如 OpenSSL）拒绝识别文件。
+💡 **`PemObject` 类型字符串的约定**：`"CERTIFICATE"` / `"PRIVATE KEY"`（[[PKCS#8]] 未加密）/ `"ENCRYPTED PRIVATE KEY"`（[[PKCS#8]] 加密）/ `"PUBLIC KEY"`（SubjectPublicKeyInfo）/ `"CERTIFICATE REQUEST"`（CSR）。类型字符串不影响 `DER` 内容的解析，但错误的头部会让工具（如 OpenSSL）拒绝识别文件。
 
 ## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 1 & 9 — 标准格式概览、X.509/PEM 编码说明
 - ITU-T X.690 (2021) — BER / DER / CER 编码规则官方标准
 - RFC 5280 — Internet X.509 Public Key Infrastructure Certificate
-- RFC 5958 — Asymmetric Key Packages（PKCS#8）
+- RFC 5958 — Asymmetric Key Packages（[[PKCS#8]]）
 - RFC 7292 — PKCS #12: Personal Information Exchange Syntax
 - Daniel Bleichenbacher, "Forging Some RSA Signatures with Pencil and Paper", Crypto 2006 Rump Session — CVE-2006-4339 根因分析
-- Bouncy Castle 官方文档，`org.bouncycastle.asn1` 包 — Java API 参考
+- Bouncy Castle 官方文档，`org.bouncycastle.asn1` 包 — Java [[API 参考]]

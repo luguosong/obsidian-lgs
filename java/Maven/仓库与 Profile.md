@@ -51,7 +51,7 @@ Windows 上具体路径是 `C:\Users\用户名\.m2\repository\`。
 
 ### 中央仓库
 
-🏛️ 中央仓库（Central Repository）是 Maven 社区维护的全球公共仓库，地址是 `https://repo.maven.apache.org/maven2/`。它收录了绝大多数开源 Java 库——Spring、Hibernate、JUnit、Logback 等都在这里。
+🏛️ 中央仓库（Central Repository）是 Maven 社区维护的全球公共仓库，地址是 `https://repo.maven.apache.org/maven2/`。它收录了绝大多数开源 Java 库——Spring、Hibernate、JUnit、[[Logback]] 等都在这里。
 
 你不需要手动配置中央仓库——`Super POM` 中已经默认配置了这个地址。回顾一下[[概述与安装]]中提到的 POM 层次：每个 Maven 项目都隐式继承 `Super POM`，所以中央仓库开箱即用。
 
@@ -115,7 +115,7 @@ graph LR
 
 ### Nexus 简介
 
-`Sonatype Nexus` 是最流行的 Maven 私服（私有仓库管理器）。类比一下：如果说中央仓库是「全国图书总馆」，那私服就是你们「公司的图书室」——它既能代理外部资源（加速下载），又能存放团队内部文档（共享发布）。
+`Sonatype Nexus` 是最流行的 Maven 私服（[[私有仓库]]管理器）。类比一下：如果说中央仓库是「全国图书总馆」，那私服就是你们「公司的图书室」——它既能代理外部资源（加速下载），又能存放团队内部文档（共享发布）。
 
 企业使用 Nexus 的三大价值：
 

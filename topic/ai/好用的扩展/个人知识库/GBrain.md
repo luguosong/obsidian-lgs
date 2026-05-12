@@ -25,11 +25,11 @@ GBrain 将这些模式通用化，包含 34 个 skill，30 分钟内完成安装
 > [!info] v0.28.8 新特性 — 内置 LongMemEval
 > `gbrain eval longmemeval <dataset.jsonl>` 对 gbrain 的混合检索运行公开的 [LongMemEval](https://huggingface.co/datasets/xiaowu0162/longmemeval) 基准测试。每次运行使用一个内存中的 PGLite 实例，在题目之间执行 `TRUNCATE`（运行时枚举表，兼容 schema 迁移），在 Apple Silicon 上每题 p50 耗时 25.9ms。你的 `~/.gbrain` 大脑不会被触碰。检索到的聊天内容使用与保护 take 相同的 `INJECTION_PATTERNS` 进行净化——提示词注入防御的单一事实源。将 JSONL 输出交给 LongMemEval 的 `evaluate_qa.py` 进行评分。
 
-> [!tip] 快速开始
+> [!tip] [[快速开始]]
 > **约 30 分钟即可获得完整可用的大脑。** 数据库 2 秒内就绪（PGLite，无需服务器）。你只需回答几个关于 API 密钥的问题。
 
 > [!info] 文档说明
-> **LLM 用户：** 获取 [`llms.txt`](https://github.com/garrytan/gbrain/blob/master/llms.txt) 查看文档地图，或获取 [`llms-full.txt`](https://github.com/garrytan/gbrain/blob/master/llms-full.txt) 获取内联了核心文档的完整地图（一次请求）。**Agent 用户：** 从 [`AGENTS.md`](https://github.com/garrytan/gbrain/blob/master/AGENTS.md) 开始（若你是 Claude Code，则看 [`CLAUDE.md`](https://github.com/garrytan/gbrain/blob/master/CLAUDE.md)）。
+> **LLM 用户：** 获取 [`llms.txt`](https://github.com/garrytan/gbrain/blob/master/llms.txt) 查看文档地图，或获取 [`llms-full.txt`](https://github.com/garrytan/gbrain/blob/master/llms-full.txt) 获取内联了核心文档的完整地图（一次请求）。**Agent 用户：** 从 [`AGENTS.md`](https://github.com/garrytan/gbrain/blob/master/AGENTS.md) 开始（若你是 [[Claude Code]]，则看 [`CLAUDE.md`](https://github.com/garrytan/gbrain/blob/master/CLAUDE.md)）。
 
 ## 安装
 
@@ -91,7 +91,7 @@ GBrain 通过 stdio 暴露 30+ 个 MCP 工具：
 }
 ```
 
-添加到 `~/.claude/server.json`（Claude Code）、Settings > MCP Servers（Cursor）或你的客户端 MCP 配置中。
+添加到 `~/.claude/server.json`（[[Claude Code]]）、[[Settings]] > [[MCP Server]]s（Cursor）或你的客户端 MCP 配置中。
 
 ### 带 OAuth 2.1 的远程 MCP（ChatGPT、Claude Desktop、Cowork、Perplexity）
 
@@ -117,7 +117,7 @@ claude mcp add gbrain -t http https://your-brain.ngrok.app/mcp -H "Authorization
 - **通过 MCP SDK 实现 OAuth 2.1** — 客户端凭证（机器对机器：Perplexity、Claude）、授权码 + PKCE（浏览器：ChatGPT）、refresh token 轮换、撤销、受保护资源元数据。可选的动态客户端注册（DCR）在 `--enable-dcr` 后启用（DCR redirect_uris 须为 `https://` 或回环地址，符合 RFC 6749 §3.1.2.1）。
 - **作用域操作** — 30 个操作标记为 `read | write | admin`。`sync_brain` 和 `file_upload` 为 `localOnly`，HTTP 请求时会被拒绝。
 - **React 管理员面板** — 7 个页面内嵌于二进制文件（~65KB gzip）。实时 SSE 活动流、Agent 列表、凭证查看、可过滤的请求日志、每客户端配置导出。
-- **传统 Bearer Token 仍然有效** — v0.26 之前通过 `gbrain auth create` 创建的 token 继续以 `read+write+admin` 身份认证。v0.22.7 的简化 `src/mcp/http-transport.ts` 路径保留编译以向后兼容；v0.26+ 部署使用支持 OAuth 的 `serve-http.ts`。
+- **传统 [[Bearer Token]] 仍然有效** — v0.26 之前通过 `gbrain auth create` 创建的 token 继续以 `read+write+admin` 身份认证。v0.22.7 的简化 `src/mcp/http-transport.ts` 路径保留编译以向后兼容；v0.26+ 部署使用支持 OAuth 的 `serve-http.ts`。
 
 各客户端接入指南：[`docs/mcp/`](https://github.com/garrytan/gbrain/blob/master/docs/mcp/DEPLOY.md)。安全加固默认值、环境变量和威胁模型：[SECURITY.md](https://github.com/garrytan/gbrain/blob/master/SECURITY.md)。
 
@@ -208,7 +208,7 @@ GBrain 内置 34 个 skill，由 `skills/RESOLVER.md`（或你的 OpenClaw 的 `
 | -------------- | ------------------------------------------------------------------------------------- |
 | **soul-audit** | 6 阶段面谈，生成 SOUL.md（Agent 身份）、USER.md（用户画像）、ACCESS_POLICY.md（4 级隐私）、HEARTBEAT.md（运营节奏）。 |
 | **setup**      | 自动配置 PGLite 或 Supabase，首次导入，GStack 检测。                                                |
-| **migrate**    | 从 Obsidian、Notion、Logseq、markdown、CSV、JSON、Roam 通用迁移。                                 |
+| **migrate**    | 从 [[Obsidian]]、Notion、Logseq、markdown、CSV、JSON、Roam 通用迁移。                                 |
 | **briefing**   | 每日简报，含会议上下文、活跃交易和引用跟踪。                                                                |
 
 ### 约定规范
@@ -280,7 +280,7 @@ gbrain jobs supervisor --concurrency 4   # 规范用法：自动重启 worker（
 gbrain jobs work --concurrency 4         # 裸 worker（无崩溃恢复——建议用 supervisor）
 ```
 
-`gbrain jobs supervisor` 通过指数退避保持 worker 在崩溃后存活，使用原子 PID 锁，在 `~/.gbrain/audit/supervisor-*.jsonl` 记录结构化审计事件，并提供 `start --detach`/`status --json`/`stop` 子命令供 Agent 调用。在容器中以 PID 1 运行；在 systemd 主机上作为 `gbrain-worker.service` 的子进程。完整部署指南：[`docs/guides/minions-deployment.md`](https://github.com/garrytan/gbrain/blob/master/docs/guides/minions-deployment.md)。读取 [`skills/minion-orchestrator/SKILL.md`](https://github.com/garrytan/gbrain/blob/master/skills/minion-orchestrator/SKILL.md) 了解父子 DAG、扇入收集、通过收件箱引导。
+`gbrain jobs supervisor` 通过指数退避保持 worker 在崩溃后存活，使用原子 PID 锁，在 `~/.gbrain/audit/supervisor-*.jsonl` 记录结构化审计事件，并提供 `start --detach`/`status --json`/`stop` 子命令供 Agent 调用。在容器中以 PID 1 运行；在 [[systemd]] 主机上作为 `gbrain-worker.service` 的子进程。完整部署指南：[`docs/guides/minions-deployment.md`](https://github.com/garrytan/gbrain/blob/master/docs/guides/minions-deployment.md)。读取 [`skills/minion-orchestrator/SKILL.md`](https://github.com/garrytan/gbrain/blob/master/skills/minion-orchestrator/SKILL.md) 了解父子 DAG、扇入收集、通过收件箱引导。
 
 > [!tip] 核心结论
 > **Minions 对后台工作不是比 subagent 好一点点，而是根本上不同的类别。** 753ms vs gateway 超时。$0 vs token 费用。100% vs 无法启动。如果你的 Agent 按计划做确定性工作，现在就用 Minions 运行。
@@ -364,7 +364,7 @@ gbrain check-resolvable --verbose
 # 发现 15 个不可达错误，108 个重叠和缺口的建议警告。
 ```
 
-在真实 OpenClaw 部署的首次运行中，从 102 个 skill 中发现了 15 个不可达 skill——约 15% 的树处于暗区。那篇文章中"Agent 永远无法到达的 skill"的陷阱，现在可见了。
+在真实 OpenClaw 部署的首次运行中，从 102 个 skill 中发现了 15 个不可达 skill——约 15% 的树处于暗区。那篇文章中[["Agent]] 永远无法到达的 skill"的陷阱，现在可见了。
 
 ### gbrain skillpack install — 将 25 个精选 skill 安装到你的 OpenClaw
 

@@ -7,7 +7,7 @@ tags:
 
 # Servlet/Tomcat
 
-Tomcat 是 Java Web 应用最主流的 Servlet 容器，负责从接收 TCP 连接到最终调用你写的 `doGet()` 方法之间的一切工作。这个复杂的运行时被设计得高度可扩展：可以在不修改容器代码的前提下部署任意 Servlet、定制拦截逻辑、托管多个独立应用——这些能力全部由设计模式支撑。
+Tomcat 是 Java Web 应用最主流的 Servlet 容器，负责从接收 TCP 连接到最终调用你写的 `doGet()` 方法之间的一切工作。这个复杂的运行时被设计得高度可扩展：可以在不修改容器代码的前提下部署任意 Servlet、定制拦截逻辑、托管多个独立应用——这些能力全部由[[设计模式]]支撑。
 
 本文重点分析三个在其他笔记中尚未深入讲解的 Tomcat 特有设计：`RequestFacade` 安全门面、`Container` 四层组合树、`Pipeline/Valve` 内部责任链。
 
@@ -64,9 +64,9 @@ servlet.service(
 
 用户代码即使强转也只能转到 `HttpServletRequest`，而 `RequestFacade` 类并不在用户可见的 classpath 中，无法强转为 `RequestFacade` 调用内部方法。
 
-> [!tip] 外观模式的安全防御用途
+> [!tip] [[外观模式]]的安全防御用途
 >
-> 外观模式通常被介绍为"简化接口"，但 `RequestFacade` 展示了它的另一个价值：**接口权限控制**——通过只暴露必要的接口，防止调用方越权访问内部实现细节。这在 SDK 设计、模块化架构中是值得借鉴的安全边界手段。
+> [[外观模式]]通常被介绍为"简化接口"，但 `RequestFacade` 展示了它的另一个价值：**接口权限控制**——通过只暴露必要的接口，防止调用方越权访问内部实现细节。这在 SDK 设计、模块化架构中是值得借鉴的安全边界手段。
 
 ```mermaid
 %%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
@@ -100,7 +100,7 @@ classDiagram
 
 ## 组合模式：Container 四层嵌套
 
-Tomcat 用组合模式实现了多应用托管的层级结构。四种 `Container` 实现从外到内依次嵌套：
+Tomcat 用[[组合模式]]实现了多应用托管的层级结构。四种 `Container` 实现从外到内依次嵌套：
 
 ```mermaid
 graph TD
@@ -121,7 +121,7 @@ graph TD
 
 四者都实现 `Container` 接口：
 
-**Container 接口：组合模式的统一节点**
+**Container 接口：[[组合模式]]的统一节点**
 
 ```java
 public interface Container {
@@ -135,7 +135,7 @@ public interface Container {
 
 请求到达时，处理逻辑从 Engine 开始递归向下传递：Engine 找到匹配的 Host → Host 找到匹配的 Context → Context 找到匹配的 Wrapper → Wrapper 调用对应 Servlet。
 
-组合模式使 Tomcat 可以用**同一套 `Container` API** 操作整个层级，无论是注册生命周期监听、统计运行状态，还是热重载某个应用，都不需要区分"是哪一层 Container"。
+[[组合模式]]使 Tomcat 可以用**同一套 `Container` API** 操作整个层级，无论是注册生命周期监听、统计运行状态，还是热重载某个应用，都不需要区分"是哪一层 Container"。
 
 ```mermaid
 %%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
@@ -270,7 +270,7 @@ classDiagram
 
 ## 观察者模式：Servlet 生命周期监听
 
-Servlet 规范定义了三级事件监听器，以观察者模式实现容器生命周期和请求生命周期的感知：
+Servlet 规范定义了三级事件监听器，以[[观察者模式]]实现容器生命周期和请求生命周期的感知：
 
 **三种 Servlet 生命周期监听器**
 
@@ -303,7 +303,7 @@ public class RequestLogger implements ServletRequestListener {
 }
 ```
 
-Tomcat 在相应事件发生时遍历已注册的监听器列表并逐一触发，开发者不感知触发时机，只需关注事件处理逻辑——这正是观察者模式"发布者与订阅者解耦"的核心价值。
+Tomcat 在相应事件发生时遍历已注册的监听器列表并逐一触发，开发者不感知触发时机，只需关注事件处理逻辑——这正是[[观察者模式]]"发布者与订阅者解耦"的核心价值。
 
 ```mermaid
 %%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%

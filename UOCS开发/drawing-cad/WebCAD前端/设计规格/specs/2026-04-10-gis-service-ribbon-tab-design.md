@@ -9,14 +9,14 @@
 
 ## 概述
 
-在审图模式（ReviewRibbon）的"签章"标签页右侧新增"GIS服务"标签页，为 WebUACAD 提供 ArcGIS Web 服务的双向互操作能力。该标签页是 C++ 四层 GIS 集成架构在前端的操作入口。
+在审图模式（ReviewRibbon）的"签章"标签页右侧新增"GIS服务"标签页，为 [[WebUACAD]] 提供 [[ArcGIS Web]] 服务的双向互操作能力。该标签页是 C++ 四层 GIS 集成架构在前端的操作入口。
 
 ### 设计决策记录
 
 | 维度 | 决策 | 理由 |
 |------|------|------|
 | 功能范围 | 双向完整版（GIS→DWG + DWG→GIS） | 审图场景需要同时查看 GIS 数据和回写编辑结果 |
-| 要素编辑 | 读+写（可同步回 FeatureServer） | 对标 ArcGIS for AutoCAD 的 Push/Pull 模式 |
+| 要素编辑 | 读+写（可同步回 FeatureServer） | 对标 ArcGIS for [[AutoCAD]] 的 Push/Pull 模式 |
 | 服务连接 | 预配置快速连接 + 手动 URL 输入 | 兼顾内网固定服务和临时连接需求 |
 | 坐标系 | 自动识别 + 信息查看按钮 | 减少操作复杂度，冲突时才需手动介入 |
 | 图层样式 | 基础样式映射（图层名/颜色/线型） | 满足审图叠加需求，不需要完整 GIS 符号化 |
@@ -105,7 +105,7 @@ G = green (绿色同步)      A = amber (橙色配置)
 
 | # | 按钮 | 样式 | 功能 | 交互方式 | C++ 对应 |
 |---|------|------|------|----------|----------|
-| 1 | 加载要素 | primary | 从 FeatureServer 拉取矢量要素，转换为 DWG 实体（点→OdDbPoint，线→OdDbPolyline，面→OdDbHatch） | Drawer：图层列表 + 勾选 | `FeatureLayerReader::open()` → `FeatureToDwgConverter::convert()` |
+| 1 | 加载要素 | primary | 从 FeatureServer 拉取矢量要素，转换为 DWG 实体（点→OdDbPoint，线→[[OdDbPolyline]]，面→OdDbHatch） | Drawer：图层列表 + 勾选 | `FeatureLayerReader::open()` → `FeatureToDwgConverter::convert()` |
 | 2 | 属性查询 | — | 输入 WHERE 条件过滤要素（如 `用地类型='R2'`） | Modal：输入 WHERE 子句 | `FeatureLayerReader::queryByWhere()` |
 | 3 | 空间查询 | — | 框选范围或输入 bbox 坐标，仅加载该范围内的要素 | 画布框选 + 执行 | `FeatureLayerReader::queryByExtent()` |
 | 4 | 样式映射 | amber | 设置要素 → DWG 的映射规则：目标图层名、颜色、线型 | Modal 对话框（表格式映射配置） | `FeatureToDwgConverter::ConvertOptions` |

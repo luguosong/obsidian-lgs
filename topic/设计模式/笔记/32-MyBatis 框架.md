@@ -7,9 +7,9 @@ tags:
 
 # MyBatis 框架
 
-MyBatis 是一个"半自动" ORM 框架，它让 SQL 与 Java 代码保持适度距离——开发者写 SQL，MyBatis 负责参数映射、结果集转换、Session 管理、缓存等基础设施。这些基础设施的实现代码里密集地应用了设计模式，而且有不少是「非教科书式」的灵活应用，更值得深入分析。
+MyBatis 是一个"半自动" ORM 框架，它让 SQL 与 Java 代码保持适度距离——开发者写 SQL，MyBatis 负责参数映射、结果集转换、Session 管理、缓存等基础设施。这些基础设施的实现代码里密集地应用了[[设计模式]]，而且有不少是「非教科书式」的灵活应用，更值得深入分析。
 
-本文梳理 MyBatis 中的 10 种设计模式，重点辨析哪些是「标准实现」、哪些做了有意识的改造以及改造的原因。
+本文梳理 MyBatis 中的 10 种[[设计模式]]，重点辨析哪些是「标准实现」、哪些做了有意识的改造以及改造的原因。
 
 ## 建造者模式：SqlSessionFactoryBuilder 的取舍
 
@@ -24,7 +24,7 @@ InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
 SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(inputStream);
 ```
 
-`SqlSessionFactoryBuilder` 实现了建造者模式——但与 GOF 定义相比，它刻意省去了 `setter` 链调用：
+`SqlSessionFactoryBuilder` 实现了[[建造者模式]]——但与 GOF 定义相比，它刻意省去了 `setter` 链调用：
 
 | 维度 | 标准建造者 | SqlSessionFactoryBuilder |
 |------|---------|------------------------|
@@ -119,7 +119,7 @@ classDiagram
 
 ## 解释器模式：动态 SQL 的树形解析
 
-MyBatis 的动态 SQL（`<if>`、`<trim>`、`<where>`、`<foreach>` 等标签）通过解释器模式实现。每种标签对应一个 `SqlNode` 实现类：
+MyBatis 的动态 SQL（`<if>`、`<trim>`、`<where>`、`<foreach>` 等标签）通过[[解释器模式]]实现。每种标签对应一个 `SqlNode` 实现类：
 
 **SqlNode 接口和各实现类**
 
@@ -202,7 +202,7 @@ public class ErrorContext {
 }
 ```
 
-这是单例模式的有意扩展：将"进程唯一"放宽为"线程唯一"。在多线程服务端环境下，全局单例的 `ErrorContext` 会导致线程间互相覆盖错误信息；`ThreadLocal` 让每个线程在自己的上下文中记录，既保持了"唯一"语义，又天然线程安全。
+这是[[单例模式]]的有意扩展：将"进程唯一"放宽为"线程唯一"。在多线程服务端环境下，全局单例的 `ErrorContext` 会导致线程间互相覆盖错误信息；`ThreadLocal` 让每个线程在自己的上下文中记录，既保持了"唯一"语义，又天然线程安全。
 
 ## 装饰器模式：9 种 Cache 增强叠加
 
@@ -299,7 +299,7 @@ System.out.println(next.getName());   // "birthdate"
 
 ## 适配器模式：统一日志框架接口
 
-MyBatis 自身不绑定任何具体日志框架，而是定义了自己的 `Log` 接口（仅 `debug()`、`error()` 等几个方法），再为 Log4j、SLF4J、JDK Logging、Log4j2 等主流框架各写一个适配器：
+MyBatis 自身不绑定任何具体[[日志框架]]，而是定义了自己的 `Log` 接口（仅 `debug()`、`error()` 等几个方法），再为 [[Log4j]]、[[SLF4J]]、JDK Logging、[[Log4j2]] 等主流框架各写一个适配器：
 
 **Log 接口与适配器实现**
 
@@ -328,7 +328,7 @@ public class Slf4jImpl implements Log {
 
 > [!note] 构造时传入 Class 而非被适配对象
 >
-> 标准适配器在构造时传入被适配的对象（`Adaptee`），但 `Slf4jImpl` 传入的是 `clazz`（String），在构造函数内部自行创建 SLF4J Logger。这是一种简化变体，适合日志框架这种"适配器即创建点"的场景。
+> 标准适配器在构造时传入被适配的对象（`Adaptee`），但 `Slf4jImpl` 传入的是 `clazz`（String），在构造函数内部自行创建 [[SLF4J]] Logger。这是一种简化变体，适合[[日志框架]]这种"适配器即创建点"的场景。
 
 ## 职责链 + 动态代理：MyBatis Plugin
 
@@ -382,6 +382,6 @@ sequenceDiagram
 | 单例变形 | ErrorContext（ThreadLocal） | 扩展（线程唯一） |
 | 装饰器 | PerpetualCache + 9 种装饰器 | 标准 |
 | 迭代器 | PropertyTokenizer 惰性解析 | 非标准（兼做解析器） |
-| 适配器 | Log 接口统一日志框架 | 非标准（构造时创建 Adaptee） |
+| 适配器 | Log 接口统一[[日志框架]] | 非标准（构造时创建 Adaptee） |
 | 职责链 | InterceptorChain 插件链 | 标准 |
 | 动态代理 | Plugin（InvocationHandler） | 标准 |

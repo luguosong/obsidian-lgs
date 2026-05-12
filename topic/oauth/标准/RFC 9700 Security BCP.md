@@ -6,7 +6,7 @@
 
 ## Abstract
 
-This document describes best current security practice for OAuth 2.0. It updates and extends the threat model and security advice given in RFCs 6749, 6750, and 6819 to incorporate practical experiences gathered since OAuth 2.0 was published and covers new threats relevant due to the broader application of OAuth 2.0. Further, it deprecates some modes of operation that are deemed less secure or even insecure.[¶](#section-abstract-1)
+This document describes best current security practice for OAuth 2.0. It updates and extends the threat model and security advice given in RFCs 6749, [[6750]], and [[6819]] to incorporate practical experiences gathered since OAuth 2.0 was published and covers new threats relevant due to the broader application of OAuth 2.0. Further, it deprecates some modes of operation that are deemed less secure or even insecure.[¶](#section-abstract-1)
 
 ## Status of This Memo
 
@@ -18,9 +18,9 @@ Information about the current status of this document, any errata, and how to pr
 
 ## 1.
 
-Since its publication in \[\] and \[\], OAuth 2.0 (referred to as simply "OAuth" in this document) has gained massive traction in the market and became the standard for API protection and the basis for federated login using OpenID Connect \[\]. While OAuth is used in a variety of scenarios and different kinds of deployments, the following challenges can be observed:[¶](#section-1-1)
+Since its publication in \[\] and \[\], OAuth 2.0 (referred to as simply "OAuth" in this document) has gained massive traction in the market and became the standard for API protection and the basis for federated login using [[OpenID Connect]] \[\]. While OAuth is used in a variety of scenarios and different kinds of deployments, the following challenges can be observed:[¶](#section-1-1)
 
-This document provides updated security recommendations to address these challenges. It introduces new requirements beyond those defined in existing specifications such as OAuth 2.0 \[\] and OpenID Connect \[\] and deprecates some modes of operation that are deemed less secure or even insecure. However, this document does not supplant the security advice given in \[\], \[\], and \[\], but complements those documents.[¶](#section-1-3)
+This document provides updated security recommendations to address these challenges. It introduces new requirements beyond those defined in existing specifications such as OAuth 2.0 \[\] and [[OpenID Connect]] \[\] and deprecates some modes of operation that are deemed less secure or even insecure. However, this document does not supplant the security advice given in \[\], \[\], and \[\], but complements those documents.[¶](#section-1-3)
 
 Naturally, not all existing ecosystems and implementations are compatible with the new requirements, and following the best practices described in this document may break interoperability. Nonetheless, it is RECOMMENDED that implementers upgrade their implementations and ecosystems as soon as feasible.[¶](#section-1-4)
 
@@ -291,13 +291,13 @@ Variants:[¶](#section-4.4.1-7)
 - Mix-Up with Interception: This variant works only if the attacker can intercept and manipulate the first request/response pair from a user's browser to the client (in which the user selects a certain authorization server and is then redirected by the client to that authorization server), as in (see ). This capability can, for example, be the result of an attacker-in-the-middle attack on the user's connection to the client. In the attack, the user starts the flow with H-AS. The attacker intercepts this request and changes the user's selection to A-AS. The rest of the attack proceeds as in and following above.[¶](#section-4.4.1-8.1)
 - Implicit Grant: In the implicit grant, the attacker receives an access token instead of the code in. The attacker's authorization server receives the access token when the client makes either a request to the A-AS userinfo endpoint (defined in \[\]) or a request to the attacker's resource server (since the client believes it has completed the flow with A-AS).[¶](#section-4.4.1-8.2)
 - Per-AS Redirect URIs: If clients use different redirection URIs for different authorization servers, clients do not store the selected authorization server in the user's session, and authorization servers do not check the redirection URIs properly, attackers can mount an attack called "Cross Social-Network Request Forgery". These attacks have been observed in practice. Refer to \[\] for details.[¶](#section-4.4.1-8.3)
-- OpenID Connect: Some variants can be used to attack OpenID Connect. In these attacks, the attacker misuses features of the OpenID Connect Discovery \[\] mechanism or replays access tokens or ID Tokens to conduct a mix-up attack. The attacks are described in detail in Appendix A of \[\] and Section 6 of \[\] ("Malicious Endpoints Attacks").[¶](#section-4.4.1-8.4)
+- [[OpenID Connect]]: Some variants can be used to attack [[OpenID Connect]]. In these attacks, the attacker misuses features of the [[OpenID Connect]] Discovery \[\] mechanism or replays access tokens or ID Tokens to conduct a mix-up attack. The attacks are described in detail in Appendix A of \[\] and Section 6 of \[\] ("Malicious Endpoints Attacks").[¶](#section-4.4.1-8.4)
 
 #### 4.4.2.
 
 When an OAuth client can only interact with one authorization server, a mix-up defense is not required. In scenarios where an OAuth client interacts with two or more authorization servers, however, clients MUST prevent mix-up attacks. Two different methods are discussed below.[¶](#section-4.4.2-1)
 
-For both defenses, clients MUST store, for each authorization request, the issuer they sent the authorization request to and bind this information to the user agent. The issuer serves, via the associated metadata, as an abstract identifier for the combination of the authorization endpoint and token endpoint that are to be used in the flow. If an issuer identifier is not available (for example, if neither OAuth Authorization Server Metadata \[\] nor OpenID Connect Discovery \[\] is used), a different unique identifier for this tuple or the tuple itself can be used instead. For brevity of presentation, such a deployment-specific identifier will be subsumed under the issuer (or issuer identifier) in the following.[¶](#section-4.4.2-2)
+For both defenses, clients MUST store, for each authorization request, the issuer they sent the authorization request to and bind this information to the user agent. The issuer serves, via the associated metadata, as an abstract identifier for the combination of the authorization endpoint and token endpoint that are to be used in the flow. If an issuer identifier is not available (for example, if neither OAuth Authorization Server Metadata \[\] nor [[OpenID Connect]] Discovery \[\] is used), a different unique identifier for this tuple or the tuple itself can be used instead. For brevity of presentation, such a deployment-specific identifier will be subsumed under the issuer (or issuer identifier) in the following.[¶](#section-4.4.2-2)
 
 It is important to note that just storing the authorization server URL is not sufficient to identify mix-up attacks. An attacker might declare an uncompromised authorization server's authorization endpoint URL as "their" authorization server URL, but declare a token endpoint under their own control.[¶](#section-4.4.2-3)
 
@@ -308,7 +308,7 @@ This defense requires that the authorization server sends its issuer identifier 
 There are different ways this issuer identifier can be transported to the client:[¶](#section-4.4.2.1-2)
 
 - The issuer information can be transported, for example, via a separate response parameter `iss`, defined in \[\].[¶](#section-4.4.2.1-3.1)
-- When OpenID Connect is used and an ID Token is returned in the authorization response, the client can evaluate the `iss` claim in the ID Token.[¶](#section-4.4.2.1-3.2)
+- When [[OpenID Connect]] is used and an ID Token is returned in the authorization response, the client can evaluate the `iss` claim in the ID Token.[¶](#section-4.4.2.1-3.2)
 
 In both cases, the `iss` value MUST be evaluated according to \[\].[¶](#section-4.4.2.1-4)
 
@@ -366,7 +366,7 @@ PKCE not only protects against the authorization code injection attack but also 
 
 ##### 4.5.3.2.
 
-OpenID Connect's existing `nonce` parameter can protect against authorization code injection attacks. The `nonce` value is one-time use and is created by the client. The client is supposed to bind it to the user agent session and send it with the initial request to the OpenID Provider (OP). The OP puts the received `nonce` value into the ID Token that is issued as part of the code exchange at the token endpoint. If an attacker injects an authorization code in the authorization response, the nonce value in the client session and the `nonce` value in the ID Token received from the token endpoint will not match, and the attack is detected. The assumption is that an attacker cannot get hold of the user agent state on the victim's device (from which the attacker has stolen the respective authorization code).[¶](#section-4.5.3.2-1)
+[[OpenID Connect]]'s existing `nonce` parameter can protect against authorization code injection attacks. The `nonce` value is one-time use and is created by the client. The client is supposed to bind it to the user agent session and send it with the initial request to the OpenID Provider (OP). The OP puts the received `nonce` value into the ID Token that is issued as part of the code exchange at the token endpoint. If an attacker injects an authorization code in the authorization response, the nonce value in the client session and the `nonce` value in the ID Token received from the token endpoint will not match, and the attack is detected. The assumption is that an attacker cannot get hold of the user agent state on the victim's device (from which the attacker has stolen the respective authorization code).[¶](#section-4.5.3.2-1)
 
 It is important to note that this countermeasure only works if the client properly checks the `nonce` parameter in the ID Token obtained from the token endpoint and does not use any issued token until this check has succeeded. More precisely, a client protecting itself against code injection using the `nonce` parameter [¶](#section-4.5.3.2-2)
 
@@ -379,7 +379,7 @@ It is important to note that `nonce` does not protect authorization codes of pub
 
 Other solutions like binding `state` to the code, sender-constraining the code using cryptographic means, or per-instance client credentials are conceivable, but lack support and bring new security requirements.[¶](#section-4.5.3.3-1)
 
-PKCE is the most obvious solution for OAuth clients, as it is available at the time of writing, while `nonce` is appropriate for OpenID Connect clients.[¶](#section-4.5.3.3-2)
+PKCE is the most obvious solution for OAuth clients, as it is available at the time of writing, while `nonce` is appropriate for [[OpenID Connect]] clients.[¶](#section-4.5.3.3-2)
 
 #### 4.5.4.
 
@@ -397,7 +397,7 @@ To conduct the attack, the attacker starts an OAuth flow with the client using t
 
 There is no way to detect such an injection attack in pure-OAuth flows since the token is issued without any binding to the transaction or the particular user agent.[¶](#section-4.6.1-1)
 
-In OpenID Connect, the attack can be mitigated, as the authorization response additionally contains an ID Token containing the `at_hash` claim. The attacker therefore needs to replace both the access token as well as the ID Token in the response. The attacker cannot forge the ID Token, as it is signed or encrypted with authentication. The attacker also cannot inject a leaked ID Token matching the stolen access token, as the `nonce` claim in the leaked ID Token will contain (with a very high probability) a different value than the one expected in the authorization response.[¶](#section-4.6.1-2)
+In [[OpenID Connect]], the attack can be mitigated, as the authorization response additionally contains an ID Token containing the `at_hash` claim. The attacker therefore needs to replace both the access token as well as the ID Token in the response. The attacker cannot forge the ID Token, as it is signed or encrypted with authentication. The attacker also cannot inject a leaked ID Token matching the stolen access token, as the `nonce` claim in the leaked ID Token will contain (with a very high probability) a different value than the one expected in the authorization response.[¶](#section-4.6.1-2)
 
 Note that further protection, like sender-constrained access tokens, is still required to prevent attackers from using the access token at the resource endpoint directly.[¶](#section-4.6.1-3)
 
@@ -409,7 +409,7 @@ An attacker might attempt to inject a request to the redirection URI of the legi
 
 #### 4.7.1.
 
-The long-established countermeasure is that clients pass a random value, also known as a CSRF Token, in the `state` parameter that links the request to the redirection URI to the user agent session as described. This countermeasure is described in detail in [Section 5.3.5](https://rfc-editor.org/rfc/rfc6819#section-5.3.5) of \[\]. The same protection is provided by PKCE or the OpenID Connect `nonce` value.[¶](#section-4.7.1-1)
+The long-established countermeasure is that clients pass a random value, also known as a CSRF Token, in the `state` parameter that links the request to the redirection URI to the user agent session as described. This countermeasure is described in detail in [Section 5.3.5](https://rfc-editor.org/rfc/rfc6819#section-5.3.5) of \[\]. The same protection is provided by PKCE or the [[OpenID Connect]] `nonce` value.[¶](#section-4.7.1-1)
 
 When using PKCE instead of `state` or `nonce` for CSRF protection, it is important to note that:[¶](#section-4.7.1-2)
 
@@ -498,8 +498,8 @@ A typical flow looks like this:[¶](#section-4.10.1-2)
 
 Two methods for sender-constrained access tokens using proof of possession have been defined by the OAuth working group and are in use in practice:[¶](#section-4.10.1-4)
 
-- "OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens" \[\]: The approach specified in this) document allows the use of mutual TLS for both client authentication and sender-constrained access tokens. For the purpose of sender-constrained access tokens, the client is identified towards the resource server by the fingerprint of its public key. During the processing of an access token request, the authorization server obtains the client's public key from the TLS stack and associates its fingerprint with the respective access tokens. The resource server in the same way obtains the public key from the TLS stack and compares its fingerprint with the fingerprint associated with the access token.[¶](#section-4.10.1-5.1)
-- "OAuth 2.0 Demonstrating Proof of Possession (DPoP)" \[\]: DPoP outlines an application-level mechanism for sender-constraining access and refresh tokens. It uses proof-of-possession based on a public/private key pair and application-level signing. DPoP can be used with public clients and, in the case of confidential clients, can be combined with any client authentication method.[¶](#section-4.10.1-5.2)
+- [["OAuth 2.0]] Mutual-TLS Client Authentication and Certificate-Bound Access Tokens" \[\]: The approach specified in this) document allows the use of mutual TLS for both client authentication and sender-constrained access tokens. For the purpose of sender-constrained access tokens, the client is identified towards the resource server by the fingerprint of its public key. During the processing of an access token request, the authorization server obtains the client's public key from the TLS stack and associates its fingerprint with the respective access tokens. The resource server in the same way obtains the public key from the TLS stack and compares its fingerprint with the fingerprint associated with the access token.[¶](#section-4.10.1-5.1)
+- [["OAuth 2.0]] Demonstrating Proof of Possession (DPoP)" \[\]: DPoP outlines an application-level mechanism for sender-constraining access and refresh tokens. It uses proof-of-possession based on a public/private key pair and application-level signing. DPoP can be used with public clients and, in the case of confidential clients, can be combined with any client authentication method.[¶](#section-4.10.1-5.2)
 
 Note that the security of sender-constrained tokens is undermined when an attacker gets access to the token and the key material. This is, in particular, the case for corrupted client software and cross-site scripting attacks (when the client is running in the browser). If the key material is protected in a hardware or software security module or only indirectly accessible (like in a TLS stack), sender-constrained tokens at least protect against the use of the token when the client is offline, i.e., when the security module or interface is not available to the attacker. This applies to access tokens as well as to refresh tokens (see ).[¶](#section-4.10.1-6)
 
@@ -624,11 +624,11 @@ Refresh tokens are a convenient and user-friendly way to obtain new access token
 
 ### 4.15.
 
-Resource servers may make access control decisions based on the identity of a resource owner for which an access token was issued, or based on the identity of a client in the client credentials grant. For example, \[\] (JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens) describes a data structure for access tokens containing a `sub` claim defined as follows:[¶](#section-4.15-1)
+Resource servers may make access control decisions based on the identity of a resource owner for which an access token was issued, or based on the identity of a client in the client credentials grant. For example, \[\] (JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Access Tokens) describes a data structure for access tokens containing a `sub` claim defined as follows:[¶](#section-4.15-1)
 
 > In cases of access tokens obtained through grants where a resource owner is involved, such as the authorization code grant, the value of "sub" SHOULD correspond to the subject identifier of the resource owner. In cases of access tokens obtained through grants where no resource owner is involved, such as the client credentials grant, the value of "sub" SHOULD correspond to an identifier the authorization server uses to indicate the client application.[¶](#section-4.15-2.1)
 
-If both options are possible, a resource server may mistake a client's identity for the identity of a resource owner. For example, if a client is able to choose its own `client_id` during registration with the authorization server, a malicious client may set it to a value identifying a resource owner (e.g., a `sub` value if OpenID Connect is used). If the resource server cannot properly distinguish between access tokens obtained with involvement of the resource owner and those without, the client may accidentally be able to access resources belonging to the resource owner.[¶](#section-4.15-3)
+If both options are possible, a resource server may mistake a client's identity for the identity of a resource owner. For example, if a client is able to choose its own `client_id` during registration with the authorization server, a malicious client may set it to a value identifying a resource owner (e.g., a `sub` value if [[OpenID Connect]] is used). If the resource server cannot properly distinguish between access tokens obtained with involvement of the resource owner and those without, the client may accidentally be able to access resources belonging to the resource owner.[¶](#section-4.15-3)
 
 This attack potentially affects not only implementations using \[\], but also similar, bespoke solutions.[¶](#section-4.15-4)
 
@@ -757,51 +757,51 @@ Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS 1.1", BCP 195, RFC 899
 
 Sheffer, Y., Saint-Andre, P., and T. Fossati, "Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)", BCP 195, RFC 9325, DOI 10.17487/RFC9325, November 2022, < [https://www.rfc-editor.org/info/rfc9325](https://www.rfc-editor.org/info/rfc9325) >.
 
-\[RFC3986\]
+\[RFC[[3986]]\]
 
-Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
+Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC [[3986]], DOI 10.17487/RFC[[3986]], January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
 
 \[RFC6749\]
 
 Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/RFC6749, October 2012, < [https://www.rfc-editor.org/info/rfc6749](https://www.rfc-editor.org/info/rfc6749) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
-\[RFC6819\]
+\[RFC[[6819]]\]
 
-Lodderstedt, T., Ed., McGloin, M., and P. Hunt, "OAuth 2.0 Threat Model and Security Considerations", RFC 6819, DOI 10.17487/RFC6819, January 2013, < [https://www.rfc-editor.org/info/rfc6819](https://www.rfc-editor.org/info/rfc6819) >.
+Lodderstedt, T., Ed., McGloin, M., and P. Hunt, [["OAuth 2.0]] [[Threat Model]] and Security Considerations", RFC [[6819]], DOI 10.17487/RFC[[6819]], January 2013, < [https://www.rfc-editor.org/info/rfc6819](https://www.rfc-editor.org/info/rfc6819) >.
 
-\[RFC7521\]
+\[RFC[[7521]]\]
 
-Campbell, B., Mortimore, C., Jones, M., and Y. Goland, "Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7521, DOI 10.17487/RFC7521, May 2015, < [https://www.rfc-editor.org/info/rfc7521](https://www.rfc-editor.org/info/rfc7521) >.
+Campbell, B., Mortimore, C., Jones, M., and Y. Goland, "[[Assertion Framework]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7521]], DOI 10.17487/RFC[[7521]], May 2015, < [https://www.rfc-editor.org/info/rfc7521](https://www.rfc-editor.org/info/rfc7521) >.
 
-\[RFC7523\]
+\[RFC[[7523]]\]
 
-Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
+Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7523]], DOI 10.17487/RFC[[7523]], May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
 
-\[RFC8252\]
+\[RFC[[8252]]\]
 
-Denniss, W. and J. Bradley, "OAuth 2.0 for Native Apps", BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017, < [https://www.rfc-editor.org/info/rfc8252](https://www.rfc-editor.org/info/rfc8252) >.
+Denniss, W. and J. Bradley, [["OAuth 2.0]] for [[Native Apps]]", BCP 212, RFC [[8252]], DOI 10.17487/RFC[[8252]], October 2017, < [https://www.rfc-editor.org/info/rfc8252](https://www.rfc-editor.org/info/rfc8252) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
-\[RFC8705\]
+\[RFC[[8705]]\]
 
-Campbell, B., Bradley, J., Sakimura, N., and T. Lodderstedt, "OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens", RFC 8705, DOI 10.17487/RFC8705, February 2020, < [https://www.rfc-editor.org/info/rfc8705](https://www.rfc-editor.org/info/rfc8705) >.
+Campbell, B., Bradley, J., Sakimura, N., and T. Lodderstedt, [["OAuth 2.0]] Mutual-TLS Client Authentication and Certificate-Bound Access Tokens", RFC [[8705]], DOI 10.17487/RFC[[8705]], February 2020, < [https://www.rfc-editor.org/info/rfc8705](https://www.rfc-editor.org/info/rfc8705) >.
 
-\[RFC9068\]
+\[RFC[[9068]]\]
 
-Bertocci, V., "JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens", RFC 9068, DOI 10.17487/RFC9068, October 2021, < [https://www.rfc-editor.org/info/rfc9068](https://www.rfc-editor.org/info/rfc9068) >.
+Bertocci, V., "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Access Tokens", RFC [[9068]], DOI 10.17487/RFC[[9068]], October 2021, < [https://www.rfc-editor.org/info/rfc9068](https://www.rfc-editor.org/info/rfc9068) >.
 
 ### 7.2.
 
 \[arXiv.1508.04324v2\]
 
-Mladenov, V., Mainka, C., and J. Schwenk, "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in OpenID Connect", arXiv:1508.04324v2, DOI 10.48550/arXiv.1508.04324, 7 January 2016, < [https://arxiv.org/abs/1508.04324v2/](https://arxiv.org/abs/1508.04324v2/) >.
+Mladenov, V., Mainka, C., and J. Schwenk, "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in [[OpenID Connect]]", arXiv:1508.04324v2, DOI 10.48550/arXiv.1508.04324, 7 January 2016, < [https://arxiv.org/abs/1508.04324v2/](https://arxiv.org/abs/1508.04324v2/) >.
 
 \[arXiv.1601.01229\]
 
@@ -809,7 +809,7 @@ Fett, D., Küsters, R., and G. Schmitz, "A Comprehensive Formal Security Analysi
 
 \[arXiv.1704.08539\]
 
-Fett, D., Küsters, R., and G. Schmitz, "The Web SSO Standard OpenID Connect: In-Depth Formal Security Analysis and Security Guidelines", arXiv:1704.08539, DOI 10.48550/arXiv.1704.08539, 27 April 2017, < [https://arxiv.org/abs/1704.08539/](https://arxiv.org/abs/1704.08539/) >.
+Fett, D., Küsters, R., and G. Schmitz, "The Web SSO Standard [[OpenID Connect]]: In-Depth Formal Security Analysis and Security Guidelines", arXiv:1704.08539, DOI 10.48550/arXiv.1704.08539, 27 April 2017, < [https://arxiv.org/abs/1704.08539/](https://arxiv.org/abs/1704.08539/) >.
 
 \[arXiv.1901.11520\]
 
@@ -829,19 +829,19 @@ Hardt, D., Parecki, A., and T. Lodderstedt, "The OAuth 2.1 Authorization Framewo
 
 \[OAuth.Post\]
 
-Jones, M. and B. Campbell, "OAuth 2.0 Form Post Response Mode", The OpenID Foundation, 27 April 2015, < [https://openid.net/specs/oauth-v2-form-post-response-mode-1\_0.html](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html) >.
+Jones, M. and B. Campbell, [["OAuth 2.0]] Form Post Response Mode", The OpenID Foundation, 27 April 2015, < [https://openid.net/specs/oauth-v2-form-post-response-mode-1\_0.html](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html) >.
 
 \[OAuth.Responses\]
 
-de Medeiros, B., Ed., Scurtescu, M., Tarjan, P., and M. Jones, "OAuth 2.0 Multiple Response Type Encoding Practices", The OpenID Foundation, 25 February 2014, < [https://openid.net/specs/oauth-v2-multiple-response-types-1\_0.html](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html) >.
+de Medeiros, B., Ed., Scurtescu, M., Tarjan, P., and M. Jones, [["OAuth 2.0]] Multiple Response Type Encoding Practices", The OpenID Foundation, 25 February [[2014]], < [https://openid.net/specs/oauth-v2-multiple-response-types-1\_0.html](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html) >.
 
 \[OpenID.Core\]
 
-Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0 incorporating errata set 2", The OpenID Foundation, 15 December 2023, < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0 incorporating errata set 2", The OpenID Foundation, 15 December 2023, < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
 
 \[OpenID.Discovery\]
 
-Sakimura, N., Bradley, J., Jones, M., and E. Jay, "OpenID Connect Discovery 1.0 incorporating errata set 2", The OpenID Foundation, 15 December 2023, < [https://openid.net/specs/openid-connect-discovery-1\_0.html](https://openid.net/specs/openid-connect-discovery-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., and E. Jay, "[[OpenID Connect]] Discovery 1.0 incorporating errata set 2", The OpenID Foundation, 15 December 2023, < [https://openid.net/specs/openid-connect-discovery-1\_0.html](https://openid.net/specs/openid-connect-discovery-1_0.html) >.
 
 \[OpenID.JARM\]
 
@@ -853,11 +853,11 @@ OWASP Foundation, "Unvalidated Redirects and Forwards Cheat Sheet", OWASP Cheat 
 
 \[research.cmu\]
 
-Chen, E., Pei, Y., Chen, S., Tian, Y., Kotcher, R., and P. Tague, "OAuth Demystified for Mobile Application Developers", CCS '14: Proceedings of the 2014 ACM SIGSAC Conference on Computer and Communications Security, pp. 892-903, DOI 10.1145/2660267.2660323, November 2014, < [https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/OAuthDemystified.pdf](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/OAuthDemystified.pdf) >.
+Chen, E., Pei, Y., Chen, S., Tian, Y., Kotcher, R., and P. Tague, "OAuth Demystified for Mobile Application Developers", CCS '14: Proceedings of the [[2014]] ACM SIGSAC Conference on Computer and Communications Security, pp. 892-903, DOI 10.1145/2660267.2660323, November [[2014]], < [https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/OAuthDemystified.pdf](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/OAuthDemystified.pdf) >.
 
 \[research.jcs\_14\]
 
-Bansal, C., Bhargavan, K., Delignat-Lavaud, A., and S. Maffeis, "Discovering concrete attacks on website authorization by formal analysis", Journal of Computer Security, vol. 22, no. 4, pp. 601-657, DOI 10.3233/JCS-140503, 23 April 2014, < [https://www.doc.ic.ac.uk/~maffeis/papers/jcs14.pdf](https://www.doc.ic.ac.uk/~maffeis/papers/jcs14.pdf) >.
+Bansal, C., Bhargavan, K., Delignat-Lavaud, A., and S. Maffeis, "Discovering concrete attacks on website authorization by formal analysis", Journal of Computer Security, vol. 22, no. 4, pp. 601-657, DOI 10.3233/JCS-140503, 23 April [[2014]], < [https://www.doc.ic.ac.uk/~maffeis/papers/jcs14.pdf](https://www.doc.ic.ac.uk/~maffeis/papers/jcs14.pdf) >.
 
 \[research.rub\]
 
@@ -865,7 +865,7 @@ Jannett, L., Mladenov, V., Mainka, C., and J. Schwenk, "DISTINCT: Identity Theft
 
 \[research.rub2\]
 
-Fries, C., "Security Analysis of Real-Life OpenID Connect Implementations", Master's thesis, Ruhr-Universität Bochum (RUB), 20 December 2020, < [https://www.nds.rub.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf](https://www.nds.rub.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf) >.
+Fries, C., "Security Analysis of Real-Life [[OpenID Connect]] Implementations", Master's thesis, Ruhr-Universität Bochum (RUB), 20 December 2020, < [https://www.nds.rub.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf](https://www.nds.rub.de/media/ei/arbeiten/2021/05/03/masterthesis.pdf) >.
 
 \[research.ubc\]
 
@@ -879,53 +879,53 @@ Liu, D., Hao, S., and H. Wang, "All Your DNS Records Point to Us: Understanding 
 
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, < [https://www.rfc-editor.org/info/rfc2119](https://www.rfc-editor.org/info/rfc2119) >.
 
-\[RFC7591\]
+\[RFC[[7591]]\]
 
-Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol", RFC 7591, DOI 10.17487/RFC7591, July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
+Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, [["OAuth 2.0]] [[Dynamic Client Registration]] Protocol", RFC [[7591]], DOI 10.17487/RFC[[7591]], July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
 
-\[RFC7636\]
+\[RFC[[7636]]\]
 
-Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key for Code Exchange by OAuth Public Clients", RFC 7636, DOI 10.17487/RFC7636, September 2015, < [https://www.rfc-editor.org/info/rfc7636](https://www.rfc-editor.org/info/rfc7636) >.
+Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key for Code Exchange by OAuth Public Clients", RFC [[7636]], DOI 10.17487/RFC[[7636]], September 2015, < [https://www.rfc-editor.org/info/rfc7636](https://www.rfc-editor.org/info/rfc7636) >.
 
 \[RFC8174\]
 
 Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, < [https://www.rfc-editor.org/info/rfc8174](https://www.rfc-editor.org/info/rfc8174) >.
 
-\[RFC8707\]
+\[RFC[[8707]]\]
 
-Campbell, B., Bradley, J., and H. Tschofenig, "Resource Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707, February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
+Campbell, B., Bradley, J., and H. Tschofenig, "[[Resource Indicators]] for OAuth 2.0", RFC [[8707]], DOI 10.17487/RFC[[8707]], February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
 
-\[RFC9101\]
+\[RFC[[9101]]\]
 
-Sakimura, N., Bradley, J., and M. Jones, "The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)", RFC 9101, DOI 10.17487/RFC9101, August 2021, < [https://www.rfc-editor.org/info/rfc9101](https://www.rfc-editor.org/info/rfc9101) >.
+Sakimura, N., Bradley, J., and M. Jones, "The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)", RFC [[9101]], DOI 10.17487/RFC[[9101]], August 2021, < [https://www.rfc-editor.org/info/rfc9101](https://www.rfc-editor.org/info/rfc9101) >.
 
 \[RFC9110\]
 
 Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., "HTTP Semantics", STD 97, RFC 9110, DOI 10.17487/RFC9110, June 2022, < [https://www.rfc-editor.org/info/rfc9110](https://www.rfc-editor.org/info/rfc9110) >.
 
-\[RFC9126\]
+\[RFC[[9126]]\]
 
-Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D., and F. Skokan, "OAuth 2.0 Pushed Authorization Requests", RFC 9126, DOI 10.17487/RFC9126, September 2021, < [https://www.rfc-editor.org/info/rfc9126](https://www.rfc-editor.org/info/rfc9126) >.
+Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D., and F. Skokan, [["OAuth 2.0]] Pushed Authorization Requests", RFC [[9126]], DOI 10.17487/RFC[[9126]], September 2021, < [https://www.rfc-editor.org/info/rfc9126](https://www.rfc-editor.org/info/rfc9126) >.
 
-\[RFC9207\]
+\[RFC[[9207]]\]
 
-Meyer zu Selhausen, K. and D. Fett, "OAuth 2.0 Authorization Server Issuer Identification", RFC 9207, DOI 10.17487/RFC9207, March 2022, < [https://www.rfc-editor.org/info/rfc9207](https://www.rfc-editor.org/info/rfc9207) >.
+Meyer zu Selhausen, K. and D. Fett, [["OAuth 2.0]] Authorization Server Issuer Identification", RFC [[9207]], DOI 10.17487/RFC[[9207]], March 2022, < [https://www.rfc-editor.org/info/rfc9207](https://www.rfc-editor.org/info/rfc9207) >.
 
 \[RFC9396\]
 
-Lodderstedt, T., Richer, J., and B. Campbell, "OAuth 2.0 Rich Authorization Requests", RFC 9396, DOI 10.17487/RFC9396, May 2023, < [https://www.rfc-editor.org/info/rfc9396](https://www.rfc-editor.org/info/rfc9396) >.
+Lodderstedt, T., Richer, J., and B. Campbell, [["OAuth 2.0]] Rich Authorization Requests", RFC 9396, DOI 10.17487/RFC9396, May 2023, < [https://www.rfc-editor.org/info/rfc9396](https://www.rfc-editor.org/info/rfc9396) >.
 
 \[RFC9440\]
 
 Campbell, B. and M. Bishop, "Client-Cert HTTP Header Field", RFC 9440, DOI 10.17487/RFC9440, July 2023, < [https://www.rfc-editor.org/info/rfc9440](https://www.rfc-editor.org/info/rfc9440) >.
 
-\[RFC9449\]
+\[RFC[[9449]]\]
 
-Fett, D., Campbell, B., Bradley, J., Lodderstedt, T., Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449, September 2023, < [https://www.rfc-editor.org/info/rfc9449](https://www.rfc-editor.org/info/rfc9449) >.
+Fett, D., Campbell, B., Bradley, J., Lodderstedt, T., Jones, M., and D. Waite, [["OAuth 2.0]] Demonstrating Proof of Possession (DPoP)", RFC [[9449]], DOI 10.17487/RFC[[9449]], September 2023, < [https://www.rfc-editor.org/info/rfc9449](https://www.rfc-editor.org/info/rfc9449) >.
 
 \[TOKEN-BINDING\]
 
-Jones, M., Campbell, B., Bradley, J., and W. Denniss, "OAuth 2.0 Token Binding", Work in Progress, Internet-Draft, draft-ietf-oauth-token-binding-08, 19 October 2018, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08) >.
+Jones, M., Campbell, B., Bradley, J., and W. Denniss, [["OAuth 2.0]] Token Binding", Work in Progress, Internet-Draft, draft-ietf-oauth-token-binding-08, 19 October 2018, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08) >.
 
 \[W3C.CSP-2\]
 
@@ -1234,13 +1234,13 @@ Variants:[¶](#section-4.4.1-7)
 - Mix-Up with Interception: This variant works only if the attacker can intercept and manipulate the first request/response pair from a user's browser to the client (in which the user selects a certain authorization server and is then redirected by the client to that authorization server), as in (see ). This capability can, for example, be the result of an attacker-in-the-middle attack on the user's connection to the client. In the attack, the user starts the flow with H-AS. The attacker intercepts this request and changes the user's selection to A-AS. The rest of the attack proceeds as in and following above.[¶](#section-4.4.1-8.1)
 - Implicit Grant: In the implicit grant, the attacker receives an access token instead of the code in. The attacker's authorization server receives the access token when the client makes either a request to the A-AS userinfo endpoint (defined in \[\]) or a request to the attacker's resource server (since the client believes it has completed the flow with A-AS).[¶](#section-4.4.1-8.2)
 - Per-AS Redirect URIs: If clients use different redirection URIs for different authorization servers, clients do not store the selected authorization server in the user's session, and authorization servers do not check the redirection URIs properly, attackers can mount an attack called "Cross Social-Network Request Forgery". These attacks have been observed in practice. Refer to \[\] for details.[¶](#section-4.4.1-8.3)
-- OpenID Connect: Some variants can be used to attack OpenID Connect. In these attacks, the attacker misuses features of the OpenID Connect Discovery \[\] mechanism or replays access tokens or ID Tokens to conduct a mix-up attack. The attacks are described in detail in Appendix A of \[\] and Section 6 of \[\] ("Malicious Endpoints Attacks").[¶](#section-4.4.1-8.4)
+- [[OpenID Connect]]: Some variants can be used to attack [[OpenID Connect]]. In these attacks, the attacker misuses features of the [[OpenID Connect]] Discovery \[\] mechanism or replays access tokens or ID Tokens to conduct a mix-up attack. The attacks are described in detail in Appendix A of \[\] and Section 6 of \[\] ("Malicious Endpoints Attacks").[¶](#section-4.4.1-8.4)
 
 #### 4.4.2.
 
 When an OAuth client can only interact with one authorization server, a mix-up defense is not required. In scenarios where an OAuth client interacts with two or more authorization servers, however, clients MUST prevent mix-up attacks. Two different methods are discussed below.[¶](#section-4.4.2-1)
 
-For both defenses, clients MUST store, for each authorization request, the issuer they sent the authorization request to and bind this information to the user agent. The issuer serves, via the associated metadata, as an abstract identifier for the combination of the authorization endpoint and token endpoint that are to be used in the flow. If an issuer identifier is not available (for example, if neither OAuth Authorization Server Metadata \[\] nor OpenID Connect Discovery \[\] is used), a different unique identifier for this tuple or the tuple itself can be used instead. For brevity of presentation, such a deployment-specific identifier will be subsumed under the issuer (or issuer identifier) in the following.[¶](#section-4.4.2-2)
+For both defenses, clients MUST store, for each authorization request, the issuer they sent the authorization request to and bind this information to the user agent. The issuer serves, via the associated metadata, as an abstract identifier for the combination of the authorization endpoint and token endpoint that are to be used in the flow. If an issuer identifier is not available (for example, if neither OAuth Authorization Server Metadata \[\] nor [[OpenID Connect]] Discovery \[\] is used), a different unique identifier for this tuple or the tuple itself can be used instead. For brevity of presentation, such a deployment-specific identifier will be subsumed under the issuer (or issuer identifier) in the following.[¶](#section-4.4.2-2)
 
 It is important to note that just storing the authorization server URL is not sufficient to identify mix-up attacks. An attacker might declare an uncompromised authorization server's authorization endpoint URL as "their" authorization server URL, but declare a token endpoint under their own control.[¶](#section-4.4.2-3)
 
@@ -1251,7 +1251,7 @@ This defense requires that the authorization server sends its issuer identifier 
 There are different ways this issuer identifier can be transported to the client:[¶](#section-4.4.2.1-2)
 
 - The issuer information can be transported, for example, via a separate response parameter `iss`, defined in \[\].[¶](#section-4.4.2.1-3.1)
-- When OpenID Connect is used and an ID Token is returned in the authorization response, the client can evaluate the `iss` claim in the ID Token.[¶](#section-4.4.2.1-3.2)
+- When [[OpenID Connect]] is used and an ID Token is returned in the authorization response, the client can evaluate the `iss` claim in the ID Token.[¶](#section-4.4.2.1-3.2)
 
 In both cases, the `iss` value MUST be evaluated according to \[\].[¶](#section-4.4.2.1-4)
 
@@ -1309,7 +1309,7 @@ PKCE not only protects against the authorization code injection attack but also 
 
 ##### 4.5.3.2.
 
-OpenID Connect's existing `nonce` parameter can protect against authorization code injection attacks. The `nonce` value is one-time use and is created by the client. The client is supposed to bind it to the user agent session and send it with the initial request to the OpenID Provider (OP). The OP puts the received `nonce` value into the ID Token that is issued as part of the code exchange at the token endpoint. If an attacker injects an authorization code in the authorization response, the nonce value in the client session and the `nonce` value in the ID Token received from the token endpoint will not match, and the attack is detected. The assumption is that an attacker cannot get hold of the user agent state on the victim's device (from which the attacker has stolen the respective authorization code).[¶](#section-4.5.3.2-1)
+[[OpenID Connect]]'s existing `nonce` parameter can protect against authorization code injection attacks. The `nonce` value is one-time use and is created by the client. The client is supposed to bind it to the user agent session and send it with the initial request to the OpenID Provider (OP). The OP puts the received `nonce` value into the ID Token that is issued as part of the code exchange at the token endpoint. If an attacker injects an authorization code in the authorization response, the nonce value in the client session and the `nonce` value in the ID Token received from the token endpoint will not match, and the attack is detected. The assumption is that an attacker cannot get hold of the user agent state on the victim's device (from which the attacker has stolen the respective authorization code).[¶](#section-4.5.3.2-1)
 
 It is important to note that this countermeasure only works if the client properly checks the `nonce` parameter in the ID Token obtained from the token endpoint and does not use any issued token until this check has succeeded. More precisely, a client protecting itself against code injection using the `nonce` parameter [¶](#section-4.5.3.2-2)
 
@@ -1322,7 +1322,7 @@ It is important to note that `nonce` does not protect authorization codes of pub
 
 Other solutions like binding `state` to the code, sender-constraining the code using cryptographic means, or per-instance client credentials are conceivable, but lack support and bring new security requirements.[¶](#section-4.5.3.3-1)
 
-PKCE is the most obvious solution for OAuth clients, as it is available at the time of writing, while `nonce` is appropriate for OpenID Connect clients.[¶](#section-4.5.3.3-2)
+PKCE is the most obvious solution for OAuth clients, as it is available at the time of writing, while `nonce` is appropriate for [[OpenID Connect]] clients.[¶](#section-4.5.3.3-2)
 
 #### 4.5.4.
 
@@ -1340,7 +1340,7 @@ To conduct the attack, the attacker starts an OAuth flow with the client using t
 
 There is no way to detect such an injection attack in pure-OAuth flows since the token is issued without any binding to the transaction or the particular user agent.[¶](#section-4.6.1-1)
 
-In OpenID Connect, the attack can be mitigated, as the authorization response additionally contains an ID Token containing the `at_hash` claim. The attacker therefore needs to replace both the access token as well as the ID Token in the response. The attacker cannot forge the ID Token, as it is signed or encrypted with authentication. The attacker also cannot inject a leaked ID Token matching the stolen access token, as the `nonce` claim in the leaked ID Token will contain (with a very high probability) a different value than the one expected in the authorization response.[¶](#section-4.6.1-2)
+In [[OpenID Connect]], the attack can be mitigated, as the authorization response additionally contains an ID Token containing the `at_hash` claim. The attacker therefore needs to replace both the access token as well as the ID Token in the response. The attacker cannot forge the ID Token, as it is signed or encrypted with authentication. The attacker also cannot inject a leaked ID Token matching the stolen access token, as the `nonce` claim in the leaked ID Token will contain (with a very high probability) a different value than the one expected in the authorization response.[¶](#section-4.6.1-2)
 
 Note that further protection, like sender-constrained access tokens, is still required to prevent attackers from using the access token at the resource endpoint directly.[¶](#section-4.6.1-3)
 
@@ -1352,7 +1352,7 @@ An attacker might attempt to inject a request to the redirection URI of the legi
 
 #### 4.7.1.
 
-The long-established countermeasure is that clients pass a random value, also known as a CSRF Token, in the `state` parameter that links the request to the redirection URI to the user agent session as described. This countermeasure is described in detail in [Section 5.3.5](https://rfc-editor.org/rfc/rfc6819#section-5.3.5) of \[\]. The same protection is provided by PKCE or the OpenID Connect `nonce` value.[¶](#section-4.7.1-1)
+The long-established countermeasure is that clients pass a random value, also known as a CSRF Token, in the `state` parameter that links the request to the redirection URI to the user agent session as described. This countermeasure is described in detail in [Section 5.3.5](https://rfc-editor.org/rfc/rfc6819#section-5.3.5) of \[\]. The same protection is provided by PKCE or the [[OpenID Connect]] `nonce` value.[¶](#section-4.7.1-1)
 
 When using PKCE instead of `state` or `nonce` for CSRF protection, it is important to note that:[¶](#section-4.7.1-2)
 
@@ -1441,8 +1441,8 @@ A typical flow looks like this:[¶](#section-4.10.1-2)
 
 Two methods for sender-constrained access tokens using proof of possession have been defined by the OAuth working group and are in use in practice:[¶](#section-4.10.1-4)
 
-- "OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens" \[\]: The approach specified in this) document allows the use of mutual TLS for both client authentication and sender-constrained access tokens. For the purpose of sender-constrained access tokens, the client is identified towards the resource server by the fingerprint of its public key. During the processing of an access token request, the authorization server obtains the client's public key from the TLS stack and associates its fingerprint with the respective access tokens. The resource server in the same way obtains the public key from the TLS stack and compares its fingerprint with the fingerprint associated with the access token.[¶](#section-4.10.1-5.1)
-- "OAuth 2.0 Demonstrating Proof of Possession (DPoP)" \[\]: DPoP outlines an application-level mechanism for sender-constraining access and refresh tokens. It uses proof-of-possession based on a public/private key pair and application-level signing. DPoP can be used with public clients and, in the case of confidential clients, can be combined with any client authentication method.[¶](#section-4.10.1-5.2)
+- [["OAuth 2.0]] Mutual-TLS Client Authentication and Certificate-Bound Access Tokens" \[\]: The approach specified in this) document allows the use of mutual TLS for both client authentication and sender-constrained access tokens. For the purpose of sender-constrained access tokens, the client is identified towards the resource server by the fingerprint of its public key. During the processing of an access token request, the authorization server obtains the client's public key from the TLS stack and associates its fingerprint with the respective access tokens. The resource server in the same way obtains the public key from the TLS stack and compares its fingerprint with the fingerprint associated with the access token.[¶](#section-4.10.1-5.1)
+- [["OAuth 2.0]] Demonstrating Proof of Possession (DPoP)" \[\]: DPoP outlines an application-level mechanism for sender-constraining access and refresh tokens. It uses proof-of-possession based on a public/private key pair and application-level signing. DPoP can be used with public clients and, in the case of confidential clients, can be combined with any client authentication method.[¶](#section-4.10.1-5.2)
 
 Note that the security of sender-constrained tokens is undermined when an attacker gets access to the token and the key material. This is, in particular, the case for corrupted client software and cross-site scripting attacks (when the client is running in the browser). If the key material is protected in a hardware or software security module or only indirectly accessible (like in a TLS stack), sender-constrained tokens at least protect against the use of the token when the client is offline, i.e., when the security module or interface is not available to the attacker. This applies to access tokens as well as to refresh tokens (see ).[¶](#section-4.10.1-6)
 
@@ -1567,11 +1567,11 @@ Refresh tokens are a convenient and user-friendly way to obtain new access token
 
 ### 4.15.
 
-Resource servers may make access control decisions based on the identity of a resource owner for which an access token was issued, or based on the identity of a client in the client credentials grant. For example, \[\] (JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens) describes a data structure for access tokens containing a `sub` claim defined as follows:[¶](#section-4.15-1)
+Resource servers may make access control decisions based on the identity of a resource owner for which an access token was issued, or based on the identity of a client in the client credentials grant. For example, \[\] (JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Access Tokens) describes a data structure for access tokens containing a `sub` claim defined as follows:[¶](#section-4.15-1)
 
 > In cases of access tokens obtained through grants where a resource owner is involved, such as the authorization code grant, the value of "sub" SHOULD correspond to the subject identifier of the resource owner. In cases of access tokens obtained through grants where no resource owner is involved, such as the client credentials grant, the value of "sub" SHOULD correspond to an identifier the authorization server uses to indicate the client application.[¶](#section-4.15-2.1)
 
-If both options are possible, a resource server may mistake a client's identity for the identity of a resource owner. For example, if a client is able to choose its own `client_id` during registration with the authorization server, a malicious client may set it to a value identifying a resource owner (e.g., a `sub` value if OpenID Connect is used). If the resource server cannot properly distinguish between access tokens obtained with involvement of the resource owner and those without, the client may accidentally be able to access resources belonging to the resource owner.[¶](#section-4.15-3)
+If both options are possible, a resource server may mistake a client's identity for the identity of a resource owner. For example, if a client is able to choose its own `client_id` during registration with the authorization server, a malicious client may set it to a value identifying a resource owner (e.g., a `sub` value if [[OpenID Connect]] is used). If the resource server cannot properly distinguish between access tokens obtained with involvement of the resource owner and those without, the client may accidentally be able to access resources belonging to the resource owner.[¶](#section-4.15-3)
 
 This attack potentially affects not only implementations using \[\], but also similar, bespoke solutions.[¶](#section-4.15-4)
 

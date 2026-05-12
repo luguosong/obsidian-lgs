@@ -20,7 +20,7 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 |------|--------|---------|
 | `executeQuery(sql)` | `ResultSet` | 仅用于 `SELECT` 查询 |
 | `executeUpdate(sql)` | `int`（受影响行数） | `INSERT` / `UPDATE` / `DELETE` / DDL |
-| `execute(sql)` | `boolean`（`true` 表示有 ResultSet） | 不确定 SQL 类型时的通用方法 |
+| `execute(sql)` | `boolean`（`true` 表示有 [[ResultSet]]） | 不确定 SQL 类型时的通用方法 |
 
 ### 初始化测试数据
 
@@ -46,6 +46,6 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 
 INSERT 语句执行后，经常需要立即获取新记录的自增主键 id（例如插入订单后需要 orderId 用于后续关联）。JDBC 通过 `Statement.RETURN_GENERATED_KEYS` 标志和 `getGeneratedKeys()` 方法实现此功能。
 
-!!! tip "PreparedStatement 同样支持"
+!!! tip "[[PreparedStatement]] 同样支持"
 
     `PreparedStatement` 也支持获取自增主键，在 `prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)` 时传入标志即可，用法完全一致。

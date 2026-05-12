@@ -57,7 +57,7 @@ graph TD
 
 ### nftables：现代替代（2014+）
 
-`nftables` 在 2014 年引入，是 iptables 的现代替代品：
+`nftables` 在 [[2014]] 年引入，是 iptables 的现代替代品：
 
 - 统一的语法，不再分 `iptables` / `ip6tables` / `arptables`
 - 原生支持集合（set）和字典（map），规则更简洁
@@ -166,7 +166,7 @@ nft delete rule inet filter input handle 4
 
 ### 完整示例：基础服务器防火墙
 
-以下是一个完整的服务器防火墙配置，允许已建立连接、SSH、HTTP/HTTPS，拒绝其余入站流量：
+以下是一个完整的服务器防火墙配置，允许已[[建立连接]]、SSH、HTTP/HTTPS，拒绝其余入站流量：
 
 **完整防火墙配置脚本**
 
@@ -811,7 +811,7 @@ iptables -t nat -A POSTROUTING -o eth0 -j SNAT \
 
 ## 连接追踪（conntrack）
 
-`conntrack`（连接追踪）是 Netfilter 的核心模块，记录每条网络连接的状态，让防火墙能够区分「新建连接」和「已建立连接的响应封包」。
+`conntrack`（连接追踪）是 Netfilter 的核心模块，记录每条网络连接的状态，让防火墙能够区分「新建连接」和「已[[建立连接]]的响应封包」。
 
 ### 连接状态说明
 
@@ -819,7 +819,7 @@ iptables -t nat -A POSTROUTING -o eth0 -j SNAT \
 |------|------|
 | `NEW` | 新建连接的第一个封包（如 TCP SYN） |
 | `ESTABLISHED` | 已完成握手的连接（双向通信中） |
-| `RELATED` | 与已建立连接相关的新连接（如 FTP 数据通道） |
+| `RELATED` | 与已[[建立连接]]相关的新连接（如 FTP 数据通道） |
 | `INVALID` | 无法识别或不合法的封包（建议直接丢弃） |
 
 典型用法：只放行 `ESTABLISHED,RELATED`，所有 `NEW` 连接按端口控制，`INVALID` 直接丢弃。这样内网主机主动发出的请求响应可以自动回来，无需为每个目标端口单独写规则。

@@ -14,7 +14,7 @@ tags:
 # mermaid-visualizer
 
 > [!summary]
-> 将文本内容转换为专业的 Mermaid 图表，内置语法错误预防机制，兼容 Obsidian、GitHub 等渲染器。
+> 将[[文本内容]]转换为专业的 [[Mermaid]] 图表，内置语法错误预防机制，兼容 [[Obsidian]]、GitHub 等渲染器。
 
 **触发词**：`Mermaid`、`可视化`、`流程图`、`时序图`、`visualize`
 
@@ -60,8 +60,8 @@ tags:
 
 ## 语法错误预防（关键规则）
 
-> [!danger] 最常见错误：列表语法冲突
-> Mermaid 会将 `number. space` 解释为 Markdown 有序列表，导致 `Parse error: Unsupported markdown: list`
+> [!danger] 最[[常见错误]]：列表语法冲突
+> [[Mermaid]] 会将 `number. space` 解释为 Markdown 有序列表，导致 `Parse error: Unsupported markdown: list`
 
 ```
 ❌ [1. Perception]
@@ -159,9 +159,9 @@ graph TB
 - [ ] 方向已指定
 - [ ] 样式声明完整
 - [ ] 节点引用使用 ID 而非显示名
-- [ ] 兼容 Obsidian/GitHub 渲染
+- [ ] 兼容 [[Obsidian]]/GitHub 渲染
 
 ## 更多参考
 
-- [[Mermaid 语法规则参考]] — 完整语法规则和故障排除
+- [[Mermaid 语法规则参考]] — 完整语法规则和[[故障排除]]
 - [[axton-obsidian-visual-skills 套装总览]] — 返回项目总览

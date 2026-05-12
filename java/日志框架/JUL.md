@@ -3,7 +3,7 @@ title: JUL
 description: Java 原生日志框架 JUL 的核心组件、日志级别、配置方式与执行流程
 ---
 
-**前置知识**：如果你还不了解日志框架的基本概念，请先阅读[[日志框架]]。
+**前置知识**：如果你还不了解[[日志框架]]的基本概念，请先阅读[[日志框架]]。
 
 **本文你会学到**：
 
@@ -15,13 +15,13 @@ description: Java 原生日志框架 JUL 的核心组件、日志级别、配置
 
 ## 🤔 为什么了解 JUL？
 
-当你需要日志功能时，第一反应可能是引入 SLF4J 或 Logback。但 JUL（`java.util.logging`）作为 JDK 自带的日志框架，有几个独特优势：
+当你需要日志功能时，第一反应可能是引入 [[SLF4J]] 或 [[Logback]]。但 JUL（`java.util.logging`）作为 JDK 自带的[[日志框架]]，有几个独特优势：
 
 - **零依赖**——不需要任何第三方 jar 包，`import java.util.logging.Logger` 就能用
-- **学习日志基础的最佳入口**——`Logger` → `Handler` → `Formatter` 这套架构被几乎所有日志框架沿用
+- **学习日志基础的最佳入口**——`Logger` → `Handler` → `Formatter` 这套架构被几乎所有[[日志框架]]沿用
 - **简单场景足够用**——小型工具、教学示例、不想引入额外依赖的库
 
-当然，JUL 也有明显的局限：占位符支持不如 SLF4J 方便、配置灵活性不如 Logback、没有异步日志。当你需要在生产项目中做复杂的日志管理时，升级到 `SLF4J` + `Logback` 是更好的选择。
+当然，JUL 也有明显的局限：占位符支持不如 [[SLF4J]] 方便、配置灵活性不如 [[Logback]]、没有异步日志。当你需要在生产项目中做复杂的[[日志管理]]时，升级到 `SLF4J` + `Logback` 是更好的选择。
 
 ## 🧱 核心组件
 
@@ -109,7 +109,7 @@ logger.finest("变量 x = 42");              // 最详细的调试
 
 ### 占位符使用
 
-与 SLF4J 的 `{}` 占位符不同，JUL 没有内置的占位符语法。你需要借助 `MessageFormat` 或字符串拼接：
+与 [[SLF4J]] 的 `{}` 占位符不同，JUL 没有内置的占位符语法。你需要借助 `MessageFormat` 或字符串拼接：
 
 ``` java title="JUL 的占位符使用方式"
 import java.text.MessageFormat;

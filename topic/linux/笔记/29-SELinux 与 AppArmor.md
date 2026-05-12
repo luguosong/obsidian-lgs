@@ -250,7 +250,7 @@ ausearch -m AVC -ts recent | audit2allow -m mypolicy
 
 ## AppArmor（Debian 系默认）
 
-AppArmor 是 Debian/Ubuntu/SUSE 系列的默认 MAC 实现，相比 SELinux 采用更直观的**路径规则**（Profile）方式，学习曲线较平缓。
+AppArmor 是 Debian/Ubuntu/SUSE 系列的默认 MAC 实现，相比 SELinux 采用更直观的**路径规则**（[[Profile]]）方式，学习曲线较平缓。
 
 ### 两种工作模式
 
@@ -290,7 +290,7 @@ systemctl reload apparmor
 
 ### Profile 结构
 
-AppArmor 的配置文件（Profile）存放在 `/etc/apparmor.d/`，以程序路径命名，内容直观：
+AppArmor 的配置文件（[[Profile]]）存放在 `/etc/apparmor.d/`，以程序路径命名，内容直观：
 
 ```
 /usr/sbin/nginx {
@@ -325,7 +325,7 @@ grep "apparmor" /var/log/syslog | grep DENIED
 journalctl | grep "apparmor.*DENIED"
 ```
 
-**生成与更新 Profile**
+**生成与更新 [[Profile]]**
 
 ```bash
 # 交互式生成新 profile（会引导你运行程序并批准访问）
@@ -342,7 +342,7 @@ aa-logprof
 | 默认发行版 | RHEL / Fedora / CentOS | Debian / Ubuntu / SUSE |
 | 控制粒度 | 极细（用户/角色/类型/级别） | 中等（路径/能力） |
 | 学习曲线 | 较陡，概念较多 | 较平，规则直观 |
-| 配置方式 | 类型强制（Type Enforcement） | 路径规则（Profile） |
+| 配置方式 | 类型强制（Type Enforcement） | 路径规则（[[Profile]]） |
 | 调试工具 | `audit2why` / `audit2allow` | `aa-logprof` |
 | 内核实现 | 基于标签（inode 存储上下文） | 基于路径（文件名匹配） |
 

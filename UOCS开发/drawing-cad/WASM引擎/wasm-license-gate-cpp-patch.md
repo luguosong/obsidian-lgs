@@ -2,11 +2,11 @@
 
 > **面向对象**：`drawing-cad/drawingweb` 仓库维护者
 > **来源**：`drawing-web-app/docs/superpowers/specs/2026-04-15-wasm-license-gate-design.md`
-> **目的**：在 WASM 侧（`DrawingJs.wasm`）内插入 License Gate，使"打开/新建图纸"操作必须通过签名 Token 校验，配合后端 `drawing-ai-server` 的 `/api/license/*` 接口达成反盗用能力
+> **目的**：在 WASM 侧（`DrawingJs.wasm`）内插入 [[License Gate]]，使"打开/新建图纸"操作必须通过签名 Token 校验，配合后端 `drawing-ai-server` 的 `/api/license/*` 接口达成反盗用能力
 > **预期产出**：`drawing-cad/drawingweb/` 仓根目录下新增 3 个文件 + 修改 2 处 + `CMakeLists.txt` 1 处 + embind 绑定 1 处，**不改动任何现有业务逻辑**。
 >
 > **路径说明**：drawingweb 仓的 C++ 源码（`CadCore.cpp` / `CadCoreWebBridge.cpp` / `CMakeLists.txt` 等）直接位于仓库根目录，**不存在 `DrawingWeb/` 子目录**。本文件中所有路径以仓根为基准。
-> **后端状态**：Java 原生 License Gate 已在 `drawing-ai-server` 落地（提交 `92eda17` `d1a287e`）。协议 100% 对齐本文档引用的设计规范，无需 drawingweb 侧配合其它改动
+> **后端状态**：Java 原生 [[License Gate]] 已在 `drawing-ai-server` 落地（提交 `92eda17` `d1a287e`）。协议 100% 对齐本文档引用的设计规范，无需 drawingweb 侧配合其它改动
 
 ---
 
@@ -28,7 +28,7 @@
 
 ## 上下文与动机
 
-- 后端（`drawing-ai-server`）按设计规范完整实现了三级密钥 + License Gate：
+- 后端（`drawing-ai-server`）按设计规范完整实现了三级密钥 + [[License Gate]]：
   - 根密钥对：厂商离线保管；根公钥需烧录进 WASM
   - 客户密钥对：每客户一对，服务端用客户私钥每 3 分钟签一次短 Token（5 分钟 TTL）
   - 硬件指纹：SM3(machineId ∥ MACs ∥ mainboardUuid) 绑定到 License
@@ -42,7 +42,7 @@
 
 ## 文件 1：`LicenseGate.h`（新增于仓根）
 
-> 设计文档 §7.2 已给出完整接口定义，此处原样引用。
+> [[设计文档]] §7.2 已给出完整接口定义，此处原样引用。
 
 ```cpp
 #pragma once
@@ -262,7 +262,7 @@ bool LicenseGate::verifyCurrentToken() {
 ```
 
 **适配清单**（给 drawingweb 维护者）：
-1. `sm2Verify(pubKeyHex, msg, sig64)` —— 映射到本仓库链接的 **GmSSL SM2 验签 API**（候选：`sm2_do_verify` / `SM2_do_verify` / `SM2_verify`，`asyncify_whitelist.txt:8534-8543` 已白名单）。输入为 GMT0009 摘要和 R‖S 64 字节格式。**GmSSL 的 `SM2_do_verify` 接受 `ECDSA_SIG*`**（含 BIGNUM r/s），需先用 `BN_bin2bn` 把 R‖S 拆成两个 32B BIGNUM 包装进 `ECDSA_SIG`；若选用 DER API（`SM2_verify`），则在 R‖S 外层套 ASN.1 SEQUENCE
+1. `sm2Verify(pubKeyHex, msg, sig64)` —— 映射到本仓库链接的 **GmSSL SM2 验签 API**（候选：`sm2_do_verify` / `SM2_do_verify` / `SM2_verify`，`asyncify_whitelist.txt:8534-8543` 已白名单）。输入为 GMT0009 摘要和 R‖S 64 字节格式。**GmSSL 的 `SM2_do_verify` 接受 `ECDSA_SIG*`**（含 BIGNUM r/s），需先用 `BN_bin2bn` 把 R‖S 拆成两个 32B BIGNUM 包装进 `ECDSA_SIG`；若选用 DER API（`SM2_verify`），则在 R‖S 外层套 [[ASN.1]] SEQUENCE
 2. `base64Decode` / `base64UrlDecode` —— 推荐直接在 C++ 实现（~30 行），或通过 `<emscripten/val.h>` 委托 JS 的 `atob`
 3. `jsonGetString/jsonGetLong` —— 若仓库已集成 `rapidjson` / `nlohmann::json`，替换为对应调用；否则可临时用 `EM_ASM_*` 委托 `JSON.parse`
 4. `isoToUnixSec(string)` —— 可用 `std::get_time` + `timegm`；或直接让后端返回 unix 秒
@@ -475,7 +475,7 @@ printf '// AUTO-GENERATED\nstatic constexpr const char kRootPubKeyHex[] = "%s";\
   - `drawing-cad/drawing-ai-server` master `92eda17 + d1a287e`（后端 + 厂商 CLI）
 - **私钥流转**：推荐由厂商运维保管 `root_private.pem`，**只把 `root_pubkey.inc` 或公钥 hex 文本**传给 drawingweb 维护者
 - **验收反馈**：将构建出的 `DrawingJs.{js,wasm,data}` 发布到 OSS 替换现有版本；前端 `public/` 目录无需改动
-- **回滚策略**：若 License Gate 发现重大阻塞问题，临时将 `verifyCurrentToken()` 的实现体改为 `return true;` 即可旁路（**仅紧急情况使用**，且必须在新版本中恢复）
+- **回滚策略**：若 [[License Gate]] 发现重大阻塞问题，临时将 `verifyCurrentToken()` 的实现体改为 `return true;` 即可旁路（**仅紧急情况使用**，且必须在新版本中恢复）
 
 ---
 

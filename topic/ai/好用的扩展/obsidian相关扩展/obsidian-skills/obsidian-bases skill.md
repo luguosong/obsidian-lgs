@@ -14,11 +14,11 @@ tags:
 # obsidian-bases
 
 > [!summary]
-> 创建和编辑 **Obsidian Bases**（`.base`）文件——Obsidian 内置的类数据库功能，将 vault 笔记以表格、看板、画廊等视图呈现，支持过滤、排序、公式计算和汇总统计。
+> 创建和编辑 **[[Obsidian]] Bases**（`.base`）文件——[[Obsidian]] 内置的类数据库功能，将 vault 笔记以表格、看板、画廊等视图呈现，支持过滤、排序、公式计算和汇总统计。
 
 **触发词**：`Obsidian Bases`、`.base 文件`、`数据库视图`、`过滤器`、`看板视图`、`表格视图`、`公式列`
 
-> [!info] 核心概念
+> [!info] [[核心概念]]
 > Bases 是对 vault 中 Markdown 笔记的**结构化查询视图**。笔记的 `properties`（frontmatter）字段就是数据列，`.base` 文件定义如何展示。
 
 ## 视图类型

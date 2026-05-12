@@ -28,12 +28,12 @@ tags:
 
 HKDF 遵循"提取-然后-扩展"（extract-then-expand）范式，KDF 在逻辑上由两个模块组成。第一阶段接收输入密钥材料并从中"提取"一个固定长度的伪随机密钥 K。第二阶段将密钥 K"扩展"为多个附加伪随机密钥（即 KDF 的输出）。
 
-在许多应用中，输入密钥材料不一定均匀分布，攻击者可能对其有部分了解（例如密钥交换协议计算的 Diffie-Hellman 值），甚至有部分控制权（如某些熵收集应用）。因此，"提取"阶段的目标是将输入密材料中可能分散的熵"浓缩"为一个短但密码学强的伪随机密钥。在某些应用中，输入可能已经是一个好的伪随机密钥；在这种情况下，"提取"阶段不是必需的，可以单独使用"扩展"部分。
+在许多应用中，输入密钥材料不一定均匀分布，攻击者可能对其有部分了解（例如[[密钥交换]]协议计算的 Diffie-Hellman 值），甚至有部分控制权（如某些熵收集应用）。因此，"提取"阶段的目标是将输入密材料中可能分散的熵"浓缩"为一个短但密码学强的伪随机密钥。在某些应用中，输入可能已经是一个好的伪随机密钥；在这种情况下，"提取"阶段不是必需的，可以单独使用"扩展"部分。
 
 第二阶段将伪随机密钥"扩展"到所需长度；输出密钥的数量和长度取决于所需密钥的具体密码算法。
 
 > [!note] 与其他 KDF 规范的比较
-> 一些现有的 KDF 规范，如 NIST SP 800-56A、NIST SP 800-108 和 IEEE 1363a-2004，要么只考虑第二阶段（扩展伪随机密钥），要么没有明确区分"提取"和"扩展"阶段，通常导致设计缺陷。本规范的目标是在最小化对底层哈希函数假设的同时，适应广泛的 KDF 需求。"提取-扩展"范式很好地支持了这一目标。
+> 一些现有的 KDF 规范，如 NIST SP [[800-56A]]、NIST SP 800-108 和 IEEE 1363a-2004，要么只考虑第二阶段（扩展伪随机密钥），要么没有明确区分"提取"和"扩展"阶段，通常导致设计缺陷。本规范的目标是在最小化对底层哈希函数假设的同时，适应广泛的 KDF 需求。"提取-扩展"范式很好地支持了这一目标。
 
 ## 2. 基于 HMAC 的密钥派生函数 (HKDF)
 
@@ -178,7 +178,7 @@ HKDF 旨在用于各种 KDF 应用，包括：
 
 - \[1363a] IEEE, "Standard Specifications for Public-Key Cryptography - Amendment 1: Additional Techniques", IEEE Std 1363a-2004, 2004.
 - \[800-108] NIST, "Recommendation for Key Derivation Using Pseudorandom Functions", SP 800-108, November 2008.
-- \[800-56A] NIST, "Recommendation for Pair-Wise Key Establishment Schemes Using Discrete Logarithm Cryptography (Revised)", SP 800-56A, March 2007.
+- \[[[800-56A]]] NIST, "Recommendation for Pair-Wise Key Establishment Schemes Using Discrete Logarithm Cryptography (Revised)", SP [[800-56A]], March 2007.
 - \[EAP-AKA] Arkko, J., et al., "Improved Extensible Authentication Protocol Method for 3rd Generation Authentication and Key Agreement (EAP-AKA')", RFC 5448, May 2009.
 - \[HKDF-paper] Krawczyk, H., "Cryptographic Extraction and Key Derivation: The HKDF Scheme", Proceedings of CRYPTO 2010.
 - \[IKEv2] Kaufman, C., Ed., "Internet Key Exchange (IKEv2) Protocol", RFC 4306, December 2005.

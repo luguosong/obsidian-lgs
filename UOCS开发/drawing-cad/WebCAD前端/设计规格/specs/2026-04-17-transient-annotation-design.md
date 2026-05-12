@@ -5,7 +5,7 @@
 
 ## 1. 概述
 
-在 WebUACAD 前端实现批注（Markup / Annotation）功能，支持**云线 + 箭头 + 批注文本**的组合批注。批注对象不写入 DWG 数据库，而是作为 ODA 引擎的**瞬态图元**（Transient Drawable）渲染在 GsView 上，数据以 JSON 格式独立存储。
+在 [[WebUACAD]] 前端实现批注（Markup / Annotation）功能，支持**云线 + 箭头 + 批注文本**的组合批注。批注对象不写入 DWG 数据库，而是作为 ODA 引擎的**瞬态图元**（Transient Drawable）渲染在 GsView 上，数据以 JSON 格式独立存储。
 
 ### 核心设计原则
 
@@ -91,7 +91,7 @@
 ### 3.3 批注文本 (Annotation Text)
 
 使用 `OdDbMText`，支持：
-- 多行文本内容
+- 多行[[文本内容]]
 - 字高、颜色、对齐方式
 - 自动换行宽度
 
@@ -276,9 +276,9 @@ src/stores/AnnotationStore.js
 
 ## 9. 注意事项
 
-1. **内存管理**: 瞬态实体由 `OdSmartPtr` 管理，从 `m_transients` map 移除时自动释放
+1. **[[内存管理]]**: 瞬态实体由 `OdSmartPtr` 管理，从 `m_transients` map 移除时自动释放
 2. **多视口**: 当前阶段只向 `getActiveView()` 添加瞬态图元
 3. **颜色**: 批注默认使用 ACI 红色 (1)，区别于 DWG 图元
 4. **云线弧长**: 应根据图纸实际尺度自适应，可参考当前视口范围计算合理值
 5. **视图重建**: `SwitchLayout` / `regenAll` / `RefreshActiveViewports` 后需调用 `reattachAllTransients()`
-6. **embind upcast**: `OdGsView::add()` 接受 `OdGiDrawable*`，OdDbPolyline 通过完整的继承链 (`OdDbPolyline → OdDbCurve → OdDbEntity → OdDbObject → OdGiDrawable`) 自动向上转型
+6. **embind upcast**: `OdGsView::add()` 接受 `OdGiDrawable*`，[[OdDbPolyline]] 通过完整的继承链 (`OdDbPolyline → OdDbCurve → OdDbEntity → OdDbObject → OdGiDrawable`) 自动向上转型

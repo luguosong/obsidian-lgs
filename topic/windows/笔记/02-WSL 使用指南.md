@@ -746,7 +746,7 @@ code ~/projects/my-app
 `Docker Desktop` for Windows 原生支持 WSL 2 后端：
 
 1. 安装 Docker Desktop
-2. 进入 Settings → General → 勾选 `Use the WSL 2 based engine`
+2. 进入 [[Settings]] → General → 勾选 `Use the WSL 2 based engine`
 3. 在 Resources → WSL Integration 中选择要启用的发行版
 
 配置完成后，在 WSL 终端中可以直接使用 `docker` 命令：

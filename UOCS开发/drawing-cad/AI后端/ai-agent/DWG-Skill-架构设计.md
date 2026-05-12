@@ -1,6 +1,6 @@
 # DWG Skill 架构设计
 
-> 参考 Anthropic PDF Skill + Office Skills 设计哲学，为 Web CAD 平台构建完整的 DWG 读取解析与修改 Agent 能力体系。
+> 参考 Anthropic [[PDF Skill]] + Office [[Skills]] 设计哲学，为 Web CAD 平台构建完整的 DWG 读取解析与修改 Agent 能力体系。
 
 ## 核心设计哲学
 
@@ -8,9 +8,9 @@
 
 | Skill | 核心洞察 | 执行策略 |
 |-------|---------|---------|
-| PDF Skill | PDF 有丰富的结构化数据（表单/文字/元数据） | pypdf/pdfplumber 预构建提取器 |
-| Office Skills | OOXML 本质是 ZIP + XML 文本 | 解包 → AI 编辑 XML → 打包 |
-| **DWG Skill** | DWG 通过 ODA 打开 = 实体数据库 | 结构化读取 → 声明式修改 → 自动验证 |
+| [[PDF Skill]] | PDF 有丰富的结构化数据（表单/文字/元数据） | pypdf/pdfplumber 预构建提取器 |
+| Office [[Skills]] | OOXML 本质是 ZIP + XML 文本 | 解包 → AI 编辑 XML → 打包 |
+| **[[DWG Skill]]** | DWG 通过 ODA 打开 = 实体数据库 | 结构化读取 → 声明式修改 → 自动验证 |
 
 ## 三层架构
 
@@ -91,7 +91,7 @@ graph LR
 
 ### DwgReadAdapter（对标 unpack.py）
 
-6 个静态方法，预构建查询模板，自带内存管理：
+6 个静态方法，预构建查询模板，自带[[内存管理]]：
 
 | 方法 | 功能 | 输出 |
 |------|------|------|

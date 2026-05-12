@@ -15,7 +15,7 @@ tags:
 - GRUB2 的两级引导机制与配置文件
 - initramfs 的作用与核心驱动加载
 - Linux 内核启动参数与 GRUB 编辑入口
-- systemd 与运行级别（target）的对应关系
+- [[systemd]] 与运行级别（target）的对应关系
 - Root 密码遗忘时的救援启动方法
 - 常见启动问题的诊断与恢复策略
 
@@ -240,7 +240,7 @@ graph LR
 
 `systemd` 与传统 SysV runlevel 的对应关系：
 
-| SysV runlevel | systemd target | 说明 |
+| SysV runlevel | [[systemd]] target | 说明 |
 |:---:|---|---|
 | 0 | `poweroff.target` | 关机 |
 | 1 | `rescue.target` | 单用户救援模式 |

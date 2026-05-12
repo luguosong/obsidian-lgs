@@ -462,7 +462,7 @@ nmtui
 
 ## DHCP 与 DNS 动态更新
 
-**DDNS**（Dynamic DNS）允许 DHCP 服务器在分配 IP 时，自动向 DNS 服务器注册 A 记录和 PTR 记录，解决"动态 IP 无法被域名解析"的问题。典型使用场景是企业内网 + Active Directory 域环境。
+**DDNS**（Dynamic DNS）允许 DHCP 服务器在分配 IP 时，自动向 [[DNS 服务器]]注册 A 记录和 PTR 记录，解决"动态 IP 无法被域名解析"的问题。典型使用场景是企业内网 + Active Directory 域环境。
 
 启用 DDNS 的关键配置（`isc-dhcp-server` + BIND 组合）：
 

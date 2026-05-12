@@ -19,17 +19,17 @@ tags:
 - 🔒 如何限制 Claude 的 Skill 访问权限
 - ✅ 编写高质量 Skill 的最佳实践
 - 📦 官方内置 Skills 开箱即用
-- 🔍 常见 Skill 问题的故障排除
+- 🔍 常见 Skill 问题的[[故障排除]]
 
 ## 🎯 什么是 Skill
 
 想象一下，你有一个新同事入职了。你除了给他一本《公司规范手册》让他随时翻阅（这就是 `CLAUDE.md`），还可以给他准备一些**可复用的 SOP 手册**——比如「部署流程」「代码审查清单」「API 设计规范」。这些手册不用他刻意去翻，遇到相关任务时他会**自动拿出来用**，或者你明确跟他说「按部署手册来」时他就照做。
 
-**Skill 就是这样的 SOP 手册**（v2.0.20 首次引入）。它是 Claude Code 的扩展机制——你写一个 `SKILL.md` 文件，里面放 instructions（指令），Claude 就会把它加入自己的工具箱。当对话上下文匹配时，Claude 会自动加载对应 Skill；你也可以随时通过 `/skill-name` 手动调用。v2.1.0 新增了 Skill 热重载——修改 `SKILL.md` 后无需重启会话即可生效。
+**Skill 就是这样的 SOP 手册**（v2.0.20 首次引入）。它是 [[Claude Code]] 的[[扩展机制]]——你写一个 `SKILL.md` 文件，里面放 instructions（指令），Claude 就会把它加入自己的工具箱。当对话上下文匹配时，Claude 会自动加载对应 Skill；你也可以随时通过 `/skill-name` 手动调用。v2.1.0 新增了 Skill 热重载——修改 `SKILL.md` 后无需重启会话即可生效。
 
 💡 **Skill 和 `CLAUDE.md` 的区别**：`CLAUDE.md` 是全局上下文，Claude 每次对话都会读取；Skill 是按需加载的专项知识，只在相关时才会激活。你可以把 `CLAUDE.md` 理解为「入职手册」，Skill 理解为「岗位 SOP」。
 
-Skills 遵循 [Agent Skills 开放标准](https://github.com/anthropics/agent-skills)，这意味着你写的 Skill 不仅能在 Claude Code 中使用，也可以跨其他支持该标准的 AI 工具复用。Claude Code 在此基础上做了扩展，增加了调用控制、子代理执行、动态上下文注入等能力。
+Skills 遵循 [Agent Skills 开放标准](https://github.com/anthropics/agent-skills)，这意味着你写的 Skill 不仅能在 [[Claude Code]] 中使用，也可以跨其他支持该标准的 AI 工具复用。[[Claude Code]] 在此基础上做了扩展，增加了调用控制、子代理执行、动态上下文注入等能力。
 
 ## 📂 Skill 的两种类型
 
@@ -208,7 +208,7 @@ Claude 并不是把所有 Skill 全部加载进上下文——那样太浪费 to
 
 ### 手动调用（/命令）
 
-所有 `user-invocable` 为 `true`（默认）的 Skill 都可以通过 `/` 命令手动调用。在 Claude Code 中输入 `/` 即可看到所有可用的 Skill 和内置命令列表（v2.1.111 改进：`/skills` 菜单现在支持按 `t` 键按估算 token 数排序，帮你快速定位最耗上下文的 Skill）。v2.1.121 进一步优化了 `/skills` 界面，新增输入搜索框，在列表很长时可以快速定位目标 Skill。
+所有 `user-invocable` 为 `true`（默认）的 Skill 都可以通过 `/` 命令手动调用。在 [[Claude Code]] 中输入 `/` 即可看到所有可用的 Skill 和内置命令列表（v2.1.111 改进：`/skills` 菜单现在支持按 `t` 键按估算 token 数排序，帮你快速定位最耗上下文的 Skill）。v2.1.121 进一步优化了 `/skills` 界面，新增输入搜索框，在列表很长时可以快速定位目标 Skill。
 
 除了自定义 Skill，内置斜杠命令（如 `/init`、`/review`、`/security-review`）也可以被模型通过 Skill tool 发现和调用（v2.1.108 新增）——这意味着模型能自主选择合适的内置命令来完成任务。
 
@@ -487,7 +487,7 @@ agent: Explore
 
 优先级：企业级 > 个人全局 > 项目级。插件 Skill 使用 `plugin-name:skill-name` 命名空间，因此不会与其他级别冲突。
 
-💡 **实时变更检测**：Claude Code 监视 Skill 目录的文件变更。在 `~/.claude/skills/`、项目 `.claude/skills/` 或 `--add-dir` 目录内的 `.claude/skills/` 中添加、编辑或删除 Skill，会在当前会话中**立即生效**，无需重启。但创建在会话启动时不存在的顶级 Skills 目录需要重启 Claude Code。
+💡 **实时变更检测**：[[Claude Code]] 监视 Skill 目录的文件变更。在 `~/.claude/skills/`、项目 `.claude/skills/` 或 `--add-dir` 目录内的 `.claude/skills/` 中添加、编辑或删除 Skill，会在当前会话中**立即生效**，无需重启。但创建在会话启动时不存在的顶级 Skills 目录需要重启 [[Claude Code]]。
 
 ### 📂 来自其他目录的 Skills
 
@@ -499,11 +499,11 @@ agent: Explore
 
 权限确认弹窗频繁出现会打断工作节奏。v2.1.111 新增的 `/less-permission-prompts` 内置 Skill 可以自动解决这个问题——它会扫描你的 transcript，找出常见的只读 Bash 和 MCP 工具调用，然后为 `.claude/settings.json` 生成一个优先级排序的允许列表建议。运行一次就能显著减少重复授权。
 
-📝 **小结**：Skill 是 Claude Code 中性价比最高的扩展方式。一个几十行的 `SKILL.md` 文件，就能让 Claude 在你的项目中表现得像一个熟悉代码库、遵循团队规范的「老员工」。从编写项目的代码风格规范开始，逐步扩展到工作流自动化，你会发现 Skill 越写越多、Claude 越来越好用。
+📝 **小结**：Skill 是 [[Claude Code]] 中性价比最高的扩展方式。一个几十行的 `SKILL.md` 文件，就能让 Claude 在你的项目中表现得像一个熟悉代码库、遵循团队规范的「老员工」。从编写项目的代码风格规范开始，逐步扩展到工作流自动化，你会发现 Skill 越写越多、Claude 越来越好用。
 
 ## 📦 官方内置 Skills
 
-Anthropic 随 Claude Code 附带了 5 个开箱即用的内置 Skill（无需安装）：
+Anthropic 随 [[Claude Code]] 附带了 5 个开箱即用的内置 Skill（无需安装）：
 
 | Skill | 功能说明 | 使用示例 |
 |-------|---------|---------|

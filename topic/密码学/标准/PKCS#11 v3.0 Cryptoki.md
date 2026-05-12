@@ -512,7 +512,7 @@ For the purposes of this standard, the following definitions apply:
 
 **Application** Any computer program that calls the Cryptoki interface.
 
-**ASN.1** Abstract Syntax Notation One, as defined in X.680.
+**[[ASN.1]]** Abstract Syntax Notation One, as defined in X.680.
 
 **Attribute** A characteristic of an object.
 
@@ -564,7 +564,7 @@ For the purposes of this standard, the following definitions apply:
 
 **Slot** A logical reader that potentially contains a token.
 
-**SSL** The Secure Sockets Layer 3.0 protocol.
+**SSL** The Secure [[Socket]]s Layer 3.0 protocol.
 
 **Subject Name** The X.500 distinguished name of the entity to which a key is assigned.
 
@@ -730,7 +730,7 @@ URL: [http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf](http://nvlpubs.
 
 **\[PKCS11-Hist\]** *PKCS #11 Cryptographic Token Interface Historical Mechanisms Specification Version 2.40*. Edited by Susan Gleeson and Chris Zimman. 14 April 2015. OASIS Standard. [http://docs.oasis-open.org/pkcs11/pkcs11-hist/v2.40/os/pkcs11-hist-v2.40-os.html](https://docs.oasis-open.org/pkcs11/pkcs11-hist/v2.40/os/pkcs11-hist-v2.40-os.html). Latest version: [http://docs.oasis-open.org/pkcs11/pkcs11-hist/v2.40/pkcs11-hist-v2.40.html](https://docs.oasis-open.org/pkcs11/pkcs11-hist/v2.40/pkcs11-hist-v2.40.html).
 
-**\[PKCS11-Prof\]** *PKCS #11 Cryptographic Token Interface Profiles Version 2.40*. Edited by Tim Hudson. 14 April 2015. OASIS Standard. [http://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/os/pkcs11-profiles-v2.40-os.html](https://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/os/pkcs11-profiles-v2.40-os.html). Latest version: [http://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/pkcs11-profiles-v2.40.html](https://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/pkcs11-profiles-v2.40.html).
+**\[PKCS11-Prof\]** *PKCS #11 Cryptographic Token Interface [[Profile]]s Version 2.40*. Edited by Tim Hudson. 14 April 2015. OASIS Standard. [http://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/os/pkcs11-profiles-v2.40-os.html](https://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/os/pkcs11-profiles-v2.40-os.html). Latest version: [http://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/pkcs11-profiles-v2.40.html](https://docs.oasis-open.org/pkcs11/pkcs11-profiles/v2.40/pkcs11-profiles-v2.40.html).
 
 **\[PKCS #1\]** RSA Laboratories. *RSA Cryptography Standard.* v2.1, June 14, 2002.  
 URL: ftp://ftp.rsasecurity.com/pub/pkcs/pkcs-1/pkcs-1v2-1.pdf
@@ -747,7 +747,7 @@ URL: ftp://ftp.rsasecurity.com/pub/pkcs/doc/pkcs-7.doc
 **\[PKCS #8\]** RSA Laboratories. *Private-Key Information Syntax Standard*. v1.2, November 1993.  
 URL: ftp://ftp.rsasecurity.com/pub/pkcs/doc/pkcs-8.doc
 
-**\[PKCS11-UG\]** *PKCS #11 Cryptographic Token Interface Usage Guide Version 2.40*. Edited by John Leiseboer and Robert Griffin. 16 November 2014. OASIS Committee Note 02. [http://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/cn02/pkcs11-ug-v2.40-cn02.html](https://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/cn02/pkcs11-ug-v2.40-cn02.html). Latest version: [http://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/pkcs11-ug-v2.40.html](https://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/pkcs11-ug-v2.40.html).
+**\[PKCS11-UG\]** *PKCS #11 Cryptographic Token Interface Usage Guide Version 2.40*. Edited by John Leiseboer and Robert Griffin. 16 November [[2014]]. OASIS Committee Note 02. [http://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/cn02/pkcs11-ug-v2.40-cn02.html](https://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/cn02/pkcs11-ug-v2.40-cn02.html). Latest version: [http://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/pkcs11-ug-v2.40.html](https://docs.oasis-open.org/pkcs11/pkcs11-ug/v2.40/pkcs11-ug-v2.40.html).
 
 **\[PKCS #12\]** RSA Laboratories. *Personal* *Information Exchange Syntax Standard*. v1.0, June 1999.
 
@@ -768,22 +768,22 @@ URL: http://www.ietf.org/rfc/rfc5705.txt
 
 **\[TLS\]** \[RFC2246\] Dierks, T. and C. Allen, "The TLS Protocol Version 1.0", RFC 2246, January 1999. URL: http://www.ietf.org/rfc/rfc2246.txt, superseded by \[RFC4346\] Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.1", RFC 4346, April 2006. URL: http://www.ietf.org/rfc/rfc4346.txt, which was superseded by \[TLS12\].
 
-**\[TLS12\]** \[RFC5246\] Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.2", RFC 5246, August 2008.  
+**\[TLS12\]** \[RFC[[5246]]\] Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.2", RFC [[5246]], August 2008.  
 URL: http://www.ietf.org/rfc/rfc5246.txt
 
 **\[X.500\]** ITU-T. Information Technology — Open Systems Interconnection — The Directory: Overview of Concepts, Models and Services. February 2001. Identical to ISO/IEC 9594-1
 
 **\[X.509\]** ITU-T. Information Technology — Open Systems Interconnection — The Directory: Public-key and Attribute Certificate Frameworks. March 2000. Identical to ISO/IEC 9594-8
 
-**\[X.680\]** ITU-T. Information Technology — Abstract Syntax Notation One (ASN.1): Specification of Basic Notation. July 2002. Identical to ISO/IEC 8824-1
+**\[X.680\]** ITU-T. Information Technology — Abstract Syntax Notation One ([[ASN.1]]): Specification of Basic Notation. July 2002. Identical to ISO/IEC 8824-1
 
-**\[X.690\]** ITU-T. Information Technology — ASN.1 Encoding Rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER), and Distinguished Encoding Rules (DER). July 2002. Identical to ISO/IEC 8825-1
+**\[X.690\]** ITU-T. Information Technology — [[ASN.1]] Encoding Rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER), and Distinguished Encoding Rules (DER). July 2002. Identical to ISO/IEC 8825-1
 
 ## 1.6 Non-Normative References
 
 **\[ANSI C\]** ANSI/ISO. American National Standard for Programming Languages – C. 1990.
 
-**\[CC/PP\]** W3C. Composite Capability/Preference Profiles (CC/PP): Structure and Vocabularies. World Wide Web Consortium, January 2004.  
+**\[CC/PP\]** W3C. Composite Capability/Preference [[Profile]]s (CC/PP): Structure and Vocabularies. World Wide Web Consortium, January 2004.  
 URL: [http://www.w3.org/TR/CCPP-struct-vocab/](http://www.w3.org/TR/CCPP-struct-vocab/)
 
 **\[CDPD**\] Ameritech Mobile Communications et al. Cellular Digital Packet Data System Specifications: Part 406: Airlink Security. 1993.
@@ -794,9 +794,9 @@ URL: [http://www.w3.org/TR/CCPP-struct-vocab/](http://www.w3.org/TR/CCPP-struct-
 
 **\[ISO/IEC 7816-4\]** ISO. Information Technology — Identification Cards — Integrated Circuit(s) with Contacts — Part 4: Interindustry Commands for Interchange. 1995.
 
-**\[ISO/IEC 8824-1\]** ISO. Information Technology-- Abstract Syntax Notation One (ASN.1): Specification of Basic Notation. 2002.
+**\[ISO/IEC 8824-1\]** ISO. Information Technology-- Abstract Syntax Notation One ([[ASN.1]]): Specification of Basic Notation. 2002.
 
-**\[ISO/IEC 8825-1\]** ISO. Information Technology—ASN.1 Encoding Rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER), and Distinguished Encoding Rules (DER). 2002.
+**\[ISO/IEC 8825-1\]** ISO. Information Technology—[[ASN.1]] Encoding Rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER), and Distinguished Encoding Rules (DER). 2002.
 
 **\[ISO/IEC 9594-1\]** ISO. Information Technology — Open Systems Interconnection — The Directory: Overview of Concepts, Models and Services. 2001.
 
@@ -804,7 +804,7 @@ URL: [http://www.w3.org/TR/CCPP-struct-vocab/](http://www.w3.org/TR/CCPP-struct-
 
 **\[ISO/IEC 9796-2\]** ISO. Information Technology — Security Techniques — Digital Signature Scheme Giving Message Recovery — Part 2: Integer factorization based mechanisms. 2002.
 
-**\[Java MIDP\]** Java Community Process. Mobile Information Device Profile for Java 2 Micro Edition. November 2002.  
+**\[Java MIDP\]** Java Community Process. Mobile Information Device [[Profile]] for Java 2 Micro Edition. November 2002.  
 URL: [http://jcp.org/jsr/detail/118.jsp](http://jcp.org/jsr/detail/118.jsp)
 
 **\[MeT-PTD\]** MeT. MeT PTD Definition – Personal Trusted Device Definition, Version 1.0, February 2003.  
@@ -1466,15 +1466,15 @@ Note that implementations of previous versions of Cryptoki may have used other m
 
 typedef CK\_ULONG CK\_PROFILE\_ID;
 
-Profiles are defines in the PKCS #11 Cryptographic Token Interface Profiles document. s. ID's greater than 0xffffffff may cause compatibility issues on platforms that have CK\_ULONG values of 32 bits, and should be avoided.
+[[Profile]]s are defines in the PKCS #11 Cryptographic Token Interface [[Profile]]s document. s. ID's greater than 0xffffffff may cause compatibility issues on platforms that have CK\_ULONG values of 32 bits, and should be avoided.
 
 Vendor defined values for this type may also be specified.
 
 CKP\_VENDOR\_DEFINED
 
-Profile IDs **CKP\_VENDOR\_DEFINED** and above are permanently reserved for token vendors. For interoperability, vendors should register their object classes through the PKCS process.
+[[Profile]] IDs **CKP\_VENDOR\_DEFINED** and above are permanently reserved for token vendors. For interoperability, vendors should register their object classes through the PKCS process.
 
-*Valid Profile IDs in Cryptoki always have nonzero values.* For developers’ convenience, Cryptoki defines the following symbolic value:
+*Valid [[Profile]] IDs in Cryptoki always have nonzero values.* For developers’ convenience, Cryptoki defines the following symbolic value:
 
 CKP\_INVALID\_ID
 
@@ -2645,8 +2645,8 @@ Table 22, X.509 Attribute Certificate Object Attributes
 
 | **Attribute** | **Data Type** | **Meaning** |
 | --- | --- | --- |
-| CKA\_OWNER <sup>1</sup> | Byte Array | DER-encoding of the attribute certificate's subject field. This is distinct from the CKA\_SUBJECT attribute contained in CKC\_X\_509 certificates because the ASN.1 syntax and encoding are different. |
-| CKA\_AC\_ISSUER | Byte Array | DER-encoding of the attribute certificate's issuer field. This is distinct from the CKA\_ISSUER attribute contained in CKC\_X\_509 certificates because the ASN.1 syntax and encoding are different. (default empty) |
+| CKA\_OWNER <sup>1</sup> | Byte Array | DER-encoding of the attribute certificate's subject field. This is distinct from the CKA\_SUBJECT attribute contained in CKC\_X\_509 certificates because the [[ASN.1]] syntax and encoding are different. |
+| CKA\_AC\_ISSUER | Byte Array | DER-encoding of the attribute certificate's issuer field. This is distinct from the CKA\_ISSUER attribute contained in CKC\_X\_509 certificates because the [[ASN.1]] syntax and encoding are different. (default empty) |
 | CKA\_SERIAL\_NUMBER | Byte Array | DER-encoding of the certificate serial number. (default empty) |
 | CKA\_ATTR\_TYPES | Byte Array | BER-encoding of a sequence of object identifier values corresponding to the attribute types contained in the certificate. When present, this field offers an opportunity for applications to search for a particular attribute certificate without fetching and parsing the certificate itself. (default empty) |
 | CKA\_VALUE <sup>1</sup> | Byte Array | BER-encoding of the certificate. |
@@ -2933,9 +2933,9 @@ This section defines the object class CKO\_PROFILE for type CK\_OBJECT\_CLASS as
 
 ### 4.13.2 Overview
 
-Profile objects (object class CKO\_PROFILE) describe which PKCS #11 profiles the token implements. Profiles are defined in the OASIS PKCS #11 Cryptographic Token Interface Profiles document. A given token can contain more than one profile ID. The following table lists the attributes supported by profile objects, in addition to the common attributes defined for this object class:
+[[Profile]] objects (object class CKO\_PROFILE) describe which PKCS #11 profiles the token implements. [[Profile]]s are defined in the OASIS PKCS #11 Cryptographic Token Interface [[Profile]]s document. A given token can contain more than one profile ID. The following table lists the attributes supported by profile objects, in addition to the common attributes defined for this object class:
 
-Table 31, Profile Object Attributes
+Table 31, [[Profile]] Object Attributes
 
 | **Attribute** | **Data type** | **Meaning** |
 | --- | --- | --- |

@@ -9,14 +9,14 @@ tags:
 
 **本文你会学到**：
 
-- 如何在 GitLab CI/CD 中快速集成 Claude Code
+- 如何在 GitLab [[CI/CD]] 中快速集成 [[Claude Code]]
 - 使用 Amazon Bedrock 和 Google Vertex AI 的 OIDC 无密钥认证
 - 通过配置示例掌握代码审查、Bug 修复和功能实现等典型工作流
 - 安全治理和成本控制的实践建议
 
 ## 为什么在 GitLab 中用 Claude Code？
 
-当你在 GitLab 上管理项目时，可能会遇到这样的问题：Issue 描述了明确的需求，但没人手实现；MR 等了很久没人审查；测试失败需要快速定位修复。Claude Code 集成到 GitLab CI/CD 后，这些问题可以自动解决。
+当你在 GitLab 上管理项目时，可能会遇到这样的问题：Issue 描述了明确的需求，但没人手实现；MR 等了很久没人审查；测试失败需要快速定位修复。[[Claude Code]] 集成到 GitLab [[CI/CD]] 后，这些问题可以自动解决。
 
 核心价值：
 
@@ -29,15 +29,15 @@ tags:
 
 > [!info] 研究预览
 >
-> Claude Code for GitLab CI/CD 目前处于测试阶段，功能和特性可能随版本更新变化。此集成由 GitLab 维护，如需支持请参阅 [GitLab issue](https://gitlab.com/gitlab-org/gitlab/-/issues/573776)。
+> [[Claude Code]] for GitLab [[CI/CD]] 目前处于测试阶段，功能和特性可能随版本更新变化。此集成由 GitLab 维护，如需支持请参阅 [GitLab issue](https://gitlab.com/gitlab-org/gitlab/-/issues/573776)。
 
 > [!note] 底层技术
 >
-> 此集成基于 [Claude Code CLI and Agent SDK](../../../agent-sdk/index.md) 构建，可以在 CI/CD 作业和自定义自动化工作流中以编程方式使用 Claude。
+> 此集成基于 [Claude Code CLI and Agent SDK](../../../agent-sdk/index.md) 构建，可以在 [[CI/CD]] 作业和自定义自动化工作流中以编程方式使用 Claude。
 
 ## 工作原理
 
-Claude Code 使用 GitLab CI/CD 在隔离的容器中运行 AI 任务，结果通过 MR 提交回来。整个过程可以简化为：触发事件 -> 收集上下文 -> 调用 AI -> 提交结果。
+[[Claude Code]] 使用 GitLab [[CI/CD]] 在隔离的容器中运行 AI 任务，结果通过 MR 提交回来。整个过程可以简化为：触发事件 -> 收集上下文 -> 调用 AI -> 提交结果。
 
 ```mermaid
 graph LR
@@ -48,7 +48,7 @@ graph LR
 
 ### 事件驱动的编排
 
-GitLab 监听你选择的触发器（例如评论中的 `@claude`、MR 事件、手动触发）。作业从线程和仓库收集上下文，构建提示，运行 Claude Code。
+GitLab 监听你选择的触发器（例如评论中的 `@claude`、MR 事件、手动触发）。作业从线程和仓库收集上下文，构建提示，运行 [[Claude Code]]。
 
 ### 提供商抽象
 
@@ -62,11 +62,11 @@ GitLab 监听你选择的触发器（例如评论中的 `@claude`、MR 事件、
 
 ### 沙箱执行
 
-每次交互都在具有严格网络和文件系统规则的容器中运行。Claude Code 强制执行工作区范围的权限限制写入操作。每项变更都通过 MR 流动，审查者可以看到完整的 diff，现有的分支保护和审批规则仍然有效。
+每次交互都在具有严格网络和文件系统规则的容器中运行。[[Claude Code]] 强制执行工作区范围的权限限制写入操作。每项变更都通过 MR 流动，审查者可以看到完整的 diff，现有的分支保护和审批规则仍然有效。
 
 ## Claude 能做什么？
 
-Claude Code 支持以下 CI/CD 工作流：
+[[Claude Code]] 支持以下 [[CI/CD]] 工作流：
 
 - 从问题描述或评论创建和更新 MR
 - 分析性能回归并提议优化
@@ -100,7 +100,7 @@ Claude 定位错误、实现修复，并更新分支或打开新 MR。
 
 ### 添加掩码 CI/CD 变量
 
-1. 进入 **Settings** -> **CI/CD** -> **Variables**
+1. 进入 **[[Settings]]** -> **[[CI/CD]]** -> **Variables**
 2. 添加 `ANTHROPIC_API_KEY`（勾选 Mask，按需勾选 Protected）
 
 ### 添加 Claude 作业
@@ -135,7 +135,7 @@ claude:
       --debug
 ```
 
-添加后，从 **CI/CD** -> **Pipelines** 手动运行作业进行测试，或从 MR 事件触发。
+添加后，从 **[[CI/CD]]** -> **Pipelines** 手动运行作业进行测试，或从 MR 事件触发。
 
 > [!note] 企业提供商
 >
@@ -147,7 +147,7 @@ claude:
 
 | 提供商 | 认证配置 |
 |--------|---------|
-| Claude API | 将 `ANTHROPIC_API_KEY` 存储为掩码 CI/CD 变量 |
+| Claude API | 将 `ANTHROPIC_API_KEY` 存储为掩码 [[CI/CD]] 变量 |
 | Amazon Bedrock | 配置 GitLab -> AWS OIDC，创建具有 Bedrock 权限的 IAM 角色 |
 | Google Vertex AI | 配置 GitLab -> GCP Workload Identity Federation |
 
@@ -200,7 +200,7 @@ claude:
 
 ### Amazon Bedrock 作业（OIDC）
 
-通过 OIDC 交换 GitLab JWT 令牌获取临时 AWS 凭证，无需存储静态密钥：
+通过 OIDC 交换 GitLab [[JWT 令牌]]获取临时 AWS 凭证，无需存储静态密钥：
 
 **.gitlab-ci.yml（Bedrock 片段）**
 
@@ -238,7 +238,7 @@ claude-bedrock:
     AWS_REGION: "us-west-2"
 ```
 
-需要的 CI/CD 变量：
+需要的 [[CI/CD]] 变量：
 
 | 变量 | 说明 |
 |------|------|
@@ -290,7 +290,7 @@ claude-vertex:
     CLOUD_ML_REGION: "us-east5"
 ```
 
-需要的 CI/CD 变量：
+需要的 [[CI/CD]] 变量：
 
 | 变量 | 说明 |
 |------|------|
@@ -344,7 +344,7 @@ IAM 角色的信任策略需要限定 GitLab 项目和分支：
 }
 ```
 
-存储为 CI/CD 变量：`AWS_ROLE_TO_ASSUME`、`AWS_REGION`
+存储为 [[CI/CD]] 变量：`AWS_ROLE_TO_ASSUME`、`AWS_REGION`
 
 ### Google Vertex AI OIDC 配置
 
@@ -376,11 +376,11 @@ gcloud iam service-accounts add-iam-policy-binding \
   --role="roles/iam.workloadIdentityUser"
 ```
 
-存储为 CI/CD 变量：`GCP_WORKLOAD_IDENTITY_PROVIDER`、`GCP_SERVICE_ACCOUNT`、`CLOUD_ML_REGION`
+存储为 [[CI/CD]] 变量：`GCP_WORKLOAD_IDENTITY_PROVIDER`、`GCP_SERVICE_ACCOUNT`、`CLOUD_ML_REGION`
 
 ## 常见参数和变量
 
-Claude Code 在 CI/CD 中支持以下常用输入：
+[[Claude Code]] 在 [[CI/CD]] 中支持以下常用输入：
 
 | 参数 / 变量 | 说明 |
 |------------|------|
@@ -413,14 +413,14 @@ Claude Code 在 CI/CD 中支持以下常用输入：
 - 每个作业在具有受限网络访问的隔离容器中运行
 - Claude 的变更通过 MR 流动，审查者可以看到每个 diff
 - 分支保护和审批规则对 AI 生成的代码同样有效
-- Claude Code 使用工作区范围的权限限制写入范围
+- [[Claude Code]] 使用工作区范围的权限限制写入范围
 - 成本在你的控制下——你提供自己的提供商凭证
 
 ### 密钥安全
 
 > [!warning] 永远不要将 API 密钥或云凭证提交到仓库
 >
-> 始终使用 GitLab CI/CD 变量：
+> 始终使用 GitLab [[CI/CD]] 变量：
 >
 > - 将 `ANTHROPIC_API_KEY` 添加为掩码变量（需要时勾选 Protected）
 > - 优先使用提供商 OIDC 认证（无长期密钥）
@@ -429,7 +429,7 @@ Claude Code 在 CI/CD 中支持以下常用输入：
 
 ### 成本控制
 
-使用 Claude Code in GitLab CI/CD 涉及两方面成本：
+使用 [[Claude Code]] in GitLab [[CI/CD]] 涉及两方面成本：
 
 **GitLab Runner 时间**：Claude 在你的 Runner 上运行并消耗计算分钟数。
 
@@ -447,7 +447,7 @@ Claude Code 在 CI/CD 中支持以下常用输入：
 ### Claude 不响应 @claude 命令
 
 - 验证 Pipeline 是否被触发（手动、MR 事件或通过注释事件监听器）
-- 确保 CI/CD 变量（`ANTHROPIC_API_KEY` 或云提供商设置）存在且未掩码
+- 确保 [[CI/CD]] 变量（`ANTHROPIC_API_KEY` 或云提供商设置）存在且未掩码
 - 检查评论是否包含 `@claude`（不是 `/claude`）以及你的提及触发器是否已配置
 
 ### 作业无法写入评论或打开 MR

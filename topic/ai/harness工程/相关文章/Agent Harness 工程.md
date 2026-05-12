@@ -34,7 +34,7 @@ A harness encompasses every piece of code, configuration, and execution logic th
 
 Concretely, a harness includes:
 
-- System prompts, CLAUDE.md, AGENTS.md, skill files, and subagent instructions.
+- System prompts, [[CLAUDE.md]], AGENTS.md, skill files, and subagent instructions.
 - Tools, skills, MCP servers, and their technical descriptions.
 - Bundled infrastructure, such as the filesystem, sandboxes, and headless browsers.
 - Orchestration logic for spawning subagents, handling handoffs, and routing models.
@@ -43,7 +43,7 @@ Concretely, a harness includes:
 
 At its core, an agent is a system that runs tools in a loop to achieve a goal. The real skill lies in designing both the tools and that loop.
 
-While this represents a massive surface area, it is your surface area, not the model provider's. Claude Code, Cursor, Codex, Aider, and Cline are all harnesses. **The underlying model might be identical across platforms, but the behavior you experience is dominated by the harness.**
+While this represents a massive surface area, it is your surface area, not the model provider's. [[Claude Code]], Cursor, Codex, Aider, and Cline are all harnesses. **The underlying model might be identical across platforms, but the behavior you experience is dominated by the harness.**
 
 ## Let's reframe the "skill Issue"
 
@@ -133,7 +133,7 @@ The clearest public picture I’ve seen of a mature harness is Fareed Khan’s (
 
 ![图像](https://pbs.twimg.com/media/HH6KJ_rbQAAQw-_?format=jpg&name=large)
 
-Almost every concept from the previous section shows up on this diagram as a named component. Context injection is the knowledge layer. Loop state lives in the memory store and the worktree isolator. Destructive-action hooks sit behind the permission gate. Subagent context firewalls are the entire multi-agent layer. The tool dispatch registry is where MCP servers and bash both plug in. **Claude Code’s trajectory is about the harness at least as much as about the model underneath it.**
+Almost every concept from the previous section shows up on this diagram as a named component. Context injection is the knowledge layer. Loop state lives in the memory store and the worktree isolator. Destructive-action hooks sit behind the permission gate. Subagent context firewalls are the entire multi-agent layer. The tool dispatch registry is where MCP servers and bash both plug in. **[[Claude Code]]’s trajectory is about the harness at least as much as about the model underneath it.**
 
 ## Harnesses Don't Shrink, They Move
 

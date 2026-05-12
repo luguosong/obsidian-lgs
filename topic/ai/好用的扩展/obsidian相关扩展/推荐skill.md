@@ -20,7 +20,7 @@ tags:
 |                                                                          | json-canvas             | 让 AI 能够创建和编辑 Obsidian 的.canvas 白板文件，通过 JSON 结构实现节点（文本、文件、链接、组）的布局以及它们之间的连线逻辑。                                       | ❌   |
 |                                                                          |                         |                                                                                                                     |     |
 | **Axton，著名博主@回到Axton**   GitHub: `axtonliu/axton-obsidian-visual-skills` | obsidian-canvas-creator | 加强版的 json canvas skill，解决了节点重叠和空间分布不均的问题。                                                                           | ✅   |
-|                                                                          | mermaid-visualizer      | 将文本逻辑转化为专业的 Mermaid 架构图或流程图，并内置了针对 Obsidian 渲染引擎的语法纠错机制。                                                            | ✅   |
+|                                                                          | mermaid-visualizer      | 将文本逻辑转化为专业的 [[Mermaid]] 架构图或流程图，并内置了针对 Obsidian 渲染引擎的语法纠错机制。                                                            | ✅   |
 |                                                                          | excalidraw-diagram      | 将文本逻辑转化为手绘风格的 Excalidraw 图表                                                                                         | ✅   |
 |                                                                          |                         |                                                                                                                     |     |
 | **OpenClaw官方GitHub**   GitHub: `openclaw/openclaw/skills/obsidian`       | obsidian-skill          | 直接操作文件系统，也就是文件I/O，非常消耗Token，在官方已经发布Obsidian-cli的情况下，没有理由继续使用这个过时的方式。                                                | ❌   |
@@ -168,7 +168,7 @@ obsidian daily
 
 #### 所需依赖
 
-- **基础环境** ：智能体工具如 Claude Code, OpenCode。
+- **基础环境** ：智能体工具如 [[Claude Code]], OpenCode。
 
 #### 使用方法
 
@@ -225,8 +225,8 @@ obsidian daily
 
 ## 核心插件
 
-- **claudian**: Obsidian 第三方插件（暂未上架官方市场），适配 Claude Code。GitHub Repo: `YishenTu/claudian`
-- **obsidian-agent-client**: 第三方插件（暂未上架官方市场），适配主流智能体：Claude Code, Codex, Gemini CLI, OpenCode, Qwen Code。GitHub Repo: `RAIT-09/obsidian-agent-client`
+- **claudian**: Obsidian 第三方插件（暂未上架[[官方市场]]），适配 [[Claude Code]]。GitHub Repo: `YishenTu/claudian`
+- **obsidian-agent-client**: 第三方插件（暂未上架[[官方市场]]），适配主流智能体：[[Claude Code]], Codex, Gemini CLI, OpenCode, Qwen Code。GitHub Repo: `RAIT-09/obsidian-agent-client`
 
 ### 1\. 安装方式
 

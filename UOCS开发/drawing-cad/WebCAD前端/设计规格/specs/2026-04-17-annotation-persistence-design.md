@@ -182,4 +182,4 @@ importAnnotations(viewer, file) {
 | `DrawingWebApp/src/services/ViewerService.js` | Viewer 服务封装 |
 | `DrawingWeb/CadCore.h` | C++ 瞬态批注 API 声明 |
 | `DrawingWeb/CadCoreAnnotation.cpp` | C++ 瞬态批注实现 |
-| `DrawingWebApp/docs/specs/2026-04-17-transient-annotation-design.md` | 瞬态批注架构设计文档 |
+| `DrawingWebApp/docs/specs/2026-04-17-transient-annotation-design.md` | 瞬态批注[[架构设计]]文档 |

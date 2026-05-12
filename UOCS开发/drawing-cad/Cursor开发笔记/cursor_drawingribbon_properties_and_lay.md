@@ -5,7 +5,7 @@ _Exported on 2026/3/9 at GMT+8 19:44:08 from Cursor (2.6.13)_
 
 **User**
 
-在 @DrawingWebApp/src/components/Ribbon/DrawingRibbon.jsx 绘图模式下的右侧两个面板：特性和图层，需要优化。 特性面板中的信息目前是写死的，在没有对象被选中时，应该显示OdDbDatabase的当前信息，例如：图层是当前图层;   图层面板中，没有高亮显示当前图层，鼠标双击某行时，切换当前图层。我还需要实现对象特性功能，即: 单独选择某个对象（不是在命令中pIO->select选择对象）时，特性中显示被选中对象的信息，E:\ODAGitLab\main24.10\Drawing\Examples\Qt\OdaQtPropSystem\ 这个目录是ODA QT应用程序案例，你可以分析一下，在AutoCAD中是通过acedSSGetFirst和acedSSSetFirst函数得到和设置当前的选择集的，ODA怎么处理当前被选中的对象。
+在 @DrawingWebApp/src/components/Ribbon/DrawingRibbon.jsx 绘图模式下的右侧两个面板：特性和图层，需要优化。 特性面板中的信息目前是写死的，在没有对象被选中时，应该显示OdDbDatabase的当前信息，例如：图层是当前图层;   图层面板中，没有高亮显示当前图层，鼠标双击某行时，切换当前图层。我还需要实现对象特性功能，即: 单独选择某个对象（不是在命令中pIO->select选择对象）时，特性中显示被选中对象的信息，E:\ODAGitLab\main24.10\Drawing\Examples\Qt\OdaQtPropSystem\ 这个目录是ODA QT应用程序案例，你可以分析一下，在[[AutoCAD]]中是通过acedSSGetFirst和acedSSSetFirst函数得到和设置当前的选择集的，ODA怎么处理当前被选中的对象。
 
 ---
 
@@ -25,7 +25,7 @@ _Exported on 2026/3/9 at GMT+8 19:44:08 from Cursor (2.6.13)_
 
 ## 一、ODA 中"当前选择集"的处理机制（对标 acedSSGetFirst/acedSSSetFirst）
 
-在 AutoCAD 中，`acedSSGetFirst` 获取当前 pickfirst 选择集（用户在非命令状态下点选/框选的对象），`acedSSSetFirst` 设置它。ODA 中有完全对应的机制：
+在 [[AutoCAD]] 中，`acedSSGetFirst` 获取当前 pickfirst 选择集（用户在非命令状态下点选/框选的对象），`acedSSSetFirst` 设置它。ODA 中有完全对应的机制：
 
 ### 1. Qt 桌面端的实现（OdaQtConsole）
 
@@ -43,7 +43,7 @@ OdSelectionSet* OdqConsoleTab::workingSelectionSet() {
 }
 ```
 
-在 `CommandContextImpl::select()` 中，`pickfirst()` 和 `previousSelection()` 对应了 AutoCAD 的 SSGetFirst 机制：
+在 `CommandContextImpl::select()` 中，`pickfirst()` 和 `previousSelection()` 对应了 [[AutoCAD]] 的 SSGetFirst 机制：
 
 - **`pickfirst()`**：命令启动前用户预选的对象集
 - **`previousSelection()`**：上次 `select()` 的结果，支持 "Previous" 选项

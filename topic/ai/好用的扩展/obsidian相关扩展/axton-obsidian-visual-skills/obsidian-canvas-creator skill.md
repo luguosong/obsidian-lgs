@@ -14,7 +14,7 @@ tags:
 # obsidian-canvas-creator
 
 > [!summary]
-> 从文本内容创建交互式 Obsidian Canvas（`.canvas`）文件，输出有效的 JSON Canvas 格式，可直接在 Obsidian 中打开。
+> 从[[文本内容]]创建交互式 [[Obsidian]] [[Canvas]]（`.canvas`）文件，输出有效的 JSON [[Canvas]] 格式，可直接在 [[Obsidian]] 中打开。
 
 **触发词**：`Canvas`、`思维导图`、`可视化图表`、`mind map`
 
@@ -128,7 +128,7 @@ tags:
 
 也支持自定义 hex：`"#4A90E2"`
 
-> [!tip] 同一 Canvas 内保持颜色格式一致（全用预设或全用 hex）。
+> [!tip] 同一 [[Canvas]] 内保持颜色格式一致（全用预设或全用 hex）。
 
 ## 节点尺寸指南
 
@@ -172,7 +172,7 @@ nodes 数组中的顺序决定层叠：
 1. **分析内容** → 识别主题、层级关系、关键点
 2. **确定布局** → 思维导图（放射状）或自由布局（分区）
 3. **规划结构** → 根节点 → 主分支 → 次级分支 → 叶节点
-4. **生成 Canvas** → 节点 + 边 + 可选分组
+4. **生成 [[Canvas]]** → 节点 + 边 + 可选分组
 5. **验证输出** → 唯一 ID、无重叠、有效引用、JSON 格式正确
 
 ## 完整示例
@@ -224,6 +224,6 @@ nodes 数组中的顺序决定层叠：
 
 ## 更多参考
 
-- [[Canvas 规范参考]] — JSON Canvas 完整规范
+- [[Canvas 规范参考]] — JSON [[Canvas]] 完整规范
 - [[Canvas 布局算法参考]] — MindMap/Freeform 布局算法详解
 - [[axton-obsidian-visual-skills 套装总览]] — 返回项目总览

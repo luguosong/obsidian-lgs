@@ -12,7 +12,7 @@ tags:
 **本文你会学到**：
 
 - 🤔 为什么两者可以在同一台电脑上协同工作
-- 🗂️ 扩展体系（Skills / Hooks / MCP / Instructions）哪些可以共享、哪些要各自维护
+- 🗂️ [[扩展体系]]（[[Skills]] / Hooks / MCP / Instructions）哪些可以共享、哪些要各自维护
 - 📌 防止配置冗余的单一来源策略
 - 🎯 不同任务场景下如何选择工具
 
@@ -26,7 +26,7 @@ tags:
 >
 > **第一周**：把共用的 MCP 配置迁到 `.mcp.json`，凭证换成环境变量
 >
-> **第一月**：根据团队实际痛点再考虑 Skills 和 Hooks
+> **第一月**：根据团队实际痛点再考虑 [[Skills]] 和 Hooks
 
 大部分团队用好前两步已经足够。
 
@@ -34,10 +34,10 @@ tags:
 
 ## 🤔 为什么两者值得同时使用？
 
-GitHub Copilot CLI 和 Claude Code 并不是互相替代的关系，它们在设计哲学上有明显分工：
+[[GitHub Copilot CLI]] 和 [[Claude Code]] 并不是互相替代的关系，它们在设计哲学上有明显分工：
 
 - `Copilot CLI` 强调 AI 与人类的职责分工——每一步都可以审批确认，内置 GitHub MCP，对 Issue / PR / CI 的原生集成无需额外配置
-- `Claude Code` 强调代理自主性——Sub-agents 并行执行、百万 token 上下文窗口，适合跨越多文件的复杂任务
+- `Claude Code` 强调代理自主性——[[Sub-agents]] 并行执行、百万 token 上下文窗口，适合跨越多文件的复杂任务
 
 两者共同遵循 MCP 协议、AGENTS.md 跨平台规范，以及部分相同的扩展目录格式。这意味着你不需要为两个工具各维护一套配置——大多数扩展只需写一份，两者都能读到。
 
@@ -47,25 +47,25 @@ GitHub Copilot CLI 和 Claude Code 并不是互相替代的关系，它们在设
 
 **全局层**
 
-| 类型 | Claude Code | Copilot CLI | 可否共享 |
+| 类型 | [[Claude Code]] | [[Copilot]] CLI | 可否共享 |
 |------|------------|------------|:-------:|
 | 配置目录 | `~/.claude/` | `~/.copilot/`（Windows：`%USERPROFILE%\.copilot\`） | ❌ 各自独立 |
 | 全局指令文件 | `~/.claude/CLAUDE.md` | `~/.copilot/copilot-instructions.md` | ❌ 各自维护 |
 | MCP 配置 | `~/.claude.json`（`mcpServers` 字段） | `~/.copilot/mcp-config.json` | ❌ 各自维护 |
-| Skills | `~/.claude/skills/` | `~/.claude/skills/`（兼容） | ✅ 共用 |
+| [[Skills]] | `~/.claude/skills/` | `~/.claude/skills/`（兼容） | ✅ 共用 |
 | Hooks | `~/.claude/settings.json` hooks 字段 | `~/.claude/settings.json`（兼容） | ✅ 共用 |
-| Agents / Sub-agents | `~/.claude/agents/` | 无对等概念 | ❌ Claude Code 独有 |
-| 会话/历史 | `~/.claude/projects/` | Copilot CLI 自有存储 | ❌ 格式不同 |
+| Agents / [[Sub-agents]] | `~/.claude/agents/` | 无对等概念 | ❌ [[Claude Code]] 独有 |
+| 会话/历史 | `~/.claude/projects/` | [[Copilot]] CLI 自有存储 | ❌ 格式不同 |
 
 **项目层**
 
-| 类型 | Claude Code | Copilot CLI | 可否共享 |
+| 类型 | [[Claude Code]] | [[Copilot]] CLI | 可否共享 |
 |------|------------|------------|:-------:|
 | 项目指令 | `./CLAUDE.md`（及子目录层叠） | `./AGENTS.md` / `.github/copilot-instructions.md` | ✅ 共用 `CLAUDE.md` |
 | 项目级 MCP | `./.mcp.json` | `./.mcp.json`（两者共用） | ✅ 共用 `.mcp.json` |
-| Skills | `.claude/skills/` | `.claude/skills/`（兼容） | ✅ 共用 `.claude/skills/` |
+| [[Skills]] | `.claude/skills/` | `.claude/skills/`（兼容） | ✅ 共用 `.claude/skills/` |
 | Hooks | `.claude/settings.json` hooks 字段 | `.claude/settings.json`（兼容）/ `.github/hooks/*.json` | ✅ 共用 `settings.json` |
-| Agents / Sub-agents | `.claude/agents/` | 无对等概念 | ❌ Claude Code 独有 |
+| Agents / [[Sub-agents]] | `.claude/agents/` | 无对等概念 | ❌ [[Claude Code]] 独有 |
 | 忽略文件 | `.gitignore`（默认复用）+ `settings.json` 的 `permissions.deny` | `.gitignore`（直接读取） | ✅ 部分共享 |
 
 ### 共享能力分级
@@ -73,24 +73,24 @@ GitHub Copilot CLI 和 Claude Code 并不是互相替代的关系，它们在设
 **可直接共享（高价值）**
 
 - **项目指令文件**：`CLAUDE.md` 同时被两个工具读取，维护一份即可
-- **MCP 服务器配置**：`.mcp.json` 的 `mcpServers` 字段 schema 完全兼容
-- **Skills**：`.claude/skills/` 目录两者均自动加载
+- **[[MCP 服务器]]配置**：`.mcp.json` 的 `mcpServers` 字段 schema 完全兼容
+- **[[Skills]]**：`.claude/skills/` 目录两者均自动加载
 - **Hooks**：`.claude/settings.json` 的 `hooks` 字段两者均识别
 
 **部分可共享（需注意）**
 
-- **忽略文件**：Claude Code 默认复用 `.gitignore`。如需在此之外额外排除（例如 `.env.local` 参与 git 但不希望 AI 读），在 `.claude/settings.json` 的 `permissions.deny` 中声明，而不是新增 `.claudeignore`。Copilot CLI 直接读 `.gitignore`
-- **自定义斜杠命令**：Claude Code 的 `~/.claude/commands/*.md` 是其专有机制，Copilot CLI 无完全对等方案，只能手动引用 prompt 片段
+- **忽略文件**：[[Claude Code]] 默认复用 `.gitignore`。如需在此之外额外排除（例如 `.env.local` 参与 git 但不希望 AI 读），在 `.claude/settings.json` 的 `permissions.deny` 中声明，而不是新增 `.claudeignore`。[[Copilot]] CLI 直接读 `.gitignore`
+- **自定义斜杠命令**：[[Claude Code]] 的 `~/.claude/commands/*.md` 是其专有机制，[[Copilot]] CLI 无完全对等方案，只能手动引用 prompt 片段
 - **环境变量**：项目级 `.env`（非密钥部分）两者均可读取，凭证类环境变量各自独立
 
 **不能共享**
 
 | 内容 | 原因 |
 |------|------|
-| 认证凭证 | Claude Code 用 Anthropic API key，Copilot CLI 用 GitHub OAuth，机制不同 |
+| 认证凭证 | [[Claude Code]] 用 Anthropic API key，[[Copilot]] CLI 用 GitHub OAuth，机制不同 |
 | 会话历史 | 格式与存储位置都不同，无法互通 |
-| 模型选择 / Sub-agents | Sub-agents 是 Claude Code 独有机制，`.claude/agents/*.md` 文件在 Copilot CLI 中会被忽略，不会报错也不会生效；Copilot CLI 模型切换也独立 |
-| Claude Code Hooks | `PreToolUse`/`PostToolUse` 等事件类型在 Copilot CLI 中无对等概念 |
+| 模型选择 / [[Sub-agents]] | [[Sub-agents]] 是 [[Claude Code]] 独有机制，`.claude/agents/*.md` 文件在 [[Copilot]] CLI 中会被忽略，不会报错也不会生效；[[Copilot]] CLI 模型切换也独立 |
+| [[Claude Code]] Hooks | `PreToolUse`/`PostToolUse` 等事件类型在 [[Copilot]] CLI 中无对等概念 |
 
 ---
 
@@ -100,9 +100,9 @@ GitHub Copilot CLI 和 Claude Code 并不是互相替代的关系，它们在设
 
 最容易产生冗余的地方是项目规范。你可能有这样的疑问：
 
-> 我用 Copilot CLI 时应该维护 `.github/copilot-instructions.md`，用 Claude Code 时应该维护 `CLAUDE.md`——两份文件要同步，太麻烦了。
+> 我用 [[Copilot]] CLI 时应该维护 `.github/copilot-instructions.md`，用 [[Claude Code]] 时应该维护 `CLAUDE.md`——两份文件要同步，太麻烦了。
 
-实际上不需要两份。根据 Copilot CLI 的文档，仓库根目录的 `CLAUDE.md` 会被 Copilot CLI 自动读取，效果与 `AGENTS.md` 完全相同。
+实际上不需要两份。根据 [[Copilot]] CLI 的文档，仓库根目录的 `CLAUDE.md` 会被 [[Copilot]] CLI 自动读取，效果与 `AGENTS.md` 完全相同。
 
 如果你更倾向于以 `AGENTS.md` 作为[开放规范](https://agents.md)的统一源（未来迁移其他 AI CLI 更方便），也可以反向建立符号链接：
 
@@ -127,7 +127,7 @@ ln -s ~/.copilot/AGENTS.md ~/.claude/CLAUDE.md
         └── tests.instructions.md
 ```
 
-`不要同时维护` `CLAUDE.md` 和 `.github/copilot-instructions.md`，内容重复不仅需要人工同步，还会双倍消耗上下文 token。较新版本的 Copilot CLI 已支持自动去重（具体版本以官方文档为准），但语义冗余仍然存在。
+`不要同时维护` `CLAUDE.md` 和 `.github/copilot-instructions.md`，内容重复不仅需要人工同步，还会双倍消耗上下文 token。较新版本的 [[Copilot]] CLI 已支持自动去重（具体版本以官方文档为准），但语义冗余仍然存在。
 
 ### 📊 内容归属决策表
 
@@ -145,7 +145,7 @@ ln -s ~/.copilot/AGENTS.md ~/.claude/CLAUDE.md
 
 ### 📄 三文件同步：以 docs/ 为权威来源
 
-同时维护 README.md + CLAUDE.md + copilot-instructions.md 时，三份文件极易内容重叠、更新时漏掉一份。根本解法是把"谁是权威来源"按信息类型切分清楚。
+同时维护 README.md + [[CLAUDE.md]] + copilot-instructions.md 时，三份文件极易内容重叠、更新时漏掉一份。根本解法是把"谁是权威来源"按信息类型切分清楚。
 
 **推荐目录结构**
 
@@ -161,7 +161,7 @@ ln -s ~/.copilot/AGENTS.md ~/.claude/CLAUDE.md
     └── copilot-instructions.md   # 仅 Copilot 特有的偏好 / 提醒
 ```
 
-`docs/` 里的文件是权威来源，CLAUDE.md 和 copilot-instructions.md 都**引用**它们，不复制内容。
+`docs/` 里的文件是权威来源，[[CLAUDE.md]] 和 copilot-instructions.md 都**引用**它们，不复制内容。
 
 **README.md（只给人看，不写 AI 指令）**
 
@@ -174,11 +174,11 @@ ln -s ~/.copilot/AGENTS.md ~/.claude/CLAUDE.md
 - 常用命令：docs/COMMANDS.md
 ```
 
-**CLAUDE.md（只写 Claude 特有内容，用 @ 引用共享文档）**
+**[[CLAUDE.md]]（只写 Claude 特有内容，用 @ 引用共享文档）**
 
-Claude Code 支持 `@文件路径` 语法，会自动把引用的文件加载进上下文，无需复制内容：
+[[Claude Code]] 支持 `@文件路径` 语法，会自动把引用的文件加载进上下文，无需复制内容：
 
-**CLAUDE.md**
+**[[CLAUDE.md]]**
 
 ```markdown
 # Claude Code 工作指引
@@ -194,9 +194,9 @@ Claude Code 支持 `@文件路径` 语法，会自动把引用的文件加载进
 - 提交信息用中文，遵循 Conventional Commits
 ```
 
-**.github/copilot-instructions.md（只写 Copilot 特有内容）**
+**.github/copilot-instructions.md（只写 [[Copilot]] 特有内容）**
 
-Copilot CLI 没有 `@` 引用机制，但在需要时会读取被提到的文件路径：
+[[Copilot]] CLI 没有 `@` 引用机制，但在需要时会读取被提到的文件路径：
 
 **.github/copilot-instructions.md**
 
@@ -240,9 +240,9 @@ cat .github/copilot-specific.md >> .github/copilot-instructions.md
 
 ### 目录级规范：各有所长
 
-| 层级 | Claude Code | Copilot CLI | 建议 |
+| 层级 | [[Claude Code]] | [[Copilot]] CLI | 建议 |
 |-----|------------|------------|-----|
-| 子目录规范 | 子目录 `CLAUDE.md`（自动层叠） | `.github/instructions/*.instructions.md`（按 `applyTo` 匹配） | 优先用 Copilot 的路径匹配，Claude Code 也会读子目录的 `CLAUDE.md` |
+| 子目录规范 | 子目录 `CLAUDE.md`（自动层叠） | `.github/instructions/*.instructions.md`（按 `applyTo` 匹配） | 优先用 [[Copilot]] 的路径匹配，[[Claude Code]] 也会读子目录的 `CLAUDE.md` |
 | 全局个人偏好 | `~/.claude/CLAUDE.md` | `~/.copilot/copilot-instructions.md` | 两者分别维护，内容不同（下文说明） |
 
 ### 全局个人配置：各自有侧重
@@ -308,7 +308,7 @@ disable-model-invocation: false
 - ✅ 修复建议
 ```
 
-`disable-model-invocation`、`model`、`effort`、`context: fork` 等 Claude Code 专有字段，Copilot CLI 会忽略但不报错，不影响使用。
+`disable-model-invocation`、`model`、`effort`、`context: fork` 等 [[Claude Code]] 专有字段，[[Copilot]] CLI 会忽略但不报错，不影响使用。
 
 ---
 
@@ -316,7 +316,7 @@ disable-model-invocation: false
 
 ### 写在 `.claude/settings.json`，两者均读
 
-`.claude/settings.json` 中的 `hooks` 字段被两个工具共同识别。推荐使用 Claude Code 的嵌套 `matcher/hooks` 格式——较新版本的 Copilot CLI 已完全兼容（具体版本以官方文档为准）：
+`.claude/settings.json` 中的 `hooks` 字段被两个工具共同识别。推荐使用 [[Claude Code]] 的嵌套 `matcher/hooks` 格式——较新版本的 [[Copilot]] CLI 已完全兼容（具体版本以官方文档为准）：
 
 **.claude/settings.json**
 
@@ -354,7 +354,7 @@ disable-model-invocation: false
 | 位置 | 作用范围 | 提交 Git | 适合内容 |
 |------|---------|:-------:|---------|
 | `.claude/settings.json` 的 hooks 字段 | 项目级，两工具共享 | ✅ | 格式化、Lint、安全校验 |
-| `.github/hooks/*.json` | 项目级，Copilot CLI 专用 | ✅ | Copilot 特有的审计、通知 |
+| `.github/hooks/*.json` | 项目级，[[Copilot]] CLI 专用 | ✅ | [[Copilot]] 特有的审计、通知 |
 | `~/.claude/settings.json` 的 hooks 字段 | 个人全局，两工具共享 | ❌ | 个人通知偏好 |
 
 > ⚠️ 不要在 `.claude/settings.json` 和 `.github/hooks/` 中写同一个逻辑，会触发两次。
@@ -385,10 +385,10 @@ disable-model-invocation: false
 
 | 工具 | 全局 MCP 配置文件 | 说明 |
 |------|----------------|-----|
-| Claude Code | `~/.claude.json` 中的 `mcpServers` | 支持 HTTP / SSE / stdio |
-| Copilot CLI | `~/.copilot/mcp-config.json` | 支持 stdio |
+| [[Claude Code]] | `~/.claude.json` 中的 `mcpServers` | 支持 HTTP / SSE / stdio |
+| [[Copilot]] CLI | `~/.copilot/mcp-config.json` | 支持 stdio |
 
-需要某个 MCP 服务器只在一个工具中使用时，放到对应的全局配置中，不要放进 `.mcp.json`。
+需要某个 [[MCP 服务器]]只在一个工具中使用时，放到对应的全局配置中，不要放进 `.mcp.json`。
 
 ### 🔐 密钥与凭证的边界
 
@@ -422,13 +422,13 @@ disable-model-invocation: false
 根据以上各节的分析，最终推荐三条落地原则：
 
 1. **项目指令文件：选定一份，符号链接另一份**
-   以 `CLAUDE.md` 或 `AGENTS.md` 二选一作为事实源（推荐 `CLAUDE.md`，Claude Code 和 Copilot CLI 均自动识别），另一侧用 `ln -s` 指向它。新团队成员无论用哪个工具都能读到统一规范。
+   以 `CLAUDE.md` 或 `AGENTS.md` 二选一作为事实源（推荐 `CLAUDE.md`，[[Claude Code]] 和 [[Copilot]] CLI 均自动识别），另一侧用 `ln -s` 指向它。新团队成员无论用哪个工具都能读到统一规范。
 
 2. **MCP 配置集中管理**
-   把团队共用的 MCP 服务器（GitHub、文件系统、数据库等通用工具）统一放在项目根目录的 `.mcp.json` 并提交 Git。工具专有或含密钥的 MCP 单独放在各自的全局配置中（`~/.claude.json` / `~/.copilot/mcp-config.json`），通过环境变量引用 API key，不硬编码。
+   把团队共用的 [[MCP 服务器]]（GitHub、文件系统、数据库等通用工具）统一放在项目根目录的 `.mcp.json` 并提交 Git。工具专有或含密钥的 MCP 单独放在各自的全局配置中（`~/.claude.json` / `~/.copilot/mcp-config.json`），通过环境变量引用 API key，不硬编码。
 
 3. **全局个人偏好各自维护，内容互补而非重复**
-   `~/.claude/CLAUDE.md` 侧重 Claude Code 专有特性（角色定义、Sub-agents 触发词、会话持续规则）；`~/.copilot/copilot-instructions.md` 侧重 Copilot CLI 特有约定。两份文件不求一致，但不要相互复制导致语义冗余。
+   `~/.claude/CLAUDE.md` 侧重 [[Claude Code]] 专有特性（角色定义、[[Sub-agents]] 触发词、会话持续规则）；`~/.copilot/copilot-instructions.md` 侧重 [[Copilot]] CLI 特有约定。两份文件不求一致，但不要相互复制导致语义冗余。
 
 ---
 
@@ -438,20 +438,20 @@ disable-model-invocation: false
 
 | 任务可中断性 | 推荐 | 典型场景 |
 |------------|------|---------|
-| 高（每步想看结果） | Copilot CLI Interactive | 关键变更审批、操作 GitHub Issue / PR / CI |
-| 低（一口气跑完几十分钟） | Claude Code Autopilot | 复杂多文件重构、架构级任务、CI/CD 集成 |
-| 不确定 | 从 Copilot CLI 起步，复杂后切 Claude Code | 探索性任务 |
+| 高（每步想看结果） | [[Copilot]] CLI Interactive | 关键变更审批、操作 GitHub Issue / PR / CI |
+| 低（一口气跑完几十分钟） | [[Claude Code]] Autopilot | 复杂多文件重构、架构级任务、[[CI/CD]] 集成 |
+| 不确定 | 从 [[Copilot]] CLI 起步，复杂后切 [[Claude Code]] | 探索性任务 |
 
 **场景速查**
 
 | 场景 | 推荐工具 | 理由 |
 |------|---------|-----|
-| 操作 GitHub Issue / PR / CI | Copilot CLI | 内置 GitHub MCP，零配置即可查询 PR、Issue、Workflow |
-| 复杂多文件重构、架构级任务 | Claude Code | Sub-agents 并行 + 百万 token 上下文 |
-| 需要每步审批的关键变更 | Copilot CLI | Interactive 模式，人类决策每一步 |
-| 长时间自动化任务 | Claude Code | Autopilot + Sub-agents，自主性更强 |
+| 操作 GitHub Issue / PR / CI | [[Copilot]] CLI | 内置 GitHub MCP，零配置即可查询 PR、Issue、Workflow |
+| 复杂多文件重构、架构级任务 | [[Claude Code]] | [[Sub-agents]] 并行 + 百万 token 上下文 |
+| 需要每步审批的关键变更 | [[Copilot]] CLI | Interactive 模式，人类决策每一步 |
+| 长时间自动化任务 | [[Claude Code]] | Autopilot + [[Sub-agents]]，自主性更强 |
 | 快速问答、查文档 | 两者均可 | 用当前打开的工具即可 |
-| 跨平台 CI/CD 脚本生成 | Claude Code | 非交互模式（`claude -p`）更方便集成 |
+| 跨平台 [[CI/CD]] 脚本生成 | [[Claude Code]] | 非[[交互模式]]（`claude -p`）更方便集成 |
 
 ---
 
@@ -492,7 +492,7 @@ workspace/
 
 ### Claude Code 的分层加载特性
 
-Claude Code 会**自动向上递归查找 CLAUDE.md**——当你在 `apps/web-frontend/` 下工作时，它同时加载：
+[[Claude Code]] 会**自动向上递归查找 [[CLAUDE.md]]**——当你在 `apps/web-frontend/` 下工作时，它同时加载：
 
 - `apps/web-frontend/CLAUDE.md`（局部，覆盖优先）
 - `workspace/CLAUDE.md`（根级，全局规则）
@@ -501,9 +501,9 @@ Claude Code 会**自动向上递归查找 CLAUDE.md**——当你在 `apps/web-f
 
 ### 根级 CLAUDE.md：只当"调度台"
 
-根目录的 CLAUDE.md 不写实现细节，只做三件事——列项目地图、写跨项目规则、引用共享文档：
+根目录的 [[CLAUDE.md]] 不写实现细节，只做三件事——列项目地图、写跨项目规则、引用共享文档：
 
-**workspace/CLAUDE.md**
+**workspace/[[CLAUDE.md]]**
 
 ```markdown
 # Workspace AI 指引
@@ -532,9 +532,9 @@ Claude Code 会**自动向上递归查找 CLAUDE.md**——当你在 `apps/web-f
 
 ### 子项目 CLAUDE.md：聚焦局部
 
-子项目 CLAUDE.md 只写这个项目自己的事——技术栈、特定约定、常用命令、与其他项目的关系：
+子项目 [[CLAUDE.md]] 只写这个项目自己的事——技术栈、特定约定、常用命令、与其他项目的关系：
 
-**apps/web-frontend/CLAUDE.md**
+**apps/web-frontend/[[CLAUDE.md]]**
 
 ```markdown
 # web-frontend AI 指引
@@ -559,35 +559,35 @@ pnpm dev / pnpm test / pnpm build
 
 ### Copilot CLI 的适配
 
-Copilot CLI 的 `.github/copilot-instructions.md` **不会**像 Claude Code 那样自动分层加载，需要手动处理：
+[[Copilot]] CLI 的 `.github/copilot-instructions.md` **不会**像 [[Claude Code]] 那样自动分层加载，需要手动处理：
 
 | 方案 | 做法 | 优劣 |
 |------|------|------|
-| 方案 A | 只在根目录放一份，列清项目地图，让 Copilot 按需读对应目录 | 简单但上下文精准度差 |
+| 方案 A | 只在根目录放一份，列清项目地图，让 [[Copilot]] 按需读对应目录 | 简单但上下文精准度差 |
 | 方案 B | 每个子项目也放 `.github/copilot-instructions.md` | 精准但冗余，维护成本高 |
 
-Claude Code 在多仓库场景的原生支持明显更强——这也是它更适合跨项目复杂任务的原因之一。
+[[Claude Code]] 在多仓库场景的原生支持明显更强——这也是它更适合跨项目复杂任务的原因之一。
 
 ### 四条防冗余硬规则
 
 **规则一：README.md 永远不写 AI 指令**
-子项目 README 就是给人看的——介绍这个模块做什么、怎么跑起来。AI 指令统一走 CLAUDE.md。
+子项目 README 就是给人看的——介绍这个模块做什么、怎么跑起来。AI 指令统一走 [[CLAUDE.md]]。
 
 **规则二：全局信息只在根 docs/ 写一次**
-"用什么数据库"、"服务怎么部署"这类跨项目事实，只在 `docs/ARCHITECTURE.md` 写。子项目 CLAUDE.md 里引用：`完整架构见 @../../docs/ARCHITECTURE.md`。
+"用什么数据库"、"服务怎么部署"这类跨项目事实，只在 `docs/ARCHITECTURE.md` 写。子项目 [[CLAUDE.md]] 里引用：`完整架构见 @../../docs/ARCHITECTURE.md`。
 
 **规则三：局部信息只在子项目写**
-前端用什么 UI 库，不要污染根 CLAUDE.md。根 CLAUDE.md 只负责"告诉 AI 去哪找"，不负责"AI 该知道什么"。
+前端用什么 UI 库，不要污染根 [[CLAUDE.md]]。根 [[CLAUDE.md]] 只负责"告诉 AI 去哪找"，不负责"AI 该知道什么"。
 
 **规则四：跨项目契约单独放一处，代码即文档**
-前后端共享的 API schema、事件格式、错误码——最容易两边各写一份造成漂移。正确做法是放 `packages/shared-types` 或 OpenAPI 文件里，两边 CLAUDE.md 都指向它。
+前后端共享的 API schema、事件格式、错误码——最容易两边各写一份造成漂移。正确做法是放 `packages/shared-types` 或 OpenAPI 文件里，两边 [[CLAUDE.md]] 都指向它。
 
 ### 上下文预算
 
-AI 工具的上下文窗口再大也是有限的，尤其在大 monorepo 里。给 CLAUDE.md 设个硬性预算：
+AI 工具的上下文窗口再大也是有限的，尤其在大 monorepo 里。给 [[CLAUDE.md]] 设个硬性预算：
 
-- **根 CLAUDE.md：不超过 100 行** — 只做路由和全局规则
-- **子项目 CLAUDE.md：不超过 200 行** — 聚焦本项目
+- **根 [[CLAUDE.md]]：不超过 100 行** — 只做路由和全局规则
+- **子项目 [[CLAUDE.md]]：不超过 200 行** — 聚焦本项目
 - 超出就拆到 `docs/` 下，按需用 `@` 引用
 
 这样无论 AI 在哪个子目录工作，加载的上下文都是精准的、不冗余的。
@@ -649,9 +649,9 @@ fi
 - [ ] 我是否在多个层级（全局、项目、子目录）写了重复的规则？→ 合并到最高覆盖层级
 - [ ] 路径特定规范是否已从 `CLAUDE.md` 拆到 `.github/instructions/*.instructions.md`？→ 减少两者的固定上下文占用
 
-**Skills 类**
+**[[Skills]] 类**
 
-- [ ] Skills 是放在 `.github/skills/` 还是 `.claude/skills/`？→ 统一放 `.claude/skills/`（两者共享）
+- [ ] [[Skills]] 是放在 `.github/skills/` 还是 `.claude/skills/`？→ 统一放 `.claude/skills/`（两者共享）
 - [ ] 是否有两个 Skill 做同一件事？→ 合并为一个，`description` 覆盖两个触发场景
 
 **Hooks 类**

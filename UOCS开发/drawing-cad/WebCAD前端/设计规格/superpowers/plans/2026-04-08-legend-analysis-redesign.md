@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Fix the `ent.color()` runtime error and redesign the legend analysis workflow to use programmatic region scanning instead of Vision-guessing for building legend-to-layer mappings.
+**Goal:** Fix the `ent.color()` runtime error and redesign the legend analysis workflow to use programmatic region scanning instead of [[Vision]]-guessing for building legend-to-layer mappings.
 
 **Architecture:** Modify `forEachEntity` to auto-cast to `OdDbEntity`, rewrite the System Prompt legend workflow to scan entities within the user-selected region (collecting text + graphic entities with spatial coordinates), and update RAG examples to match.
 
-**Tech Stack:** ODA WASM API (Emscripten), Node.js (AI server), Vercel AI SDK
+**Tech Stack:** ODA [[WASM API]] (Emscripten), Node.js (AI server), Vercel AI SDK
 
 ---
 

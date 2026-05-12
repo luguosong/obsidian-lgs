@@ -370,7 +370,7 @@ pipeline {
 
 ## 🏗️ 一套镜像怎么同时跑 x86 和 ARM？
 
-在 GitHub Actions 中构建同时支持 `linux/amd64`（x86）和 `linux/arm64`（Apple M系列、ARM服务器）的镜像：
+在 [[GitHub Actions]] 中构建同时支持 `linux/amd64`（x86）和 `linux/arm64`（Apple M系列、ARM服务器）的镜像：
 
 ``` yaml
 - name: 设置 QEMU（支持 ARM 模拟）

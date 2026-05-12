@@ -8,7 +8,7 @@
 
 1. **工具重组**：去掉 11 个碎片化 `draw_xxx` 命令工具，统一用 JS 代码 / LISP 代码模式
 2. **多步 ReAct**：服务端 `maxSteps` 从 1 提升至 10，支持"检索→生成→执行→评估→修正"闭环
-3. **分析能力增强**：图框识别、建筑轮廓提取、Vision 截图分析
+3. **分析能力增强**：图框识别、建筑轮廓提取、[[Vision]] 截图分析
 4. **规范合规检查**：基于建筑设计规范的自动审查
 5. **多 Agent 编排**：Router → Drawing / Analysis / Modeling / Compliance Agent
 6. **C++ WASM 扩展**：支撑上层分析、建模需求的底层 API
@@ -18,7 +18,7 @@
 | 项目 | 路径 | 借鉴点 |
 |------|------|--------|
 | Text2CAD | `E:\DrawingsInWEB\Text2CAD` | 多 Agent 流水线 (Architect→Implementer→Evaluator→Replanner)、视觉评估、Lessons Learned |
-| AutoCAD MCP | `E:\DrawingsInWEB\autocadmcp` | 统一通过代码执行（不需要碎片化命令工具）、MCP 标准协议 |
+| [[AutoCAD]] MCP | `E:\DrawingsInWEB\autocadmcp` | 统一通过代码执行（不需要碎片化命令工具）、MCP 标准协议 |
 
 ## 实施阶段
 
@@ -43,7 +43,7 @@
    - `execute_lisp_code` — LISP 代码执行
    - `execute_command` — WASM 命令执行（预留，用于 TRIM/FILLET 等复杂命令）
    - `plan_task` — 任务分解规划
-   - `capture_viewport` — 截取当前视图供 Vision 分析
+   - `capture_viewport` — 截取当前视图供 [[Vision]] 分析
    - `search_code_examples` — RAG 代码示例检索
    - `search_help_docs` — RAG 帮助文档检索
    - ~~draw_line, draw_circle, draw_rectangle, draw_polyline, draw_arc, draw_arc_center, draw_ellipse, draw_polygon, draw_text, draw_mtext, draw_donut~~ (已删除)
@@ -51,8 +51,8 @@
 2. **CORE_PROMPT 重写** (`server/tools/cadTools.js`):
    - 核心原则：代码优先、先查后做、任务分解、执行验证、错误修正
    - 工具选择策略表格化：场景→工具→说明
-   - ODA API 参考保留（实体类、几何类、工具类、枚举）
-   - 新增 plan_task / capture_viewport 使用指南
+   - ODA [[API 参考]]保留（实体类、几何类、工具类、枚举）
+   - 新增 plan_task / capture_viewport [[使用指南]]
    - 新增查询代码模板（统计实体、查询图层）
 
 3. **maxSteps 提升** (`server/index.js`):
@@ -80,7 +80,7 @@
 
 ### Phase 2: 分析能力增强 ✅
 
-**目标**: 增强图纸分析能力 — 图框双路径并行分析、区域截图、Vision 精细分析
+**目标**: 增强图纸分析能力 — 图框双路径并行分析、区域截图、[[Vision]] 精细分析
 
 **改动文件**:
 
@@ -88,12 +88,12 @@
 |------|---------|
 | `server/tools/analysisTools.js` (新) | analyze_drawing, detect_title_blocks, extract_building_info, measure_entities 工具 |
 | `src/services/ScreenshotService.js` (新) | 截图服务：captureCurrentView, captureFullExtents, captureRegion, captureMultipleRegions, saveViewState, restoreViewState |
-| `src/services/TitleBlockAnalyzer.js` (新) | 图框分析管线：双路径并行采集 → 交叉验证 → 逐框截图 → Vision 精细分析 |
+| `src/services/TitleBlockAnalyzer.js` (新) | 图框分析管线：双路径并行采集 → 交叉验证 → 逐框截图 → [[Vision]] 精细分析 |
 | `src/services/CadCodeExecutor.js` | 沙箱新增: OdDbAttribute, OdDbAttributeDefinition, OdDbViewport |
 | `src/services/CommandExecutor.js` | 查询结果传递 needsScreenshot, analysisType 标记 |
 | `src/components/AiAssistant/AiAssistant.jsx` | 图框分析按钮 + AnalysisPanel（进度/确认/结果 UI） |
 | `src/components/AiAssistant/AiAssistant.module.css` | 分析面板样式（进度、确认卡片、结果展示） |
-| `server/index.js` | 新增 /api/ai/vision-analyze 端点（一次性 Vision 分析） |
+| `server/index.js` | 新增 /api/ai/vision-analyze 端点（一次性 [[Vision]] 分析） |
 | `server/tools/cadTools.js` | CORE_PROMPT 更新双路径分析指南；导入 analysisTools |
 
 **完成状态**: ✅ 已完成 (2026-03-17)
@@ -101,7 +101,7 @@
 **变更详情**:
 
 1. **新增 4 个分析工具** (`server/tools/analysisTools.js`):
-   - `analyze_drawing` — 综合图纸分析（程序化查询 + Vision 截图）
+   - `analyze_drawing` — 综合图纸分析（程序化查询 + [[Vision]] 截图）
    - `detect_title_blocks` — 图框检测（双路径并行分析管线）
    - `extract_building_info` — 建筑信息提取（轮廓线 + 文字标注 + 图层筛选）
    - `measure_entities` — 实体测量（距离、面积计算）
@@ -118,16 +118,16 @@
    - `buildScreenshotParts()` — 构建截图消息 parts
 
 3. **新增图框分析管线** (`src/services/TitleBlockAnalyzer.js`):
-   - **Phase 1: 并行采集** — `Promise.allSettled` 同时启动 Vision 和 WASM 路径
-     - Vision 路径：截取当前视图 + 全图 → `/api/ai/vision-analyze` → 识别图框数量
+   - **Phase 1: 并行采集** — `Promise.allSettled` 同时启动 [[Vision]] 和 WASM 路径
+     - [[Vision]] 路径：截取当前视图 + 全图 → `/api/ai/vision-analyze` → 识别图框数量
      - WASM 路径：内置查询代码遍历 BlockReference + Attribute + getGeomExtents
      - 先完成的立即通过 `onProgress` 回调通知前端
    - **Phase 2: 交叉验证** — 比对图框数量，不一致时返回 `needsConfirmation: true`
    - **Phase 3: 逐框截图** — 调用 `captureMultipleRegions()` 对每个图框 ZoomToRect 截图
-   - **Phase 4: Vision 精细分析** — 所有图框截图 + API 属性数据 → Vision LLM 分析标签栏详情
+   - **Phase 4: [[Vision]] 精细分析** — 所有图框截图 + API 属性数据 → [[Vision]] LLM 分析标签栏详情
    - 支持 `cancel()` 中止和 `continueWithBlocks()` 用户确认后继续
 
-4. **新增 Vision 分析端点** (`server/index.js`):
+4. **新增 [[Vision]] 分析端点** (`server/index.js`):
    - `POST /api/ai/vision-analyze` — 一次性 `generateText` 调用（非流式）
    - 接收 images(base64[]) + prompt + apiData，返回结构化 JSON
    - 自动从 LLM 返回文本中提取 JSON 对象
@@ -140,7 +140,7 @@
      - collecting/zooming/analyzing → 进度指示器
      - visionDone/apiDone → 单路径完成通知
      - mismatch → 确认卡片（显示两条路径数量 + 三个按钮）
-     - done → 结果展示（摘要 + 每个图框的属性和 Vision 分析）
+     - done → 结果展示（摘要 + 每个图框的属性和 [[Vision]] 分析）
      - error → 错误信息
 
 6. **CORE_PROMPT 更新**:
@@ -148,7 +148,7 @@
    - 新增管线流程说明（4 个 Phase）
    - 说明前端 UI 按钮也可直接触发
 
-7. **CadCodeExecutor 沙箱扩展** (`src/services/CadCodeExecutor.js`):
+7. **[[CadCodeExecutor 沙箱]]扩展** (`src/services/CadCodeExecutor.js`):
    - 新增 `OdDbAttribute` — 属性读取（tag, textString）
    - 新增 `OdDbAttributeDefinition` — 属性定义读取
    - 新增 `OdDbViewport` — 视口信息读取
@@ -157,7 +157,7 @@
    - OdDbBlockReference: ✅ (position, rotation, scaleFactors, blockTableRecord, attributeIds)
    - OdDbAttribute: ✅ (tag, textString via OdDbText inheritance)
    - OdDbAttributeDefinition: ✅ (tag, prompt, textString)
-   - OdDbEntity.getGeomExtents(): ✅
+   - OdDb[[Entity]].getGeomExtents(): ✅
    - CadCore.ZoomToRect(minX, minY, maxX, maxY): ✅
    - CadCore.getViewAt0() → position/target/upVector/fieldWidth/fieldHeight/setView: ✅
    - OdDbLayout: ❌ (需要 P0 级 C++ 新增，暂不影响基本分析功能)
@@ -238,7 +238,7 @@
 | 面积计算 | `OdDbHatch/Region::getArea()` |
 | 距离计算 | `OdGePoint3d::distanceTo()` |
 | 文字搜索 | `textString()`, `contents()` |
-| 图层过滤 | `isOff()`, `isFrozen()`, `colorIndex()` |
+| [[图层过滤]] | `isOff()`, `isFrozen()`, `colorIndex()` |
 
 ---
 

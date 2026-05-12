@@ -17,8 +17,8 @@
 
 **Tech Stack:**
 - Frontend: React 19 + Vite 6 + MobX + Ant Design. **Adds Vitest** for pure-function unit tests
-- Backend: Spring Boot 3.5 + Spring AI 1.1.2 + Spring AI Alibaba (DashScope) + Qdrant + Redis
-- Vision model: configured via Spring AI Alibaba DashScope (multimodal)
+- Backend: [[Spring Boot]] 3.5 + [[Spring AI]] 1.1.2 + [[Spring AI]] Alibaba (DashScope) + Qdrant + Redis
+- [[Vision]] model: configured via [[Spring AI]] Alibaba DashScope (multimodal)
 
 **Reference docs:**
 - Spec: [DrawingWebApp/docs/specs/2026-04-30-drawing-memory-vision-init-design.md](../specs/2026-04-30-drawing-memory-vision-init-design.md)
@@ -484,7 +484,7 @@ Run from `drawing-ai-server/`:
 ```bash
 mvn compile -q
 ```
-Expected: success. If compile errors about Spring AI imports, check classpath: confirm `spring-ai-starter-model-openai` version 1.1.2 provides `ChatModel`, `Media`, `BeanOutputConverter`.
+Expected: success. If compile errors about [[Spring AI]] imports, check classpath: confirm `spring-ai-starter-model-openai` version 1.1.2 provides `ChatModel`, `Media`, `BeanOutputConverter`.
 
 - [ ] **Step 3: Commit**
 
@@ -588,7 +588,7 @@ mvn test -Dtest=StageAServiceTest -q
 ```
 Expected: 3 tests pass.
 
-If JSON parse fails (BeanOutputConverter strict mode), inspect Spring AI version's parser behavior. May need to wrap mockJson in `BeanOutputConverter.getFormat()`-compatible structure.
+If JSON parse fails (BeanOutputConverter strict mode), inspect [[Spring AI]] version's parser behavior. May need to wrap mockJson in `BeanOutputConverter.getFormat()`-compatible structure.
 
 - [ ] **Step 3: Commit**
 
@@ -782,7 +782,7 @@ export async function postInitV2(clientId, fileId, metadata, fullScreenshotBase6
 
 Keep `initDrawingMemory` (old) for now — it has callers that Plan 2 will migrate.
 
-- [ ] **Step 2: Create VisionMemoryPipeline.js (Stage A only for now)**
+- [ ] **Step 2: Create [[Vision]]MemoryPipeline.js (Stage A only for now)**
 
 ```javascript
 import { captureFullExtents } from '../ScreenshotService'
@@ -877,7 +877,7 @@ git commit -m "feat(memory/vision): VisionMemoryPipeline + postInitV2 (Stage A w
 **Files:**
 - Modify: `DrawingWebApp/src/components/AiAssistant/AiAssistant.jsx`
 
-- [ ] **Step 1: Import VisionMemoryPipeline at top of AiAssistant.jsx**
+- [ ] **Step 1: Import [[Vision]]MemoryPipeline at top of AiAssistant.jsx**
 
 Add after existing imports (around line 39 area):
 ```javascript
@@ -1728,7 +1728,7 @@ public class StageBService {
 
 - [ ] **Step 2: Compile**
 
-`mvn compile -q`. Fix any import errors. **Note**: `UserMessage.builder().media(Media...)` varargs — verify this signature exists in Spring AI 1.1.2. If not, change to chained `.media(m1).media(m2)` calls in a loop.
+`mvn compile -q`. Fix any import errors. **Note**: `UserMessage.builder().media(Media...)` varargs — verify this signature exists in [[Spring AI]] 1.1.2. If not, change to chained `.media(m1).media(m2)` calls in a loop.
 
 - [ ] **Step 3: Commit**
 
@@ -1905,7 +1905,7 @@ export async function postRegion(clientId, fileId, regionType, images) {
 }
 ```
 
-- [ ] **Step 2: Extend VisionMemoryPipeline with runStageB**
+- [ ] **Step 2: Extend [[Vision]]MemoryPipeline with runStageB**
 
 In `VisionMemoryPipeline.js`:
 ```javascript
@@ -2278,11 +2278,11 @@ After Plan 1 ships, the following must hold:
 
 ## Notes for the Implementing Engineer
 
-1. **Spring AI 1.1.2 `UserMessage.builder().media(Media...)` varargs**: not 100% verified by reading source. If compile fails on the varargs call, fall back to chained `.media(m1).media(m2).media(m3)` calls or look up the actual API in the version's javadoc.
+1. **[[Spring AI]] 1.1.2 `UserMessage.builder().media(Media...)` varargs**: not 100% verified by reading source. If compile fails on the varargs call, fall back to chained `.media(m1).media(m2).media(m3)` calls or look up the actual API in the version's javadoc.
 
 2. **`viewer.zoomToWindow` vs `viewer.zoomTo`**: the captureRegionTiles helper tries both. If neither exists, the actual method may be on `Module.appCore` or some other path. Read `ViewerService.js:976+` for the real API.
 
-3. **Vision model availability**: the backend uses Spring AI Alibaba DashScope. Verify `application.yml` / `application-dev.yml` configures `spring.ai.dashscope.chat.options.model` to a multimodal-capable model (qwen-vl-max or similar). If not, Stage A will return null with no helpful error — add explicit check in `StageAService.runStageA` to log when `chatModel.getDefaultOptions()` shows non-vision model.
+3. **[[Vision]] model availability**: the backend uses [[Spring AI]] Alibaba DashScope. Verify `application.yml` / `application-dev.yml` configures `spring.ai.dashscope.chat.options.model` to a multimodal-capable model (qwen-vl-max or similar). If not, Stage A will return null with no helpful error — add explicit check in `StageAService.runStageA` to log when `chatModel.getDefaultOptions()` shows non-vision model.
 
 4. **`@Async` removal**: the old `doStage2` was annotated `@Async`. The new `init()` flow is synchronous (frontend awaits), so `@EnableAsync` may no longer be needed for memory init. Don't remove `@EnableAsync` from the application — other features may use it. Just make the init path synchronous.
 

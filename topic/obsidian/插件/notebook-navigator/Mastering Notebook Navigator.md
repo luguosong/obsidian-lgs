@@ -13,7 +13,7 @@ tags:
 # Mastering Notebook Navigator
 
 > [!info] 视频信息
-> - **标题**：Mastering Notebook Navigator for Obsidian
+> - **标题**：Mastering Notebook [[Navigator]] for [[Obsidian]]
 > - **作者**：Johan Sanneblad（[YouTube 频道](https://www.youtube.com/@JohanSanneblad)）
 > - **发布日期**：2026-01-04
 > - **观看量**：35,000+
@@ -24,14 +24,14 @@ tags:
 
 ## 插件简介
 
-Notebook Navigator 是 Obsidian 的现代文件管理器替代品，用**双窗格界面**取代默认的文件浏览器，灵感来自 Apple Notes / Bear / Evernote 风格。免费开源，支持 100,000+ 笔记的库。
+Notebook [[Navigator]] 是 [[Obsidian]] 的现代文件管理器替代品，用**双窗格界面**取代默认的文件浏览器，灵感来自 Apple Notes / Bear / Evernote 风格。免费开源，支持 100,000+ 笔记的库。
 
 ## 视频章节与要点
 
 ### 0:26 — 安装
 
-1. 打开 Settings → Community plugins
-2. 搜索 "Notebook Navigator"
+1. 打开 [[Settings]] → Community plugins
+2. 搜索 [["Notebook]] [[Navigator]]"
 3. 点击 Install → Enable
 
 > [!tip] 安装后记得**禁用默认的 File Explorer 插件**，避免界面冲突。

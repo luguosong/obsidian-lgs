@@ -12,7 +12,7 @@ tags:
 > [!note] 版本线说明
 > 2.0.x 为下一大版本的 Milestone 预览版，包含大量 Breaking Changes。
 > **不建议用于生产环境**，仅用于评估和迁移准备。
-> 详细迁移指南见各版本升级说明。
+> 详细[[迁移指南]]见各版本升级说明。
 
 ---
 
@@ -46,7 +46,7 @@ tags:
 - MilvusVectorStore 字符串 ID 删除时未正确转义
 - OllamaChatOptions `getOutputSchema()` 异常
 - OpenAI 工具选项合并 `ToolCallingChatOptions` 到 `OpenAiChatOptions` 错误
-- OpenAI 配置属性未正确解析（Spring Boot 自动配置）
+- OpenAI 配置属性未正确解析（[[Spring Boot]] 自动配置）
 - Qdrant Docker 镜像更新至 1.17.0
 - DefaultSemanticCache 字符串拼接替换为 `Filter.Expression`
 - 多个模块 null-safety 改进（Google GenAI、MiniMax、Transformers、Vertex AI、ElevenLabs）
@@ -59,7 +59,7 @@ tags:
 
 ### 构建
 
-- Spring AI starter 模块重组到专用 `starters/` 目录
+- [[Spring AI]] starter 模块重组到专用 `starters/` 目录
 - JDK 17.0.19
 
 ---
@@ -87,7 +87,7 @@ tags:
 - 统一缓存使用指标到 `Usage` 接口
 - **采用官方 openai-java SDK**：替代内部实现，支持所有 OpenAI 模型
 - OpenAI 音频转录模型支持
-- MCP Server 工具暴露过滤：`spring.ai.mcp.server.expose-mcp-client-tools`
+- [[MCP Server]] 工具暴露过滤：`spring.ai.mcp.server.expose-mcp-client-tools`
 - OpenAI 内容审核模型支持
 - OpenAI SDK 模型支持 extra body 参数
 
@@ -132,7 +132,7 @@ tags:
 
 - **MCP Annotations 包迁移**：`org.springaicommunity.mcp` → `org.springframework.ai.mcp.annotation`
 - **MCP transport artifact 迁移**：`io.modelcontextprotocol.sdk` → `org.springframework.ai.mcp`
-- **Jackson 2 → Jackson 3**：`com.fasterxml.jackson` → `tools.jackson`（Spring Boot 4 默认）
+- **Jackson 2 → Jackson 3**：`com.fasterxml.jackson` → `tools.jackson`（[[Spring Boot]] 4 默认）
 - **`McpAsyncClientCustomizer` / `McpSyncClientCustomizer` 移除**：合并为 `McpClientCustomizer<B>`
 - **Anthropic 集成改用官方 Java SDK**：内部实现从 RestClient 改为官方 SDK
 - **`disableMemory()` → `disableInternalConversationHistory()`**
@@ -146,7 +146,7 @@ tags:
 - MCP 客户端自定义抽象
 - 过滤表达式转换器改进
 - Builder 简化（移除不必要泛型）
-- Anthropic 官方 SDK 集成
+- Anthropic 官方 [[SDK 集成]]
 - `disableMemory()` 重命名为 `disableInternalConversationHistory()`
 
 ---
@@ -157,7 +157,7 @@ tags:
 
 ### Breaking Changes
 
-- **Anthropic Skills API 统一**：helper 类重命名
+- **Anthropic [[Skills]] API 统一**：helper 类重命名
 - **SemanticCache 接口搬迁**：从 Redis 包移到通用包
 - **Couchbase 向量存储类搬迁**：需更新 import
 
@@ -174,6 +174,6 @@ tags:
 - Mistral AI 结构化输出（JSON Schema）
 - Redis 语义缓存 Advisor
 - JSpecify null-safety 注解
-- MCP Server Customizer 接口
+- [[MCP Server]] Customizer 接口
 - 动态工具 Schema 增强
 - ToolCallAdvisor conversationHistoryEnabled 选项

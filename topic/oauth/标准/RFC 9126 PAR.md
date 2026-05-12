@@ -98,7 +98,7 @@ The pushed authorization request endpoint is an HTTP API at the authorization se
 
 Authorization servers supporting PAR SHOULD include the URL of their pushed authorization request endpoint in their authorization server metadata document \[\] using the `pushed_authorization_request_endpoint` parameter as defined in.[¶](#section-2-2)
 
-The endpoint accepts the authorization request parameters defined in \[\] for the authorization endpoint as well as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof Key for Code Exchange (PKCE) \[\], Resource Indicators \[\], and OpenID Connect (OIDC) \[\]. The endpoint MAY also support sending the set of authorization request parameters as a Request Object according to \[\] and of this document.[¶](#section-2-3)
+The endpoint accepts the authorization request parameters defined in \[\] for the authorization endpoint as well as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof Key for Code Exchange (PKCE) \[\], [[Resource Indicators]] \[\], and [[OpenID Connect]] (OIDC) \[\]. The endpoint MAY also support sending the set of authorization request parameters as a Request Object according to \[\] and of this document.[¶](#section-2-3)
 
 The rules for client authentication as defined in \[\] for token endpoint requests, including the applicable authentication methods, apply for the PAR endpoint as well. If applicable, the `token_endpoint_auth_method` client metadata parameter \[\] indicates the registered authentication method for the client to use when making direct requests to the authorization server, including requests to the PAR endpoint. Similarly, the `token_endpoint_auth_methods_supported` authorization server metadata \[\] parameter lists client authentication methods supported by the authorization server when accepting direct requests from clients, including requests to the PAR endpoint.[¶](#section-2-4)
 
@@ -338,7 +338,7 @@ The client policy might change between the lodging of the Request Object and the
 
 ### 7.5.
 
-An attacker could capture the request URI from one request and then substitute it into a different authorization request. For example, in the context of OpenID Connect, an attacker could replace a request URI asking for a high level of authentication assurance with one that requires a lower level of assurance. Clients SHOULD make use of PKCE \[\], a unique `state` parameter \[\], or the OIDC "nonce" parameter \[\] in the pushed Request Object to prevent this attack.[¶](#section-7.5-1)
+An attacker could capture the request URI from one request and then substitute it into a different authorization request. For example, in the context of [[OpenID Connect]], an attacker could replace a request URI asking for a high level of authentication assurance with one that requires a lower level of assurance. Clients SHOULD make use of PKCE \[\], a unique `state` parameter \[\], or the OIDC "nonce" parameter \[\] in the pushed Request Object to prevent this attack.[¶](#section-7.5-1)
 
 ## 9.
 
@@ -382,13 +382,13 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 
 Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", STD 90, RFC 8259, DOI 10.17487/RFC8259, December 2017, < [https://www.rfc-editor.org/info/rfc8259](https://www.rfc-editor.org/info/rfc8259) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
-\[RFC9101\]
+\[RFC[[9101]]\]
 
-Sakimura, N., Bradley, J., and M. Jones, "The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)", RFC 9101, DOI 10.17487/RFC9101, August 2021, < [https://www.rfc-editor.org/info/rfc9101](https://www.rfc-editor.org/info/rfc9101) >.
+Sakimura, N., Bradley, J., and M. Jones, "The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)", RFC [[9101]], DOI 10.17487/RFC[[9101]], August 2021, < [https://www.rfc-editor.org/info/rfc9101](https://www.rfc-editor.org/info/rfc9101) >.
 
 ### 10.2.
 
@@ -398,7 +398,7 @@ IANA, "OAuth Parameters", < [http://www.iana.org/assignments/oauth-parameters](h
 
 \[OAUTH-SECURITY-TOPICS\]
 
-Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, "OAuth 2.0 Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-18, 13 April 2021, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18) >.
+Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, [["OAuth 2.0]] Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-18, 13 April 2021, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18) >.
 
 \[OAUTH-V2\]
 
@@ -406,47 +406,47 @@ Hardt, D., Parecki, A., and T. Lodderstedt, "The OAuth 2.1 Authorization Framewo
 
 \[OIDC\]
 
-Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0 incorporating errata set 1", November 2014, < [http://openid.net/specs/openid-connect-core-1\_0.html](http://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0 incorporating errata set 1", November [[2014]], < [http://openid.net/specs/openid-connect-core-1\_0.html](http://openid.net/specs/openid-connect-core-1_0.html) >.
 
 \[OIDC.Disco\]
 
-Sakimura, N., Bradley, J., Jones, M., and E. Jay, "OpenID Connect Discovery 1.0 incorporating errata set 1", November 2014, < [http://openid.net/specs/openid-connect-discovery-1\_0.html](http://openid.net/specs/openid-connect-discovery-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., and E. Jay, "[[OpenID Connect]] Discovery 1.0 incorporating errata set 1", November [[2014]], < [http://openid.net/specs/openid-connect-discovery-1\_0.html](http://openid.net/specs/openid-connect-discovery-1_0.html) >.
 
 \[RFC6755\]
 
 Campbell, B. and H. Tschofenig, "An IETF URN Sub-Namespace for OAuth", RFC 6755, DOI 10.17487/RFC6755, October 2012, < [https://www.rfc-editor.org/info/rfc6755](https://www.rfc-editor.org/info/rfc6755) >.
 
-\[RFC7517\]
+\[RFC[[7517]]\]
 
-Jones, M., "JSON Web Key (JWK)", RFC 7517, DOI 10.17487/RFC7517, May 2015, < [https://www.rfc-editor.org/info/rfc7517](https://www.rfc-editor.org/info/rfc7517) >.
+Jones, M., "JSON Web Key (JWK)", RFC [[7517]], DOI 10.17487/RFC[[7517]], May 2015, < [https://www.rfc-editor.org/info/rfc7517](https://www.rfc-editor.org/info/rfc7517) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
-\[RFC7523\]
+\[RFC[[7523]]\]
 
-Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
+Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7523]], DOI 10.17487/RFC[[7523]], May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
 
-\[RFC7591\]
+\[RFC[[7591]]\]
 
-Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol", RFC 7591, DOI 10.17487/RFC7591, July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
+Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, [["OAuth 2.0]] [[Dynamic Client Registration]] Protocol", RFC [[7591]], DOI 10.17487/RFC[[7591]], July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
 
-\[RFC7636\]
+\[RFC[[7636]]\]
 
-Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key for Code Exchange by OAuth Public Clients", RFC 7636, DOI 10.17487/RFC7636, September 2015, < [https://www.rfc-editor.org/info/rfc7636](https://www.rfc-editor.org/info/rfc7636) >.
+Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key for Code Exchange by OAuth Public Clients", RFC [[7636]], DOI 10.17487/RFC[[7636]], September 2015, < [https://www.rfc-editor.org/info/rfc7636](https://www.rfc-editor.org/info/rfc7636) >.
 
-\[RFC8252\]
+\[RFC[[8252]]\]
 
-Denniss, W. and J. Bradley, "OAuth 2.0 for Native Apps", BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017, < [https://www.rfc-editor.org/info/rfc8252](https://www.rfc-editor.org/info/rfc8252) >.
+Denniss, W. and J. Bradley, [["OAuth 2.0]] for [[Native Apps]]", BCP 212, RFC [[8252]], DOI 10.17487/RFC[[8252]], October 2017, < [https://www.rfc-editor.org/info/rfc8252](https://www.rfc-editor.org/info/rfc8252) >.
 
-\[RFC8705\]
+\[RFC[[8705]]\]
 
-Campbell, B., Bradley, J., Sakimura, N., and T. Lodderstedt, "OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens", RFC 8705, DOI 10.17487/RFC8705, February 2020, < [https://www.rfc-editor.org/info/rfc8705](https://www.rfc-editor.org/info/rfc8705) >.
+Campbell, B., Bradley, J., Sakimura, N., and T. Lodderstedt, [["OAuth 2.0]] Mutual-TLS Client Authentication and Certificate-Bound Access Tokens", RFC [[8705]], DOI 10.17487/RFC[[8705]], February 2020, < [https://www.rfc-editor.org/info/rfc8705](https://www.rfc-editor.org/info/rfc8705) >.
 
-\[RFC8707\]
+\[RFC[[8707]]\]
 
-Campbell, B., Bradley, J., and H. Tschofenig, "Resource Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707, February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
+Campbell, B., Bradley, J., and H. Tschofenig, "[[Resource Indicators]] for OAuth 2.0", RFC [[8707]], DOI 10.17487/RFC[[8707]], February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
 
 ## Acknowledgements
 

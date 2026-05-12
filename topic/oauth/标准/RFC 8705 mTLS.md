@@ -69,7 +69,7 @@ Mutual-TLS certificate-bound access tokens ensure that only the party in possess
 
 Mutual-TLS certificate-bound access tokens and mutual-TLS client authentication are distinct mechanisms that are complementary but don't necessarily need to be deployed or used together.[¶](#section-1-8)
 
-Additional client metadata parameters are introduced by this document in support of certificate-bound access tokens and mutual-TLS client authentication. The authorization server can obtain client metadata via the Dynamic Client Registration Protocol \[\], which defines mechanisms for dynamically registering OAuth 2.0 client metadata with authorization servers. Also the metadata defined by \[\], and registered extensions to it, imply a general data model for clients that is useful for authorization server implementations, even when the Dynamic Client Registration Protocol isn't in play. Such implementations will typically have some sort of user interface available for managing client configuration.[¶](#section-1-9)
+Additional client metadata parameters are introduced by this document in support of certificate-bound access tokens and mutual-TLS client authentication. The authorization server can obtain client metadata via the [[Dynamic Client Registration]] Protocol \[\], which defines mechanisms for dynamically registering OAuth 2.0 client metadata with authorization servers. Also the metadata defined by \[\], and registered extensions to it, imply a general data model for clients that is useful for authorization server implementations, even when the [[Dynamic Client Registration]] Protocol isn't in play. Such implementations will typically have some sort of user interface available for managing client configuration.[¶](#section-1-9)
 
 ### 1.1.
 
@@ -131,7 +131,7 @@ The following is an example of a JWT payload containing an `x5t#S256` certificat
 
 ### 3.2.
 
-OAuth 2.0 Token Introspection \[\] defines a method for a protected resource to query an authorization server about the active state of an access token as well as to determine metainformation about the token.[¶](#section-3.2-1)
+OAuth 2.0 [[Token Introspection]] \[\] defines a method for a protected resource to query an authorization server about the active state of an access token as well as to determine metainformation about the token.[¶](#section-3.2-1)
 
 For a mutual-TLS client certificate-bound access token, the hash of the certificate to which the token is bound is conveyed to the protected resource as metainformation in a token introspection response. The hash is conveyed using the same `cnf` with `x5t#S256` member structure as the certificate SHA-256 thumbprint confirmation method, described in, as a top-level member of the introspection response JSON. The protected resource compares that certificate hash to a hash of the client certificate used for mutual-TLS authentication and rejects the request if they do not match.[¶](#section-3.2-2)
 
@@ -252,7 +252,7 @@ If the PKI method of client authentication is used, an attacker could try to imp
 Parsing and validation of X.509 certificates and certificate chains is complex, and implementation mistakes have previously exposed security vulnerabilities. Complexities of validation include (but are not limited to) \[\] \[\] \[\]:[¶](#section-7.5-1)
 
 - checking of basic constraints, basic and extended key usage constraints, validity periods, and critical extensions;[¶](#section-7.5-2.1)
-- handling of embedded NUL bytes in ASN.1 counted-length strings and non-canonical or non-normalized string representations in subject names;[¶](#section-7.5-2.2)
+- handling of embedded NUL bytes in [[ASN.1]] counted-length strings and non-canonical or non-normalized string representations in subject names;[¶](#section-7.5-2.2)
 - handling of wildcard patterns in subject names;[¶](#section-7.5-2.3)
 - recursive verification of certificate chains and checking certificate revocation.[¶](#section-7.5-2.4)
 
@@ -346,9 +346,9 @@ of RFC 8705 [¶](#section-9.3-3.6)
 
 ### 9.4.
 
-"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)" \[\] defined the `cnf` (confirmation) claim that enables confirmation key information to be carried in a JWT. However, the same proof-of-possession semantics are also useful for introspected access tokens whereby the protected resource obtains the confirmation key data as metainformation of a token introspection response and uses that information in verifying proof-of-possession. Therefore, this specification defines and registers proof-of-possession semantics for OAuth 2.0 Token Introspection \[\] using the `cnf` structure. When included as a top-level member of an OAuth token introspection response, `cnf` has the same semantics and format as the claim of the same name defined in \[\]. While this specification only explicitly uses the `x5t#S256` confirmation method member (see ), it needs to define and register the higher-level `cnf` structure as an introspection response member in order to define and use the more specific certificate thumbprint confirmation method.[¶](#section-9.4-1)
+"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)" \[\] defined the `cnf` (confirmation) claim that enables confirmation key information to be carried in a JWT. However, the same proof-of-possession semantics are also useful for introspected access tokens whereby the protected resource obtains the confirmation key data as metainformation of a token introspection response and uses that information in verifying proof-of-possession. Therefore, this specification defines and registers proof-of-possession semantics for OAuth 2.0 [[Token Introspection]] \[\] using the `cnf` structure. When included as a top-level member of an OAuth token introspection response, `cnf` has the same semantics and format as the claim of the same name defined in \[\]. While this specification only explicitly uses the `x5t#S256` confirmation method member (see ), it needs to define and register the higher-level `cnf` structure as an introspection response member in order to define and use the more specific certificate thumbprint confirmation method.[¶](#section-9.4-1)
 
-As such, the following values have been registered in the IANA "OAuth Token Introspection Response" registry \[\] established by \[\].[¶](#section-9.4-2)
+As such, the following values have been registered in the IANA "OAuth [[Token Introspection]] Response" registry \[\] established by \[\].[¶](#section-9.4-2)
 
 Claim Name:
 
@@ -368,7 +368,7 @@ Specification Document(s):
 
 ### 9.5.
 
-Per this specification, the following client metadata definitions have been registered in the IANA "OAuth Dynamic Client Registration Metadata" registry \[\] established by \[\]:[¶](#section-9.5-1)
+Per this specification, the following client metadata definitions have been registered in the IANA "OAuth [[Dynamic Client Registration]] Metadata" registry \[\] established by \[\]:[¶](#section-9.5-1)
 
 Client Metadata Name:
 
@@ -486,61 +486,61 @@ Zeilenga, K., Ed., "Lightweight Directory Access Protocol (LDAP): String Represe
 
 Josefsson, S., "The Base16, Base32, and Base64 Data Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006, < [https://www.rfc-editor.org/info/rfc4648](https://www.rfc-editor.org/info/rfc4648) >.
 
-\[RFC5246\]
+\[RFC[[5246]]\]
 
-Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.2", RFC 5246, DOI 10.17487/RFC5246, August 2008, < [https://www.rfc-editor.org/info/rfc5246](https://www.rfc-editor.org/info/rfc5246) >.
+Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.2", RFC [[5246]], DOI 10.17487/RFC[[5246]], August 2008, < [https://www.rfc-editor.org/info/rfc5246](https://www.rfc-editor.org/info/rfc5246) >.
 
 \[RFC5280\]
 
-Cooper, D., Santesson, S., Farrell, S., Boeyen, S., Housley, R., and W. Polk, "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008, < [https://www.rfc-editor.org/info/rfc5280](https://www.rfc-editor.org/info/rfc5280) >.
+Cooper, D., Santesson, S., Farrell, S., Boeyen, S., Housley, R., and W. Polk, "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) [[Profile]]", RFC 5280, DOI 10.17487/RFC5280, May 2008, < [https://www.rfc-editor.org/info/rfc5280](https://www.rfc-editor.org/info/rfc5280) >.
 
 \[RFC6749\]
 
 Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/RFC6749, October 2012, < [https://www.rfc-editor.org/info/rfc6749](https://www.rfc-editor.org/info/rfc6749) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
-\[RFC7517\]
+\[RFC[[7517]]\]
 
-Jones, M., "JSON Web Key (JWK)", RFC 7517, DOI 10.17487/RFC7517, May 2015, < [https://www.rfc-editor.org/info/rfc7517](https://www.rfc-editor.org/info/rfc7517) >.
+Jones, M., "JSON Web Key (JWK)", RFC [[7517]], DOI 10.17487/RFC[[7517]], May 2015, < [https://www.rfc-editor.org/info/rfc7517](https://www.rfc-editor.org/info/rfc7517) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
-\[RFC7591\]
+\[RFC[[7591]]\]
 
-Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol", RFC 7591, DOI 10.17487/RFC7591, July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
+Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, [["OAuth 2.0]] [[Dynamic Client Registration]] Protocol", RFC [[7591]], DOI 10.17487/RFC[[7591]], July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
 
-\[RFC7662\]
+\[RFC[[7662]]\]
 
-Richer, J., Ed., "OAuth 2.0 Token Introspection", RFC 7662, DOI 10.17487/RFC7662, October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
+Richer, J., Ed., [["OAuth 2.0]] [[Token Introspection]]", RFC [[7662]], DOI 10.17487/RFC[[7662]], October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
 
-\[RFC7800\]
+\[RFC[[7800]]\]
 
-Jones, M., Bradley, J., and H. Tschofenig, "Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)", RFC 7800, DOI 10.17487/RFC7800, April 2016, < [https://www.rfc-editor.org/info/rfc7800](https://www.rfc-editor.org/info/rfc7800) >.
+Jones, M., Bradley, J., and H. Tschofenig, "Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)", RFC [[7800]], DOI 10.17487/RFC[[7800]], April 2016, < [https://www.rfc-editor.org/info/rfc7800](https://www.rfc-editor.org/info/rfc7800) >.
 
 \[RFC8174\]
 
 Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, < [https://www.rfc-editor.org/info/rfc8174](https://www.rfc-editor.org/info/rfc8174) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
-\[RFC8446\]
+\[RFC[[8446]]\]
 
-Rescorla, E., "The Transport Layer Security (TLS) Protocol Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018, < [https://www.rfc-editor.org/info/rfc8446](https://www.rfc-editor.org/info/rfc8446) >.
+Rescorla, E., "The Transport Layer Security (TLS) Protocol Version 1.3", RFC [[8446]], DOI 10.17487/RFC[[8446]], August 2018, < [https://www.rfc-editor.org/info/rfc8446](https://www.rfc-editor.org/info/rfc8446) >.
 
 \[SHS\]
 
-National Institute of Standards and Technology (NIST), "Secure Hash Standard (SHS)", FIPS PUB 180-4, DOI 10.6028/NIST.FIPS.180-4, August 2015, < [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf) >.
+National Institute of Standards and Technology (NIST), "Secure Hash Standard (SHS)", FIPS PUB [[180-4]], DOI 10.6028/NIST.FIPS.[[180-4]], August 2015, < [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf) >.
 
 \[X690\]
 
-ITU-T, "Information Technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)", ITU-T Recommendation X.690, August 2015.
+ITU-T, "Information Technology - [[ASN.1]] encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)", ITU-T Recommendation X.690, August 2015.
 
 ### 10.2.
 
@@ -562,7 +562,7 @@ IANA, "OAuth Parameters", < [https://www.iana.org/assignments/oauth-parameters](
 
 \[OpenID.CIBA\]
 
-Fernandez, G., Walter, F., Nennker, A., Tonge, D., and B. Campbell, "OpenID Connect Client Initiated Backchannel Authentication Flow - Core 1.0", 16 January 2019, < [https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1\_0.html](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) >.
+Fernandez, G., Walter, F., Nennker, A., Tonge, D., and B. Campbell, "[[OpenID Connect]] Client Initiated Backchannel Authentication Flow - Core 1.0", 16 January 2019, < [https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1\_0.html](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html) >.
 
 \[RFC4517\]
 
@@ -576,17 +576,17 @@ Kawamura, S. and M. Kawashima, "A Recommendation for IPv6 Address Text Represent
 
 Eastlake 3rd, D., "Transport Layer Security (TLS) Extensions: Extension Definitions", RFC 6066, DOI 10.17487/RFC6066, January 2011, < [https://www.rfc-editor.org/info/rfc6066](https://www.rfc-editor.org/info/rfc6066) >.
 
-\[RFC7009\]
+\[RFC[[7009]]\]
 
-Lodderstedt, T., Ed., Dronia, S., and M. Scurtescu, "OAuth 2.0 Token Revocation", RFC 7009, DOI 10.17487/RFC7009, August 2013, < [https://www.rfc-editor.org/info/rfc7009](https://www.rfc-editor.org/info/rfc7009) >.
+Lodderstedt, T., Ed., Dronia, S., and M. Scurtescu, [["OAuth 2.0]] [[Token Revocation]]", RFC [[7009]], DOI 10.17487/RFC[[7009]], August 2013, < [https://www.rfc-editor.org/info/rfc7009](https://www.rfc-editor.org/info/rfc7009) >.
 
-\[RFC7518\]
+\[RFC[[7518]]\]
 
-Jones, M., "JSON Web Algorithms (JWA)", RFC 7518, DOI 10.17487/RFC7518, May 2015, < [https://www.rfc-editor.org/info/rfc7518](https://www.rfc-editor.org/info/rfc7518) >.
+Jones, M., "JSON Web Algorithms (JWA)", RFC [[7518]], DOI 10.17487/RFC[[7518]], May 2015, < [https://www.rfc-editor.org/info/rfc7518](https://www.rfc-editor.org/info/rfc7518) >.
 
 \[TOKEN\]
 
-Jones, M., Campbell, B., Bradley, J., and W. Denniss, "OAuth 2.0 Token Binding", Work in Progress, Internet-Draft, draft-ietf-oauth-token-binding-08, 19 October 2018, < [https://tools.ietf.org/html/draft-ietf-oauth-token-binding-08](https://tools.ietf.org/html/draft-ietf-oauth-token-binding-08) >.
+Jones, M., Campbell, B., Bradley, J., and W. Denniss, [["OAuth 2.0]] Token Binding", Work in Progress, Internet-Draft, draft-ietf-oauth-token-binding-08, 19 October 2018, < [https://tools.ietf.org/html/draft-ietf-oauth-token-binding-08](https://tools.ietf.org/html/draft-ietf-oauth-token-binding-08) >.
 
 ## Appendix A.
 

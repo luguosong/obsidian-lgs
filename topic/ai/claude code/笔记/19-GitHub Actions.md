@@ -9,31 +9,31 @@ tags:
 
 **本文你会学到**：
 
-- 如何在几分钟内完成 Claude Code GitHub Actions 的基本配置
+- 如何在几分钟内完成 [[Claude Code]] GitHub Actions 的基本配置
 - 从 Beta 升级到 GA v1.0 的迁移要点
 - 使用 Amazon Bedrock 和 Google Vertex AI 的企业级配置方法
 - Action 参数参考和典型配置示例（代码审查、日程触发等）
-- 安全、成本控制和故障排除的最佳实践
+- 安全、成本控制和[[故障排除]]的最佳实践
 
 ## 为什么在 GitHub Actions 中用 Claude Code？
 
-当你需要在每次 PR 创建时自动审查代码、在 Issue 被标记时自动实现功能、或者在评论中提到 AI 助手时让它帮忙修复 Bug——这些场景下手动操作既低效又容易遗漏。Claude Code GitHub Actions 把 AI 能力直接嵌入你的 CI 流水线，让它像一个永远在线的团队成员一样自动响应。
+当你需要在每次 PR 创建时自动审查代码、在 Issue 被标记时自动实现功能、或者在评论中提到 AI 助手时让它帮忙修复 Bug——这些场景下手动操作既低效又容易遗漏。[[Claude Code]] GitHub Actions 把 AI 能力直接嵌入你的 CI 流水线，让它像一个永远在线的团队成员一样自动响应。
 
 核心价值：
 
 - **即时 PR 创建**：描述需求，Claude 自动创建包含完整变更的 PR
 - **自动化代码实现**：通过 `@claude` 提及，将 Issue 转化为可工作的代码
-- **遵循项目标准**：Claude 读取仓库中的 `CLAUDE.md`，遵守你的编码规范
+- **遵循项目标准**：Claude 读取仓库中的 `CLAUDE.md`，遵守你的[[编码规范]]
 - **简单设置**：一条命令完成 GitHub App 安装和密钥配置
 - **默认安全**：代码始终留在 GitHub 托管的 Runner 上
 
 > [!info] 底层技术
 >
-> Claude Code GitHub Actions 基于 [Claude Agent SDK](../../../agent-sdk/index.md) 构建，支持以编程方式将 Claude Code 集成到应用程序中。你可以用该 SDK 构建超越 GitHub Actions 的自定义自动化工作流。
+> [[Claude Code]] GitHub Actions 基于 [Claude Agent SDK](../../../agent-sdk/index.md) 构建，支持以编程方式将 [[Claude Code]] 集成到应用程序中。你可以用该 SDK 构建超越 GitHub Actions 的自定义自动化工作流。
 
 ## Claude 能做什么？
 
-Claude Code 提供了一个功能强大的 GitHub Action（`anthropics/claude-code-action@v1`），支持以下场景：
+[[Claude Code]] 提供了一个功能强大的 GitHub Action（`anthropics/claude-code-action@v1`），支持以下场景：
 
 - **审查代码**：在 PR 评论中触发代码质量、安全性和正确性审查
 - **修复 Bug**：在 Issue 或 PR 评论中描述问题，Claude 自动定位并修复
@@ -50,13 +50,13 @@ Claude Code 提供了一个功能强大的 GitHub Action（`anthropics/claude-co
 
 ## 快速设置
 
-最快的方式是通过终端中的 Claude Code 运行安装命令：
+最快的方式是通过终端中的 [[Claude Code]] 运行安装命令：
 
 ```bash
 claude
 ```
 
-然后在 Claude Code 会话中执行：
+然后在 [[Claude Code]] 会话中执行：
 
 ```text
 /install-github-app
@@ -88,7 +88,7 @@ claude
 
 ### 添加 API 密钥
 
-在仓库的 **Settings** -> **Secrets and variables** -> **Actions** 中添加：
+在仓库的 **[[Settings]]** -> **Secrets and variables** -> **Actions** 中添加：
 
 - `ANTHROPIC_API_KEY`：你的 Claude API 密钥（从 [console.anthropic.com](https://console.anthropic.com) 获取）
 
@@ -114,7 +114,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 ```
 
-这个工作流监听 Issue 和 PR 评论事件，当评论中包含 `@claude` 时自动触发 Claude Code。
+这个工作流监听 Issue 和 PR 评论事件，当评论中包含 `@claude` 时自动触发 [[Claude Code]]。
 
 ## 从 Beta 升级到 GA v1.0
 
@@ -256,8 +256,8 @@ jobs:
 关键特性：
 
 - **统一提示接口**：所有指令通过 `prompt` 传递
-- **Skills 支持**：可以直接在提示中调用已安装的 [Skills](../../skills/index.md)
-- **CLI 参数透传**：通过 `claude_args` 传递任意 Claude Code CLI 参数
+- **[[Skills]] 支持**：可以直接在提示中调用已安装的 [Skills](../../skills/index.md)
+- **CLI 参数透传**：通过 `claude_args` 传递任意 [[Claude Code]] CLI 参数
 - **灵活触发器**：适用于任何 GitHub 事件
 
 ## Action 参数参考
@@ -265,7 +265,7 @@ jobs:
 | 参数 | 说明 | 必需 |
 |------|------|------|
 | `prompt` | Claude 的指令（纯文本或 skill 名称） | 否* |
-| `claude_args` | 传递给 Claude Code 的 CLI 参数 | 否 |
+| `claude_args` | 传递给 [[Claude Code]] 的 CLI 参数 | 否 |
 | `anthropic_api_key` | Claude API 密钥 | 是** |
 | `github_token` | 用于 API 访问的 GitHub 令牌 | 否 |
 | `trigger_phrase` | 自定义触发短语（默认 `@claude`） | 否 |
@@ -293,7 +293,7 @@ claude_args: "--max-turns 5 --model claude-sonnet-4-6 --mcp-config /path/to/conf
 
 ## 使用 Amazon Bedrock 和 Google Vertex AI
 
-如果你的企业需要控制数据驻留和计费，可以将 Claude Code GitHub Actions 与自有云基础设施配合使用。
+如果你的企业需要控制数据驻留和计费，可以将 [[Claude Code]] GitHub Actions 与自有云基础设施配合使用。
 
 > [!note] 前置条件
 >
@@ -471,7 +471,7 @@ jobs:
 
 在仓库根目录创建 `CLAUDE.md` 文件，定义代码风格、审查标准、项目规则和首选模式。Claude 在创建 PR 和响应请求时会遵循这些指南。例如：
 
-**CLAUDE.md（示例片段）**
+**[[CLAUDE.md]]（示例片段）**
 
 ```markdown
 # 项目规范
@@ -484,9 +484,9 @@ jobs:
 
 ### 优化性能与成本控制
 
-使用 Claude Code GitHub Actions 涉及两方面成本：
+使用 [[Claude Code]] GitHub Actions 涉及两方面成本：
 
-- **GitHub Actions 成本**：Claude Code 运行在 GitHub 托管的 Runner 上，消耗 Actions 分钟数
+- **GitHub Actions 成本**：[[Claude Code]] 运行在 GitHub 托管的 Runner 上，消耗 Actions 分钟数
 - **API 成本**：每次交互根据提示和响应长度消耗 API Token
 
 优化建议：
@@ -505,7 +505,7 @@ jobs:
 检查以下几点：
 
 - GitHub App 是否已正确安装到目标仓库
-- 工作流是否已启用（仓库 Settings -> Actions）
+- 工作流是否已启用（仓库 [[Settings]] -> Actions）
 - `ANTHROPIC_API_KEY` 是否已正确设置在仓库 Secrets 中
 - 评论中是否包含 `@claude`（注意是 `@` 而不是 `/`）
 

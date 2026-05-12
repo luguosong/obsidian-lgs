@@ -182,7 +182,7 @@ sequenceDiagram
 |------|---------|---------|
 | `pre-receive` | 接收 push 时，处理所有引用之前 | 全局权限检查 |
 | `update` | 每个分支更新时分别触发 | 分支级权限、拒绝非 fast-forward |
-| `post-receive` | push 完成后 | 触发 CI/CD、发送通知 |
+| `post-receive` | push 完成后 | 触发 [[CI/CD]]、发送通知 |
 
 服务端钩子的优势：无法被开发者绕过（客户端钩子可以用 `--no-verify` 跳过）。
 

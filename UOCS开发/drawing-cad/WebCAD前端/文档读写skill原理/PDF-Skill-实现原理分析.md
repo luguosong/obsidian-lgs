@@ -45,7 +45,7 @@ skills/pdf/
 | 基础文本提取 | `pypdf` | `PdfReader.pages[i].extract_text()` |
 | 带布局文本提取 | `pdfplumber` | `page.extract_text()` |
 | 表格提取 | `pdfplumber` | `page.extract_tables()` |
-| 元数据读取 | `pypdf` | `reader.metadata` |
+| 元[[数据读取]] | `pypdf` | `reader.metadata` |
 | 坐标精确提取 | `pdfplumber` | `page.chars` / `page.within_bbox()` |
 | PDF 渲染为图片 | `pypdfium2` | `page.render(scale=2.0)` |
 | 扫描件 OCR | `pytesseract` + `pdf2image` | `image_to_string()` |
@@ -103,7 +103,7 @@ with pdfplumber.open("document.pdf") as pdf:
 
 | 场景 | 工具 | 原理 |
 |------|------|------|
-| 从零创建 PDF | `reportlab` | Canvas 绘图 / Platypus 流式布局 |
+| 从零创建 PDF | `reportlab` | [[Canvas]] 绘图 / Platypus 流式布局 |
 | 合并多 PDF | `pypdf` | `PdfWriter.add_page()` |
 | 拆分 PDF | `pypdf` | 遍历 pages 各写一个 PdfWriter |
 | 旋转页面 | `pypdf` | `page.rotate(90)` |

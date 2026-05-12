@@ -2,7 +2,7 @@
 
 > **日期**: 2026-05-06
 > **状态**: 待实现
-> **范围**: CadCodeExecutor 沙箱中注入受限的瞬态标注 API，让 AI 代码在审图模式下可直接创建批注
+> **范围**: [[CadCodeExecutor 沙箱]]中注入受限的瞬态标注 API，让 AI 代码在审图模式下可直接创建批注
 
 ---
 
@@ -10,13 +10,13 @@
 
 ### 问题
 
-当前 AI 代码在 CadCodeExecutor 沙箱中执行时，只能操作 OdDb* 数据库实体（永久写入 DWG 文件）。审图模式下需要的"批注标注"属于瞬态图形（不修改原始 DWG），但沙箱出于安全考虑未注入 `viewer` 对象，因此无法调用 `viewer.addTransientLeader()` 等瞬态 API。
+当前 AI 代码在 [[CadCodeExecutor 沙箱]]中执行时，只能操作 OdDb* 数据库实体（永久写入 DWG 文件）。审图模式下需要的"批注标注"属于瞬态图形（不修改原始 DWG），但沙箱出于安全考虑未注入 `viewer` 对象，因此无法调用 `viewer.addTransientLeader()` 等瞬态 API。
 
 ### 现有架构分层
 
 | 层 | 职责 | 可访问 |
 |----|------|--------|
-| CadCodeExecutor 沙箱 | 操作 OdDb* 数据库实体 | pDb, modelSpace, ODA 类 |
+| [[CadCodeExecutor 沙箱]] | 操作 OdDb* 数据库实体 | pDb, modelSpace, ODA 类 |
 | AnnotationStore | 通过 ViewerService 管理瞬态标注 | viewer, transient API |
 
 两层之间没有通道。AI 要创建审图批注，只能走"AI 返回数据 → 前端后处理"的路径，但这样 AI 无法精确控制标注位置（偏移、避让等）。

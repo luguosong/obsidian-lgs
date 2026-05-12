@@ -17,9 +17,9 @@ tags:
 > - **仓库**：[RoundTable02/tutor-skills](https://github.com/RoundTable02/tutor-skills)
 > - **作者**：Choi Wontak
 > - **许可证**：MIT
-> - **兼容**：Claude Code、Cursor、Windsurf 等 Agent Skills 规范工具
+> - **兼容**：[[Claude Code]]、Cursor、Windsurf 等 Agent [[Skills]] 规范工具
 
-两个 Skill 构成 **"输入 → 内化 → 检测"** 完整闭环：将文档或代码库一键转化为结构化的 Obsidian 知识库（StudyVault），之后通过无提示的交互式测验不断暴露知识盲区并记录学习轨迹。
+两个 Skill 构成 **"输入 → 内化 → 检测"** 完整闭环：将文档或代码库一键转化为结构化的 [[Obsidian]] 知识库（StudyVault），之后通过无提示的交互式测验不断暴露知识盲区并记录学习轨迹。
 
 ## 工作流概览
 
@@ -38,7 +38,7 @@ Documents / Code                Obsidian                Quiz Session
 
 | Skill | 命令 | 功能 | 输入 | 输出 |
 |-------|------|------|------|------|
-| **tutor-setup** | `/tutor-setup` | 生成 StudyVault | 文档或源码 | Obsidian 笔记 + 仪表盘 + 练习题 |
+| **tutor-setup** | `/tutor-setup` | 生成 StudyVault | 文档或源码 | [[Obsidian]] 笔记 + 仪表盘 + 练习题 |
 | **tutor** | `/tutor` | 交互测验 | 已有 StudyVault | 测验会话 + 概念级进度追踪 |
 
 ## 安装

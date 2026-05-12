@@ -361,7 +361,7 @@ Samba 是 Linux 上 SMB 协议的开源实现（由 Andrew Tridgell 在 1991 年
 |------|---------|------|
 | SMB1 | Windows XP 及更早 | ⚠️ **已弃用，存在严重安全漏洞（WannaCry 利用此协议）** |
 | SMB2 | Windows Vista/Server 2008+ | ✅ 推荐（性能与安全大幅改善） |
-| SMB3 | Windows 8/Server 2012+ | ✅ 推荐（支持端到端加密） |
+| SMB3 | Windows 8/Server 2012+ | ✅ 推荐（支持[[端到端加密]]） |
 | SMB3.1.1 | Windows 10/Server 2016+ | ✅ 当前最佳（支持 AES-128-GCM 加密） |
 
 > [!danger] 禁用 SMB1

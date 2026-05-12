@@ -14,8 +14,8 @@ source: https://github.com/gsd-build/get-shit-done
 # get-shit-done（GSD）
 
 > [!abstract] 定位
-> 一套轻量但强大的**元提示 + 上下文工程 + 规格驱动开发系统**。
-> 支持 Claude Code、Copilot、Gemini CLI、Cursor、Windsurf、Codex、OpenCode 等主流 AI 编程工具。
+> 一套轻量但强大的**元提示 + [[上下文工程]] + 规格驱动开发系统**。
+> 支持 [[Claude Code]]、[[Copilot]]、Gemini CLI、Cursor、Windsurf、Codex、OpenCode 等主流 AI 编程工具。
 > 
 > 核心问题：解决 **context rot**（上下文腐化）—— 随着 AI 上下文窗口被填满，输出质量逐步劣化的问题。
 

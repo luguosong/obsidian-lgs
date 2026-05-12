@@ -70,7 +70,7 @@ graph TD
 
 ### 与 PDF Skill 的本质差异
 
-| 维度 | PDF Skill | Office Skills |
+| 维度 | [[PDF Skill]] | Office [[Skills]] |
 |------|-----------|---------------|
 | 文件本质 | 二进制流 | ZIP 压缩包（内含 XML） |
 | 编辑方式 | Python 库 API 调用 | 解包 → 直接编辑 XML → 重新打包 |
@@ -218,7 +218,7 @@ graph TD
 | 操作 | 实现方式 | 工具/库 |
 |------|---------|--------|
 | **创建/编辑** | Python | `openpyxl`（结构化操作） |
-| **数据分析** | Python | `pandas`（数据读取分析） |
+| **数据分析** | Python | `pandas`（[[数据读取]]分析） |
 | **公式重算** | LibreOffice 宏 | `recalc.py` |
 | **读取内容** | Python | `openpyxl`（data_only=True） |
 
@@ -723,7 +723,7 @@ graph TD
 
 ## 与 PDF Skill 的差异对比
 
-| 维度 | PDF Skill | Office Skills |
+| 维度 | [[PDF Skill]] | Office [[Skills]] |
 |------|-----------|---------------|
 | **文件本质** | 二进制页面描述语言 | ZIP + XML |
 | **编辑粒度** | 页面/注解/表单域 | 段落/单元格/幻灯片 |

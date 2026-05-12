@@ -181,7 +181,7 @@ public:
 };
 ```
 
-**关键设计原则**：
+**关键[[设计原则]]**：
 
 - **写入 DWG 的坐标**：统一走 ODA 的 `OdDbGeoData::transformFromLonLatAlt()` / `transformToLonLatAlt()`，保证与 ODA 渲染管线一致
 - **读/写 GIS 格式的坐标**：统一走 GDAL/PROJ 的 `OGRCoordinateTransformation`

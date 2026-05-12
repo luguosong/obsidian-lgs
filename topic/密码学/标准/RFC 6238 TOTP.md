@@ -17,7 +17,7 @@ tags:
 
 ## 摘要
 
-本文档描述了一次性密码（OTP，One-Time Password）算法的一个扩展，即对 [RFC 4226](https://www.rfc-editor.org/rfc/rfc4226) 中定义的基于 HMAC 的一次性密码（HOTP，HMAC-based One-Time Password）算法进行扩展，以支持基于时间的移动因子（moving factor）。HOTP 算法指定了一个基于事件的 OTP 算法，其移动因子是一个事件计数器。本文将移动因子建立在时间值之上。OTP 算法的基于时间变体提供了短期有效的 OTP 值，有利于增强安全性。
+本文档描述了一次性密码（OTP，One-Time Password）算法的一个扩展，即对 [RFC 4226](https://www.rfc-editor.org/rfc/rfc4226) 中定义的基于 HMAC [[的一次性密码]]（HOTP，HMAC-based One-Time Password）算法进行扩展，以支持基于时间的移动因子（moving factor）。HOTP 算法指定了一个基于事件的 OTP 算法，其移动因子是一个事件计数器。本文将移动因子建立在时间值之上。OTP 算法的基于时间变体提供了短期有效的 OTP 值，有利于增强安全性。
 
 所提出的算法可用于广泛的网络应用场景，从远程 VPN（Virtual Private Network）访问和 Wi-Fi 网络登录到面向事务的 Web 应用。作者认为，一个通用且共享的算法将通过实现商业和开源实现之间的互操作性，促进双因素认证在互联网上的采用。
 
@@ -58,7 +58,7 @@ Copyright (c) 2011 IETF Trust and the persons identified as the document authors
 
 ### 1.1 范围
 
-本文档描述了一次性密码（OTP）算法的一个扩展，即对 [RFC4226](https://www.rfc-editor.org/rfc/rfc4226) 中定义的基于 HMAC 的一次性密码（HOTP）算法进行扩展，以支持基于时间的移动因子。
+本文档描述了一次性密码（OTP）算法的一个扩展，即对 [RFC4226](https://www.rfc-editor.org/rfc/rfc4226) 中定义的基于 HMAC [[的一次性密码]]（HOTP）算法进行扩展，以支持基于时间的移动因子。
 
 ### 1.2 背景
 
@@ -137,11 +137,11 @@ HOTP 算法的这一变体指定了基于将计数器表示为时间因子来计
 
 我们建议遵循 [RFC4086](https://www.rfc-editor.org/rfc/rfc4086) 中的建议进行所有伪随机和随机数生成。用于生成密钥的伪随机数应当成功通过 [CN](http://www.gemplus.com/smart/rd/publications/pdf/CN99maur.pdf) 中指定的随机性测试，或类似的公认测试。
 
-所有通信应当通过安全通道进行，例如 SSL/TLS（Secure Socket Layer/Transport Layer Security）[RFC5246](https://www.rfc-editor.org/rfc/rfc5246) 或 IPsec 连接 [RFC4301](https://www.rfc-editor.org/rfc/rfc4301)。
+所有通信应当通过安全通道进行，例如 SSL/TLS（Secure [[Socket]] Layer/Transport Layer Security）[RFC5246](https://www.rfc-editor.org/rfc/rfc5246) 或 IPsec 连接 [RFC4301](https://www.rfc-editor.org/rfc/rfc4301)。
 
 我们还建议在验证系统中安全地存储密钥，更具体地说，使用防篡改硬件加密对密钥进行加密，仅在需要时暴露：例如，在需要验证 OTP 值时解密密钥，并立即重新加密，以将密钥在 RAM 中的暴露时间限制在很短的时间段内。
 
-密钥存储必须位于安全区域，以尽可能避免对验证系统和密钥数据库的直接攻击。特别是，对密钥材料的访问应仅限于验证系统所需的程序和进程。
+[[密钥存储]]必须位于安全区域，以尽可能避免对验证系统和密钥数据库的直接攻击。特别是，对密钥材料的访问应仅限于验证系统所需的程序和进程。
 
 ### 5.2 验证与时间步长大小
 
@@ -189,7 +189,7 @@ HOTP 算法的这一变体指定了基于将计数器表示为时间因子来计
 
 - [CN] Coron, J. and D. Naccache, "An Accurate Evaluation of Maurer's Universal Test", LNCS 1556, February 1999, <http://www.gemplus.com/smart/rd/publications/pdf/CN99maur.pdf>.
 - [RFC4301] Kent, S. and K. Seo, "Security Architecture for the Internet Protocol", RFC 4301, December 2005.
-- [RFC5246] Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.2", RFC 5246, August 2008.
+- [RFC[[5246]]] Dierks, T. and E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.2", RFC [[5246]], August 2008.
 - [RFC6030] Hoyer, P., Pei, M., and S. Machani, "Portable Symmetric Key Container (PSKC)", RFC 6030, October 2010.
 - [UT] Wikipedia, "Unix time", February 2011, <http://en.wikipedia.org/wiki/Unix_time>.
 

@@ -43,7 +43,7 @@ tags:
 
 - `CI/CD 流水线`
 
-    GitHub Actions 与 Jenkins 自动化构建、扫描与部署
+    [[GitHub Actions]] 与 Jenkins 自动化构建、扫描与部署
 
     [开始学习](cicd/index.md)
 

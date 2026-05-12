@@ -313,7 +313,7 @@ A JSON array containing a list of the JWS `alg` values (from the \[\] registry) 
 
 ### 5.2.
 
-The Dynamic Client Registration Protocol \[\] defines an API for dynamically registering OAuth 2.0 client metadata with authorization servers. The metadata defined by \[\], and registered extensions to it, also imply a general data model for clients that is useful for authorization server implementations even when the Dynamic Client Registration Protocol isn't in play. Such implementations will typically have some sort of user interface available for managing client configuration.[¶](#section-5.2-1)
+The [[Dynamic Client Registration]] Protocol \[\] defines an API for dynamically registering OAuth 2.0 client metadata with authorization servers. The metadata defined by \[\], and registered extensions to it, also imply a general data model for clients that is useful for authorization server implementations even when the [[Dynamic Client Registration]] Protocol isn't in play. Such implementations will typically have some sort of user interface available for managing client configuration.[¶](#section-5.2-1)
 
 This document introduces the following client registration metadata \[\] parameter to indicate that the client always uses DPoP when requesting tokens from the authorization server.[¶](#section-5.2-2)
 
@@ -366,7 +366,7 @@ YUY1kfAavomW_YwYMkmRNizLJoQzWy2fCo79Zi5yObpIzjWb5xW4OGld7ESZrh0fsrA
 
 ### 6.2.
 
-"OAuth 2.0 Token Introspection" \[\] defines a method for a protected resource to query an authorization server about the active state of an access token. The protected resource also determines metainformation about the token.[¶](#section-6.2-1)
+[["OAuth 2.0]] [[Token Introspection]]" \[\] defines a method for a protected resource to query an authorization server about the active state of an access token. The protected resource also determines metainformation about the token.[¶](#section-6.2-1)
 
 For a DPoP-bound access token, the hash of the public key to which the token is bound is conveyed to the protected resource as metainformation in a token introspection response. The hash is conveyed using the same `cnf` content with `jkt` member structure as the JWK Thumbprint confirmation method, described in, as a top-level member of the introspection response JSON. Note that the resource server does not send a DPoP proof with the introspection request, and the authorization server does not validate an access token's DPoP binding at the introspection endpoint. Rather, the resource server uses the data of the introspection response to validate the access token binding itself locally.[¶](#section-6.2-2)
 
@@ -661,7 +661,7 @@ DPoP-Nonce: eyJ7S_zG.eyJH0-Z.HX4w-7v
 
 :
 
-Note that the nonces provided by an authorization server and a resource server are different and should not be confused with one another since nonces will be only accepted by the server that issued them. Likewise, should a client use multiple authorization servers and/or resource servers, a nonce issued by any of them should be used only at the issuing server. Developers should also be careful to not confuse DPoP nonces with the OpenID Connect \[\] ID Token nonce.[¶](#section-9-4)
+Note that the nonces provided by an authorization server and a resource server are different and should not be confused with one another since nonces will be only accepted by the server that issued them. Likewise, should a client use multiple authorization servers and/or resource servers, a nonce issued by any of them should be used only at the issuing server. Developers should also be careful to not confuse DPoP nonces with the [[OpenID Connect]] \[\] ID Token nonce.[¶](#section-9-4)
 
 ## 10.
 
@@ -1049,9 +1049,9 @@ RFC 9449 [¶](#section-12.8-3.2.2.6)
 
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, < [https://www.rfc-editor.org/info/rfc2119](https://www.rfc-editor.org/info/rfc2119) >.
 
-\[RFC3986\]
+\[RFC[[3986]]\]
 
-Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
+Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC [[3986]], DOI 10.17487/RFC[[3986]], January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
 
 \[RFC5234\]
 
@@ -1065,29 +1065,29 @@ Saint-Andre, P. and J. Hodges, "Representation and Verification of Domain-Based 
 
 Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/RFC6749, October 2012, < [https://www.rfc-editor.org/info/rfc6749](https://www.rfc-editor.org/info/rfc6749) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
-\[RFC7515\]
+\[RFC[[7515]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May 2015, < [https://www.rfc-editor.org/info/rfc7515](https://www.rfc-editor.org/info/rfc7515) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Signature (JWS)", RFC [[7515]], DOI 10.17487/RFC[[7515]], May 2015, < [https://www.rfc-editor.org/info/rfc7515](https://www.rfc-editor.org/info/rfc7515) >.
 
-\[RFC7517\]
+\[RFC[[7517]]\]
 
-Jones, M., "JSON Web Key (JWK)", RFC 7517, DOI 10.17487/RFC7517, May 2015, < [https://www.rfc-editor.org/info/rfc7517](https://www.rfc-editor.org/info/rfc7517) >.
+Jones, M., "JSON Web Key (JWK)", RFC [[7517]], DOI 10.17487/RFC[[7517]], May 2015, < [https://www.rfc-editor.org/info/rfc7517](https://www.rfc-editor.org/info/rfc7517) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
 \[RFC7638\]
 
 Jones, M. and N. Sakimura, "JSON Web Key (JWK) Thumbprint", RFC 7638, DOI 10.17487/RFC7638, September 2015, < [https://www.rfc-editor.org/info/rfc7638](https://www.rfc-editor.org/info/rfc7638) >.
 
-\[RFC7800\]
+\[RFC[[7800]]\]
 
-Jones, M., Bradley, J., and H. Tschofenig, "Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)", RFC 7800, DOI 10.17487/RFC7800, April 2016, < [https://www.rfc-editor.org/info/rfc7800](https://www.rfc-editor.org/info/rfc7800) >.
+Jones, M., Bradley, J., and H. Tschofenig, "Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)", RFC [[7800]], DOI 10.17487/RFC[[7800]], April 2016, < [https://www.rfc-editor.org/info/rfc7800](https://www.rfc-editor.org/info/rfc7800) >.
 
 \[RFC8174\]
 
@@ -1095,7 +1095,7 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 
 \[SHS\]
 
-National Institute of Standards and Technology, "Secure Hash Standard (SHS)", FIPS PUB 180-4, DOI 10.6028/NIST.FIPS.180-4, August 2015, < [http://dx.doi.org/10.6028/NIST.FIPS.180-4](https://dx.doi.org/10.6028/NIST.FIPS.180-4) >.
+National Institute of Standards and Technology, "Secure Hash Standard (SHS)", FIPS PUB [[180-4]], DOI 10.6028/NIST.FIPS.[[180-4]], August 2015, < [http://dx.doi.org/10.6028/NIST.FIPS.180-4](https://dx.doi.org/10.6028/NIST.FIPS.180-4) >.
 
 ### 13.2.
 
@@ -1117,7 +1117,7 @@ Hanley, M., "Security alert: Attack campaign involving stolen OAuth user tokens 
 
 \[Heartbleed\]
 
-"CVE-2014-0160", < [https://cve.mitre.org/cgi-bin/cvename.cgi?name=cve-2014-0160](https://cve.mitre.org/cgi-bin/cvename.cgi?name=cve-2014-0160) >.
+"CVE-[[2014]]-0160", < [https://cve.mitre.org/cgi-bin/cvename.cgi?name=cve-2014-0160](https://cve.mitre.org/cgi-bin/cvename.cgi?name=cve-2014-0160) >.
 
 \[IANA.HTTP.AuthSchemes\]
 
@@ -1145,7 +1145,7 @@ IANA, "OAuth Parameters", < [https://www.iana.org/assignments/oauth-parameters/]
 
 \[OpenID.Core\]
 
-Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0 incorporating errata set 1", November 2014, < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0 incorporating errata set 1", November [[2014]], < [https://openid.net/specs/openid-connect-core-1\_0.html](https://openid.net/specs/openid-connect-core-1_0.html) >.
 
 \[RFC2046\]
 
@@ -1163,33 +1163,33 @@ Shirey, R., "Internet Security Glossary, Version 2", FYI 36, RFC 4949, DOI 10.17
 
 Freed, N., Klensin, J., and T. Hansen, "Media Type Specifications and Registration Procedures", BCP 13, RFC 6838, DOI 10.17487/RFC6838, January 2013, < [https://www.rfc-editor.org/info/rfc6838](https://www.rfc-editor.org/info/rfc6838) >.
 
-\[RFC7523\]
+\[RFC[[7523]]\]
 
-Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
+Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7523]], DOI 10.17487/RFC[[7523]], May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
 
-\[RFC7591\]
+\[RFC[[7591]]\]
 
-Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol", RFC 7591, DOI 10.17487/RFC7591, July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
+Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, [["OAuth 2.0]] [[Dynamic Client Registration]] Protocol", RFC [[7591]], DOI 10.17487/RFC[[7591]], July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
 
-\[RFC7636\]
+\[RFC[[7636]]\]
 
-Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key for Code Exchange by OAuth Public Clients", RFC 7636, DOI 10.17487/RFC7636, September 2015, < [https://www.rfc-editor.org/info/rfc7636](https://www.rfc-editor.org/info/rfc7636) >.
+Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key for Code Exchange by OAuth Public Clients", RFC [[7636]], DOI 10.17487/RFC[[7636]], September 2015, < [https://www.rfc-editor.org/info/rfc7636](https://www.rfc-editor.org/info/rfc7636) >.
 
-\[RFC7662\]
+\[RFC[[7662]]\]
 
-Richer, J., Ed., "OAuth 2.0 Token Introspection", RFC 7662, DOI 10.17487/RFC7662, October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
+Richer, J., Ed., [["OAuth 2.0]] [[Token Introspection]]", RFC [[7662]], DOI 10.17487/RFC[[7662]], October 2015, < [https://www.rfc-editor.org/info/rfc7662](https://www.rfc-editor.org/info/rfc7662) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
-\[RFC8705\]
+\[RFC[[8705]]\]
 
-Campbell, B., Bradley, J., Sakimura, N., and T. Lodderstedt, "OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens", RFC 8705, DOI 10.17487/RFC8705, February 2020, < [https://www.rfc-editor.org/info/rfc8705](https://www.rfc-editor.org/info/rfc8705) >.
+Campbell, B., Bradley, J., Sakimura, N., and T. Lodderstedt, [["OAuth 2.0]] Mutual-TLS Client Authentication and Certificate-Bound Access Tokens", RFC [[8705]], DOI 10.17487/RFC[[8705]], February 2020, < [https://www.rfc-editor.org/info/rfc8705](https://www.rfc-editor.org/info/rfc8705) >.
 
-\[RFC8707\]
+\[RFC[[8707]]\]
 
-Campbell, B., Bradley, J., and H. Tschofenig, "Resource Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707, February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
+Campbell, B., Bradley, J., and H. Tschofenig, "[[Resource Indicators]] for OAuth 2.0", RFC [[8707]], DOI 10.17487/RFC[[8707]], February 2020, < [https://www.rfc-editor.org/info/rfc8707](https://www.rfc-editor.org/info/rfc8707) >.
 
 \[RFC8725\]
 
@@ -1203,17 +1203,17 @@ Watsen, K., Auerswald, E., Farrel, A., and Q. Wu, "Handling Long Lines in Conten
 
 Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., "HTTP Semantics", STD 97, RFC 9110, DOI 10.17487/RFC9110, June 2022, < [https://www.rfc-editor.org/info/rfc9110](https://www.rfc-editor.org/info/rfc9110) >.
 
-\[RFC9126\]
+\[RFC[[9126]]\]
 
-Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D., and F. Skokan, "OAuth 2.0 Pushed Authorization Requests", RFC 9126, DOI 10.17487/RFC9126, September 2021, < [https://www.rfc-editor.org/info/rfc9126](https://www.rfc-editor.org/info/rfc9126) >.
+Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D., and F. Skokan, [["OAuth 2.0]] Pushed Authorization Requests", RFC [[9126]], DOI 10.17487/RFC[[9126]], September 2021, < [https://www.rfc-editor.org/info/rfc9126](https://www.rfc-editor.org/info/rfc9126) >.
 
 \[SECURITY-TOPICS\]
 
-Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, "OAuth 2.0 Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-23, 5 June 2023, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-23](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-23) >.
+Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett, [["OAuth 2.0]] Security Best Current Practice", Work in Progress, Internet-Draft, draft-ietf-oauth-security-topics-23, 5 June 2023, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-23](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-23) >.
 
 \[TOKEN-BINDING\]
 
-Jones, M., Campbell, B., Bradley, J., and W. Denniss, "OAuth 2.0 Token Binding", Work in Progress, Internet-Draft, draft-ietf-oauth-token-binding-08, 19 October 2018, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08) >.
+Jones, M., Campbell, B., Bradley, J., and W. Denniss, [["OAuth 2.0]] Token Binding", Work in Progress, Internet-Draft, draft-ietf-oauth-token-binding-08, 19 October 2018, < [https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-token-binding-08) >.
 
 \[W3C.CSP\]
 
@@ -1365,4 +1365,4 @@ DPoP-Nonce: eyJ7S_zG.eyJH0-Z.HX4w-7v
 
 :
 
-Note that the nonces provided by an authorization server and a resource server are different and should not be confused with one another since nonces will be only accepted by the server that issued them. Likewise, should a client use multiple authorization servers and/or resource servers, a nonce issued by any of them should be used only at the issuing server. Developers should also be careful to not confuse DPoP nonces with the OpenID Connect \[\] ID Token nonce.[¶](#section-9-4)
+Note that the nonces provided by an authorization server and a resource server are different and should not be confused with one another since nonces will be only accepted by the server that issued them. Likewise, should a client use multiple authorization servers and/or resource servers, a nonce issued by any of them should be used only at the issuing server. Developers should also be careful to not confuse DPoP nonces with the [[OpenID Connect]] \[\] ID Token nonce.[¶](#section-9-4)

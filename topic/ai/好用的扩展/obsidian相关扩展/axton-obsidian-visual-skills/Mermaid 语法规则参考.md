@@ -176,7 +176,7 @@ graph TB
 
 | 平台 | 说明 |
 |------|------|
-| **Obsidian** | 较老版本 Mermaid，解析更严格；`<br/>` 仅圆节点支持 |
+| **[[Obsidian]]** | 较老版本 Mermaid，解析更严格；`<br/>` 仅圆节点支持 |
 | **GitHub** | 支持良好，渲染大部分现代语法 |
 | **Mermaid Live Editor** | 最新解析器，可测试新语法 |
 

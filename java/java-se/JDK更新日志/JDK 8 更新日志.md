@@ -62,7 +62,7 @@ JDK 8 各更新版本（8uXXX）的变更记录，按发布时间倒序排列。
 - `java.security.debug` 系统属性新增线程和调试时间戳选项
 - 更新 XML Security 到 Santuario 3.0.5
 - JNDI 新增 LDAP/RMI 协议级对象工厂过滤器
-- Linux RPM 安装器改用 systemd 管理 `jexec` 服务
+- Linux RPM 安装器改用 [[systemd]] 管理 `jexec` 服务
 - 禁止 Windows 命令行参数的"最佳匹配"字符映射
 - XPath 支持 `FEATURE_SECURE_PROCESSING` 外部访问限制
 

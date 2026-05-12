@@ -2,7 +2,7 @@
 
 ## 适用范围
 
-`drawing-cad/drawing-web-app/` 源码变更后，将 dist 产物同步到测试服务器（192.168.3.228）的完整流程。
+`drawing-cad/drawing-web-app/` 源码变更后，将 dist 产物同步到[[测试服务器]]（192.168.3.228）的完整流程。
 
 > 深度背景见 `docker-compose/docs/测试服务器.md`（SSH / SVN / 全局部署链路）。本文档只覆盖前端子模块专属步骤。
 
@@ -65,7 +65,7 @@ nginx 容器（端口 17010）
 
 ### 服务器更新
 
-- [ ] SSH 到测试服务器执行 `svn update`
+- [ ] SSH 到[[测试服务器]]执行 `svn update`
 - [ ] `docker compose up -d --build drawing-web-app`（耗时操作，放后台）：
 
     ```bash
@@ -74,14 +74,14 @@ nginx 容器（端口 17010）
        nohup docker compose up -d --build drawing-web-app > /tmp/rebuild.log 2>&1 &'
     ```
 
-  > drawing-web-app 重建会级联重启 drawing-ai-server，后者 Spring Boot 冷启动 + `start_period: 180s`，总等待约 3-4 分钟。
+  > drawing-web-app 重建会级联重启 drawing-ai-server，后者 [[Spring Boot]] 冷启动 + `start_period: 180s`，总等待约 3-4 分钟。
 
 ### 验证
 
 - [ ] `docker compose ps` 确认 `drawing-web-app` 和 `drawing-ai-server` 均为 `healthy`
 - [ ] 打开 <http://192.168.3.228:17010/>，硬刷新（Ctrl+F5）
 - [ ] 浏览器 DevTools → Network 确认加载的 `index-*.js` 是最新 hash
-- [ ] 执行关键功能一次（例如上传 DWG → 打开 AI 助手 → 看到"图纸记忆"面板初始化）
+- [ ] 执行关键功能一次（例如上传 DWG → 打开 AI 助手 → 看到"[[图纸记忆]]"面板初始化）
 
 ## 常见问题
 

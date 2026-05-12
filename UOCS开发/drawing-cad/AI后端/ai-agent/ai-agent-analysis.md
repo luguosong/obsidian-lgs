@@ -1,7 +1,7 @@
 # WebUACAD AI Agent 全面分析报告
 
 > 分析日期：2026-04-02
-> 项目：DrawingWebApp（WebUACAD）
+> 项目：DrawingWebApp（[[WebUACAD]]）
 
 ---
 
@@ -53,7 +53,7 @@
 | Viewer 服务 | `src/services/ViewerService.js` | WASM 封装层，`appCore` = CadCore |
 | AI 助手 UI | `src/components/AiAssistant/AiAssistant.jsx` | useChat + drawingState + 附件系统 + 反馈闭环 |
 | 工作文件夹面板 | `src/components/FsViewerPanel/FsViewerPanel.jsx` | `/workspace/` 文件管理（上传/浏览/删除） |
-| 顶栏 | `src/components/TopBar/TopBar.jsx` | 文件操作 + 工作文件夹入口 |
+| 顶栏 | `src/components/TopBar/TopBar.jsx` | [[文件操作]] + 工作文件夹入口 |
 | 应用状态 | `src/stores/AppStore.js` | WASM 状态 + 工作文件夹面板/文件列表 |
 | RAG 索引 | `server/rag/build_index.py` | ChromaDB 向量索引构建 |
 | RAG 服务 | `server/rag/rag_server.py` | FastAPI 检索服务（端口 3002） |
@@ -68,9 +68,9 @@
 | 2 | `execute_lisp_code` | **执行** | 前端 WASM | AutoLISP 代码执行 |
 | 3 | `execute_command` | **执行** | 前端 WASM | WASM 命令执行（TRIM/FILLET 等） |
 | 4 | `plan_task` | **规划** | 服务端 | 复杂任务分解为步骤 |
-| 5 | `capture_viewport` | **视觉** | 前端截图 | 截取视图供 Vision 分析 |
+| 5 | `capture_viewport` | **视觉** | 前端截图 | 截取视图供 [[Vision]] 分析 |
 | 6 | `search_code_examples` | **RAG** | 服务端→ChromaDB | 检索 ODA API 代码示例（32 个） |
-| 7 | `search_help_docs` | **RAG** | 服务端→ChromaDB | 检索 WebUACAD 帮助文档 |
+| 7 | `search_help_docs` | **RAG** | 服务端→ChromaDB | 检索 [[WebUACAD]] 帮助文档 |
 | 8 | `analyze_drawing` | **分析** | 前端沙箱+截图 | 综合图纸分析 |
 | 9 | `detect_title_blocks` | **分析** | 前端管线 | 图框检测（双路径并行） |
 | 10 | `extract_building_info` | **分析** | 前端沙箱+截图 | 建筑信息提取 |
@@ -85,7 +85,7 @@
 - **入口**：`CadCodeExecutor.executeCadCode(code, Module, viewer)`
 - **机制**：构建白名单沙箱，注入约 **60+ ODA WASM 类**
 - **预置变量**：`pDb`（数据库）、`modelSpace`（模型空间）、`OpenAs()`、`setResult()`
-- **内存管理**：embind 对象自动追踪，执行结束统一 `.delete()`
+- **[[内存管理]]**：embind 对象自动追踪，执行结束统一 `.delete()`
 - **撤销支持**：执行前自动 `pDb.startUndoRecord()`
 - **视图刷新**：成功后自动 `appCore.Update()` + `ZoomExtents()`
 - **查询模式**：`isQuery=true` 时代码须调用 `setResult(data)` 返回结构化数据
@@ -143,7 +143,7 @@
 
 - **入口**：`viewer.execute(name, args)` → `appCore.ExecuteCommand(name, vecArgs)`
 - **命令注册**：ODA 内部 `odedRegCmds()->executeCommand`
-- **别名映射**：`resolveCommandAlias` 支持 AutoCAD 风格命令别名（如 `DIMDIAMETER` → `DimDiametric`）
+- **别名映射**：`resolveCommandAlias` 支持 [[AutoCAD]] 风格命令别名（如 `DIMDIAMETER` → `DimDiametric`）
 - **系统变量**：`TryExecuteAsSysVar` 处理同名系统变量的读写
 - **命令列表**：`GetCommandNames()` 返回所有可用命令名（大写）
 
@@ -155,7 +155,7 @@
 
 | 方法组 | 方法 | 说明 |
 |--------|------|------|
-| 文件 | `OpenFile`, `Update`, `Resize`, `Redraw`, `regenAll` | 文件操作与显示刷新 |
+| 文件 | `OpenFile`, `Update`, `Resize`, `Redraw`, `regenAll` | [[文件操作]]与显示刷新 |
 | 视图 | `Zoom`, `ZoomExtents`, `Dolly`, `Orbit` | 视图控制 |
 | 命令 | `ExecuteCommand` (Asyncify) | 执行 ODA 注册命令 |
 | 交互 | `ProvidePoint`, `ProvideEmptyInput`, `ProvideCancel`, `ProvideKeyword` | 命令交互输入 |
@@ -171,9 +171,9 @@
 
 ### AutoCAD 功能对照表
 
-| 能力域 | 已导出的 ODA WASM 类 | AutoCAD 对应命令 |
+| 能力域 | 已导出的 ODA WASM 类 | [[AutoCAD]] 对应命令 |
 |--------|---------------------|-----------------|
-| **基本绘图** | OdDbLine, OdDbCircle, OdDbArc, OdDbEllipse, OdDbPolyline, OdDbSpline, OdDbPoint | LINE, CIRCLE, ARC, ELLIPSE, PLINE, SPLINE, POINT |
+| **基本绘图** | OdDbLine, OdDbCircle, OdDbArc, OdDbEllipse, [[OdDbPolyline]], OdDbSpline, OdDbPoint | LINE, CIRCLE, ARC, ELLIPSE, PLINE, SPLINE, POINT |
 | **高级绘图** | OdDbHatch, OdDbRegion, OdDb3dSolid, OdDbSurface, OdDbSubDMesh | HATCH, REGION, BOX/CYLINDER, SURFACE, MESH |
 | **文字** | OdDbText, OdDbMText, OdDbTable | TEXT, MTEXT, TABLE |
 | **标注** | OdDbAlignedDimension, OdDbRotatedDimension, OdDbRadialDimension, OdDbDiametricDimension, OdDbOrdinateDimension | DIMALIGNED, DIMLINEAR, DIMRADIUS, DIMDIAMETER, DIMORDINATE |
@@ -195,7 +195,7 @@
 | **比对** | StartCompare, StartObjectCompare | DWGCOMPARE |
 | **撤销/重做** | Undo/Redo | UNDO, REDO |
 | **LISP** | ExecuteLisp + OdLspInterpreter | AutoLISP |
-| **CDA 属性** | GetEntityProperties, SetEntityProperty | PROPERTIES |
+| **CDA 属性** | Get[[Entity]]Properties, Set[[Entity]]Property | PROPERTIES |
 
 ### 命令别名映射（CadCore resolveCommandAlias）
 
@@ -266,8 +266,8 @@ cd server/rag && python build_index.py --code-source ./code_examples
 
 | 模块 | 行数（约） | 内容 | 评价 |
 |------|-----------|------|------|
-| 角色定义 | 1-3 | "DrawingWebApp 的 CAD 智能助手" | ⚠️ 定位模糊，未明确等同 AutoCAD |
-| 视觉能力 | 5-7 | Vision 图像分析 | ✅ 良好 |
+| 角色定义 | 1-3 | "DrawingWebApp 的 CAD 智能助手" | ⚠️ 定位模糊，未明确等同 [[AutoCAD]] |
+| 视觉能力 | 5-7 | [[Vision]] 图像分析 | ✅ 良好 |
 | 核心原则 | 9-14 | 代码优先、先查后做、任务分解、执行验证、错误修正 | ✅ 良好 |
 | 工具选择表 | 16-30 | 11 个工具的场景映射 | ✅ 良好 |
 | 坐标与单位 | 32-36 | WCS、默认尺寸参考 | ✅ 良好 |
@@ -324,7 +324,7 @@ AI 助手面板 Header 提供了丰富的交互工具按钮，用户可以在发
 引用文件按钮 (📎) 点击后展开 `WorkspaceFilePicker` 子组件，显示 `/workspace/` 目录的树形文件列表：
 
 - **文本文件**（`.txt/.json/.csv/.xml/.js/.py/.md/.yaml` 等）：前端直接从 Emscripten FS 读取内容（上限 50KB），内容作为附件发送给后端，后端将文件内容以代码块格式注入到 LLM 的用户消息中
-- **二进制文件**（`.dwg/.dxf/.pdf` 等 CAD 文件）：仅发送文件路径和元信息，后端提示 LLM 可通过 `execute_js_code` 工具使用 WASM API（如 `Module.CadCore.ReadFile(path)`）打开和分析该文件
+- **二进制文件**（`.dwg/.dxf/.pdf` 等 CAD 文件）：仅发送文件路径和元信息，后端提示 LLM 可通过 `execute_js_code` 工具使用 [[WASM API]]（如 `Module.CadCore.ReadFile(path)`）打开和分析该文件
 - 工作文件夹为空时，提供"打开文件夹管理"快捷入口，跳转到 TopBar 的 FsViewerPanel
 
 #### 工作文件夹（/workspace/）
@@ -371,7 +371,7 @@ TopBar 新增了 **文件夹** 按钮（`FolderOpenOutlined`），点击弹出 `
 | `selection` | handles 数组 + "使用 `pDb.getOdDbObjectId(handle)` 获取 ObjectId" |
 | `region` | 顶点坐标 + 包围盒 + "可用于筛选区域内实体" |
 | `file`（文本） | 文件路径 + 完整内容（代码块格式）+ "请根据文件内容回答" |
-| `file`（二进制） | 文件路径 + "可通过 WASM API 打开分析" |
+| `file`（二进制） | 文件路径 + "可通过 [[WASM API]] 打开分析" |
 | `screenshot` | "见消息中的图片部分" + Base64 图片作为 image part |
 
 ### AiAssistant 反馈闭环
@@ -380,7 +380,7 @@ TopBar 新增了 **文件夹** 按钮（`FolderOpenOutlined`），点击弹出 `
 2. **执行成功** → 写入 `appStore.appendOutput` 日志
 3. **执行失败** → 组装 `[系统反馈]` + 可选截图 → 发回 LLM 自纠
 4. **查询成功** → 组装 `[查询结果]` JSON → 发回 LLM 总结
-5. **截图请求** → `captureCurrentView()` / `captureFullExtents()` → 图片发回 LLM Vision 分析
+5. **截图请求** → `captureCurrentView()` / `captureFullExtents()` → 图片发回 LLM [[Vision]] 分析
 6. **drawingState** → 每次请求通过 `DrawingStateTransport` 附带当前图纸状态
 
 ### CadCodeExecutor 安全机制
@@ -398,11 +398,11 @@ TopBar 新增了 **文件夹** 按钮（`FolderOpenOutlined`），点击弹出 `
 
 | 问题 | 改进内容 |
 |------|---------|
-| **产品定位不清** | ✅ 新增"关于 WebUACAD"章节，明确定义为"功能完备的在线 CAD 系统，等同于 AutoCAD" |
-| **AutoCAD 命令映射缺失** | ✅ 新增完整的"AutoCAD 命令 → WebUACAD 实现方式"映射表（7 个分类，50+ 命令） |
+| **产品定位不清** | ✅ 新增"关于 [[WebUACAD]]"章节，明确定义为"功能完备的在线 CAD 系统，等同于 [[AutoCAD]]" |
+| **[[AutoCAD]] 命令映射缺失** | ✅ 新增完整的"[[AutoCAD]] 命令 → [[WebUACAD]] 实现方式"映射表（7 个分类，50+ 命令） |
 | **JS API 能力边界不明** | ✅ 新增"你的能力"章节 + "三条执行路径"详细说明，明确路径选择策略 |
 | **execute_command 工具未充分利用** | ✅ 在修改命令映射表中明确标注 TRIM/FILLET/CHAMFER/OFFSET 等走 LISP/CMD 路径 |
-| **缺少常用操作映射表** | ✅ 示例部分按 AutoCAD 术语分类（绘图/修改/图层/三维/查询/LISP），覆盖用户常见表达 |
+| **缺少常用操作映射表** | ✅ 示例部分按 [[AutoCAD]] 术语分类（绘图/修改/图层/三维/查询/LISP），覆盖用户常见表达 |
 | **核心原则不完整** | ✅ 新增第 2 条"命令兜底"原则，明确 JS 无法实现时的降级策略 |
 
 ### 已完成的改进（2026-04-02 #2）
@@ -420,21 +420,21 @@ TopBar 新增了 **文件夹** 按钮（`FolderOpenOutlined`），点击弹出 `
 |------|------|
 | **RAG 示例缺少部分常见操作** | 可补充 COPY、MIRROR、OFFSET、FILLET 等编辑操作的 JS/LISP 示例 |
 | **Viewer 层能力未暴露给 LLM** | 可考虑补充 ViewerService 可直接调用的高级 API（如图层管理、属性修改等快捷方法） |
-| **二进制文件 AI 分析路径待完善** | 引用 DWG 文件时 AI 目前只能获得路径提示，后续可在 CadCodeExecutor 沙箱中暴露 `openDatabase(path)` 等便捷 API |
+| **二进制文件 AI 分析路径待完善** | 引用 DWG 文件时 AI 目前只能获得路径提示，后续可在 [[CadCodeExecutor 沙箱]]中暴露 `openDatabase(path)` 等便捷 API |
 | **工作文件夹持久化** | `/workspace/` 内容在页面刷新后丢失（Emscripten FS 为内存文件系统），可考虑 IndexedDB 持久化或 OPFS 支持 |
 
 ---
 
 ## 总结
 
-WebUACAD AI Agent 架构已经相当完善：
+WebUA[[CAD AI Agent]] 架构已经相当完善：
 
 1. **三条执行路径**（JS 沙箱 / AutoLISP / WASM 命令）覆盖了从精细 API 操作到高级命令执行的全部层次
 2. **11 个工具**覆盖了绘图、修改、查询、分析、测量、规划、检索等完整的 CAD 工作流
-3. **WASM 导出了 100+ ODA 类**，涵盖了 AutoCAD 的绝大部分核心功能
-4. **ReAct 多步推理** + **Vision 视觉分析** + **RAG 代码检索** 的闭环机制很成熟
+3. **WASM 导出了 100+ ODA 类**，涵盖了 [[AutoCAD]] 的绝大部分核心功能
+4. **ReAct 多步推理** + **[[Vision]] 视觉分析** + **RAG 代码检索** 的闭环机制很成熟
 5. **反馈闭环**（执行→反馈→修正→验证）保证了代码执行的可靠性
 6. **5 种附件类型**（拾取点/选择对象/区域/截图/引用文件）提供了丰富的用户→AI 上下文传递通道
 7. **工作文件夹** (`/workspace/`) 实现了多文件工作区，AI 可跨文件分析和操作
 
-**核心改进方向**：在 System Prompt 中明确告诉 LLM——WebUACAD 就是 AutoCAD 的在线版本，具备完整的 AutoCAD 功能，并提供清晰的 AutoCAD 命令 → WebUACAD 实现路径映射。
+**核心改进方向**：在 System Prompt 中明确告诉 LLM——[[WebUACAD]] 就是 [[AutoCAD]] 的在线版本，具备完整的 [[AutoCAD]] 功能，并提供清晰的 [[AutoCAD]] 命令 → [[WebUACAD]] 实现路径映射。

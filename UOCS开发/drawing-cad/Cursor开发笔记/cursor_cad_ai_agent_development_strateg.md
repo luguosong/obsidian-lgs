@@ -5,7 +5,7 @@ _Exported on 2026/3/13 at GMT+8 16:57:57 from Cursor (2.6.13)_
 
 **User**
 
-我现在开发的CAD AI Agent的目标是: 能智能画图，各种复杂的图形，还要能分析当前图纸，智能分析出图纸上的信息。我目前采用的是：“`streamText()` 将消息 + System Prompt + Tool 定义发给 LLM”这种路线，是不是非常难实现。 将来应该用什么最好的路线，例如，是不是我们要建立自己的小模型，因为不可能把所有的ODA 的JS代码都汇总给"System Prompt"吧，你有什么好的建议。
+我现在开发的[[CAD AI Agent]]的目标是: 能智能画图，各种复杂的图形，还要能分析当前图纸，智能分析出图纸上的信息。我目前采用的是：“`streamText()` 将消息 + System Prompt + Tool 定义发给 LLM”这种路线，是不是非常难实现。 将来应该用什么最好的路线，例如，是不是我们要建立自己的小模型，因为不可能把所有的ODA 的JS代码都汇总给"System Prompt"吧，你有什么好的建议。
 
 ---
 
@@ -25,10 +25,10 @@ _Exported on 2026/3/13 at GMT+8 16:57:57 from Cursor (2.6.13)_
 |---|---|
 | `streamText()` + Tool Calling | 标准的 Function Calling Agent 模式 |
 | 快捷工具 + `execute_cad_code` 混合模式 | **非常聪明**的设计 — 简单图形用可靠工具，复杂图形用代码生成 |
-| 沙箱执行 + 自动内存管理 | 安全且实用 |
+| 沙箱执行 + 自动[[内存管理]] | 安全且实用 |
 | RAG 知识检索 | 已经走在正确的方向上 |
 
-**核心矛盾不在路线上，而在 System Prompt 的"信息密度瓶颈"。** 你当前的 `SYSTEM_PROMPT` 大约 370 行 / ~15KB，里面塞了 ODA API 参考、12 个代码示例、规则说明等。这是可以工作的，但确实不可能把所有 ODA JS API 都放进去。
+**核心矛盾不在路线上，而在 System Prompt 的"信息密度瓶颈"。** 你当前的 `SYSTEM_PROMPT` 大约 370 行 / ~15KB，里面塞了 ODA [[API 参考]]、12 个代码示例、规则说明等。这是可以工作的，但确实不可能把所有 ODA JS API 都放进去。
 
 ---
 

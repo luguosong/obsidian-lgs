@@ -79,7 +79,7 @@
 | 三层缓存 | `tiered-cache` | `ai.cache.l0.hit` / `ai.cache.l1.hit` / `ai.cache.miss` |
 | RAG | `rag` | `cache.gets{cache=rag,result=hit/miss}` |
 | 会话记忆 | `session-memory` | `ai.session.memory.l1.hit` / `l2.hit` / `created` / `read.errors` / `write.errors` / `l1.size` 等 7 |
-| 图纸记忆 | `drawing-memory` | 同 session-memory 的 7 |
+| [[图纸记忆]] | `drawing-memory` | 同 session-memory 的 7 |
 | Embedding 缓存 | `embedding-cache` | `ai.embedding.cache.hit` / `miss` / `redis.read.errors` / `redis.write.errors` |
 | QA 跨会话 | `qa-cache` | `ai.qa-cache.read.hit` / `write.count` / `circuit.open` |
 | Bloom 过滤器 | `bloom-filter` | `ai.bloom.reject` / `ai.bloom.pass` |

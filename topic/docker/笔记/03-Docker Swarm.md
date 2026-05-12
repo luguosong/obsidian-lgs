@@ -13,7 +13,7 @@ Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主
 
 > [!tip]+ Swarm vs Kubernetes
 >
-> Swarm 配置简单、与 Docker 原生集成；Kubernetes 功能更全、生态更大。小规模项目或已有 Docker Compose 经验的团队可优先考虑 Swarm。
+> Swarm 配置简单、与 Docker 原生集成；Kubernetes 功能更全、生态更大。小规模项目或已有 [[Docker Compose]] 经验的团队可优先考虑 Swarm。
 
 ---
 
@@ -163,7 +163,7 @@ docker service update \
 
 ## 📦 Stack 部署
 
-Stack 允许用 Docker Compose 文件描述多服务应用，并一次性部署到 Swarm。
+Stack 允许用 [[Docker Compose]] 文件描述多服务应用，并一次性部署到 Swarm。
 
 **docker-stack.yml**
 

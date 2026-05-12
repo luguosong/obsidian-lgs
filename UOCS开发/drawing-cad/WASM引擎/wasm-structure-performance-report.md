@@ -150,10 +150,10 @@ bIter.delete()
 | 需求 | 现有能力 | 缺失 API | 影响 |
 |---|----------|---------|------|
 | 一次取所有实体的基本信息 | 逐个 entity() | getBatchEntities() | N+1 问题 |
-| 字段投影（只取需要的字段） | 全量属性 | getEntityFields() / projection | 序列化开销 |
-| 快速类型检测 | 多次 isKindOf() | getEntityType() 直接返回类型名 | 150k+ 调用浪费 |
-| 快速几何范围查询 | 每个实体调用 | getEntityExtents() / getBatchExtents() | 重复计算 |
-| 属性快照批量查询 | 逐个 get* | getEntitySnapshot() / getBatchSnapshot() | 大量跨界调用 |
+| 字段投影（只取需要的字段） | 全量属性 | get[[Entity]]Fields() / projection | 序列化开销 |
+| 快速类型检测 | 多次 isKindOf() | get[[Entity]]Type() 直接返回类型名 | 150k+ 调用浪费 |
+| 快速几何范围查询 | 每个实体调用 | get[[Entity]]Extents() / getBatchExtents() | 重复计算 |
+| 属性快照批量查询 | 逐个 get* | get[[Entity]]Snapshot() / getBatchSnapshot() | 大量跨界调用 |
 
 ---
 

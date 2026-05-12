@@ -22,7 +22,7 @@
 
 | 序号 | 类名 | 方法数 | 前端使用 |
 |-----|-----|-------|---------|
-| 1 | OdDbTable | 274 | ✗ 否 | | 2 | OdDbDatabase | 191 | ✗ 否 | | 3 | OdDbViewport | 183 | ✗ 否 | | 4 | OdDbMText | 118 | ✓ 是 | | 5 | OdDbEntity | 118 | ✓ 是 | | 6 | OdGsView | 114 | ✗ 否 | | 7 | OdDbObject | 114 | ✓ 是 | | 8 | OdDbHatch | 111 | ✓ 是 | | 9 | OdDbMLeaderStyle | 101 | ✗ 否 | | 10 | TableStyleOverrides | 99 | ✗ 否 |
+| 1 | OdDbTable | 274 | ✗ 否 | | 2 | OdDbDatabase | 191 | ✗ 否 | | 3 | OdDbViewport | 183 | ✗ 否 | | 4 | OdDbMText | 118 | ✓ 是 | | 5 | OdDb[[Entity]] | 118 | ✓ 是 | | 6 | OdGsView | 114 | ✗ 否 | | 7 | OdDbObject | 114 | ✓ 是 | | 8 | OdDbHatch | 111 | ✓ 是 | | 9 | OdDbMLeaderStyle | 101 | ✗ 否 | | 10 | TableStyleOverrides | 99 | ✗ 否 |
 
 ---
 
@@ -62,7 +62,7 @@
 
 | 类名 | API 方法数 | 可能用途 |
 |-----|----------|--------|
-| OdDbTable | 274 | 表格对象 - 建筑表格数据提取 | | OdDbDatabase | 191 | 数据库级操作 - 全局配置、元数据 | | OdDbViewport | 183 | 视口管理 - 多视图图纸解析 | | OdGsView | 114 | 视图渲染接口 - 几何编辑 | | OdDbMLeaderStyle | 101 | 多行引导线样式 - 注释丰富化 | | TableStyleOverrides | 99 | 表格样式覆盖 - 表格格式化 | | OdDbLeader | 84 | 引导线 - 注释提取 | | OdDbSubDMesh | 74 | 细分网格 - 复杂建筑形体 | | OdDbMaterial | 66 | 材质属性 - BIM 信息增强 | | OdDbPlotSettings | 64 | 打印设置 - 文档配置读取 | | OdGiSubEntityTraits | 64 | 子实体属性 - 分层表示信息 | | OdDb2dPolyline | 64 | 2D 多段线 - 旧式几何处理 | | OdDbViewportTableRecord | 63 | 视口表 - 多视图管理 | | OdDbGroup | 55 | 对象组 - 关联关系提取 | | OdGeMatrix3d | 53 | 3D 矩阵变换 - 坐标转换 |
+| OdDbTable | 274 | 表格对象 - 建筑表格数据提取 | | OdDbDatabase | 191 | 数据库级操作 - 全局配置、元数据 | | OdDbViewport | 183 | 视口管理 - 多视图图纸解析 | | OdGsView | 114 | 视图渲染接口 - 几何编辑 | | OdDbMLeaderStyle | 101 | 多行引导线样式 - 注释丰富化 | | TableStyleOverrides | 99 | 表格样式覆盖 - 表格格式化 | | OdDbLeader | 84 | 引导线 - 注释提取 | | OdDbSubDMesh | 74 | 细分网格 - 复杂建筑形体 | | OdDbMaterial | 66 | 材质属性 - BIM 信息增强 | | OdDbPlot[[Settings]] | 64 | 打印设置 - 文档配置读取 | | OdGiSub[[Entity]]Traits | 64 | 子实体属性 - 分层表示信息 | | OdDb2dPolyline | 64 | 2D 多段线 - 旧式几何处理 | | OdDbViewportTableRecord | 63 | 视口表 - 多视图管理 | | OdDbGroup | 55 | 对象组 - 关联关系提取 | | OdGeMatrix3d | 53 | 3D 矩阵变换 - 坐标转换 |
 
 ### 🔍 潜在的 API 漂移
 
@@ -111,7 +111,7 @@
 - 块表遍历：OdDbBlockTableRecord → OdDbBlockReference 链式查询
 - 文本提取：OdDbText/OdDbMText 的 textString 属性
 - 几何信息：getGeomExtents() + getArea() 的联合使用
-- 内存管理：每个查询需 .delete() 进行垃圾回收
+- [[内存管理]]：每个查询需 .delete() 进行垃圾回收
 
 ### 待开发功能
 - 表格（OdDbTable）数据的结构化输出
@@ -151,7 +151,7 @@
 
 ## 附录：所有前端使用的 WASM 类
 
-- **OdDb2LineAngularDimension** (27 个方法，2 次引用) - **OdDb3dSolid** (89 个方法，1 次引用) - **OdDb3PointAngularDimension** (25 个方法，2 次引用) - **OdDbAlignedDimension** (29 个方法，3 次引用) - **OdDbArc** (39 个方法，1 次引用) - **OdDbArcDimension** (35 个方法，2 次引用) - **OdDbAttribute** (36 个方法，1 次引用) - **OdDbBlockReference** (53 个方法，9 次引用) - **OdDbBlockTable** (21 个方法，2 次引用) - **OdDbBlockTableRecord** (59 个方法，11 次引用) - **OdDbBody** (37 个方法，1 次引用) - **OdDbCircle** (34 个方法，1 次引用) - **OdDbCurve** (40 个方法，4 次引用) - **OdDbDiametricDimension** (26 个方法，2 次引用) - **OdDbDimension** (57 个方法，3 次引用) - **OdDbDimStyleTable** (11 个方法，1 次引用) - **OdDbDimStyleTableRecord** (81 个方法，1 次引用) - **OdDbEllipse** (39 个方法，1 次引用) - **OdDbEntity** (118 个方法，1 次引用) - **OdDbHandle** (4 个方法，1 次引用) - **OdDbHatch** (111 个方法，1 次引用) - **OdDbLayerTable** (18 个方法，1 次引用) - **OdDbLayerTableRecord** (20 个方法，1 次引用) - **OdDbLine** (35 个方法，4 次引用) - **OdDbLinetypeTable** (11 个方法，1 次引用) - **OdDbLinetypeTableRecord** (27 个方法，1 次引用) - **OdDbMInsertBlock** (26 个方法，2 次引用) - **OdDbMText** (118 个方法，5 次引用) - **OdDbObject** (114 个方法，1 次引用) - **OdDbObjectId** (15 个方法，1 次引用) - **OdDbOrdinateDimension** (25 个方法，2 次引用) - **OdDbPlaneSurface** (16 个方法，1 次引用) - **OdDbPoint** (17 个方法，1 次引用) - **OdDbPolyline** (66 个方法，1 次引用) - **OdDbRadialDimension** (26 个方法，2 次引用) - **OdDbRadialDimensionLarge** (28 个方法，2 次引用) - **OdDbRegion** (38 个方法，1 次引用) - **OdDbRotatedDimension** (31 个方法，3 次引用) - **OdDbSpline** (52 个方法，1 次引用) - **OdDbSurface** (71 个方法，1 次引用) - **OdDbText** (50 个方法，5 次引用) - **OdDbTextStyleTable** (10 个方法，1 次引用) - **OdDbTextStyleTableRecord** (41 个方法，1 次引用) - **OdDbXxx** (0 个方法，1 次引用) - **OdGeExtents3d** (23 个方法，1 次引用) - **OdGePoint2d** (14 个方法，2 次引用)
+- **OdDb2LineAngularDimension** (27 个方法，2 次引用) - **OdDb3dSolid** (89 个方法，1 次引用) - **OdDb3PointAngularDimension** (25 个方法，2 次引用) - **OdDbAlignedDimension** (29 个方法，3 次引用) - **OdDbArc** (39 个方法，1 次引用) - **OdDbArcDimension** (35 个方法，2 次引用) - **OdDbAttribute** (36 个方法，1 次引用) - **OdDbBlockReference** (53 个方法，9 次引用) - **OdDbBlockTable** (21 个方法，2 次引用) - **OdDbBlockTableRecord** (59 个方法，11 次引用) - **OdDbBody** (37 个方法，1 次引用) - **OdDbCircle** (34 个方法，1 次引用) - **OdDbCurve** (40 个方法，4 次引用) - **OdDbDiametricDimension** (26 个方法，2 次引用) - **OdDbDimension** (57 个方法，3 次引用) - **OdDbDimStyleTable** (11 个方法，1 次引用) - **OdDbDimStyleTableRecord** (81 个方法，1 次引用) - **OdDbEllipse** (39 个方法，1 次引用) - **OdDb[[Entity]]** (118 个方法，1 次引用) - **OdDbHandle** (4 个方法，1 次引用) - **OdDbHatch** (111 个方法，1 次引用) - **OdDbLayerTable** (18 个方法，1 次引用) - **OdDbLayerTableRecord** (20 个方法，1 次引用) - **OdDbLine** (35 个方法，4 次引用) - **OdDbLinetypeTable** (11 个方法，1 次引用) - **OdDbLinetypeTableRecord** (27 个方法，1 次引用) - **OdDbMInsertBlock** (26 个方法，2 次引用) - **OdDbMText** (118 个方法，5 次引用) - **OdDbObject** (114 个方法，1 次引用) - **OdDbObjectId** (15 个方法，1 次引用) - **OdDbOrdinateDimension** (25 个方法，2 次引用) - **OdDbPlaneSurface** (16 个方法，1 次引用) - **OdDbPoint** (17 个方法，1 次引用) - **[[OdDbPolyline]]** (66 个方法，1 次引用) - **OdDbRadialDimension** (26 个方法，2 次引用) - **OdDbRadialDimensionLarge** (28 个方法，2 次引用) - **OdDbRegion** (38 个方法，1 次引用) - **OdDbRotatedDimension** (31 个方法，3 次引用) - **OdDbSpline** (52 个方法，1 次引用) - **OdDbSurface** (71 个方法，1 次引用) - **OdDbText** (50 个方法，5 次引用) - **OdDbTextStyleTable** (10 个方法，1 次引用) - **OdDbTextStyleTableRecord** (41 个方法，1 次引用) - **OdDbXxx** (0 个方法，1 次引用) - **OdGeExtents3d** (23 个方法，1 次引用) - **OdGePoint2d** (14 个方法，2 次引用)
 
 ---
 

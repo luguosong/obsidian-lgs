@@ -29,7 +29,7 @@ tags:
 
 系统调用直接代表着"我需要内核帮我做某件事"：
 
-- 文件操作：`open`、`read`、`write`、`close`、`stat`
+- [[文件操作]]：`open`、`read`、`write`、`close`、`stat`
 - 进程控制：`fork`、`exec`、`exit`、`wait`
 - 信号：`kill`、`signal`、`sigaction`
 - 网络：`socket`、`bind`、`connect`、`accept`
@@ -441,7 +441,7 @@ man 2 open | grep -A 20 "^ERRORS"
 
 GNU 项目的工具通常提供更详细的 `info` 格式文档：
 
-- **man pages**：简洁参考手册，适合快速查参数和函数签名
+- **man pages**：简洁[[参考手册]]，适合快速查参数和函数签名
 - **info pages**：超链接树状结构，内容更丰富，有完整的教程和示例，适合深度学习
 
 **info 命令示例**
@@ -472,7 +472,7 @@ Linux 和 glibc 在 POSIX 的基础上提供了大量扩展，性能更好或功
 
 | 类别 | POSIX 标准接口 | Linux/GNU 扩展 |
 |------|--------------|--------------|
-| 文件操作 | `open()` / `read()` | `openat()` / `pread()` / `splice()` |
+| [[文件操作]] | `open()` / `read()` | `openat()` / `pread()` / `splice()` |
 | 目录遍历 | `readdir()` | `getdents64()`（更高效） |
 | 进程创建 | `fork()` / `exec()` | `clone()`（细粒度控制，容器的基础） |
 | 文件元数据 | `stat()` | `statx()`（更多信息，原子性更强） |

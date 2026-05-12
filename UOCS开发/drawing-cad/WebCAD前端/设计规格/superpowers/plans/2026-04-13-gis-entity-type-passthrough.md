@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 让前端 ImportGisModal 中用户选择的实体类型（如 OdDbHatch / OdDbPolyline）能正确传递到 C++ 端，并据此创建对应的 DWG 实体。
+**Goal:** 让前端 ImportGisModal 中用户选择的实体类型（如 OdDbHatch / [[OdDbPolyline]]）能正确传递到 C++ 端，并据此创建对应的 DWG 实体。
 
 **Architecture:** 将 `GisStyleMap` 的键从 `gisType` 改为 `layerName` 以支持 per-layer 配置；在 `GisStyleEntry` 中增加 `dwgEntity` 字段；`ConvertOGRFeatureToDWG` 改为接收直接解析好的 `GisStyleEntry*`；新增 `convertPolygonAsHatch()` 函数实现 OGRPolygon → OdDbHatch 转换。
 
@@ -25,7 +25,7 @@
 **Files:**
 - Modify: `E:\updasdk\WorkSpace\uadrawing\src\uaodcadcore\gdal\uaodco_feature_from_gis.h:12-27`
 
-- [ ] **Step 1: 在 GisStyleEntry 中增加 dwgEntity 字段**
+- [ ] **Step 1: 在 GisStyleEntry 中增加 dwg[[Entity]] 字段**
 
 将 `uaodco_feature_from_gis.h` 中的 `GisStyleEntry` 和 `ConvertOGRFeatureToDWG` 声明改为：
 
@@ -429,21 +429,21 @@ git commit -m "feat(gis): importGisFile resolves per-layer style and passes to C
 4. 点击导入
 5. 验证：DWG 中生成的实体应为 **OdDbHatch (SOLID 填充)**，而非闭合多段线
 
-- [ ] **Step 3: 测试用例 — Polygon 选 OdDbPolyline (多段线)**
+- [ ] **Step 3: 测试用例 — Polygon 选 [[OdDbPolyline]] (多段线)**
 
-1. 同一 Shapefile，实体类型改为 **多段线** (OdDbPolyline)
-2. 导入后验证：DWG 中生成的实体应为闭合 **OdDbPolyline**
+1. 同一 Shapefile，实体类型改为 **多段线** ([[OdDbPolyline]])
+2. 导入后验证：DWG 中生成的实体应为闭合 **[[OdDbPolyline]]**
 
 - [ ] **Step 4: 测试用例 — 多图层不同实体类型**
 
 1. 导入包含 2 个 Polygon 图层的文件
-2. 图层 A 选 OdDbHatch，图层 B 选 OdDbPolyline
+2. 图层 A 选 OdDbHatch，图层 B 选 [[OdDbPolyline]]
 3. 验证两个图层分别生成正确的实体类型
 
 - [ ] **Step 5: 回归测试 — Point / LineString 图层**
 
 1. 导入包含 Point 和 LineString 图层的 Shapefile
-2. 验证它们仍然正常生成 OdDbPoint 和 OdDbPolyline
+2. 验证它们仍然正常生成 OdDbPoint 和 [[OdDbPolyline]]
 
 - [ ] **Step 6: 回归测试 — 颜色、线型、图层名**
 

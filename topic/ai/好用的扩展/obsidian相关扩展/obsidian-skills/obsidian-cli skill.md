@@ -13,12 +13,12 @@ tags:
 # obsidian-cli
 
 > [!summary]
-> 通过命令行工具直接与**运行中的 Obsidian** 交互：读写笔记、管理 properties、执行 JavaScript、调试插件/主题、截图。是 Obsidian 自动化和插件开发的核心工具。
+> 通过命令行工具直接与**运行中的 [[Obsidian]]** 交互：读写笔记、管理 properties、执行 JavaScript、调试插件/主题、截图。是 [[Obsidian]] 自动化和插件开发的核心工具。
 
 **触发词**：`Obsidian CLI`、`操作 vault`、`插件开发`、`主题开发`、`执行 JS`、`截图 Obsidian`、`批量处理笔记`
 
 > [!warning] 前提条件
-> 1. Obsidian 应用正在运行
+> 1. [[Obsidian]] 应用正在运行
 > 2. 已安装 [Obsidian CLI 插件](https://github.com/kepano/obsidian-cli)
 > 3. CLI 工具已在系统 PATH 中
 
@@ -76,7 +76,7 @@ obsidian theme "Minimal"                   # 切换主题
 
 ### 执行 JavaScript
 
-直接在 Obsidian 上下文中运行 JS——最强大的功能：
+直接在 [[Obsidian]] 上下文中运行 JS——最强大的功能：
 
 ```bash
 obsidian eval "app.vault.getName()"        # 简单命令

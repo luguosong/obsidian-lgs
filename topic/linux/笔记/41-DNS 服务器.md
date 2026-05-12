@@ -561,9 +561,9 @@ dig +ttlid www.example.com
 
 ### nslookup：交互式查询
 
-`nslookup` 支持交互模式，适合临时调试：
+`nslookup` 支持[[交互模式]]，适合临时调试：
 
-**nslookup 交互模式**
+**nslookup [[交互模式]]**
 
 ```bash
 nslookup
@@ -580,7 +580,7 @@ nslookup
 
 在使用 `systemd-resolved` 的现代 Linux 系统上，用以下命令诊断：
 
-**systemd-resolve 常用命令**
+**[[systemd]]-resolve 常用命令**
 
 ```bash
 # 查看所有接口的 DNS 配置和缓存统计
@@ -607,9 +607,9 @@ resolvectl dns eth0
 
 ### DNSSEC：数字签名验证
 
-DNSSEC（DNS Security Extensions）通过公钥密码学为 DNS 记录添加数字签名，防止缓存投毒攻击。
+DNSSEC（DNS Security Extensions）通过公钥密码学为 DNS 记录添加[[数字签名]]，防止缓存投毒攻击。
 
-工作原理：
+[[工作原理]]：
 
 - 区域管理员用私钥对区域中每条记录生成签名（`RRSIG`）
 - 公钥发布为 `DNSKEY` 记录，并由上级 DNS 的 `DS` 记录背书
@@ -645,7 +645,7 @@ BIND9 开启 DNSSEC 验证只需在 `options` 中设置 `dnssec-validation auto;
 
 `systemd-resolved` 支持 DoT，在 `/etc/systemd/resolved.conf` 中启用：
 
-**/etc/systemd/resolved.conf**
+**/etc/[[systemd]]/resolved.conf**
 
 ```text
 [Resolve]

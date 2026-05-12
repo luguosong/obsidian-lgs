@@ -10,7 +10,7 @@ tags:
 **本文你会学到**：
 
 - 系统时间偏差的危害与应用场景
-- NTP 的层级结构（Stratum）与工作原理
+- NTP 的层级结构（Stratum）与[[工作原理]]
 - 常见公网 NTP 服务器的选择（pool.ntp.org、国内源等）
 - 用 `timedatectl` 或 `ntpd` 配置客户端
 - 搭建内网主 NTP 服务器的配置步骤
@@ -253,11 +253,11 @@ sudo ufw allow 123/udp
 
 ## systemd-timesyncd：轻量级客户端
 
-`systemd-timesyncd` 是 systemd 内置的 SNTP 客户端，无需额外安装，适合只需时间同步（不需要提供 NTP 服务）的场景。
+`systemd-timesyncd` 是 [[systemd]] 内置的 SNTP 客户端，无需额外安装，适合只需时间同步（不需要提供 NTP 服务）的场景。
 
 ### 配置
 
-**/etc/systemd/timesyncd.conf**
+**/etc/[[systemd]]/timesyncd.conf**
 
 ```text
 [Time]
@@ -332,7 +332,7 @@ sudo timedatectl set-time "2024-01-01 20:00:00"
 | 需要向内网其他主机提供 NTP 服务 | `chrony` |
 | 网络环境不稳定（VPN、经常休眠的笔记本） | `chrony` |
 | 需要毫秒级以下精度（金融、电信） | `chrony` + 硬件时间戳网卡 |
-| 已有 systemd 环境且不需额外功能 | `systemd-timesyncd`（默认已有） |
+| 已有 [[systemd]] 环境且不需额外功能 | `systemd-timesyncd`（默认已有） |
 
 > [!warning] 两者不能同时运行
 >

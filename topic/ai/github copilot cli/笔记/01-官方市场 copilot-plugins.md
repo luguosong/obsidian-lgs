@@ -11,7 +11,7 @@ tags:
 
 📦 仓库地址：[github/copilot-plugins](https://github.com/github/copilot-plugins)
 
-`copilot-plugins` 是 GitHub 官方维护的插件集合——可以理解为 Copilot CLI 的"官方应用商店"。这里的每个插件都经过 GitHub 团队审核，质量有保障，适合作为首选安装来源。
+`copilot-plugins` 是 GitHub 官方维护的插件集合——可以理解为 [[Copilot]] CLI 的"官方应用商店"。这里的每个插件都经过 GitHub 团队审核，质量有保障，适合作为首选安装来源。
 
 ## 📥 安装方式
 
@@ -72,7 +72,7 @@ tags:
 >
 > WorkIQ 目前处于公开预览阶段，功能和 API 可能变更。
 
-将 AI Agent 连接到 Microsoft 365 Copilot，提供对组织数据的访问能力。支持查询的数据类型：
+将 AI Agent 连接到 Microsoft 365 [[Copilot]]，提供对组织数据的访问能力。支持查询的数据类型：
 
 | 数据类型 | 示例问题 |
 |---------|---------|
@@ -82,15 +82,15 @@ tags:
 | Teams | "总结一下工程频道今天的消息" |
 | 人员 | "谁在参与 Alpha 项目？" |
 
-**包含**：`workiq` Skill + MCP 服务器（基于 [`@microsoft/workiq`](https://github.com/microsoft/work-iq-mcp)）
+**包含**：`workiq` Skill + [[MCP 服务器]]（基于 [`@microsoft/workiq`](https://github.com/microsoft/work-iq-mcp)）
 
-**前置条件**：Node.js 18+、具备 Copilot 访问权限的 Microsoft 365 账户、租户管理员授权
+**前置条件**：Node.js 18+、具备 [[Copilot]] 访问权限的 Microsoft 365 账户、租户管理员授权
 
 ---
 
 ## 🆚 与社区市场的区别
 
-| 维度 | copilot-plugins（官方） | awesome-copilot（社区） |
+| 维度 | copilot-plugins（官方） | [[awesome-copilot]]（社区） |
 |------|----------------------|----------------------|
 | 维护者 | GitHub 团队 | 社区贡献者 |
 | 审核标准 | 严格审核 | 社区评审 |

@@ -503,7 +503,7 @@ listen(sockfd, 128);
 
 - **Nginx ↔ PHP-FPM**：`fastcgi_pass unix:/var/run/php-fpm.sock`，比 `127.0.0.1:9000` 性能更好
 - **Docker 守护进程**：`/var/run/docker.sock`，Docker CLI 通过它与 daemon 通信
-- **systemd socket activation**：systemd 持有监听 socket，服务启动时传递给进程（零停机重启）
+- **[[systemd]] socket activation**：[[systemd]] 持有监听 socket，服务启动时传递给进程（零停机重启）
 - **MySQL / PostgreSQL 本地连接**：`mysql -h 127.0.0.1` 走 TCP，`mysql` 不带 `-h` 则走 Unix socket
 
 ### 查看 Unix Domain Socket
@@ -529,7 +529,7 @@ lsof /var/run/docker.sock
 
 ### 无连接的本质：sendto / recvfrom
 
-UDP 不需要建立连接，每次发送都要显式指定目标地址：
+UDP 不需要[[建立连接]]，每次发送都要显式指定目标地址：
 
 **UDP 服务端**
 

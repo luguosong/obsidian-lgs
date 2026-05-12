@@ -1,6 +1,6 @@
 # WASM Emscripten 绑定规律手册
 
-> 本文档记录 drawing-cad 前端调用 ODA WASM API 时必须遵守的绑定规律，  
+> 本文档记录 drawing-cad 前端调用 ODA [[WASM API]] 时必须遵守的绑定规律，  
 > 由 P18 阶段原子工具 Bug 排查过程中总结归纳（2026-04-24）。
 
 ---

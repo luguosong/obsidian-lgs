@@ -97,7 +97,7 @@ UacadConfig 是一个跨平台的 JSON 配置管理系统，用于替代 Windows
 
 ### 三大分区说明
 
-| 分区 | 用途 | 对应 AutoCAD 机制 |
+| 分区 | 用途 | 对应 [[AutoCAD]] 机制 |
 |------|------|-------------------|
 | `vars` | CAD 系统变量 | `SETVAR` / `REGVAR_DEF` / 注册表 `vars\td` |
 | `options` | 应用选项设置 | `OPTIONS` 对话框 / 注册表 `Profiles\...\General` |

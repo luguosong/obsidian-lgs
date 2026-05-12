@@ -12,11 +12,11 @@ tags:
 
 ## Obsidian Git 插件
 
-一款功能强大的 Obsidian 社区插件，将 Git 集成直接带入你的 Vault。在 Obsidian 内即可完成自动提交、pull、push 以及变更查看等操作。
+一款功能强大的 [[Obsidian]] 社区插件，将 Git 集成直接带入你的 Vault。在 [[Obsidian]] 内即可完成自动提交、pull、push 以及变更查看等操作。
 
 ## 📚 文档
 
-所有配置说明（含移动端）、常见问题、技巧及高级配置，均可在 📖 [完整文档](https://publish.obsidian.md/git-doc) 中找到。
+所有配置说明（含移动端）、常见问题、技巧及[[高级配置]]，均可在 📖 [完整文档](https://publish.obsidian.md/git-doc) 中找到。
 
 > [!warning] 移动端用户注意
 > 该插件在移动端**极不稳定**，请务必查阅下方 [移动端支持](#-移动端支持--实验性) 章节。
@@ -24,7 +24,7 @@ tags:
 ## 核心功能
 
 - 🔁 **自动提交同步**：按计划自动执行 commit、pull 和 push
-- 📥 **启动时自动 pull**：Obsidian 启动时自动拉取最新内容
+- 📥 **启动时自动 pull**：[[Obsidian]] 启动时自动拉取最新内容
 - 📂 **子模块支持**：管理多个仓库（仅限桌面端，需手动开启）
 - 🔧 **Source Control View**：暂存/取消暂存、提交和查看文件差异——通过 `Open source control view` 命令打开
 - 📜 **History View**：浏览提交记录和变更文件——通过 `Open history view` 命令打开
@@ -39,7 +39,7 @@ tags:
 
 ### 🔧 Source Control View
 
-在 Obsidian 内直接管理文件变更，支持暂存/取消暂存单个文件并提交。
+在 [[Obsidian]] 内直接管理文件变更，支持暂存/取消暂存单个文件并提交。
 
 ![Source Control View](https://raw.githubusercontent.com/Vinzent03/obsidian-git/master/images/source-view.png)
 
@@ -64,7 +64,7 @@ tags:
 ## 可用命令
 
 > [!info] 说明
-> 以下仅列出最常用的命令，完整命令列表请在 Obsidian 命令面板中查看。
+> 以下仅列出最常用的命令，完整命令列表请在 [[Obsidian]] 命令面板中查看。
 
 - 🔄 变更
 	- `List changed files`：在弹窗中列出所有变更
@@ -80,7 +80,7 @@ tags:
 - 🔀 提交同步
 	- `Commit-and-sync`：默认行为为提交所有变更、pull，然后 push
 		- `Commit-and-sync with specific message`：同上，但使用自定义提交信息
-		- `Commit-and-sync and close`：同 `Commit-and-sync`，在桌面端还会关闭 Obsidian 窗口（移动端不会退出应用）
+		- `Commit-and-sync and close`：同 `Commit-and-sync`，在桌面端还会关闭 [[Obsidian]] 窗口（移动端不会退出应用）
 - 🌐 远程操作
 	- `Push`、`Pull`
 		- `Edit remotes`：添加或编辑远程仓库
@@ -118,7 +118,7 @@ tags:
 一个可选替代方案是 [GitSync](https://github.com/ViscousPot/GitSync)，支持 Android 和 iOS，与本插件无关联，但对移动端用户可能是更好的选择。相关教程可参考[此处](https://viscouspotenti.al/posts/gitsync-all-devices-tutorial)。
 
 > [!info] 技术背景
-> 移动端 Git 功能通过 [isomorphic-git](https://isomorphic-git.org/) 实现——这是一个基于 JavaScript 的 Git 重实现，但存在严重的局限性和问题。Obsidian 插件无法在 Android 或 iOS 上调用原生 Git 安装。
+> 移动端 Git 功能通过 [isomorphic-git](https://isomorphic-git.org/) 实现——这是一个基于 JavaScript 的 Git 重实现，但存在严重的局限性和问题。[[Obsidian]] 插件无法在 Android 或 iOS 上调用原生 Git 安装。
 
 ### ❌ 移动端功能限制
 
@@ -130,7 +130,7 @@ tags:
 ### ⚠️ 性能注意事项
 
 > [!caution] 注意
-> 根据你的设备和可用内存，Obsidian 可能出现以下情况：
+> 根据你的设备和可用内存，[[Obsidian]] 可能出现以下情况：
 >
 > - 在 clone/pull 时崩溃
 > - 产生缓冲区溢出错误

@@ -77,7 +77,7 @@ its development status as a Proposed Standard, along with the associated signing
 
 the relative ease of JWS and JWE compared to XML Signature and Encryption.[¶](#section-1-12.5)
 
-The parameters `request` and `request_uri` are introduced as additional authorization request parameters for the \[\] flows. The `request` parameter is a \[\] whose JWT Claims Set holds the JSON-encoded OAuth 2.0 authorization request parameters. Note that, in contrast to RFC 7519, the elements of the Claims Set are encoded OAuth request parameters \[\], supplemented with only a few of the IANA-managed JSON Web Token Claims \[\], in particular, `iss` and `aud`. The JWT in the `request` parameter is integrity protected and source authenticated using JWS.[¶](#section-1-13)
+The parameters `request` and `request_uri` are introduced as additional authorization request parameters for the \[\] flows. The `request` parameter is a \[\] whose JWT Claims Set holds the JSON-encoded OAuth 2.0 authorization request parameters. Note that, in contrast to RFC [[7519]], the elements of the Claims Set are encoded OAuth request parameters \[\], supplemented with only a few of the IANA-managed JSON Web Token Claims \[\], in particular, `iss` and `aud`. The JWT in the `request` parameter is integrity protected and source authenticated using JWS.[¶](#section-1-13)
 
 The \[\] can be passed to the authorization endpoint by reference, in which case the parameter `request_uri` is used instead of `request`.[¶](#section-1-14)
 
@@ -104,7 +104,7 @@ There are a few cases where request by reference is useful, such as:[¶](#sectio
 1. when it is desirable to reduce the size of a transmitted request. The use of application-layer security increases the size of the request particularly when public-key cryptography is used.[¶](#section-1-18.1)
 2. when the client does not want to do the application-level cryptography. The authorization server may provide an endpoint to accept the authorization request through direct communication with the client, so that the client is authenticated and the channel is TLS protected.[¶](#section-1-18.2)
 
-This capability is in use by OpenID Connect \[\].[¶](#section-1-19)
+This capability is in use by [[OpenID Connect]] \[\].[¶](#section-1-19)
 
 ### 1.1.
 
@@ -713,7 +713,7 @@ As described in [Section 2.8](https://www.rfc-editor.org/rfc/rfc8725#section-2.8
 
 One way that an attacker might attempt to repurpose a Request Object is to try to use it as a client authentication JWT, as described in [Section 2.2](https://www.rfc-editor.org/rfc/rfc7523#section-2.2) of \[\]. A simple way to prevent this is to never use the client ID as the `sub` value in a Request Object.[¶](#section-10.8-2)
 
-Another way to prevent cross-JWT confusion is to use explicit typing, as described in [Section 3.11](https://www.rfc-editor.org/rfc/rfc8725#section-3.11) of \[\]. One would explicitly type a Request Object by including a `typ` Header Parameter with the value `oauth-authz-req+jwt` (which is registered in ). Note, however, that requiring explicitly typed Request Objects at existing authorization servers will break most existing deployments, as existing clients are already commonly using untyped Request Objects, especially with OpenID Connect \[\]. However, requiring explicit typing would be a good idea for new OAuth deployment profiles where compatibility with existing deployments is not a consideration.[¶](#section-10.8-3)
+Another way to prevent cross-JWT confusion is to use explicit typing, as described in [Section 3.11](https://www.rfc-editor.org/rfc/rfc8725#section-3.11) of \[\]. One would explicitly type a Request Object by including a `typ` Header Parameter with the value `oauth-authz-req+jwt` (which is registered in ). Note, however, that requiring explicitly typed Request Objects at existing authorization servers will break most existing deployments, as existing clients are already commonly using untyped Request Objects, especially with [[OpenID Connect]] \[\]. However, requiring explicit typing would be a good idea for new OAuth deployment profiles where compatibility with existing deployments is not a consideration.[¶](#section-10.8-3)
 
 Finally, yet another way to prevent cross-JWT confusion is to use a key management regime in which keys used to sign Request Objects are identifiably distinct from those used for other purposes. Then, if an adversary attempts to repurpose the Request Object in another context, a key mismatch will occur, thwarting the attack.[¶](#section-10.8-4)
 
@@ -753,9 +753,9 @@ Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14,
 
 Yergeau, F., "UTF-8, a transformation format of ISO 10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November 2003, < [https://www.rfc-editor.org/info/rfc3629](https://www.rfc-editor.org/info/rfc3629) >.
 
-\[RFC3986\]
+\[RFC[[3986]]\]
 
-Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
+Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC [[3986]], DOI 10.17487/RFC[[3986]], January 2005, < [https://www.rfc-editor.org/info/rfc3986](https://www.rfc-editor.org/info/rfc3986) >.
 
 \[RFC6125\]
 
@@ -765,29 +765,29 @@ Saint-Andre, P. and J. Hodges, "Representation and Verification of Domain-Based 
 
 Hardt, D., Ed., "The OAuth 2.0 Authorization Framework", RFC 6749, DOI 10.17487/RFC6749, October 2012, < [https://www.rfc-editor.org/info/rfc6749](https://www.rfc-editor.org/info/rfc6749) >.
 
-\[RFC6750\]
+\[RFC[[6750]]\]
 
-Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: Bearer Token Usage", RFC 6750, DOI 10.17487/RFC6750, October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
+Jones, M. and D. Hardt, "The OAuth 2.0 Authorization Framework: [[Bearer Token]] Usage", RFC [[6750]], DOI 10.17487/RFC[[6750]], October 2012, < [https://www.rfc-editor.org/info/rfc6750](https://www.rfc-editor.org/info/rfc6750) >.
 
 \[RFC7230\]
 
-Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing", RFC 7230, DOI 10.17487/RFC7230, June 2014, < [https://www.rfc-editor.org/info/rfc7230](https://www.rfc-editor.org/info/rfc7230) >.
+Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing", RFC 7230, DOI 10.17487/RFC7230, June [[2014]], < [https://www.rfc-editor.org/info/rfc7230](https://www.rfc-editor.org/info/rfc7230) >.
 
-\[RFC7515\]
+\[RFC[[7515]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May 2015, < [https://www.rfc-editor.org/info/rfc7515](https://www.rfc-editor.org/info/rfc7515) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Signature (JWS)", RFC [[7515]], DOI 10.17487/RFC[[7515]], May 2015, < [https://www.rfc-editor.org/info/rfc7515](https://www.rfc-editor.org/info/rfc7515) >.
 
-\[RFC7516\]
+\[RFC[[7516]]\]
 
-Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)", RFC 7516, DOI 10.17487/RFC7516, May 2015, < [https://www.rfc-editor.org/info/rfc7516](https://www.rfc-editor.org/info/rfc7516) >.
+Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)", RFC [[7516]], DOI 10.17487/RFC[[7516]], May 2015, < [https://www.rfc-editor.org/info/rfc7516](https://www.rfc-editor.org/info/rfc7516) >.
 
-\[RFC7518\]
+\[RFC[[7518]]\]
 
-Jones, M., "JSON Web Algorithms (JWA)", RFC 7518, DOI 10.17487/RFC7518, May 2015, < [https://www.rfc-editor.org/info/rfc7518](https://www.rfc-editor.org/info/rfc7518) >.
+Jones, M., "JSON Web Algorithms (JWA)", RFC [[7518]], DOI 10.17487/RFC[[7518]], May 2015, < [https://www.rfc-editor.org/info/rfc7518](https://www.rfc-editor.org/info/rfc7518) >.
 
-\[RFC7519\]
+\[RFC[[7519]]\]
 
-Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
+Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token (JWT)", RFC [[7519]], DOI 10.17487/RFC[[7519]], May 2015, < [https://www.rfc-editor.org/info/rfc7519](https://www.rfc-editor.org/info/rfc7519) >.
 
 \[RFC7525\]
 
@@ -805,19 +805,19 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 
 Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", STD 90, RFC 8259, DOI 10.17487/RFC8259, December 2017, < [https://www.rfc-editor.org/info/rfc8259](https://www.rfc-editor.org/info/rfc8259) >.
 
-\[RFC8414\]
+\[RFC[[8414]]\]
 
-Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0 Authorization Server Metadata", RFC 8414, DOI 10.17487/RFC8414, June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
+Jones, M., Sakimura, N., and J. Bradley, [["OAuth 2.0]] Authorization Server Metadata", RFC [[8414]], DOI 10.17487/RFC[[8414]], June 2018, < [https://www.rfc-editor.org/info/rfc8414](https://www.rfc-editor.org/info/rfc8414) >.
 
 ### 12.2.
 
 \[BASIN\]
 
-Basin, D., Cremers, C., and S. Meier, "Provably Repairing the ISO/IEC 9798 Standard for Entity Authentication", Journal of Computer Security - Security and Trust Principles, Volume 21, Issue 6, pp. 817-846, November 2013, < [https://www.cs.ox.ac.uk/people/cas.cremers/downloads/papers/BCM2012-iso9798.pdf](https://www.cs.ox.ac.uk/people/cas.cremers/downloads/papers/BCM2012-iso9798.pdf) >.
+Basin, D., Cremers, C., and S. Meier, "Provably Repairing the ISO/IEC 9798 Standard for [[Entity]] Authentication", Journal of Computer Security - Security and Trust Principles, Volume 21, Issue 6, pp. 817-846, November 2013, < [https://www.cs.ox.ac.uk/people/cas.cremers/downloads/papers/BCM2012-iso9798.pdf](https://www.cs.ox.ac.uk/people/cas.cremers/downloads/papers/BCM2012-iso9798.pdf) >.
 
 \[CapURLs\]
 
-Tennison, J., Ed., "Good Practices for Capability URLs", W3C First Public Working Draft, 18 February 2014, < [https://www.w3.org/TR/capability-urls/](https://www.w3.org/TR/capability-urls/) >.
+Tennison, J., Ed., "Good Practices for Capability URLs", W3C First Public Working Draft, 18 February [[2014]], < [https://www.w3.org/TR/capability-urls/](https://www.w3.org/TR/capability-urls/) >.
 
 \[IANA.JWT.Claims\]
 
@@ -833,15 +833,15 @@ IANA, "OAuth Parameters", < [https://www.iana.org/assignments/oauth-parameters](
 
 \[OpenID.Core\]
 
-Sakimura, N., Bradley, J., Jones, M.B., de Medeiros, B., and C. Mortimore, "OpenID Connect Core 1.0 incorporating errata set 1", OpenID Foundation Standards, 8 November 2014, < [http://openid.net/specs/openid-connect-core-1\_0.html](http://openid.net/specs/openid-connect-core-1_0.html) >.
+Sakimura, N., Bradley, J., Jones, M.B., de Medeiros, B., and C. Mortimore, "[[OpenID Connect]] Core 1.0 incorporating errata set 1", OpenID Foundation Standards, 8 November [[2014]], < [http://openid.net/specs/openid-connect-core-1\_0.html](http://openid.net/specs/openid-connect-core-1_0.html) >.
 
 \[RFC2046\]
 
 Freed, N. and N. Borenstein, "Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types", RFC 2046, DOI 10.17487/RFC2046, November 1996, < [https://www.rfc-editor.org/info/rfc2046](https://www.rfc-editor.org/info/rfc2046) >.
 
-\[RFC6819\]
+\[RFC[[6819]]\]
 
-Lodderstedt, T., Ed., McGloin, M., and P. Hunt, "OAuth 2.0 Threat Model and Security Considerations", RFC 6819, DOI 10.17487/RFC6819, January 2013, < [https://www.rfc-editor.org/info/rfc6819](https://www.rfc-editor.org/info/rfc6819) >.
+Lodderstedt, T., Ed., McGloin, M., and P. Hunt, [["OAuth 2.0]] [[Threat Model]] and Security Considerations", RFC [[6819]], DOI 10.17487/RFC[[6819]], January 2013, < [https://www.rfc-editor.org/info/rfc6819](https://www.rfc-editor.org/info/rfc6819) >.
 
 \[RFC6838\]
 
@@ -851,13 +851,13 @@ Freed, N., Klensin, J., and T. Hansen, "Media Type Specifications and Registrati
 
 Cooper, A., Tschofenig, H., Aboba, B., Peterson, J., Morris, J., Hansen, M., and R. Smith, "Privacy Considerations for Internet Protocols", RFC 6973, DOI 10.17487/RFC6973, July 2013, < [https://www.rfc-editor.org/info/rfc6973](https://www.rfc-editor.org/info/rfc6973) >.
 
-\[RFC7523\]
+\[RFC[[7523]]\]
 
-Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants", RFC 7523, DOI 10.17487/RFC7523, May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
+Jones, M., Campbell, B., and C. Mortimore, "JSON Web Token (JWT) [[Profile]] for OAuth 2.0 Client Authentication and Authorization Grants", RFC [[7523]], DOI 10.17487/RFC[[7523]], May 2015, < [https://www.rfc-editor.org/info/rfc7523](https://www.rfc-editor.org/info/rfc7523) >.
 
-\[RFC7591\]
+\[RFC[[7591]]\]
 
-Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol", RFC 7591, DOI 10.17487/RFC7591, July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
+Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and P. Hunt, [["OAuth 2.0]] [[Dynamic Client Registration]] Protocol", RFC [[7591]], DOI 10.17487/RFC[[7591]], July 2015, < [https://www.rfc-editor.org/info/rfc7591](https://www.rfc-editor.org/info/rfc7591) >.
 
 \[RFC8725\]
 

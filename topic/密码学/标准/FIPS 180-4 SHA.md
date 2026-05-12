@@ -23,7 +23,7 @@ source: https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.180-4.pdf
 
 ## 1. 概述
 
-本标准规定了以下安全哈希算法：SHA-1、SHA-224、SHA-256、SHA-384、SHA-512、SHA-512/224 和 SHA-512/256。
+本标准规定了以下安全哈希算法：SHA-1、SHA-224、SHA-256、[[SHA-3]]84、SHA-512、SHA-512/224 和 SHA-512/256。
 
 所有算法都是**迭代型单向哈希函数**，可以将消息处理为称为"消息摘要"的压缩表示。这些算法能够验证消息的完整性：对消息的任何修改，都会以极高的概率产生不同的消息摘要。
 
@@ -38,7 +38,7 @@ source: https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.180-4.pdf
 | SHA-1 | < 2^64 | 512 | 32 | 160 |
 | SHA-224 | < 2^64 | 512 | 32 | 224 |
 | SHA-256 | < 2^64 | 512 | 32 | 256 |
-| SHA-384 | < 2^128 | 1024 | 64 | 384 |
+| [[SHA-3]]84 | < 2^128 | 1024 | 64 | 384 |
 | SHA-512 | < 2^128 | 1024 | 64 | 512 |
 | SHA-512/224 | < 2^128 | 1024 | 64 | 224 |
 | SHA-512/256 | < 2^128 | 1024 | 64 | 256 |
@@ -114,12 +114,12 @@ source: https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.180-4.pdf
   - 0 到 2^32-1 的整数可用 32-bit 字表示
   - 0 到 2^64-1 的整数可用 64-bit 字表示
   - 0 到 2^64 的整数 Z = 2^32·X + Y，表示为字对 (x, y)（用于 SHA-1/224/256）
-  - 0 到 2^128 的整数 Z = 2^64·X + Y，表示为字对 (x, y)（用于 SHA-384/512 等）
+  - 0 到 2^128 的整数 Z = 2^64·X + Y，表示为字对 (x, y)（用于 [[SHA-3]]84/512 等）
 
 ### 3.2 消息块大小
 
 - **SHA-1、SHA-224、SHA-256**：512 bits = 十六个 32-bit 字
-- **SHA-384、SHA-512、SHA-512/224、SHA-512/256**：1024 bits = 十六个 64-bit 字
+- **[[SHA-3]]84、SHA-512、SHA-512/224、SHA-512/256**：1024 bits = 十六个 64-bit 字
 
 ## 4. 函数与常量
 
@@ -256,7 +256,7 @@ ca273eceea26619c d186b8c721c0c207 eada7dd6cde0eb1e f57d4f7fee6ed178
 将填充后的消息解析为 N 个 m-bit 块：
 
 - **SHA-1/224/256**：解析为 N 个 512-bit 块，每块表示为 16 个 32-bit 字 M^(i)_0, …, M^(i)_15
-- **SHA-384/512 等**：解析为 N 个 1024-bit 块，每块表示为 16 个 64-bit 字 M^(i)_0, …, M^(i)_15
+- **[[SHA-3]]84/512 等**：解析为 N 个 1024-bit 块，每块表示为 16 个 64-bit 字 M^(i)_0, …, M^(i)_15
 
 ### 5.3 初始哈希值 H^(0)
 
@@ -350,7 +350,7 @@ H_6^(0) = 2B0199FC2C85B8AA    H_7^(0) = 0EB72DDC81C52CA2
 
 > [!note] 算法关系
 > - **SHA-224** 与 SHA-256 核心逻辑相同，仅 IV 不同且截断为 224 bits
-> - **SHA-384**、SHA-512/224、SHA-512/256 与 SHA-512 核心逻辑相同，仅 IV 不同且截断位数不同
+> - **[[SHA-3]]84**、SHA-512/224、SHA-512/256 与 SHA-512 核心逻辑相同，仅 IV 不同且截断位数不同
 
 ### 6.1 SHA-1
 
@@ -542,7 +542,7 @@ For i = 1 to N:
 
 ### 6.5 SHA-384
 
-SHA-384 与 SHA-512 **完全相同**，仅有两处不同：
+[[SHA-3]]84 与 SHA-512 **完全相同**，仅有两处不同：
 1. 初始哈希值 H^(0) 使用 5.3.4 节的值
 2. 最终 384-bit 摘要 = H_0^(N) ‖ H_1^(N) ‖ … ‖ H_5^(N)（截断为最左 384 bits）
 
@@ -579,7 +579,7 @@ NIST 提供测试向量：http://csrc.nist.gov/groups/ST/toolkit/examples.html
 ## 附录 B：参考文献
 
 - **[FIPS 180-3]** NIST FIPS PUB 180-3, Secure Hash Standard (SHS), 2008 年 10 月
-- **[SP 800-57]** NIST SP 800-57 Part 1, Recommendation for Key Management: General
+- **[SP [[800-57]]]** NIST SP [[800-57]] Part 1, Recommendation for Key Management: General
 - **[SP 800-107]** NIST SP 800-107, Recommendation for Applications Using Approved Hash Algorithms
 
 ## 附录 C：与 FIPS 180-3 的技术变更
@@ -591,7 +591,7 @@ NIST 提供测试向量：http://csrc.nist.gov/groups/ST/toolkit/examples.html
 
 | 日期 | 类型 | 变更 |
 |:--|:--|:--|
-| 2014-05-09 | 编辑性修正 | 4.1.1 节第 1 行："t < 79" 改为 "t ≤ 79" |
+| [[2014]]-05-09 | 编辑性修正 | 4.1.1 节第 1 行："t < 79" 改为 "t ≤ 79" |
 
 ---
 

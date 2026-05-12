@@ -766,9 +766,9 @@ docker compose up -d
 # 等同于 docker compose --profile debug --profile cache up -d
 ```
 
-> [!tip]+ Profiles vs 多个 Compose 文件
+> [!tip]+ [[Profile]]s vs 多个 Compose 文件
 >
 > - `Profiles`：适合少量服务的开关（如调试工具、监控组件），一个文件搞定
 > - `多个 Compose 文件叠加`：适合整个服务配置的大幅差异（如开发 vs 生产的不同端口、资源限制）
 >
-> 两者可以组合使用：基础配置 + Profile 切换调试工具 + 文件叠加覆盖环境参数。
+> 两者可以组合使用：基础配置 + [[Profile]] 切换调试工具 + 文件叠加覆盖环境参数。

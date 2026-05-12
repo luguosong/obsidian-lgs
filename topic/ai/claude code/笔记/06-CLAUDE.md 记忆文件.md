@@ -12,14 +12,14 @@ tags:
 **本文你会学到**：
 
 - 📝 CLAUDE.md 的作用域体系、加载顺序与目录组织方式
-- 🧠 自动记忆（Auto Memory）的工作原理
+- 🧠 自动记忆（Auto Memory）的[[工作原理]]
 - 📋 如何写出高质量的 CLAUDE.md——模板与最佳实践
 
 ## 📝 CLAUDE.md：Claude 的「长期记忆」
 
 ### 什么是 CLAUDE.md？
 
-CLAUDE.md 是 Claude Code 的「记忆文件」——每次对话开始时，Claude 会自动读取这些文件，把它们当作上下文的一部分。你可以把它理解为给 Claude 写的一封「长期指令信」。
+CLAUDE.md 是 [[Claude Code]] 的「记忆文件」——每次对话开始时，Claude 会自动读取这些文件，把它们当作上下文的一部分。你可以把它理解为给 Claude 写的一封「长期指令信」。
 
 ### 四个作用域的 CLAUDE.md
 
@@ -36,7 +36,7 @@ CLAUDE.md 是 Claude Code 的「记忆文件」——每次对话开始时，Cla
 
 ### `.claude/rules/` 目录组织
 
-当 CLAUDE.md 文件变得很长时，可以用 `.claude/rules/` 目录来组织规则。Claude Code 会自动读取这个目录下所有 Markdown 文件，按文件名排序后拼接在一起。
+当 CLAUDE.md 文件变得很长时，可以用 `.claude/rules/` 目录来组织规则。[[Claude Code]] 会自动读取这个目录下所有 Markdown 文件，按文件名排序后拼接在一起。
 
 ```
 .claude/
@@ -60,7 +60,7 @@ ln -s ~/shared-claude-rules .claude/rules/shared
 ln -s ~/company-standards/security.md .claude/rules/security.md
 ```
 
-Claude Code 会正常解析和加载符号链接指向的文件，循环链接也会被检测并优雅跳过，不会造成死循环。
+[[Claude Code]] 会正常解析和加载符号链接指向的文件，循环链接也会被检测并优雅跳过，不会造成死循环。
 
 ### 从额外目录加载记忆文件
 
@@ -85,9 +85,9 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 
 你有没有遇到过这种情况：明明在 `CLAUDE.md` 里写了「使用 2 空格缩进」，Claude 却一直在用 4 空格？或者改了配置但 Claude 的行为完全没有变化？这类问题的根因往往是加载顺序——多个 `CLAUDE.md` 文件同时存在时，谁先谁后决定了最终效果。
 
-理解加载顺序有助于排查「为什么我的指令没生效」的问题。Claude Code 从当前工作目录**向上遍历**目录树，沿途检查每个目录是否有 `CLAUDE.md` 和 `CLAUDE.local.md`。
+理解加载顺序有助于排查「为什么我的指令没生效」的问题。[[Claude Code]] 从当前工作目录**向上遍历**目录树，沿途检查每个目录是否有 `CLAUDE.md` 和 `CLAUDE.local.md`。
 
-假设你在 `foo/bar/` 目录下启动 Claude Code，加载顺序如下：
+假设你在 `foo/bar/` 目录下启动 [[Claude Code]]，加载顺序如下：
 
 1. 从文件系统根目录开始，逐级向下，直到工作目录
 2. 在每一级目录中，先加载 `CLAUDE.md`，再加载 `CLAUDE.local.md`
@@ -125,7 +125,7 @@ CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 
 ### 自动记忆（Auto Memory）
 
-Claude Code 还有一个更智能的机制：**自动记忆**。当 Claude 在对话中觉得某些信息对未来的会话有用时，它会自动写入 CLAUDE.md。
+[[Claude Code]] 还有一个更智能的机制：**自动记忆**。当 Claude 在对话中觉得某些信息对未来的会话有用时，它会自动写入 CLAUDE.md。
 
 - 写入位置：User 级别的 `~/.claude/CLAUDE.md`（追加到末尾）
 - 触发条件：Claude 判断这些信息值得记住（如项目架构偏好、常用命令等）
@@ -151,7 +151,7 @@ export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1
 
 ## 🤝 把 CLAUDE.md 用成「协作契约」
 
-CLAUDE.md 不只是"项目文档"，更像是你和 Claude 之间的**协作契约**。里面只放那些**每次会话都得成立的事**——不是知识库，不是团队文档。
+CLAUDE.md 不只是"项目[[文档"]]，更像是你和 Claude 之间的**协作契约**。里面只放那些**每次会话都得成立的事**——不是知识库，不是团队文档。
 
 💡 **起步建议**：一开始甚至可以什么都不写。先用起来，等你发现自己老是在重复同一件事，再把它补进去。用 `#` 可以把当前对话里的内容直接追加进 CLAUDE.md。
 
@@ -168,7 +168,7 @@ CLAUDE_CODE_NEW_INIT=1 claude
 启用后，`/init` 会引导你逐步选择要设置的工件：
 
 - `CLAUDE.md` 文件（项目指令）
-- Skills（可复用的工作流）
+- [[Skills]]（可复用的工作流）
 - Hooks（自动化钩子）
 
 确认选择后，Claude 会派出 subagent 探索你的代码库，通过后续问题填补信息空白，最后在写入任何文件之前**呈现完整提案供你审查**。这种「先审查再写入」的方式比一次性生成更可控，也更容易发现遗漏。
@@ -191,9 +191,9 @@ CLAUDE_CODE_NEW_INIT=1 claude
 | ❌ 别放 | 原因 | ✅ 放哪里 |
 |--------|------|---------|
 | 大段背景介绍和项目历史 | Claude 可以通过读代码推断 | 不需要放 |
-| 完整 API 文档 | 每次加载都费 token | Skills 的辅助文件 |
+| 完整 API 文档 | 每次加载都费 token | [[Skills]] 的辅助文件 |
 | 空泛原则如「写高质量代码」 | 模糊指令等于没有指令 | 具体可执行的约束 |
-| 大量背景资料和低频任务知识 | 浪费固定上下文空间 | Skills 按需加载 |
+| 大量背景资料和低频任务知识 | 浪费固定上下文空间 | [[Skills]] 按需加载 |
 
 ### 高质量 CLAUDE.md 模板
 
