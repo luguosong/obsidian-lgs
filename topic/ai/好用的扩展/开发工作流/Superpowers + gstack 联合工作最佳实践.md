@@ -220,7 +220,7 @@ Claude: [打开真实 Chromium 浏览器]
 
 ```
 你: /cso
-Claude: OWASP Top 10 + STRIDE 威模型审查完成
+Claude: OWASP Top 10 + STRIDE 威胁模型审查完成
         0 个 Critical, 1 个 Medium (建议添加导出频率限制)
 
 你: /ship
