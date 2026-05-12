@@ -3,7 +3,7 @@ title: Log4j2
 description: Log4j2 下一代日志框架的配置详解与高性能异步日志
 ---
 
-**前置知识**：本文假设你已经熟悉 Logback 的核心概念（`Logger` / `Appender` / `Layout`、日志归档、异步日志）。如果还不了解，请先阅读「Logback」。Log4j2 沿用了相同的三层架构，理解 Logback 后学习 Log4j2 会非常顺畅。
+**前置知识**：本文假设你已经熟悉 Logback 的核心概念（`Logger` / `Appender` / `Layout`、日志归档、异步日志）。如果还不了解，请先阅读[[Logback]]。Log4j2 沿用了相同的三层架构，理解 Logback 后学习 Log4j2 会非常顺畅。
 
 **本文你会学到**：
 
@@ -16,7 +16,7 @@ description: Log4j2 下一代日志框架的配置详解与高性能异步日志
 
 ## ⚡ Log4j2 的改进
 
-如果你读过「Logback」，应该已经知道 Logback 相比 Log4j 1.x 带来了配置热更新、原生 SLF4J 支持等改进。那为什么还会出现 Log4j2？
+如果你读过[[Logback]]，应该已经知道 Logback 相比 Log4j 1.x 带来了配置热更新、原生 SLF4J 支持等改进。那为什么还会出现 Log4j2？
 
 答案要从性能说起。Logback 的异步日志虽然比同步方式好，但在超高并发下仍然存在瓶颈——它的 `AsyncAppender` 使用普通的阻塞队列，在高吞吐场景下锁竞争严重。
 

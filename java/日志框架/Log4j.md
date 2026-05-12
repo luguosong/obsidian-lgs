@@ -3,7 +3,7 @@ title: Log4j
 description: Log4j 1.x 日志框架的核心组件、配置详解与格式化器
 ---
 
-**前置知识**：如果你还不了解日志框架的基本概念和 Java 日志生态全景，请先阅读「日志框架」和「JUL」。
+**前置知识**：如果你还不了解日志框架的基本概念和 Java 日志生态全景，请先阅读[[日志框架]]和[[JUL]]。
 
 **本文你会学到**：
 
@@ -28,7 +28,7 @@ Log4j 1.x 是 Java 日志世界的奠基者。它首创了「`Logger` → `Appen
 
 ## 🧱 核心组件
 
-Log4j 1.x 的架构围绕三个核心组件展开。如果你读过「JUL」，会发现它们与 JUL 的 `Logger` → `Handler` → `Formatter` 高度相似：
+Log4j 1.x 的架构围绕三个核心组件展开。如果你读过[[JUL]]，会发现它们与 JUL 的 `Logger` → `Handler` → `Formatter` 高度相似：
 
 ```mermaid
 graph LR

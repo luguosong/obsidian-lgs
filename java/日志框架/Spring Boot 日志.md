@@ -3,7 +3,7 @@ title: Spring Boot 日志
 description: Spring Boot 日志配置实战 — 默认日志、application.yml 配置、Logback 扩展与切换 Log4j2
 ---
 
-**前置知识**：本文假设你已经了解「SLF4J」日志门面的基本用法和「Logback」日志框架的核心概念（`Logger` / `Appender` / `Layout`）。Spring Boot 的日志体系正是基于这套组合构建的。
+**前置知识**：本文假设你已经了解[[SLF4J]]日志门面的基本用法和[[Logback]]日志框架的核心概念（`Logger` / `Appender` / `Layout`）。Spring Boot 的日志体系正是基于这套组合构建的。
 
 **本文你会学到**：
 

@@ -184,7 +184,7 @@ CLAUDE_CODE_NEW_INIT=1 claude
 | **代码风格和命名约束** | `Service 层不允许注入 HttpServletRequest` |
 | **环境陷阱** | `本项目使用 Bun 而非 npm` |
 | **绝对禁止的事**（NEVER 列表） | `禁止修改 .env`、`禁止删除 feature flags` |
-| **压缩时必须保留的信息** | Compact Instructions（详见「上下文工程」） |
+| **压缩时必须保留的信息** | Compact Instructions（详见[[上下文工程]]） |
 
 ### 不该放什么
 

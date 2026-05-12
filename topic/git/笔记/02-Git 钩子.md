@@ -362,4 +362,4 @@ fi
 | `post-checkout` | checkout 成功后 | 无影响（通知型） |
 | `pre-receive` | 服务端接收 push | ✅ 接受 push |
 
-下一篇「内部原理」将揭开 Git 的底层实现：对象模型、引用和 packfile。
+下一篇[[内部原理]]将揭开 Git 的底层实现：对象模型、引用和 packfile。

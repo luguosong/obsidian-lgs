@@ -199,4 +199,4 @@ git config -h
 - 核心三区域：`工作目录` → `暂存区` → `本地仓库`
 - 初始配置：`user.name` 和 `user.email` 是必须设置的
 
-下一篇「基础操作」将带你完成第一次 `git init` → `git add` → `git commit` 的完整工作流。
+下一篇[[基础操作]]将带你完成第一次 `git init` → `git add` → `git commit` 的完整工作流。
