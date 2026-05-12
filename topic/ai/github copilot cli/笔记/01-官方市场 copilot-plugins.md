@@ -98,3 +98,14 @@ tags:
 | 适用场景 | 通用、安全相关 | 特定语言、框架、工作流 |
 
 想浏览更多插件？查看 → [社区市场 awesome-copilot](../awesome-copilot/index.md)
+
+## 相关笔记
+
+- [[Agent 系统]]
+- [[插件]]
+- [[Copilot CLI+Claude Code双工具协同实践]]
+- [[GitHub Copilot CLI]]
+- [[社区市场 awesome-copilot]]
+- [[SDK 集成]]
+- [[交互模式]]
+- [[企业版管理]]

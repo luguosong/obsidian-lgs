@@ -309,3 +309,14 @@ LLM 生成总结："发现 3 处退缩距离不足，已在图纸上标注"
 | 新增 | `curve_distance_with_points.js` — 距离 + 最近点坐标（closestPointTo） |
 | 删除 | `curve_closest_point.js`（旧，职责模糊） |
 | 删除 | `curve_distance_annotate.js`（旧，计算与标注耦合） |
+
+## 相关笔记
+
+- [[specs]]
+- [[Legend Analysis Redesign: Programmatic Region Scan + Vision]]
+- [[Industry Standards RAG Knowledge Base Design]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 设计文档]]
+- [[WASM License Gate 设计（DrawingWebApp）]]
+- [[GIS 目录面板 + 调图/属性查询 设计文档]]
+- [[设计文档：同步 quzhen 分支审查批注功能至 feat-zfs]]
+- [[WebUACAD AI Agent 全面分析报告]]

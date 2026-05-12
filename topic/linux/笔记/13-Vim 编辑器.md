@@ -723,3 +723,14 @@ sudo dnf install neovim
 vim --version | head -1    # 查看 vim 版本
 nvim --version             # 查看 neovim 版本
 ```
+
+## 相关笔记
+
+- [[Linux]]
+- [[Shell 与文本处理]]
+- [[文件与命令查找]]
+- [[Shell 脚本编程]]
+- [[文本处理工具]]
+- [[网络安全基础]]
+- [[Linux 简介与发行版]]
+- [[文件与目录操作]]

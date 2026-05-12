@@ -260,3 +260,14 @@ const length = curve.getDistAtParam(curve.getEndParam())
 | **关键外部依赖** | 东莞规划局 GIS 服务访问权限、国标图框模板规范 |
 
 > **建议**：在 Phase 1 结束后（第 7 周）安排一次客户对样，确认标注样式和分类体系后再进入后续阶段，降低返工风险。
+
+## 相关笔记
+
+- [[WebCAD前端]]
+- [[OdDbPolyline 长度计算错误修复方案]]
+- [[前端架构详情]]
+- [[前端 dist 部署 checklist（drawing-web-app）]]
+- [[速度优化架构]]
+- [[CAD AI Agent 改进计划]]
+- [[WASM 性能优化：批量实体快照 API（Plan A）]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 设计文档]]

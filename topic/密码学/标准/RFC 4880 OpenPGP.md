@@ -4244,3 +4244,14 @@ copyrights, patents or patent applications, or other proprietary
 rights that may cover technology that may be required to implement
 this standard.  Please address the information to the IETF at
 ietf-ipr@ietf.org.
+
+## 相关笔记
+
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[密码消息语法 (CMS)]]
+- [[PKCS#8 非对称密钥包]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[RFC 9580 OpenPGP 新版]]
+- [[PKCS#10 证书签名请求]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[RFC 6960 在线证书状态协议 OCSP]]

@@ -5072,3 +5072,13 @@ Yutaka Niibe
 FSIJ
 
 Email: [gniibe@fsij.org](mailto:gniibe@fsij.org)
+## 相关笔记
+
+- [["OpenPGP 消息格式"]]
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[FIPS 180-4 安全哈希标准（SHS）]]
+- [[标准]]
+- [[PKCS#11 v3.0 Cryptoki]]
+- [[PKCS#10 证书签名请求]]
+- [[密码消息语法 (CMS)]]

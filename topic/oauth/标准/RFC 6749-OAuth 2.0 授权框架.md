@@ -2137,3 +2137,14 @@ Microsoft
 EMail: dick.hardt@gmail.com
 URI:   http://dickhardt.org/
 
+
+## 相关笔记
+
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9101 JAR]]
+- [[RFC 9700 Security BCP]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9449 DPoP]]
+- [[RFC 8707 Resource Indicators]]
+- [[RFC 9068 JWT Access Token]]
+- [[标准]]

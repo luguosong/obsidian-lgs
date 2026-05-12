@@ -181,3 +181,14 @@ This is fascinating and slightly unsettling. Jesse already built a system that u
 如果有什么地方可以改进，让 Claude 用 `gh` 向 [https://github.com/obra/Superpowers](https://github.com/obra/superpowers) 提交 bug。
 
 也欢迎为新的 skills 提交 PR :)
+
+## 相关笔记
+
+- [[superpower]]
+- [["Superpowers：编码 Agent 技能框架"]]
+- [["Superpowers 使用手册与最佳实践"]]
+- [["Superpowers 实战：用 TDD 工作流构建生产功能"]]
+- [[更新日志]]
+- [[最佳实践]]
+- [[Agent SDK]]
+- [[扩展机制]]

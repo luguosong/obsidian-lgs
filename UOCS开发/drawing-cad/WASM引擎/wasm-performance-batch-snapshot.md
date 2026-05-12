@@ -212,3 +212,14 @@ Phase 3: 仅对匹配实体，按 handle 重开取类型特定几何属性
 | #3 字段投影 `getEntityProjection()` | 只序列化需要的字段，减少 JS 堆开销 | ~50-100ms |
 | #4 表批量收集 `getAllRecords()` | `extractStructure` 表遍历优化 | ~100-200ms |
 | #5 类型统计 `getEntityTypeStats()` | 块内实体类型分布快速统计 | ~20ms |
+
+## 相关笔记
+
+- [[DrawingWeb (WASM) License Gate C++ 修改报告]]
+- [[WASM引擎]]
+- [[ODA demo cases integration and code optimization]]
+- [[WASM API 覆盖报告（p17-wasm-report-1）]]
+- [[WASM Emscripten 绑定规律手册]]
+- [[WASM License Gate 实施报告（p17-wasm-report-3）]]
+- [[WASM 结构提取性能分析报告（p17-wasm-report-2）]]
+- [[CAD AI Agent 改进计划]]

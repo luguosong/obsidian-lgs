@@ -116,3 +116,14 @@ docker compose up -d --build drawing-ai-server
 | `drawing-cad/drawing-web-app/package.json` | `build` 脚本已串接 `verify:bundle` |
 | `docker-compose/uocs-app/drawing-cad/web-app/dist/` | SVN 工作副本，对接服务器部署目录 |
 | `docker-compose/docs/测试服务器.md` | SSH、SVN、全局部署链路权威文档 |
+
+## 相关笔记
+
+- [[WebCAD前端]]
+- [[东莞红线工具 — WebUACAD 开发评估报告]]
+- [[OdDbPolyline 长度计算错误修复方案]]
+- [[前端架构详情]]
+- [[速度优化架构]]
+- [[架构总览]]
+- [[Harness Engineering 架构详解]]
+- [[Docker 部署架构]]

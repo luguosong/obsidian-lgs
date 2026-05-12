@@ -493,3 +493,12 @@ Authorization: Bearer reg-23410913-abewfq.123483
 `← 上一篇：` [核心概念](../core-concepts/index.md)
 `→ 下一篇：` [授权流程](../authorization-flows/index.md)
 `↩ 返回专题：` [OAuth2 & OpenID Connect](../index.md)
+
+## 相关笔记
+
+- [[安全实践]]
+- [[扩展协议]]
+- [[JWT 令牌]]
+- [[威胁模型与攻击面]]
+- [[OAuth 2.1 演进]]
+- [[令牌体系]]

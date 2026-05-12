@@ -528,3 +528,12 @@ mvn help:evaluate -Dexpression=java.home
 **环境变量**：
 
 操作系统定义的环境变量，用 `${env.变量名}` 访问。比如 `${env.JAVA_HOME}` 可以获取 JDK 安装路径。这种用法在 [[CI/CD]] 环境中比较常见，用来注入构建时才确定的配置值。
+
+## 相关笔记
+
+- [[Maven]]
+- [[依赖管理]]
+- [[入门案例]]
+- [[仓库与 Profile]]
+- [[Java 概述]]
+- [[JCL]]

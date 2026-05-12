@@ -345,3 +345,14 @@ AI 通过两种方式"看懂"图纸：
 
 *本方案由 [公司名称] 提供 · 技术底座：[[WebUACAD]]（基于 ODA SDK 24.10）*  
 *联系方式：[邮箱] | [电话]*
+
+## 相关笔记
+
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[ai-agent]]
+- [[AI 绘图助手 — 实现文档]]
+- [[CAD AI Agent 改进计划]]
+- [[DWG Skill 架构设计]]
+- [[RAG 知识库 — AutoCAD 帮助文档检索系统]]
+- [[浏览器里的专业 CAD，功能全面对标 AutoCAD 2014]]
+- [[GIS服务 Ribbon 标签页设计规格]]

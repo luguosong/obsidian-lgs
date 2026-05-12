@@ -350,3 +350,11 @@ Log4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelec
 对应的 Java 代码示例：
 
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/log4j2-demo/`。
+
+## 相关笔记
+
+- [[Spring Boot 日志]]
+- [[日志框架]]
+- [[JCL]]
+- [[JUL]]
+- [[依赖管理]]

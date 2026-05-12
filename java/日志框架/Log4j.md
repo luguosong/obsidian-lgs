@@ -387,3 +387,11 @@ log4j.appender.console.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{
 # 调试版：时间 + 线程 + 级别 + 类名 + 方法名 + 行号 + 消息
 %d{HH:mm:ss.SSS} [%t] %-5p %C.%M(%F:%L) - %m%n
 ```
+
+## 相关笔记
+
+- [[SLF4J]]
+- [[Spring Boot 日志]]
+- [[JCL]]
+- [[Log4j2]]
+- [[适配器模式]]

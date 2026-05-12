@@ -400,3 +400,11 @@ graph TD
 对应的 Java 代码示例：
 
 项目中有完整的可运行示例，路径为 `code/java/javase/logging/logback-demo/`。
+
+## 相关笔记
+
+- [[Spring Boot 日志]]
+- [[Log4j2]]
+- [[JCL]]
+- [[JUL]]
+- [[适配器模式]]

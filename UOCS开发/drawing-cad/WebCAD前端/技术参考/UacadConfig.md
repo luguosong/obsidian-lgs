@@ -281,3 +281,14 @@ int osmode = UacadConfig::instance().getInt("/vars/OSMODE", 4133);
 
 - **RapidJSON** (header-only) — `ThirdParty/rapidjson/`，已在 ODA SDK 中
 - 无额外编译库依赖，UacadConfig.h 是纯头文件实现
+
+## 相关笔记
+
+- [[技术参考]]
+- [[WASM API 速查]]
+- [[CadCodeExecutor 沙箱]]
+- [[GIS 后端接口参考文档]]
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[CAD AI Agent 改进计划]]
+- [[规划审图 AI 智能体解决方案]]
+- [[AI助手功能开发方向]]

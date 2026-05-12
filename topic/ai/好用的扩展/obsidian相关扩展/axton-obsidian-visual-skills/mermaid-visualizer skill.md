@@ -165,3 +165,13 @@ graph TB
 
 - [[Mermaid 语法规则参考]] — 完整语法规则和[[故障排除]]
 - [[axton-obsidian-visual-skills 套装总览]] — 返回项目总览
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[excalidraw-diagram skill]]
+- [[obsidian-canvas-creator skill]]
+- [[Canvas 布局算法参考]]
+- [[Canvas 规范参考]]
+- [[Excalidraw JSON Schema 参考]]
+- [[obsidian-skills 套件总览]]

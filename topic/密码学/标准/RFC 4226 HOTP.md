@@ -1001,3 +1001,14 @@ Copyright (C) The Internet Society (2005).
 ## 致谢
 
 RFC Editor 功能的资金目前由 Internet Society 提供。
+
+## 相关笔记
+
+- [[标准]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[FIPS 180-4 安全哈希标准（SHS）]]
+- [[FIPS 186-5 DSS]]
+- [[FIPS 197 AES]]
+- [[FIPS 202 SHA-3]]
+- [[FIPS 203 ML-KEM]]
+- [[FIPS 204 ML-DSA]]

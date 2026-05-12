@@ -155,3 +155,14 @@ StudyVault/
 # 或手动
 rm -rf ~/.claude/skills/tutor-setup ~/.claude/skills/tutor
 ```
+
+## 相关笔记
+
+- [[更新日志]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[obsidian-skills 套件总览]]
+- [[Agent SDK]]
+- [[扩展机制]]
+- [[更新日志（≤2.1.98）]]
+- [[快速入门]]
+- [[工作原理]]

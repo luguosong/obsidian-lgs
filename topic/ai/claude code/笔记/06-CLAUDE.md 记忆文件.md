@@ -250,3 +250,12 @@ When compressing, preserve in priority order:
 > Update your CLAUDE.md so you don't make that mistake again.
 
 Claude 在给自己补这类规则时效果不错，用久了确实越来越少犯同样的错。不过也要**定期 review**——时间一长，当初有用的限制现在未必还适合。
+
+## 相关笔记
+
+- [[配置体系]]
+- [[Hooks]]
+- [[MCP]]
+- [[插件]]
+- [[最佳实践]]
+- [[快速入门]]

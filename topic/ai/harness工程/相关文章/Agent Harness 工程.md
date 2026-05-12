@@ -168,3 +168,13 @@ The most exciting open problems are moving beyond single agents: orchestrating m
 Ultimately, this is the phase where harnesses stop being static configuration files and start acting much more like compilers.
 
 If you are a looking for a great agent harness framework, [@FredKSchott](https://x.com/@FredKSchott) wrote [Flue](https://x.com/FredKSchott/status/2050274923852210397). It's solid and was apparently inspired by an earlier version of this post!
+## 相关笔记
+
+- [[Agent 循环]]
+- [[配置与权限]]
+- [[更新日志（1.x 及更早）]]
+- [[更新日志（≤2.1.98）]]
+- [[快速入门]]
+- [[工作原理]]
+- [[模型与输出风格]]
+- [[环境变量参考]]

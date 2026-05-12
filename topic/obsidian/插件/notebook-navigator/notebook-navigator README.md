@@ -456,3 +456,13 @@ Notebook Navigator 由 [Johan Sanneblad](https://www.linkedin.com/in/johansan/) 
 ## 15 许可证
 
 本项目基于 GNU General Public License v3.0 许可——详见 [LICENSE](https://github.com/johansan/notebook-navigator/blob/main/LICENSE) 文件。
+## 相关笔记
+
+- [[Mastering Notebook Navigator]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[obsidian-skills 套件总览]]
+- [[Superpowers 使用手册与最佳实践 — 实施计划]]
+- [[mermaid-visualizer skill]]
+- [[obsidian-canvas-creator skill]]
+- [[json-canvas skill]]
+- [["GBrain：AI Agent 知识大脑"]]

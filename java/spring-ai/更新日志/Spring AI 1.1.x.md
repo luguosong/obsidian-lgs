@@ -211,3 +211,14 @@ tags:
 - 可配置工具执行[[异常处理]]
 - Kotlin data class JSON Schema 支持
 - MariaDB 相似度搜索评分
+
+## 相关笔记
+
+- [[更新日志]]
+- [[Spring AI 1.0.x 更新日志]]
+- [[Spring AI 2.0 Milestone 更新日志]]
+- [[Spring AI 更新日志总览]]
+- [[Harness Engineering 架构详解]]
+- [[多平台支持]]
+- [[Java 概述]]
+- [[依赖管理]]

@@ -208,3 +208,13 @@ Daniel Fett
 yes.com
 
 Email: [mail@danielfett.de](mailto:mail@danielfett.de)
+## 相关笔记
+
+- [[RFC 9101 JAR]]
+- [[RFC 9126 PAR]]
+- [[RFC 9449 DPoP]]
+- [[RFC 9700 Security BCP]]
+- [[RFC 8705 mTLS]]
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 8707 Resource Indicators]]

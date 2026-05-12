@@ -794,3 +794,12 @@ You can search for tools to interact with Slack, GitHub, and Jira.
 | 最大工具数 | 10,000 个 |
 | 每次搜索返回 | 3-5 个最相关工具 |
 | 支持的模型 | Claude Sonnet 4 及更高、Claude Opus 4 及更高（不支持 Haiku） |
+
+## 相关笔记
+
+- [[笔记]]
+- [[快速开始]]
+- [[扩展机制]]
+- [[监控与成本]]
+- [[部署与安全]]
+- [[配置与权限]]

@@ -66,3 +66,14 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+## 相关笔记
+
+- [[编码规范]]
+- [[更新日志]]
+- [[配置体系]]
+- [[插件]]
+- [[Agent 系统]]
+- [[Copilot CLI+Claude Code双工具协同实践]]
+- [[Hook 扩展]]
+- [[Skills 技能系统]]

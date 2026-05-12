@@ -217,3 +217,14 @@ MIT License——详见 LICENSE 文件。
 - **Discord**：[加入我们](https://discord.gg/35wsABTejz)，获取社区支持、提问，分享你用 [[Superpowers]] 构建的东西
 - **Issues**：[https://github.com/obra/superpowers/issues](https://github.com/obra/superpowers/issues)
 - **版本公告**：[注册](https://primeradiant.com/superpowers/) 以获取新版本通知
+
+## 相关笔记
+
+- [["Superpowers 使用手册与最佳实践"]]
+- [["Superpowers 实战：用 TDD 工作流构建生产功能"]]
+- [[superpower]]
+- [["Superpowers：我在 2025 年 10 月如何使用编码代理"]]
+- [[最佳实践]]
+- [[更新日志]]
+- [[Superpowers + gstack 联合工作最佳实践]]
+- [[社区市场 awesome-copilot]]

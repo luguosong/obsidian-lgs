@@ -580,3 +580,11 @@ flowchart TD
 **Q：gstack 和 Claude Code 原生功能如何配合？**
 
 gstack Skills 是对 Claude Code 原生能力的工作流封装，两者在同一个会话中无缝协作。在任何 Skill 执行过程中，你都可以直接输入自然语言指令，Claude Code 会保持当前 Skill 的上下文继续工作。
+
+## 相关笔记
+
+- [["gstack 深度解析：设计哲学与技术架构"]]
+- [["gstack：Garry Tan 的 Claude Code 工作流"]]
+- [[Superpowers + gstack 联合工作最佳实践]]
+- [[gstack 使用手册设计规格]]
+- [[最佳实践]]

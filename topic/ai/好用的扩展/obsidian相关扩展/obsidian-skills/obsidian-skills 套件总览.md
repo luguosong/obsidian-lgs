@@ -77,3 +77,9 @@ graph LR
 - [[axton-obsidian-visual-skills 套装总览]] — 第三方增强可视化 [[Skills]]（Excalidraw/[[Mermaid]]/[[Canvas]]）
 - [Agent Skills 规范](https://agentskills.io/specification)
 - [Claude Skills 官方文档](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[mermaid-visualizer skill]]
+- [[obsidian-canvas-creator skill]]

@@ -193,3 +193,13 @@ tags:
 ---
 
 → 返回 [[obsidian-canvas-creator skill]] | [[axton-obsidian-visual-skills 套装总览]]
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[Canvas 布局算法参考]]
+- [[json-canvas skill]]
+- [[Excalidraw JSON Schema 参考]]
+- [[excalidraw-diagram skill]]
+- [[Mermaid 语法规则参考]]
+- [[mermaid-visualizer skill]]

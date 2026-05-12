@@ -974,3 +974,14 @@ public record LegendItem(
    - `AUTO_DRAWING_ANALYSIS_ENABLED` / `RUN_LAND_BOUNDARY_TEST` 两个开关已删除
    - `LandBoundaryVisionTest.js` / `LandBoundaryAnalyzer.js` 已删除
    - `_aggregateSiteAreas` / `_categorizeSiteLayer` 已删除
+
+## 相关笔记
+
+- [[specs]]
+- [[审查建筑退线距离 — 实现详细说明]]
+- [[图例分析功能设计规格]]
+- [[ArcGIS Web 服务集成 — C++ 实施架构]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[GIS服务 Ribbon 标签页 Implementation Plan]]
+- [[GIS File Import / Save-Back Design]]
+- [[GIS服务 Ribbon 标签页 — 后续实施设计]]

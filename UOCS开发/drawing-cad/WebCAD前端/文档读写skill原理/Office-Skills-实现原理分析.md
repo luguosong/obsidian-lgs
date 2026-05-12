@@ -799,3 +799,14 @@ graph TD
 > **分析日期**：2025-07  
 > **源码版本**：commit `98669c11ca63`  
 > **关联文档**：[PDF-Skill-实现原理分析.md](./PDF-Skill-实现原理分析.md)
+
+## 相关笔记
+
+- [[PDF Skill 实现原理分析]]
+- [[DWG Skill 深度重构优化记录]]
+- [[DWG Skill 架构设计]]
+- [[Spring AI 1.1.x 更新日志]]
+- [[Spring AI 2.0 Milestone 更新日志]]
+- [[Spring AI 更新日志总览]]
+- [[Agent SDK]]
+- [[扩展机制]]

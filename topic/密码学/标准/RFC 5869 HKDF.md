@@ -345,3 +345,14 @@ OKM  = 0x2c91117204d745f3500d636a62f64f0a
 
 - **Hugo Krawczyk** — IBM Research, 19 Skyline Drive, Hawthorne, NY 10532, USA. Email: hugokraw@us.ibm.com
 - **Pasi Eronen** — Nokia Research Center, P.O. Box 407, FI-00045 Nokia Group, Finland. Email: pasi.eronen@nokia.com
+
+## 相关笔记
+
+- [[标准]]
+- [[HMAC 基于哈希的消息认证]]
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[RFC 9580 OpenPGP 新版]]
+- [[FIPS 180-4 安全哈希标准（SHS）]]
+- [[FIPS 186-5 DSS]]
+- [[FIPS 197 AES]]
+- [[FIPS 202 SHA-3]]

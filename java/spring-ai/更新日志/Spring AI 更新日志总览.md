@@ -77,3 +77,13 @@ tags:
 - [GitHub Releases](https://github.com/spring-projects/spring-ai/releases)
 - [官方文档](https://docs.spring.io/spring-ai/reference/)
 - [Spring AI BOM](https://docs.spring.io/spring-ai/reference/dependencies.html)
+
+## 相关笔记
+
+- [[Spring AI 1.1.x 更新日志]]
+- [[Spring AI 2.0 Milestone 更新日志]]
+- [[Spring AI 1.0.x 更新日志]]
+- [[Harness Engineering 架构详解]]
+- [[快速入门]]
+- [[最佳实践]]
+- [[参考手册]]

@@ -201,3 +201,13 @@ REPULSION_CONSTANT = 5000 # 斥力常数
 ---
 
 → 返回 [[obsidian-canvas-creator skill]] | [[axton-obsidian-visual-skills 套装总览]]
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[Canvas 规范参考]]
+- [[Excalidraw JSON Schema 参考]]
+- [[excalidraw-diagram skill]]
+- [[Mermaid 语法规则参考]]
+- [[mermaid-visualizer skill]]
+- [[json-canvas skill]]

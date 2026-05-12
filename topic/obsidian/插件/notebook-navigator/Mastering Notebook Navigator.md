@@ -136,3 +136,14 @@ Notebook [[Navigator]] 是 [[Obsidian]] 的现代文件管理器替代品，用*
 - GitHub 仓库：[johansan/notebook-navigator](https://github.com/johansan/notebook-navigator)
 - Discord 社区：通过官网链接加入
 - 中文介绍（繁体）：[notebooknavigator.com/zh-tw](https://notebooknavigator.com/zh-tw/docs.html)
+
+## 相关笔记
+
+- [["Notebook Navigator 插件"]]
+- [["GBrain：AI Agent 知识大脑"]]
+- [[Superpowers 使用手册与最佳实践 — 实施计划]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[excalidraw-diagram skill]]
+- [[Mermaid 语法规则参考]]
+- [[mermaid-visualizer skill]]
+- [[obsidian-canvas-creator skill]]

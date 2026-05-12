@@ -798,3 +798,14 @@ graph TD
 3. **表单填充**：通过预置的 Pipeline 脚本链实现精确的表单检测 → 字段提取 → 坐标计算 → 注解叠加 → 结果验证
 
 > **本质上，PDF Skill 是一套"增强提示词 + 配套工具脚本"的组合。AI 的代码执行能力（终端工具调用）是真正的"手"，而 Skill 是指导这双手如何操作 PDF 的"大脑知识"。**
+
+## 相关笔记
+
+- [[Office Document Skills 实现原理分析（DOCX / XLSX / PPTX）]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[Canvas 规范参考]]
+- [[obsidian-canvas-creator skill]]
+- [[json-canvas skill]]
+- [[obsidian-skills 套件总览]]
+- [["Notebook Navigator 插件"]]
+- [[快速比对功能 — 执行流程与原理说明]]

@@ -193,3 +193,13 @@ graph TB
 ---
 
 → 返回 [[mermaid-visualizer skill]] | [[axton-obsidian-visual-skills 套装总览]]
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[excalidraw-diagram skill]]
+- [[obsidian-canvas-creator skill]]
+- [[Canvas 布局算法参考]]
+- [[Canvas 规范参考]]
+- [[Excalidraw JSON Schema 参考]]
+- [[json-canvas skill]]

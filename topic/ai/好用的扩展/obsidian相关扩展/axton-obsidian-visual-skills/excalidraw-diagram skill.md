@@ -172,3 +172,13 @@ For more info check in plugin settings under 'Saving'
 
 - [[Excalidraw JSON Schema 参考]] — 元素类型、配色、完整 JSON 结构
 - [[axton-obsidian-visual-skills 套装总览]] — 返回项目总览
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[mermaid-visualizer skill]]
+- [[obsidian-canvas-creator skill]]
+- [[Mermaid 语法规则参考]]
+- [[Canvas 布局算法参考]]
+- [[Canvas 规范参考]]
+- [[json-canvas skill]]

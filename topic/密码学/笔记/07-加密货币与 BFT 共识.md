@@ -533,3 +533,13 @@ public class MerkleTreeDemo {
 ---
 
 > 本节内容参考自《Real-World Cryptography》(David Wong, Manning 2021) 第 12 章
+
+## 相关笔记
+
+- [[ASN.1 基础]]
+- [[密码学]]
+- [[后量子密码]]
+- [[密码学失败案例集]]
+- [[CMS 与 S/MIME]]
+- [[Java 密码学架构]]
+- [[OpenPGP]]

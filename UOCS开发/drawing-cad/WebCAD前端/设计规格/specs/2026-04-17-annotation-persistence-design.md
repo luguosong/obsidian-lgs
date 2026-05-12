@@ -183,3 +183,14 @@ importAnnotations(viewer, file) {
 | `DrawingWeb/CadCore.h` | C++ 瞬态批注 API 声明 |
 | `DrawingWeb/CadCoreAnnotation.cpp` | C++ 瞬态批注实现 |
 | `DrawingWebApp/docs/specs/2026-04-17-transient-annotation-design.md` | 瞬态批注[[架构设计]]文档 |
+
+## 相关笔记
+
+- [[specs]]
+- [[图例分析功能设计规格]]
+- [[ArcGIS Web 服务集成 — C++ 实施架构]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[GIS服务 Ribbon 标签页 Implementation Plan]]
+- [[GIS File Import / Save-Back Design]]
+- [[GIS服务 Ribbon 标签页 — 后续实施设计]]
+- [[GIS服务后续实施 Implementation Plan]]

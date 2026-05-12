@@ -670,3 +670,13 @@ graph TD
 | 单元测试模拟输入 | `StringReader` / `CharArrayReader` | `new BufferedReader(new StringReader(testData))` |
 
 💡 **组合规律**：实际开发中很少直接使用裸节点流，典型的[[组合模式]]是 `节点流 → 缓冲流 → 功能流`，例如 `FileOutputStream → BufferedOutputStream → DataOutputStream`。缓冲层几乎总是值得加上。
+
+## 相关笔记
+
+- [[笔记]]
+- [[Java 概述]]
+- [[JavaSE]]
+- [[JDK 源码]]
+- [[代理模式]]
+- [[设计原则]]
+- [[建造者模式]]

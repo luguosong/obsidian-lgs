@@ -207,3 +207,14 @@ tags:
 - OpenAiAudioTranscriptionResponseMetadata.toString 异常
 - getMimeType 无限递归
 - McpToolCallback 根[[异常处理]]
+
+## 相关笔记
+
+- [[更新日志]]
+- [[Spring AI 1.1.x 更新日志]]
+- [[Spring AI 2.0 Milestone 更新日志]]
+- [[Spring AI 更新日志总览]]
+- [[工作原理]]
+- [[MCP]]
+- [[上下文工程]]
+- [[扩展体系]]

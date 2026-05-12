@@ -460,3 +460,13 @@ gcloud iam service-accounts add-iam-policy-binding \
 
 - **Claude API**：确认 `ANTHROPIC_API_KEY` 有效且未过期
 - **Bedrock / Vertex**：验证 OIDC / WIF 配置、角色模拟和密钥名称；确认区域和模型可用性
+
+## 相关笔记
+
+- [[自动化]]
+- [[MCP]]
+- [[第三方集成]]
+- [[多平台支持]]
+- [[企业管理]]
+- [[快速入门]]
+- [[Settings 与权限]]

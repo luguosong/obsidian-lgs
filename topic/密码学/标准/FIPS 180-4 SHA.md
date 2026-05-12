@@ -597,3 +597,14 @@ NIST 提供测试向量：http://csrc.nist.gov/groups/ST/toolkit/examples.html
 
 > [!warning] 安全建议
 > SHA-1 的碰撞抗性已被实际攻破（2017 年 SHAttered 攻击）。新应用应使用 SHA-256 或 SHA-512 系列。详见 [[SHA-1 碰撞攻击]]。
+
+## 相关笔记
+
+- [[RFC 9580 OpenPGP 新版]]
+- [[标准]]
+- [["OpenPGP 消息格式"]]
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[PKCS#11 v3.0 Cryptoki]]
+- [[FIPS 186-5 DSS]]
+- [[FIPS 197 AES]]

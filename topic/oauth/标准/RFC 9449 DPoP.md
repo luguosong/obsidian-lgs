@@ -1366,3 +1366,13 @@ DPoP-Nonce: eyJ7S_zG.eyJH0-Z.HX4w-7v
 :
 
 Note that the nonces provided by an authorization server and a resource server are different and should not be confused with one another since nonces will be only accepted by the server that issued them. Likewise, should a client use multiple authorization servers and/or resource servers, a nonce issued by any of them should be used only at the issuing server. Developers should also be careful to not confuse DPoP nonces with the [[OpenID Connect]] \[\] ID Token nonce.[¶](#section-9-4)
+## 相关笔记
+
+- [[RFC 9700 Security BCP]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 9126 PAR]]
+- [[RFC 9101 JAR]]
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9207 Issuer ID]]
+- [[RFC 8707 Resource Indicators]]

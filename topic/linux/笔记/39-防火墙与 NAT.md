@@ -1005,3 +1005,14 @@ tcpdump -i eth0 tcp port 22 -n
 | DNAT 不生效 | FORWARD 链未放行转发封包 | `nft list chain inet filter forward` |
 | 连接超时（非拒绝） | policy 为 `drop` 而非 `reject` | 改为 `reject` 可得到即时反馈 |
 | 服务重启后规则丢失 | 未持久化规则 | `systemctl enable nftables` |
+
+## 相关笔记
+
+- [[网络安全基础]]
+- [[Linux]]
+- [[存储与文件]]
+- [[网络与服务]]
+- [[网络命令与诊断]]
+- [[SSH 远程连接]]
+- [[Socket 编程基础]]
+- [[Linux 简介与发行版]]

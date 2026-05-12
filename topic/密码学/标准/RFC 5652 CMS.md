@@ -1506,3 +1506,14 @@ Vigil Security, LLC
 Herndon, VA 20170
 USA
 EMail: housley@vigilsec.com
+
+## 相关笔记
+
+- [[PKCS#8 非对称密钥包]]
+- [["OpenPGP 消息格式"]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[RFC 6960 在线证书状态协议 OCSP]]
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[PKCS#10 证书签名请求]]
+- [[RFC 6962 证书透明]]

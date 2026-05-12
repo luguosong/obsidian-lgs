@@ -131,3 +131,12 @@ graph LR
 - [[get-shit-done 概览]]
 - [Architecture 文档](https://github.com/gsd-build/get-shit-done/blob/main/docs/ARCHITECTURE.md)
 - [Agents 文档](https://github.com/gsd-build/get-shit-done/blob/main/docs/AGENTS.md)
+
+## 相关笔记
+
+- [[GSD 命令参考]]
+- [[GSD 实战使用技巧]]
+- [[Claude Code]]
+- [[CLAUDE.md 记忆文件]]
+- [[最佳实践]]
+- [[社区市场 awesome-copilot]]

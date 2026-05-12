@@ -2287,3 +2287,14 @@ After Plan 1 ships, the following must hold:
 4. **`@Async` removal**: the old `doStage2` was annotated `@Async`. The new `init()` flow is synchronous (frontend awaits), so `@EnableAsync` may no longer be needed for memory init. Don't remove `@EnableAsync` from the application — other features may use it. Just make the init path synchronous.
 
 5. **Test framework note**: existing backend tests under `src/test/java/.../memory/` use JUnit 5 + Mockito + AssertJ via `spring-boot-starter-test`. New tests should follow that style — see `DrawingMemoryStoreTest` (if exists) for reference patterns.
+
+## 相关笔记
+
+- [[Spring AI 2.0 Milestone 更新日志]]
+- [[服务端口清单]]
+- [[测试服务器]]
+- [[Harness Engineering 架构详解]]
+- [[架构总览]]
+- [[Java 概述]]
+- [[依赖管理]]
+- [[生命周期与插件]]

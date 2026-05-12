@@ -651,3 +651,14 @@ console.log(`extractEntities: ${time2}ms`);
 - **长期** (Phase 1+2): 性能提升 **78%**（3000ms → 650ms）
 - **技术债消除**: 消除 N+1 调用反模式，为后续优化奠定基础
 
+
+## 相关笔记
+
+- [[DrawingWeb (WASM) License Gate C++ 修改报告]]
+- [[WASM引擎]]
+- [[WASM API 覆盖报告（p17-wasm-report-1）]]
+- [[ODA demo cases integration and code optimization]]
+- [[WASM Emscripten 绑定规律手册]]
+- [[WASM License Gate 实施报告（p17-wasm-report-3）]]
+- [[WASM 性能优化：批量实体快照 API（Plan A）]]
+- [[生命周期与插件]]

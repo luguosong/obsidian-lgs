@@ -593,3 +593,14 @@ OdGePoint3d resultOda, resultGdal;
 - [GDAL ESRIJSON driver](https://gdal.org/en/stable/drivers/vector/esrijson.html) — 读取 ArcGIS FeatureService JSON
 - [MSC 规范](https://doc.arcgis.com/en/arcgis-for-autocad/latest/commands-api/what-is-maping-specification-for-cad-.htm) — Mapping Specification for CAD
 - [ArcGIS direct-read CAD 数据模型](https://desktop.arcgis.com/en/arcmap/latest/manage-data/cad/the-direct-read-cad-data-model.htm)
+
+## 相关笔记
+
+- [[specs]]
+- [[图例分析功能设计规格]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[GIS服务 Ribbon 标签页 Implementation Plan]]
+- [[GIS File Import / Save-Back Design]]
+- [[GIS服务 Ribbon 标签页 — 后续实施设计]]
+- [[GIS服务后续实施 Implementation Plan]]
+- [[批注数据持久化方案]]

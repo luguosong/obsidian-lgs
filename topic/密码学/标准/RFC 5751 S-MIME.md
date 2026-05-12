@@ -1127,3 +1127,14 @@ Fairfax, VA 22031
 USA
 
 Email: turners@ieca.com
+
+## 相关笔记
+
+- [["OpenPGP 消息格式"]]
+- [[PKCS#8 非对称密钥包]]
+- [[密码消息语法 (CMS)]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[RFC 9580 OpenPGP 新版]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[标准]]
+- [[FIPS 180-4 安全哈希标准（SHS）]]

@@ -185,3 +185,14 @@ drawingState.legendAnalysis = {
 - 语义层分析（楼层数、标高、退让距离）
 - 交互式子实体选择（kEnableSubents 模式）
 - 图例分析 UI 按钮（当前通过对话文字触发）
+
+## 相关笔记
+
+- [[specs]]
+- [[首次打开图纸自动归纳 — 视觉化重构设计]]
+- [[ArcGIS Web 服务集成 — C++ 实施架构]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[GIS服务 Ribbon 标签页 Implementation Plan]]
+- [[GIS File Import / Save-Back Design]]
+- [[GIS服务 Ribbon 标签页 — 后续实施设计]]
+- [[GIS服务后续实施 Implementation Plan]]

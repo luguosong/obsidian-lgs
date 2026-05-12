@@ -135,3 +135,14 @@ scholar-skill/
 > - 在独立测试 Vault 中运行
 > - 开启 Git 快照以便回滚
 > - L3 深读前预估 Token 成本
+
+## 相关笔记
+
+- [[Superpowers 使用手册与最佳实践 — 实施计划]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[excalidraw-diagram skill]]
+- [[Mermaid 语法规则参考]]
+- [[mermaid-visualizer skill]]
+- [[obsidian-canvas-creator skill]]
+- [[defuddle skill]]
+- [[json-canvas skill]]

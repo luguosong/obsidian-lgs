@@ -353,3 +353,14 @@ classDiagram
 | 责任链 | Web 应用级请求拦截 | `ApplicationFilterChain` + `Filter` |
 | 模板方法 | HTTP 方法自动分发 | `HttpServlet.service()` → `doGet/doPost` |
 | 观察者 | 容器/Session/请求生命周期感知 | `ServletContextListener` / `HttpSessionListener` |
+
+## 相关笔记
+
+- [[JDK 源码]]
+- [[Spring 框架]]
+- [[设计原则]]
+- [[建造者模式]]
+- [[面向对象基础]]
+- [[单例模式]]
+- [[原型模式]]
+- [[简单工厂模式]]

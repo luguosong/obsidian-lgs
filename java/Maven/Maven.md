@@ -27,3 +27,13 @@ graph LR
 - [生命周期与插件](raw/编程学习/java/maven/lifecycle-plugin/index.md)
 - [依赖管理](raw/编程学习/java/maven/dependency/index.md)
 - [仓库与 Profile](raw/编程学习/java/maven/repository-profile/index.md)
+
+## 相关笔记
+
+- [[Maven]]
+- [[概述与安装]]
+- [[POM 详解]]
+- [[仓库与 Profile]]
+- [[入门案例]]
+- [[生命周期与插件]]
+- [[计划任务]]

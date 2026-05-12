@@ -202,3 +202,12 @@ STATE.md                 # 当前进度与关键决策
 - [npm 包](https://www.npmjs.com/package/get-shit-done-cc)
 - [Discord 社区](https://discord.gg/mYgfVNfA2r)
 - [[GSD 架构原理]]
+
+## 相关笔记
+
+- [[GSD 命令参考]]
+- [[GSD 实战使用技巧]]
+- [[更新日志]]
+- [[CLAUDE.md 记忆文件]]
+- [[最佳实践]]
+- [[社区市场 awesome-copilot]]

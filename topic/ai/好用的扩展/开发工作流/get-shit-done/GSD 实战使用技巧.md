@@ -226,3 +226,12 @@ CLAUDE_CONFIG_DIR=/home/youruser/.claude npx get-shit-done-cc --global
 - [[GSD 架构原理]]
 - [USER-GUIDE.md](https://github.com/gsd-build/get-shit-done/blob/main/docs/USER-GUIDE.md)
 - [COMMANDS.md](https://github.com/gsd-build/get-shit-done/blob/main/docs/COMMANDS.md)
+
+## 相关笔记
+
+- [[GSD 命令参考]]
+- [[更新日志]]
+- [[配置体系]]
+- [[插件]]
+- [[Agent 系统]]
+- [[Copilot CLI+Claude Code双工具协同实践]]

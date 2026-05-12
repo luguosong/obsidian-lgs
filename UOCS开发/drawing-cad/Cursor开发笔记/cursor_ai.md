@@ -527,3 +527,14 @@ class CADInterface:
 
 4. **最快路径**：在你的 `AiAssistant.jsx` 中集成 LLM API，用上述 System Prompt + Tool Schema，LLM 返回命令 JSON → 逐条调用 `window.__odaUi.safeExecute(cmd)` 或 `viewer.execute(name, args)` 执行。
 
+
+## 相关笔记
+
+- [[Cursor开发笔记]]
+- [[DrawingRibbon properties and layers optimization]]
+- [[基于ODA的二维绘图项目参考]]
+- [[CAD AI Agent development strategy]]
+- [[最佳实践]]
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[CAD AI Agent 改进计划]]
+- [[规划审图 AI 智能体解决方案]]

@@ -301,3 +301,13 @@ Hannes Tschofenig
 Arm Limited
 
 Email: [hannes.tschofenig@gmx.net](mailto:hannes.tschofenig@gmx.net)
+## 相关笔记
+
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9449 DPoP]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 9101 JAR]]
+- [[RFC 9700 Security BCP]]
+- [["OAuth 2.0 授权框架（RFC 6749）"]]
+- [[RFC 9207 Issuer ID]]

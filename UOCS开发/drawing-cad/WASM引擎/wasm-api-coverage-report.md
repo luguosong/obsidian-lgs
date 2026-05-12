@@ -157,3 +157,14 @@
 
 **报告完整性**: ✓ 已验证  
 **下一步**: 基于 Gap 分析结果，优先补充表格/数据库/网格相关的 code_examples
+
+## 相关笔记
+
+- [[DrawingWeb (WASM) License Gate C++ 修改报告]]
+- [[WASM引擎]]
+- [[WASM 结构提取性能分析报告（p17-wasm-report-2）]]
+- [[ODA demo cases integration and code optimization]]
+- [[WASM Emscripten 绑定规律手册]]
+- [[WASM License Gate 实施报告（p17-wasm-report-3）]]
+- [[WASM 性能优化：批量实体快照 API（Plan A）]]
+- [[WebUACAD AI Agent 全面分析报告]]

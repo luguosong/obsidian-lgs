@@ -172,3 +172,14 @@ BYOK 相关环境变量属于 [[Copilot]] CLI **运行时配置**的一部分，
 
 > [!tip] 持久化环境变量
 > 建议将 BYOK 环境变量写入 shell 配置文件（如 `~/.bashrc` 或 `~/.zshrc`），避免每次手动设置。Windows 用户可通过「系统环境变量」或 PowerShell [[Profile]] 持久化。
+
+## 相关笔记
+
+- [[负责任使用指南]]
+- [[Agent 系统]]
+- [[远程访问]]
+- [[配置体系]]
+- [[官方市场 copilot-plugins]]
+- [[Copilot CLI+Claude Code双工具协同实践]]
+- [[GitHub Copilot CLI]]
+- [[社区市场 awesome-copilot]]

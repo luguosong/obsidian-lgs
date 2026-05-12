@@ -783,3 +783,14 @@ PKCS 的进一步发展通过 IETF 进行。欢迎提出改进建议。
 - **Sean Parkinson**，RSA Security Inc.，345 Queen Street，Brisbane，QLD，4000，Australia，Sean.Parkinson@rsa.com
 - **Andreas Rusch**，RSA Security Inc.，345 Queen Street，Brisbane，QLD，4000，Australia，Andreas.Rusch@rsa.com
 - **Michael Scott**，RSA Security Inc.，345 Queen Street，Brisbane，QLD，4000，Australia，Michael2.Scott@rsa.com
+
+## 相关笔记
+
+- [["OpenPGP 消息格式"]]
+- [[密码消息语法 (CMS)]]
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[PKCS#8 非对称密钥包]]
+- [[RFC 9580 OpenPGP 新版]]
+- [[PKCS#10 证书签名请求]]
+- [[RFC 6960 在线证书状态协议 OCSP]]
+- [[FIPS 180-4 安全哈希标准（SHS）]]

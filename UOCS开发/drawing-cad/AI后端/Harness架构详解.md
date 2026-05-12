@@ -856,3 +856,14 @@ src/main/java/com/lvjian/drawingai/
 | P21 | [[License Gate]]（SM2 三级密钥 + 6 步验证 + SM3 硬件指纹 + [[会话管理]] + 厂商 CLI） |
 | P22 | 规划审查工具链（DwgPlanningTools + identify_land_boundary 三阶段验证 + 规划报建表单） |
 | P23 | 意图驱动统一编排（移除 streamReviewByDimension → buildChatOptionsForIntent 排除集过滤） |
+
+## 相关笔记
+
+- [[架构总览]]
+- [[AI后端]]
+- [[RAG 知识库管道]]
+- [[Redis + MySQL 优化方案（已落地）]]
+- [[图纸记忆 — 流程与问题分析]]
+- [[License Gate — WASM 图纸加载硬件许可]]
+- [[Agent SDK]]
+- [[更新日志]]

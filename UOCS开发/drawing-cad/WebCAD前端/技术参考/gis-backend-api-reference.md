@@ -418,3 +418,14 @@ app.get('/api/gis/proxy', async (req, res) => {
 | 绿建科技苏州内网测试 | `http://192.168.3.214:6080/arcgis/rest/services/test/MapServer` | EPSG:4526 |
 
 这些仅用于开发测试，后端不需要关心它们。
+
+## 相关笔记
+
+- [[技术参考]]
+- [[CadCodeExecutor 沙箱]]
+- [[UacadConfig — 跨平台 CAD 配置持久化方案]]
+- [[WASM API 速查]]
+- [[Java 概述]]
+- [[部署与安全]]
+- [[更新日志]]
+- [[更新日志（≤2.1.98）]]

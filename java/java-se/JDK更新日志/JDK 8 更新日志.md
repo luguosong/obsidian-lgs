@@ -464,3 +464,14 @@ JDK 8 各更新版本（8uXXX）的变更记录，按发布时间倒序排列。
 ## JDK 8 GA（2014-03-18）
 
 JDK 8 首个正式发布版本，引入 Lambda 表达式、Streams API、默认方法、`java.time`（JSR 310）等重大特性。完整发布说明详见 [JDK 8 Release Notes](https://www.oracle.com/java/technologies/javase/8-relnotes.html)。
+
+## 相关笔记
+
+- [[JDK更新日志]]
+- [[JDK 11 更新日志]]
+- [[JDK 17 更新日志]]
+- [[JDK 21 更新日志]]
+- [[JDK 25 更新日志]]
+- [[JDK 26 更新日志]]
+- [[JDK 更新日志]]
+- [["GBrain：AI Agent 知识大脑"]]

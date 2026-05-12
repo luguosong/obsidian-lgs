@@ -328,3 +328,11 @@ graph TD
 !!! info "双重级别过滤的意义"
 
     你可能会问：为什么 Logger 和 Handler 各自都要检查级别？这是为了灵活性。比如 Logger 设为 `ALL`（全部放行），但 ConsoleHandler 设为 `INFO`（只显示重要信息），FileHandler 设为 `ALL`（记录所有细节）。这样你可以做到控制台只看关键信息，文件中保留完整调试记录。
+
+## 相关笔记
+
+- [[Log4j]]
+- [[Spring Boot 日志]]
+- [[JCL]]
+- [[Log4j2]]
+- [[依赖管理]]

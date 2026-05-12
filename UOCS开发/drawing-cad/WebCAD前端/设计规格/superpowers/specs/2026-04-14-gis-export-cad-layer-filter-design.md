@@ -163,3 +163,14 @@ if (!filterSet.empty() && filterSet.find(sLayerName) == filterSet.end())
 
 - C++ 接口的新参数均带默认值，老调用方（如 `pushFeatures` 内部的 `ConvertDWGToGIS` 调用）无需改动
 - `Cmd_GIS_EXPORT` 读第 3 个参数：若前端旧代码仍只传 2 个参数，`pIO->getString` 会等待第三个输入 —— 需确认 `OdDbUserIO::getString` 在 args 数组耗尽时的行为（通常返回空串，但需验证）。实施阶段在 WASM 端验证并在必要时加 try/catch
+
+## 相关笔记
+
+- [[specs]]
+- [[GIS 目录面板 + 调图/属性查询 设计文档]]
+- [[Legend Analysis Redesign: Programmatic Region Scan + Vision]]
+- [[Industry Standards RAG Knowledge Base Design]]
+- [[WASM License Gate 设计（DrawingWebApp）]]
+- [[审图批注沙箱 API 设计]]
+- [[设计文档：同步 quzhen 分支审查批注功能至 feat-zfs]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]

@@ -358,3 +358,13 @@ source: https://github.com/gsd-build/get-shit-done/blob/main/docs/COMMANDS.md
 - [[get-shit-done 概览]]
 - [[GSD 实战使用技巧]]
 - [COMMANDS.md 原文](https://github.com/gsd-build/get-shit-done/blob/main/docs/COMMANDS.md)
+
+- [[GSD 架构原理]]
+
+## 相关笔记
+
+- [[更新日志]]
+- [[配置体系]]
+- [[插件]]
+- [[Agent 系统]]
+- [[Copilot CLI+Claude Code双工具协同实践]]

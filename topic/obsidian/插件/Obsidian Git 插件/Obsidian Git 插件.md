@@ -147,3 +147,14 @@ tags:
 - 行标记（Line Authoring）功能由 [GollyTicker](https://github.com/GollyTicker) 开发，相关问题可直接联系她。
 - 本插件最初由 [denolehov](https://github.com/denolehov) 开发。自 2021 年 3 月起由 [Vinzent03](https://github.com/Vinzent03) 接手维护，GitHub 仓库也于 2024 年 7 月迁移至其账号下。
 - 如有任何反馈或问题，欢迎通过 GitHub Issues 联系。
+
+## 相关笔记
+
+- [[扩展体系]]
+- [[Superpowers 使用手册与最佳实践 — 实施计划]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[excalidraw-diagram skill]]
+- [[Mermaid 语法规则参考]]
+- [[mermaid-visualizer skill]]
+- [[obsidian-canvas-creator skill]]
+- [[defuddle skill]]

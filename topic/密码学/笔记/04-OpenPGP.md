@@ -962,3 +962,12 @@ $$\text{MDC} = \text{SHA-1}(prefix || plaintext)$$
 - WKD 规范：[https://wiki.gnupg.org/WKD](https://wiki.gnupg.org/WKD)
 - Sequoia-PGP 项目：[https://sequoia-pgp.org](https://sequoia-pgp.org)
 - OpenPGP.js 项目：[https://openpgpjs.org](https://openpgpjs.org)
+
+## 相关笔记
+
+- [[ASN.1 基础]]
+- [[密码学]]
+- [[Java 密码学架构]]
+- [[密码学失败案例集]]
+- [[端到端加密]]
+- [[基于密码的密钥生成]]

@@ -130,3 +130,14 @@ app:
 - ❌ 不引入 Redisson（Spring Data Redis + Lua 够用）
 - ❌ 不改 SSE / Harness 核心流程（只在缓存层/Prompt Section 增强）
 - ❌ 不改前端（对 drawing-web-app 透明）
+
+## 相关笔记
+
+- [[AI后端]]
+- [[Harness Engineering 架构详解]]
+- [[License Gate — WASM 图纸加载硬件许可]]
+- [[RAG 知识库管道]]
+- [[图纸记忆 — 流程与问题分析]]
+- [[前端 dist 部署 checklist（drawing-web-app）]]
+- [[首次打开图纸自动归纳 — 视觉化重构设计]]
+- [[审查建筑退线距离 — 实现详细说明]]

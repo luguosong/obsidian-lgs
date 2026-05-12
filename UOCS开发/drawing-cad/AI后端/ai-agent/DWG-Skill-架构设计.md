@@ -195,3 +195,14 @@ sequenceDiagram
     Server->>UI: SSE: text-delta
     UI->>User: 渲染结果
 ```
+
+## 相关笔记
+
+- [[ai-agent]]
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[AI 绘图助手 — 实现文档]]
+- [[CAD AI Agent 改进计划]]
+- [[RAG 知识库 — AutoCAD 帮助文档检索系统]]
+- [[规划审图 AI 智能体解决方案]]
+- [[DWG Skill 深度重构优化记录]]
+- [[Office Document Skills 实现原理分析（DOCX / XLSX / PPTX）]]

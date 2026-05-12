@@ -81,3 +81,9 @@ cp -r axton-obsidian-visual-skills/obsidian-canvas-creator ~/.claude/skills/
 - [Excalidraw](https://excalidraw.com/) — 手绘风格白板
 - [Mermaid](https://mermaid.js.org/) — 图表生成工具
 - [JSON Canvas](https://jsoncanvas.org/) — 开放的无限画布格式
+
+## 相关笔记
+
+- [[更新日志]]
+- [[插件]]
+- [[obsidian-skills 套件总览]]

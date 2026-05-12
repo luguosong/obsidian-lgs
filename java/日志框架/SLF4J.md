@@ -417,3 +417,10 @@ mvn dependency:tree | grep slf4j
 !!! tip "[[Spring Boot]] 的自动管理"
 
     [[Spring Boot]] 的 `spring-boot-starter-logging` 已经默认引入了 `logback-classic`，并通过 `jcl-over-slf4j`、`log4j-over-slf4j`、`jul-to-slf4j` 桥接了所有旧 API。只要你使用 [[Spring Boot]] 的 starter 依赖，通常不会遇到多实现冲突。冲突往往出现在手动引入额外日志依赖时。
+
+## 相关笔记
+
+- [[Spring Boot 日志]]
+- [[JUL]]
+- [[Log4j2]]
+- [[依赖管理]]

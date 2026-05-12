@@ -503,3 +503,13 @@ AE 安全的密码等价于一个"理想加密接口"：密文只是一个不透
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 1 & 16
 - 章节文本：会话工作区 `files/rwc-chapters/ch01.txt`、`ch16.txt`
+
+## 相关笔记
+
+- [[ASN.1 基础]]
+- [[密码学]]
+- [[CMS 与 S/MIME]]
+- [[密码学失败案例集]]
+- [[密钥存储]]
+- [[TLS]]
+- [[基于密码的密钥生成]]

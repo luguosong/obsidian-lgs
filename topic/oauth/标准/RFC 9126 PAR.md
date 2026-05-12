@@ -485,3 +485,13 @@ Filip Skokan
 Auth0
 
 Email: [panva.ip@gmail.com](mailto:panva.ip@gmail.com)
+## 相关笔记
+
+- [[RFC 9700 Security BCP]]
+- [[RFC 9449 DPoP]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 9101 JAR]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9207 Issuer ID]]
+- [[RFC 8693 Token Exchange]]
+- [[标准]]

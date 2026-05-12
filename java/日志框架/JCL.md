@@ -270,3 +270,11 @@ JCL 只能通过系统属性 `org.apache.commons.logging.Log` 来覆盖绑定，
 !!! tip "[[Spring Boot]] 的解决方案"
 
     [[Spring Boot]] 通过 `jcl-over-slf4j` 桥接器解决了 JCL 的问题。这个库提供了与 JCL 完全相同的 API（`org.apache.commons.logging.Log`），但将所有调用重定向到 [[SLF4J]]。这样既保持了与遗留代码的兼容性，又享受了 [[SLF4J]] 的稳定绑定机制。
+
+## 相关笔记
+
+- [[Logback]]
+- [[Spring Boot 日志]]
+- [[JUL]]
+- [[Log4j2]]
+- [[依赖管理]]

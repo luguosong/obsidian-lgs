@@ -728,3 +728,12 @@ sequenceDiagram
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11
 - 章节文本：会话工作区 `files/rwc-chapters/ch11.txt`
+
+## 相关笔记
+
+- [[ASN.1 基础]]
+- [[密码学]]
+- [[Java 密码学架构]]
+- [[密码学失败案例集]]
+- [[密钥存储]]
+- [[非对称加密与混合加密]]

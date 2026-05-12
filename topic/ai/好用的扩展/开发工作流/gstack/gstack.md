@@ -459,3 +459,14 @@ Available skills: /office-hours, /plan-ceo-review, /plan-eng-review, /plan-desig
 /setup-browser-cookies, /setup-deploy, /setup-gbrain, /sync-gbrain, /retro, /investigate, /document-release,
 /codex, /cso, /autoplan, /pair-agent, /careful, /freeze, /guard, /unfreeze, /gstack-upgrade, /learn.
 ```
+- [[gstack 使用手册与最佳实践]]
+- [["gstack 深度解析：设计哲学与技术架构"]]
+
+## 相关笔记
+
+- [[更新日志]]
+- [[插件]]
+- [[最佳实践]]
+- [[官方插件目录]]
+- [[Agent 系统]]
+- [[Copilot CLI+Claude Code双工具协同实践]]

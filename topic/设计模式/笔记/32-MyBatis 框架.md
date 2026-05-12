@@ -385,3 +385,13 @@ sequenceDiagram
 | 适配器 | Log 接口统一[[日志框架]] | 非标准（构造时创建 Adaptee） |
 | 职责链 | InterceptorChain 插件链 | 标准 |
 | 动态代理 | Plugin（InvocationHandler） | 标准 |
+
+## 相关笔记
+
+- [[JDK 源码]]
+- [[适配器模式]]
+- [[框架中的设计模式]]
+- [[原型模式]]
+- [[Spring 框架]]
+- [[设计原则]]
+- [[面向对象基础]]

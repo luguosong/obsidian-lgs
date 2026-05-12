@@ -463,3 +463,13 @@ Vittorio Bertocci
 Auth0
 
 Email: [vittorio@auth0.com](mailto:vittorio@auth0.com)
+## 相关笔记
+
+- [[RFC 9449 DPoP]]
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9101 JAR]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9700 Security BCP]]
+- [[RFC 9126 PAR]]
+- [[RFC 8707 Resource Indicators]]
+- [[RFC 9207 Issuer ID]]

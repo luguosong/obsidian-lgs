@@ -231,3 +231,14 @@ window.__onGisError          // 错误回调
 工具 (坐标系)       → Layer 2                 → CrsBridge
 工具 (导出)         → Layer 4.2               → DwgToGisExporter
 ```
+
+## 相关笔记
+
+- [[specs]]
+- [[瞬态批注系统设计文档]]
+- [[图例分析功能设计规格]]
+- [[ArcGIS Web 服务集成 — C++ 实施架构]]
+- [[GIS服务 Ribbon 标签页 Implementation Plan]]
+- [[GIS File Import / Save-Back Design]]
+- [[GIS服务 Ribbon 标签页 — 后续实施设计]]
+- [[GIS服务后续实施 Implementation Plan]]

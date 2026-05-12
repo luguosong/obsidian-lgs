@@ -816,3 +816,13 @@ Chuck Mortimore
 Visa
 
 Email: [chuck.mortimore@visa.com](mailto:chuck.mortimore@visa.com)
+## 相关笔记
+
+- [[RFC 9700 Security BCP]]
+- [[RFC 9449 DPoP]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 9101 JAR]]
+- [[RFC 8705 mTLS]]
+- [[RFC 8707 Resource Indicators]]
+- [[RFC 9126 PAR]]
+- [["OAuth 2.0 授权框架（RFC 6749）"]]

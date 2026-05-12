@@ -177,3 +177,14 @@ tags:
 - [[MCP Server]] Customizer 接口
 - 动态工具 Schema 增强
 - ToolCallAdvisor conversationHistoryEnabled 选项
+
+## 相关笔记
+
+- [[更新日志]]
+- [[Spring AI 1.0.x 更新日志]]
+- [[Spring AI 1.1.x 更新日志]]
+- [[Spring AI 更新日志总览]]
+- [[Harness Engineering 架构详解]]
+- [[社区市场 awesome-copilot]]
+- [[实战：授权服务器]]
+- [[服务端口清单]]

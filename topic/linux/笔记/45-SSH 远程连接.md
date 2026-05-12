@@ -730,3 +730,14 @@ ssh-keyscan host1 host2 host3 >> ~/.ssh/known_hosts
 | `Host key verification failed` | 服务器公钥变更 | `ssh-keygen -R <host>` 删除旧记录 |
 | 连接后长时间无响应 | 网络超时或防火墙丢包 | 在 `~/.ssh/config` 设置 `ServerAliveInterval 60` |
 | `Warning: Remote port forwarding failed for listen port` | 端口已被占用或权限不足 | 换端口或检查 `GatewayPorts` 设置 |
+
+## 相关笔记
+
+- [[Linux]]
+- [[DNS 服务器]]
+- [[服务器概览]]
+- [[磁盘分区规划]]
+- [[重定向与管道]]
+- [[存储与文件]]
+- [[日志管理]]
+- [[网络安全基础]]

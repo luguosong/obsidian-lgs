@@ -170,3 +170,14 @@ npm run build
 - **feat-zfs 优先**：所有 AI/内存管线/视觉记忆相关代码保持 feat-zfs 版本
 - **[[quzhen]] 叠加**：批注/审图/嵌入协议相关代码以 [[quzhen]] 版本为准，插入 feat-zfs 版本中
 - **SmartReviewTab**：[[quzhen]] 中已移除该 Tab，"AI 智能审图"按钮移入 ReviewFlowTab，遵循此决定
+
+## 相关笔记
+
+- [[specs]]
+- [[Legend Analysis Redesign: Programmatic Region Scan + Vision]]
+- [[Industry Standards RAG Knowledge Base Design]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 设计文档]]
+- [[WASM License Gate 设计（DrawingWebApp）]]
+- [[GIS 目录面板 + 调图/属性查询 设计文档]]
+- [[审图批注沙箱 API 设计]]
+- [[WebUACAD AI Agent 全面分析报告]]

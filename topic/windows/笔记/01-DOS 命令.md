@@ -1090,3 +1090,15 @@ fsutil fsinfo volumeinfo C:
 :: 查看文件的实际分配大小（含簇对齐）
 fsutil file queryextents myfile.dat
 ```
+
+- [[WSL 使用指南]]
+- [[Windows]]
+
+## 相关笔记
+
+- [[Linux]]
+- [[网络与服务]]
+- [[网络安全基础]]
+- [[Vim 编辑器]]
+- [[JDBC]]
+- [[会话管理]]

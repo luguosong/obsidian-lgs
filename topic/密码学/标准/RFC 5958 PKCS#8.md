@@ -345,3 +345,13 @@ END
 ## 作者地址
 
 **Sean Turner** — IECA, Inc., 3057 Nutley Street, Suite 106, Fairfax, VA 22031, USA. Email: turners@ieca.com
+
+## 相关笔记
+
+- [["OpenPGP 消息格式"]]
+- [[RFC 5751 S/MIME 3.2 消息规范]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[PKCS#10 证书签名请求]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[RFC 6960 在线证书状态协议 OCSP]]
+- [[RFC 9580 OpenPGP 新版]]

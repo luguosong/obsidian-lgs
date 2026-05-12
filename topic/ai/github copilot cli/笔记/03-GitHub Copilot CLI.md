@@ -118,3 +118,13 @@ tags:
 
 > **管理路径**：enterprise → responsible-use → reference
 > 适合团队管理者，了解企业版功能、安全治理和完整[[参考手册]]。
+
+## 相关笔记
+
+- [[Agent 系统]]
+- [[Copilot CLI+Claude Code双工具协同实践]]
+- [[安装与快速入门]]
+- [[插件]]
+- [[更新日志]]
+- [[SDK 集成]]
+- [[Skills 技能系统]]

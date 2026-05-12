@@ -438,3 +438,14 @@ WebUA[[CAD AI Agent]] 架构已经相当完善：
 7. **工作文件夹** (`/workspace/`) 实现了多文件工作区，AI 可跨文件分析和操作
 
 **核心改进方向**：在 System Prompt 中明确告诉 LLM——[[WebUACAD]] 就是 [[AutoCAD]] 的在线版本，具备完整的 [[AutoCAD]] 功能，并提供清晰的 [[AutoCAD]] 命令 → [[WebUACAD]] 实现路径映射。
+
+## 相关笔记
+
+- [[AI 绘图助手 — 实现文档]]
+- [[CAD AI Agent 改进计划]]
+- [[规划审图 AI 智能体解决方案]]
+- [[ai-agent]]
+- [[DWG Skill 架构设计]]
+- [[RAG 知识库 — AutoCAD 帮助文档检索系统]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[瞬态批注系统设计文档]]

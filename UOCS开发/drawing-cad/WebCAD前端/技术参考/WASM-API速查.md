@@ -143,3 +143,14 @@ for (iter.start(); !iter.done(); iter.step()) {
 - `SetBackgroundColor()` 不存在 → 使用 `appCore.getDevice().setBackgroundColor()` + `device.setLogicalPalette(Module.odcmAcadPalette(bg), 256)`
 - `Module` 是 `createViewerClass(Module)` 的闭包参数，不是 `this.Module`
 - `OdDbDimStyleTable` / `OdDbLinetypeTable` 未导出 → DwgReadAdapter 中为非致命错误
+
+## 相关笔记
+
+- [[技术参考]]
+- [[UacadConfig — 跨平台 CAD 配置持久化方案]]
+- [[CadCodeExecutor 沙箱]]
+- [[GIS 后端接口参考文档]]
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[CAD AI Agent 改进计划]]
+- [[规划审图 AI 智能体解决方案]]
+- [[AI助手功能开发方向]]

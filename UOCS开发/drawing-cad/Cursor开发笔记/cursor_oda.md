@@ -191,3 +191,14 @@ Text2CAD 不使用单一的 Prompt，而是将任务拆分。在你的 `DrawingW
 3.  **返回结构化数据**：
     当 LLM 调用查询工具时，前端返回的 JSON 应该尽可能精简。不要把 ODA 对象的整个原型链返回给 LLM（Token 会爆炸）。只返回关键的 `x, y, z`、`layer`、`color`、`textString` 等扁平化数据。
 
+
+## 相关笔记
+
+- [[Cursor开发笔记]]
+- [[AI助手功能开发方向]]
+- [[DrawingRibbon properties and layers optimization]]
+- [[CAD AI Agent development strategy]]
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[CAD AI Agent 改进计划]]
+- [[规划审图 AI 智能体解决方案]]
+- [[浏览器里的专业 CAD，功能全面对标 AutoCAD 2014]]

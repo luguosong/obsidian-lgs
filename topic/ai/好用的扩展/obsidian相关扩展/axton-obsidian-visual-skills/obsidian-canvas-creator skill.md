@@ -227,3 +227,12 @@ nodes 数组中的顺序决定层叠：
 - [[Canvas 规范参考]] — JSON [[Canvas]] 完整规范
 - [[Canvas 布局算法参考]] — MindMap/Freeform 布局算法详解
 - [[axton-obsidian-visual-skills 套装总览]] — 返回项目总览
+
+## 相关笔记
+
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[json-canvas skill]]
+- [[excalidraw-diagram skill]]
+- [[mermaid-visualizer skill]]
+- [[Mermaid 语法规则参考]]
+- [[Excalidraw JSON Schema 参考]]

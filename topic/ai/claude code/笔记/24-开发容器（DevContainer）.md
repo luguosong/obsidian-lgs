@@ -149,3 +149,13 @@ GitHub Codespaces 本质上就是云端的 Dev Container。如果你的团队使
 > [!note]- Codespaces 中的认证管理
 >
 > 在 Codespaces 中，建议通过 GitHub Secrets 注入 `ANTHROPIC_API_KEY`，而非使用 OAuth 登录。这样每个 Codespace 实例启动时自动获取凭证，无需开发者手动操作。
+
+## 相关笔记
+
+- [[企业管理]]
+- [[GitHub Actions]]
+- [[GitLab CI/CD]]
+- [[第三方集成]]
+- [[多平台支持]]
+- [[法律合规与零数据保留]]
+- [[安装问题]]

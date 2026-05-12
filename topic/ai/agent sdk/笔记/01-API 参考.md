@@ -299,3 +299,13 @@ Python `Message` 联合类型：
 | **中断支持** | `query()` 流式模式下支持 | 仅 `ClaudeSDKClient` 支持，`query()` 不支持 |
 | **类型系统** | TypeScript 接口/类型别名 | `@dataclass`（属性访问）和 `TypedDict`（键访问）混合使用 |
 | **`auto` 权限模式** | 支持 | 不支持 |
+
+## 相关笔记
+
+- [[笔记]]
+- [[Agent SDK]]
+- [[Agent 循环]]
+- [[工具与 MCP]]
+- [[扩展机制]]
+- [[部署与安全]]
+- [[更新日志]]

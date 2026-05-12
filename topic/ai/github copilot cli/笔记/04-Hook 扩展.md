@@ -731,3 +731,14 @@ jq 'select(.event=="policyDeny")' .github/hooks/logs/audit.jsonl
 | 大量文件跳过快照 | 文件数量超过 **500** 时跳过快照 |
 | Hook 失败不阻塞 | Hook 执行失败（非零退出码或超时）仅记录日志并跳过，**永远不会阻塞 Agent 执行** |
 | 多 Hook 合并 | `permissionRequest` 的多个 Hook 按顺序执行，后输出的覆盖前输出的；`preToolUse` 中任意一个返回 `deny` 即阻止执行 |
+
+## 相关笔记
+
+- [[Agent 系统]]
+- [[开发工作流]]
+- [[Copilot CLI+Claude Code双工具协同实践]]
+- [[Skills 技能系统]]
+- [[GitHub Copilot CLI]]
+- [[SDK 集成]]
+- [[参考手册]]
+- [[安装与快速入门]]

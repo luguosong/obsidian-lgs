@@ -277,3 +277,13 @@ D:\Obsidian Vault\MyObVault
 ```
 4. **连通性验证**:
 - 在Agent Client的AI对话框中，发送“你好”，若回复正常则配置成功。
+## 相关笔记
+
+- [[更新日志]]
+- [[最佳实践]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[obsidian-skills 套件总览]]
+- [[Channels]]
+- [[插件]]
+- [[相关资源]]
+- [[官方插件目录]]

@@ -924,3 +924,13 @@ United States of America
 Email: [mbj@microsoft.com](mailto:mbj@microsoft.com)
 
 URI: [https://self-issued.info/](https://self-issued.info/)
+## 相关笔记
+
+- [[RFC 9449 DPoP]]
+- [[RFC 9700 Security BCP]]
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9126 PAR]]
+- [[RFC 9207 Issuer ID]]
+- [["OAuth 2.0 授权框架（RFC 6749）"]]

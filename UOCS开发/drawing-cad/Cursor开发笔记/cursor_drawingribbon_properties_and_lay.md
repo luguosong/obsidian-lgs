@@ -1347,3 +1347,14 @@ rb.delete()
 
 **注意：C++ 文件修改后需要重新编译 WASM 模块才能生效。**
 
+
+## 相关笔记
+
+- [[Cursor开发笔记]]
+- [[AI助手功能开发方向]]
+- [[基于ODA的二维绘图项目参考]]
+- [[CAD AI Agent development strategy]]
+- [[WebUACAD AI Agent 全面分析报告]]
+- [[CAD AI Agent 改进计划]]
+- [[规划审图 AI 智能体解决方案]]
+- [[浏览器里的专业 CAD，功能全面对标 AutoCAD 2014]]

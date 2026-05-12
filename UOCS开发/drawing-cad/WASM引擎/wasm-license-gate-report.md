@@ -140,3 +140,14 @@ EMSCRIPTEN_BINDINGS(license_gate) {
 [ ] 端到端测试：无 Token 时 OpenFile 返回 false 并触发 __onLicenseDenied
 [ ] 端到端测试：有效 Token 时 OpenFile 正常执行
 ```
+
+## 相关笔记
+
+- [[DrawingWeb (WASM) License Gate C++ 修改报告]]
+- [[WASM引擎]]
+- [[ODA demo cases integration and code optimization]]
+- [[WASM API 覆盖报告（p17-wasm-report-1）]]
+- [[WASM Emscripten 绑定规律手册]]
+- [[WASM 性能优化：批量实体快照 API（Plan A）]]
+- [[WASM 结构提取性能分析报告（p17-wasm-report-2）]]
+- [[Java 概述]]

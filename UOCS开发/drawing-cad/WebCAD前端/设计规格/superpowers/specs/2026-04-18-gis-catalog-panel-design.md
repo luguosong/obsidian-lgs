@@ -348,3 +348,14 @@ UI：Ant Design Modal（宽度 800px）+ Table：
 6. 属性查询 → Modal 展示要素属性表，导出 CSV 可用
 7. 关闭面板 → 左侧空间归还画布，无布局抖动
 8. 连接非文件夹类 URL 的预置服务 → 原有 MapServer 流程不受影响
+
+## 相关笔记
+
+- [[specs]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 设计文档]]
+- [[Legend Analysis Redesign: Programmatic Region Scan + Vision]]
+- [[Industry Standards RAG Knowledge Base Design]]
+- [[WASM License Gate 设计（DrawingWebApp）]]
+- [[审图批注沙箱 API 设计]]
+- [[设计文档：同步 quzhen 分支审查批注功能至 feat-zfs]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]

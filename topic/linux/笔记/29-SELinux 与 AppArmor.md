@@ -382,3 +382,14 @@ apt install selinux-basics selinux-policy-default
 selinux-activate
 ```
 
+
+## 相关笔记
+
+- [[Linux]]
+- [[Linux 简介与发行版]]
+- [[文件与命令查找]]
+- [[文件与目录操作]]
+- [[文件内容查看工具]]
+- [[文件权限体系]]
+- [[目录结构（FHS）]]
+- [[磁盘分区规划]]

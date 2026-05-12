@@ -1088,3 +1088,14 @@ END
 | Ambarish Malpani | CA Technologies, 455 West Maude Ave. Suite 210, Sunnyvale, CA 94085, United States | ambarish@gmail.com |
 | Slava Galperin | A9.com Inc., 130 Lytton Ave. Suite 300, Palo Alto, CA 94301, United States | slava.galperin@gmail.com |
 | Carlisle Adams | University of Ottawa, 800 King Edward Avenue, Ottawa ON K1N 6N5, Canada | cadams@eecs.uottawa.ca |
+
+## 相关笔记
+
+- [[密码消息语法 (CMS)]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[PKCS#10 证书签名请求]]
+- [["OpenPGP 消息格式"]]
+- [[PKCS#8 非对称密钥包]]
+- [[RFC 6962 证书透明]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[标准]]

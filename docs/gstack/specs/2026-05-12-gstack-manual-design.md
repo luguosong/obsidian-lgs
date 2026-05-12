@@ -147,3 +147,10 @@
 - [ ] wikilink 到现有 `[[gstack]]` 文档
 - [ ] 与 Superpowers 手册有明确对照点（前言 + 附录）
 - [ ] 无硬编码 URL，所有引用通过 wikilink
+
+## 相关笔记
+
+- [[gstack 使用手册与最佳实践]]
+- [["gstack 深度解析：设计哲学与技术架构"]]
+- [[Superpowers + gstack 联合工作最佳实践]]
+- [[最佳实践]]

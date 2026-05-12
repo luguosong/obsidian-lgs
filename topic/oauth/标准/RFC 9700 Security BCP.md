@@ -1678,3 +1678,13 @@ window.addEventListener("message", (e) => {
 [¶](#section-4.17.2-5)
 
 Since in-browser communication flows only apply a different communication technique (i.e., postMessage instead of HTTP redirect), all measures protecting the authorization response listed in MUST be applied equally.[¶](#section-4.17.2-6)
+## 相关笔记
+
+- [[RFC 9449 DPoP]]
+- [[RFC 9126 PAR]]
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9101 JAR]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 8705 mTLS]]
+- [[RFC 9207 Issuer ID]]
+- [["OAuth 2.0 授权框架（RFC 6749）"]]

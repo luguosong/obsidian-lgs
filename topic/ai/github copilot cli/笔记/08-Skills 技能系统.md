@@ -308,3 +308,13 @@ skills:
 | `定义方式` | `SKILL.md` + 资源文件 | `.agent.md` | `.instructions.md` | JSON 配置 |
 | `包含资源` | ✅ 示例、模板、配置 | ❌ 仅 Markdown | ❌ 仅 Markdown | ✅ 外部工具 |
 | `典型用例` | 测试生成、代码审查 | 安全专家、DBA | [[编码规范]] | GitHub API、数据库 |
+
+## 相关笔记
+
+- [[Agent 系统]]
+- [[配置体系]]
+- [[Copilot CLI+Claude Code双工具协同实践]]
+- [[参考手册]]
+- [[开发工作流]]
+- [[GitHub Copilot CLI]]
+- [[Hook 扩展]]

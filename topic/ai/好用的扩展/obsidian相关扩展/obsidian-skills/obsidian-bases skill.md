@@ -155,3 +155,11 @@ tags:
 ---
 
 → 返回 [[obsidian-skills 套件总览]]
+
+## 相关笔记
+
+- [[defuddle skill]]
+- [[json-canvas skill]]
+- [[Superpowers 使用手册与最佳实践 — 实施计划]]
+- [[axton-obsidian-visual-skills 套件总览]]
+- [[excalidraw-diagram skill]]

@@ -841,3 +841,14 @@ function Restart-WSL {
 }
 Set-Alias rwsl Restart-WSL
 ```
+
+## 相关笔记
+
+- [[DOS 命令]]
+- [[Windows]]
+- [[更新日志]]
+- [[更新日志（1.x 及更早）]]
+- [[更新日志（≤2.1.98）]]
+- [[Claude Code]]
+- [[GitHub Actions]]
+- [[GitLab CI/CD]]

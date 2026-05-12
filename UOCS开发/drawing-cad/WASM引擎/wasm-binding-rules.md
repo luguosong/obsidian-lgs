@@ -138,3 +138,14 @@ p.transformBy(m)
 | `delete_entities` | `erase()` → `erase(true)` + handles 快路径 | ✅ 通过 |
 | `insert_block_ref` | `has1` → `has` + `getAt(name, false)` | ✅ 通过 |
 | `transform_entities(scale)` | 移除 OdGeScale3d（NaN矩阵）+ handles 快路径 | ✅ 通过 |
+
+## 相关笔记
+
+- [[DrawingWeb (WASM) License Gate C++ 修改报告]]
+- [[WASM引擎]]
+- [[ODA demo cases integration and code optimization]]
+- [[WASM API 覆盖报告（p17-wasm-report-1）]]
+- [[WASM License Gate 实施报告（p17-wasm-report-3）]]
+- [[WASM 性能优化：批量实体快照 API（Plan A）]]
+- [[WASM 结构提取性能分析报告（p17-wasm-report-2）]]
+- [[DWG Skill 深度重构优化记录]]

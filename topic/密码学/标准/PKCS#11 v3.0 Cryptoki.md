@@ -8127,3 +8127,13 @@ The definitions for manifest constants specified in this document can be found i
 | csprd 02 wd01 | Oct 8 2019 | Dieter Bong | Created csprd02 based on csprd01 |
 | csprd 02 wd02 | Nov 8 2019 | Dieter Bong | Item #26 as per “PKCS11 mechnisms review” document |
 | csprd 02 wd03 | Dec 3 2019 | Dieter Bong | Changes as per “PKCS11 base spec review” document |
+## 相关笔记
+
+- [[RFC 6962 证书透明]]
+- [["X.509 公钥基础设施证书与 CRL"]]
+- [[密码消息语法 (CMS)]]
+- [[TOTP 基于时间的一次性密码算法]]
+- [[RFC 6960 在线证书状态协议 OCSP]]
+- [[PKCS#12 个人信息交换语法 v1.1]]
+- [[RFC 9580 OpenPGP 新版]]
+- [[FIPS 180-4 安全哈希标准（SHS）]]

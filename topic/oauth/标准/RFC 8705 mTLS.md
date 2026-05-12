@@ -690,3 +690,13 @@ bUlJSGQgjwD5vaUaKlLR50Q2DmFfQj1L+SY=
 ```
 
 :
+## 相关笔记
+
+- [[RFC 9449 DPoP]]
+- [[RFC 9068 JWT Access Token]]
+- [[RFC 9101 JAR]]
+- [[RFC 8693 Token Exchange]]
+- [[RFC 9126 PAR]]
+- [[RFC 9700 Security BCP]]
+- [[RFC 8707 Resource Indicators]]
+- [[RFC 9207 Issuer ID]]

@@ -493,3 +493,14 @@ printf '// AUTO-GENERATED\nstatic constexpr const char kRootPubKeyHex[] = "%s";\
 - 后端落地参考：
   - `drawing-ai-server/src/main/java/com/lvjian/drawingai/license/` 全部类
   - `drawing-ai-server/src/main/java/com/lvjian/drawingai/license/tools/LicenseToolsMain.java`（4 子命令 CLI）
+
+## 相关笔记
+
+- [[DrawingWeb (WASM) License Gate C++ 修改报告]]
+- [[WASM引擎]]
+- [[ODA demo cases integration and code optimization]]
+- [[WASM API 覆盖报告（p17-wasm-report-1）]]
+- [[WASM Emscripten 绑定规律手册]]
+- [[WASM License Gate 实施报告（p17-wasm-report-3）]]
+- [[WASM 性能优化：批量实体快照 API（Plan A）]]
+- [[WASM 结构提取性能分析报告（p17-wasm-report-2）]]
