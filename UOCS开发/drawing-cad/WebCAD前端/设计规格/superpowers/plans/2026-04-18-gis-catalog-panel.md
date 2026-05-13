@@ -1,6 +1,6 @@
 # GIS 目录面板 + 调图/属性查询 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 在 App 左侧新增固定目录树面板，连接文件夹型 ArcGIS REST URL 后自动展开，支持勾选图层后执行调图（框选/多边形/全部）或属性查询。
 
@@ -961,3 +961,14 @@
 | 属性查询 Modal Table | Task 5 |
 | GisStore 新增三字段 | Task 1 |
 | 非文件夹 URL 原有流程不变 | Task 6 Step 2（isFolderUrl 分支仅拦截文件夹） |
+
+## 相关笔记
+
+- [[Legend Analysis Redesign Implementation Plan]]
+- [[GIS 导入实体类型透传 — 实现计划]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]
+- [[plans]]
+- [[GIS File Import Implementation Plan]]
+- [[UAOdcadCore GIS Service Implementation Plan]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 实施计划]]
+- [[WASM License Gate Implementation Plan]]

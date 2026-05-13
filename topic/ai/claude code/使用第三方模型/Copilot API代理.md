@@ -45,7 +45,7 @@ http://localhost:4141/usage-viewer?endpoint=http://localhost:4141/usage
 > [!important] Important
 > **使用前请先注意以下几点：**
 > 
-> 1. **Claude Code 配置：** 与 Claude Code 搭配使用时，请将模型 ID 配置为 `claude-opus-4-6` 或 `claude-opus-4.6` （不要带 `[1m]` 后缀，超出 GitHub Copilot 上下文窗口限制太多可能导致账号被封）。示例 claude `settings.json` 见 [通过 `settings.json` 手动配置](#manual-configuration-with-settingsjson) 。
+> 1. **[[Claude Code]] 配置：** 与 [[Claude Code]] 搭配使用时，请将模型 ID 配置为 `claude-opus-4-6` 或 `claude-opus-4.6` （不要带 `[1m]` 后缀，超出 GitHub Copilot 上下文窗口限制太多可能导致账号被封）。示例 claude `settings.json` 见 [通过 `settings.json` 手动配置](#manual-configuration-with-settingsjson) 。
 > 2. **推荐给 opencode 用户：** 与 opencode 搭配时，推荐优先使用 opencode OAuth app 启动。该方式与 opencode 内置的 GitHub Copilot provider 行为一致，且不存在 Terms of Service 风险：
 > 	```
 > 	npx @jeffreycao/copilot-api@latest --oauth-app=opencode start
@@ -67,9 +67,9 @@ http://localhost:4141/usage-viewer?endpoint=http://localhost:4141/usage
 - **减少不必要的 Premium 请求** ：通过把预热请求路由到 `smallModel` 、将 `tool_result` 的后续消息重新并入工具流，以及把恢复的工具轮次视为延续流量而非全新高级交互，减少浪费的 premium 使用量。
 - **分阶段的 `gpt-5.4` 与 `gpt-5.3-codex`** ：这些模型可以在更深入推理或调用工具前先发出面向用户的 commentary，让长时间运行的编码操作更容易理解，而不是突然开始一串工具调用。
 - **支持 Claude 原生 Beta 能力** ：在 Messages API 路径上支持 Anthropic 原生能力，例如 `interleaved-thinking` 、 `advanced-tool-use` 和 `context-management` ；这些能力在普通 Chat Completions 兼容模式下通常很难支持，或根本不可用。
-- **Subagent 标记集成** ：Claude Code 与 opencode 插件可以注入 `__SUBAGENT_MARKER__...`，并传递 `x-session-id` ，从而让 subagent 流量保留正确的根会话以及 agent/user 语义。
+- **Subagent 标记集成** ：[[Claude Code]] 与 opencode 插件可以注入 `__SUBAGENT_MARKER__...`，并传递 `x-session-id` ，从而让 subagent 流量保留正确的根会话以及 agent/user 语义。
 - **通过 `@ai-sdk/anthropic` 接入 OpenCode** ：可以将 OpenCode 指向这个代理作为 Anthropic provider，从而端到端保留 Anthropic Messages 语义、premium request 优化以及更原生的 Claude 行为。
-- **Claude Code 集成** ：可通过简单的命令行参数（ `--claude-code` ）快速配置并启动 [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) 使用 Copilot 作为后端。
+- **[[Claude Code]] 集成** ：可通过简单的命令行参数（ `--claude-code` ）快速配置并启动 [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) 使用 Copilot 作为后端。
 - **使用量看板** ：提供基于 Web 的看板，用于监控 Copilot API 使用情况、查看额度以及详细统计数据。
 - **速率限制控制** ：通过速率限制选项（ `--rate-limit` ）和等待机制（ `--wait` ）管理 API 使用，避免因请求过快而报错。
 - **手动请求审批** ：可对每个 API 请求进行手动批准或拒绝，实现更细粒度的使用控制（ `--manual` ）。
@@ -119,11 +119,11 @@ http://localhost:4141/usage-viewer?endpoint=http://localhost:4141/usage
 
 这一标记流程会在 `<system-reminder>` 中放入 `__SUBAGENT_MARKER__...`，同时传递根级 `x-session-id` 。当检测到该标记后，代理可以保留父会话身份、推导 `x-initiator: agent` ，并把交互标记为 subagent 流量，而不是新的顶层请求。
 
-项目中已经为 Claude Code 和 opencode 都提供了插件集成；配置方法见下文 [插件集成](#plugin-integrations) 。
+项目中已经为 [[Claude Code]] 和 opencode 都提供了插件集成；配置方法见下文 [插件集成](#plugin-integrations) 。
 
 ### 精确的 Claude Token 计数
 
-默认情况下， `/v1/messages/count_tokens` 会使用 GPT 的 `o200k_base` tokenizer，并乘以 1.15 倍来估算 Claude token 数。这个估算通常会低于 Claude 的真实 token 使用量，导致像 Claude Code 这类工具压缩上下文太晚，从而触发 “prompt token count exceeds limit” 之类的错误。
+默认情况下， `/v1/messages/count_tokens` 会使用 GPT 的 `o200k_base` tokenizer，并乘以 1.15 倍来估算 Claude token 数。这个估算通常会低于 Claude 的真实 token 使用量，导致像 [[Claude Code]] 这类工具压缩上下文太晚，从而触发 “prompt token count exceeds limit” 之类的错误。
 
 当配置了 Anthropic API key 后，代理会把 Claude 模型的 token 计数请求转发到 [Anthropic 真实的 `/v1/messages/count_tokens` 端点](https://docs.anthropic.com/en/docs/build-with-claude/token-counting) 。这样能返回精确计数，消除估算误差。不属于 Claude 的模型，以及转发失败的情况，会自动回退到 GPT tokenizer 估算。
 
@@ -291,7 +291,7 @@ Copilot API 现在使用子命令结构，主要命令包括：
 | \--rate-limit | 请求之间的速率限制秒数 | 无 | \-r |
 | \--wait | 达到速率限制时等待，而不是直接报错 | false | \-w |
 | \--github-token | 直接提供 GitHub token（必须通过 `auth` 子命令生成） | 无 | \-g |
-| \--claude-code | 生成一个使用 Copilot API 配置启动 Claude Code 的命令 | false | \-c |
+| \--claude-code | 生成一个使用 Copilot API 配置启动 [[Claude Code]] 的命令 | false | \-c |
 | \--show-token | 在获取和刷新时显示 GitHub 与 Copilot token | false | 无 |
 | \--proxy-env | 从环境变量初始化代理 | false | 无 |
 
@@ -393,7 +393,7 @@ Copilot API 现在使用子命令结构，主要命令包括：
 				- `contextCache` ：可选，OpenAI 兼容 provider 默认 `true` ，用于启用阿里云百炼/DashScope 的显式缓存（explicit context cache），会按其 Context Cache 格式在最多 4 个 content block 上注入 `cache_control: { "type": "ephemeral" }` 。缓存断点策略与 opencode 主链路保持一致：前 2 条 system 消息 + 最后 2 条非 system 消息。标记字符串 content 时会把 `system` / `user` / `assistant` / `tool` 消息转换为 text content part 数组；已有数组 content 则标记最后一个 part。如果模型本身已经支持隐式缓存，或上游不支持该显式缓存扩展字段，可在模型配置中设为 `false` 。
 				- `supportPdf` ：可选，控制该模型是否支持 PDF/document content。默认 `false` ，不支持时会把 PDF 转成提示文本；设为 `true` 时会把 PDF/document 转成 OpenAI Chat Completions 的 file part。
 				- `toolContentSupportType` ：可选，配置该模型的 tool result content 支持能力，值为 `array` 、 `image` 、 `pdf` 的数组。provider 侧未配置时默认只发送 string tool content。若 `supportPdf` 为 `true` 但这里不包含 `pdf` ，tool result 里的 file part 会被转成 user role 消息。Copilot 主链路不使用这个 provider 默认，仍按 array + image 且不支持 PDF 的能力处理。
-- **smallModel：** 无工具预热消息的回退模型（例如 Claude Code 的探测请求），用于避免消耗 premium requests；默认是 `gpt-5-mini` 。
+- **smallModel：** 无工具预热消息的回退模型（例如 [[Claude Code]] 的探测请求），用于避免消耗 premium requests；默认是 `gpt-5-mini` 。
 - **responsesApiContextManagementModels：** 需要启用 Responses API `context_management` 压缩指令的 GPT 模型 ID 列表。默认是 `[]` ，需要你显式开启。一个不错的起点是 `["gpt-5-mini", "gpt-5.3-codex", "gpt-5.4-mini", "gpt-5.4"]` 。启用后，请求体会带上 `context_management` ，并在后续轮次中仅保留最新的压缩承载内容。实际压缩由服务端完成，看起来会在 usage 接近模型 `maxPromptTokens` 的约 90% 时开始，因此特别适合长任务场景，同时不会额外消耗 premium requests。实践中 `compact_threshold` 似乎也是服务端固定的，所以在本项目中修改它目前不会改变压缩行为。当前该优化仅面向 GPT 系模型。
 - **modelReasoningEfforts：** 按模型配置发送到 Copilot Responses API 的 `reasoning.effort` 。可选值包括 `none` 、 `minimal` 、 `low` 、 `medium` 、 `high` 和 `xhigh` 。若某模型未配置，则默认使用 `high` 。
 - **useFunctionApplyPatch：** 当为 `true` 时，服务端会把 Responses payload 中任何名为 `apply_patch` 的自定义工具转换为 OpenAI 风格的函数工具（ `type: "function"` ），并附带参数 schema，从而让 assistant 可以通过 function-calling 语义调用它来编辑文件。若设为 `false` ，则保持工具原样。默认值为 `true` 。
@@ -524,9 +524,9 @@ bunx --bun @jeffreycao/copilot-api@latest start
 
 ## 与 Claude Code 一起使用
 
-这个代理可以为 [Claude Code](https://docs.anthropic.com/en/claude-code) 提供后端能力。Claude Code 是 Anthropic 提供的实验性面向开发者的对话式 AI 助手。
+这个代理可以为 [Claude Code](https://docs.anthropic.com/en/claude-code) 提供后端能力。[[Claude Code]] 是 Anthropic 提供的实验性面向开发者的对话式 AI 助手。
 
-有两种方式可以把 Claude Code 配置为使用这个代理：
+有两种方式可以把 [[Claude Code]] 配置为使用这个代理：
 
 ### 通过 --claude-code 标志进行交互式配置
 
@@ -536,13 +536,13 @@ bunx --bun @jeffreycao/copilot-api@latest start
 npx @jeffreycao/copilot-api@latest start --claude-code
 ```
 
-你会被提示选择一个主模型，以及一个用于后台任务的 “small, fast” 模型。选择完成后，会有一条命令被复制到剪贴板中。该命令会设置 Claude Code 使用该代理所需的环境变量。
+你会被提示选择一个主模型，以及一个用于后台任务的 “small, fast” 模型。选择完成后，会有一条命令被复制到剪贴板中。该命令会设置 [[Claude Code]] 使用该代理所需的环境变量。
 
-在新的终端中粘贴并执行这条命令，即可启动 Claude Code。
+在新的终端中粘贴并执行这条命令，即可启动 [[Claude Code]]。
 
 ### 通过 settings.json 手动配置
 
-另一种方式是在项目根目录中创建 `.claude/settings.json` 文件，并写入 Claude Code 所需的环境变量。这样你就不需要每次都运行交互式配置了。
+另一种方式是在项目根目录中创建 `.claude/settings.json` 文件，并写入 [[Claude Code]] 所需的环境变量。这样你就不需要每次都运行交互式配置了。
 
 下面是一个 `.claude/settings.json` 示例：
 
@@ -571,10 +571,10 @@ npx @jeffreycao/copilot-api@latest start --claude-code
 }
 ```
 - 请根据需要替换 `ANTHROPIC_MODEL` 、 `ANTHROPIC_DEFAULT_OPUS_MODEL` 、 `ANTHROPIC_DEFAULT_SONNET_MODEL` 和 `ANTHROPIC_DEFAULT_HAIKU_MODEL` 。配置完成后，请安装 claude code 插件，见 [插件集成](#plugin-integrations) 。如果你配置的是 Claude 模型，建议把这些模型配置都设为相同，以保持与 github-copilot claude agent 行为一致。
-- 将 `CLAUDE_CODE_ATTRIBUTION_HEADER` 设为 `0` 可以阻止 Claude Code 在 system prompt 中附加计费和版本信息，从而避免 prompt cache 失效。
+- 将 `CLAUDE_CODE_ATTRIBUTION_HEADER` 设为 `0` 可以阻止 [[Claude Code]] 在 system prompt 中附加计费和版本信息，从而避免 prompt cache 失效。
 - 关闭 `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` 和 `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` 可以避免不必要地消耗额度。
 - `permissions` 中禁止 `WebSearch` ，因为 GitHub Copilot API 不支持原生 web search（部分 gpt 模型支持 websearch，但本项目目前尚未适配）；建议安装 mcp 的 `mcp_server_fetch` 工具或其他搜索工具作为替代。
-- 如果使用的不是 Claude 模型，请不要启用 `ENABLE_TOOL_SEARCH` 。如果使用的是 Claude 模型，则可以启用 `ENABLE_TOOL_SEARCH` 。当前 Claude Code 使用的是客户端 tool search 模式，在该模式下每次加载 defer tools 都需要额外请求一次。
+- 如果使用的不是 Claude 模型，请不要启用 `ENABLE_TOOL_SEARCH` 。如果使用的是 Claude 模型，则可以启用 `ENABLE_TOOL_SEARCH` 。当前 [[Claude Code]] 使用的是客户端 tool search 模式，在该模式下每次加载 defer tools 都需要额外请求一次。
 
 更多选项见： [Claude Code settings](https://docs.anthropic.com/en/docs/claude-code/settings#environment-variables)
 
@@ -672,11 +672,11 @@ npx @jeffreycao/copilot-api@latest --oauth-app=opencode start
 
 ## 插件集成
 
-本项目为 Claude Code 和 opencode 提供了插件集成。
+本项目为 [[Claude Code]] 和 opencode 提供了插件集成。
 
 #### Claude Code 插件集成（基于 marketplace）
 
-Claude Code 集成被打包为名为 `claude-plugin` 的插件。
+[[Claude Code]] 集成被打包为名为 `claude-plugin` 的插件。
 
 - 本仓库中的 marketplace catalog：`.claude-plugin/marketplace.json`
 - 本仓库中的插件源码： `claude-plugin`
@@ -697,7 +697,7 @@ Claude Code 集成被打包为名为 `claude-plugin` 的插件。
 
 插件还会注册一个 `UserPromptSubmit` hook，并返回 `{"continue": true}` ；同时它也可以通过环境变量注入 `SessionStart` reminder 规则：
 
-- `CLAUDE_PLUGIN_ENABLE_QUESTION_RULES=1` 会自动为 Claude Code 启用两条关于使用 `question` 工具的提醒。你也可以把同样的提醒手动写进 `CLAUDE.md` ；见 [CLAUDE.md 或 AGENTS.md 推荐内容](#claudemd-or-agentsmd-recommended-content) 。
+- `CLAUDE_PLUGIN_ENABLE_QUESTION_RULES=1` 会自动为 [[Claude Code]] 启用两条关于使用 `question` 工具的提醒。你也可以把同样的提醒手动写进 `CLAUDE.md` ；见 [CLAUDE.md 或 AGENTS.md 推荐内容](#claudemd-or-agentsmd-recommended-content) 。
 - `CLAUDE_PLUGIN_ENABLE_NO_BACKGROUND_AGENTS_RULE=1` 会启用关于避免在 agent hooks 中使用 `run_in_background: true` 的提醒。
 
 #### Opencode 插件
@@ -775,9 +775,19 @@ bun run start start
 
 ### CLAUDE.md 或 AGENTS.md 推荐内容
 
-如果你想手动加入这些提醒，请在 Claude Code 的 `CLAUDE.md` ，或 opencode/codex 的 `AGENTS.md` 中加入以下内容：
+如果你想手动加入这些提醒，请在 [[Claude Code]] 的 `CLAUDE.md` ，或 opencode/codex 的 `AGENTS.md` 中加入以下内容：
 
 ```
 - Prohibited from directly asking questions to users, MUST use question tool.
 - Once you can confirm that the task is complete, MUST use question tool to make user confirm. The user may respond with feedback if they are not satisfied with the result, which you can use to make improvements and try again, after try again, MUST use question tool to make user confirm again.
 ```
+## 相关笔记
+
+- [[更新日志]]
+- [[配置体系]]
+- [[最佳实践]]
+- [[笔记]]
+- [[文件操作]]
+- [[Agent SDK]]
+- [[Agent 循环]]
+- [[快速开始]]

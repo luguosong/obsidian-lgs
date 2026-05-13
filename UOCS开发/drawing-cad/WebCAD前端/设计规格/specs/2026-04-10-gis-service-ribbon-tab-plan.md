@@ -1,6 +1,6 @@
 # GIS服务 Ribbon 标签页 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 在审图模式 ReviewRibbon 中新增"GIS服务"标签页，包含 4 组 19 个按钮的完整 UI Shell（所有按钮暂用 `onNotImpl` 桩回调，C++ 功能后续开发）。
 
@@ -217,3 +217,14 @@ Run: `npm run dev` (手动验证页面可加载，切换到审图模式可看到
 git add -A
 git commit -m "fix: resolve lint issues in GIS service tab"
 ```
+
+## 相关笔记
+
+- [[specs]]
+- [[图例分析功能设计规格]]
+- [[ArcGIS Web 服务集成 — C++ 实施架构]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[批注数据持久化方案]]
+- [[瞬态批注系统设计文档]]
+- [[首次打开图纸自动归纳 — 视觉化重构设计]]
+- [[审查建筑退线距离 — 实现详细说明]]

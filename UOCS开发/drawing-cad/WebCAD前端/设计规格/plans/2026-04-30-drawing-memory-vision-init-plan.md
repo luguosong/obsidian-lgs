@@ -1,6 +1,6 @@
 # Drawing Memory Vision Init — Plan 1 (Stage A + Stage B + UI)
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the slow text-only memory init flow with a vision-driven Stage A (full-image analysis) + Stage B (region-by-region precise reading) pipeline, producing accurate `keyFacts` / `layerSemantics` / `mainAreaDescription` / `candidateObjects` into Redis-backed `DrawingMemory`. This plan delivers a ship-able milestone where opening a drawing automatically builds vision-derived memory in ≤ 30s P50.
 

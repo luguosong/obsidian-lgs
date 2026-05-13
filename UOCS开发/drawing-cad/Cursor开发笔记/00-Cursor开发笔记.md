@@ -10,3 +10,9 @@ tags:
 - [[CAD AI Agent development strategy]]
 - [[DrawingRibbon properties and layers optimization]]
 - [[基于ODA的二维绘图项目参考]]
+
+## 相关笔记
+
+- [[项目简介]]
+- [[UacadConfig — 跨平台 CAD 配置持久化方案]]
+- [[WASM API 速查]]

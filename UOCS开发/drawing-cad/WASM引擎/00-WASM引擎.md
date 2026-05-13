@@ -14,3 +14,7 @@ tags:
 - [[WASM License Gate 实施报告（p17-wasm-report-3）]]
 - [[WASM 性能优化：批量实体快照 API（Plan A）]]
 - [[WASM 结构提取性能分析报告（p17-wasm-report-2）]]
+
+## 相关笔记
+
+- [[最佳实践]]

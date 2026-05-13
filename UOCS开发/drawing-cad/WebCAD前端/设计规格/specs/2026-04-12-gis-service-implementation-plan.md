@@ -1,6 +1,6 @@
 # GIS服务后续实施 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 将 GIS 服务 UI Shell 升级为完整组件体系：独立组件拆分 + MobX 状态管理 + DrawingWeb WASM 桥接命令桩。
 
@@ -1242,3 +1242,14 @@ git commit -m "fix: resolve lint issues in GIS service implementation"
 - [ ] **Step 3: 验证开发服务器可启动**
 
 Run: `npm run dev` (手动验证页面可加载，切换到审图模式可看到"GIS服务"标签，点击按钮可弹出各弹窗/面板)
+
+## 相关笔记
+
+- [[specs]]
+- [[图例分析功能设计规格]]
+- [[ArcGIS Web 服务集成 — C++ 实施架构]]
+- [[GIS服务 Ribbon 标签页设计规格]]
+- [[批注数据持久化方案]]
+- [[瞬态批注系统设计文档]]
+- [[GIS服务 Ribbon 标签页 Implementation Plan]]
+- [[GIS File Import / Save-Back Design]]

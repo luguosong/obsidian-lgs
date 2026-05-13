@@ -171,7 +171,7 @@ GBrain 内置 34 个 skill，由 `skills/RESOLVER.md`（或你的 OpenClaw 的 `
 | **perplexity-research** | 大脑增强的网络研究。将大脑上下文发送给 Perplexity，使搜索聚焦于**新内容**而非已知信息。输出：执行摘要 + 关键新进展 + 确认信号 + 矛盾或更新 + 推荐大脑更新 + 引用来源。 |
 | **archive-crawler** | 个人文件归档的通用存档器（Dropbox/Backblaze/Gmail 导出/硬盘转储）。除非在 `gbrain.yml` 中设置了 `archive-crawler.scan_paths:`，否则**拒绝运行**。默认安全围栏。 |
 | **academic-verify** | 追溯研究声明的完整链路：发表 → 方法论 → 原始数据 → 独立复现。通过 perplexity-research 路由；产出裁决（已验证/部分验证/不可验证/错误归因/已撤稿）。 |
-| **brain-pdf** | 通过 gstack `make-pdf` 二进制将任何大脑页面渲染为出版级 PDF。剥离 frontmatter，净化 emoji，应用页眉。 |
+| **brain-pdf** | 通过 [[gstack]] `make-pdf` 二进制将任何大脑页面渲染为出版级 PDF。剥离 frontmatter，净化 emoji，应用页眉。 |
 
 ### 大脑运维
 

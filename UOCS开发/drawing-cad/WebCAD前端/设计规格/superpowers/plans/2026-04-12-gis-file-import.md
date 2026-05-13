@@ -1,6 +1,6 @@
 # GIS File Import Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Allow users to open Shapefile/GDB/ZIP files in the browser, convert to DWG for editing, and save back to the original GIS format.
 
@@ -1079,3 +1079,14 @@ git commit -m "feat(gis): add handleGisSaveBack with fflate ZIP download"
 - `gisStore.sourceInfo` → set after import in ImportGisModal, read in handleGisSaveBack
 - `window.__onGisFileInfo(jsonStr)` → registered in useWasmModule, called in GIS_QUERY_FILE C++ command
 - `window.__onGisImportComplete(resultCode, formatStr)` → registered in useWasmModule, called in GIS_IMPORT_FILE C++ command
+
+## 相关笔记
+
+- [[Legend Analysis Redesign Implementation Plan]]
+- [[GIS 导入实体类型透传 — 实现计划]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]
+- [[plans]]
+- [[UAOdcadCore GIS Service Implementation Plan]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 实施计划]]
+- [[WASM License Gate Implementation Plan]]
+- [[GIS 目录面板 + 调图/属性查询 Implementation Plan]]

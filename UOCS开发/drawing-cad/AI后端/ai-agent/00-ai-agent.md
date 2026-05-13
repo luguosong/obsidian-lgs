@@ -12,3 +12,8 @@ tags:
 - [[DWG Skill 架构设计]]
 - [[RAG 知识库 — AutoCAD 帮助文档检索系统]]
 - [[规划审图 AI 智能体解决方案]]
+
+## 相关笔记
+
+- [[AI助手功能开发方向]]
+- [[DrawingRibbon properties and layers optimization]]

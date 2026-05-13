@@ -1,6 +1,6 @@
 # DWG 导出 GIS 按 CAD 图层过滤 — 实施计划
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 让用户在"导出 GIS"对话框中勾选具体 CAD 图层，只导出所选图层的实体。
 
@@ -553,3 +553,14 @@ npm run dev
 - [x] 每个代码改动都给出具体文件路径 + 行号 + 完整代码块
 - [x] 向后兼容路径明确（`handleGisSaveBack` 单独修复）
 - [x] 前端修改使用 frontend-design skill 的约束已在 Task 5 Step 1 明示
+
+## 相关笔记
+
+- [[Legend Analysis Redesign Implementation Plan]]
+- [[GIS 导入实体类型透传 — 实现计划]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]
+- [[plans]]
+- [[GIS File Import Implementation Plan]]
+- [[UAOdcadCore GIS Service Implementation Plan]]
+- [[WASM License Gate Implementation Plan]]
+- [[GIS 目录面板 + 调图/属性查询 Implementation Plan]]

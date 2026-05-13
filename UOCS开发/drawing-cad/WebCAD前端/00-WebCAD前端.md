@@ -11,3 +11,8 @@ tags:
 - [[前端架构详情]]
 - [[前端 dist 部署 checklist（drawing-web-app）]]
 - [[速度优化架构]]
+
+## 相关笔记
+
+- [[测试服务器]]
+- [[Redis + MySQL 优化方案（已落地）]]

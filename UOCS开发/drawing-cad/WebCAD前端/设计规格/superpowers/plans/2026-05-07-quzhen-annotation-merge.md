@@ -1,6 +1,6 @@
 # quzhen 审查批注功能同步 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 将 `origin/quzhen` 分支的审查批注、iframe 嵌入协议、控规参数弹窗、UI 可见性控制等功能通过 `git merge -X ours` + 手动补丁合并至 `feat-zfs` 分支。
 

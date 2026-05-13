@@ -1,6 +1,6 @@
 # UAOdcadCore GIS Service Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Implement the `IUcoGisService` interface in the UAOdcadCore project so that DrawingWeb's six GIS commands (`GIS_LOAD_MAP_IMAGE`, `GIS_LOAD_FEATURES`, `GIS_PUSH_FEATURES`, `GIS_PULL_FEATURES`, `GIS_EXPORT`, `GIS_CRS_INFO`) can execute real ArcGIS REST service operations.
 
@@ -1954,3 +1954,14 @@ git commit -m "chore(gis): verify EMCC network connectivity, add CORS proxy if n
 | 10 | EMCC network verification | Build config | Task 9 |
 
 **Independent tasks that can be parallelized:** Tasks 1+3+5+7 have no inter-dependencies and can be developed simultaneously.
+
+## 相关笔记
+
+- [[Legend Analysis Redesign Implementation Plan]]
+- [[GIS 导入实体类型透传 — 实现计划]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]
+- [[plans]]
+- [[GIS File Import Implementation Plan]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 实施计划]]
+- [[WASM License Gate Implementation Plan]]
+- [[GIS 目录面板 + 调图/属性查询 Implementation Plan]]

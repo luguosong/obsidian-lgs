@@ -13,7 +13,7 @@ created: 2026-05-12
 [[Superpowers]] 和 [[gstack]] 不是二选一的关系。它们覆盖的是软件交付的不同半程：
 
 - **Superpowers** 管"怎么开发"——需求澄清、设计打磨、TDD 循环、子 Agent 编排、代码审查
-- **gstack** 管"怎么交付"——产品挑战、架构锁定、浏览器 QA、安全审计、发布上线
+- **[[gstack]]** 管"怎么交付"——产品挑战、架构锁定、浏览器 QA、安全审计、发布上线
 
 单独用 [[Superpowers]]，你可能写出漂亮的代码但跳过了产品验证；单独用 [[gstack]]，你的 Sprint 流程完整但缺乏 TDD 纪律。两者结合，从想法到上线形成一条无断点的流水线。
 
@@ -31,7 +31,7 @@ created: 2026-05-12
 | **审查阶段** | `/requesting-code-review` 子 Agent 审查 | `/review` + `/codex` 双模型审查 |
 | **验证阶段** | 依赖测试框架 | `/qa` 真实浏览器测试 |
 | **发布阶段** | `/finishing-a-development-branch` | `/ship` → `/land-and-deploy` → `/canary` |
-| **适用平台** | Claude Code、Codex、Gemini CLI 等 | Claude Code、Codex、Cursor 等 |
+| **适用平台** | [[Claude Code]]、Codex、Gemini CLI 等 | [[Claude Code]]、Codex、Cursor 等 |
 
 ## 联合工作流全景
 
@@ -65,9 +65,9 @@ flowchart LR
 
 **关键交接点**在三个位置：
 
-1. **gstack → Superpowers**：工程审查通过后，设计文档自动传递给 `brainstorming`，进入开发半程
-2. **Superpowers → gstack**：分支收尾后，代码交给 `/qa` 进行浏览器级验收
-3. **gstack 内部闭环**：QA 通过后经安全审计到发布，形成完整 Sprint
+1. **[[gstack]] → Superpowers**：工程审查通过后，[[设计文档]]自动传递给 `brainstorming`，进入开发半程
+2. **Superpowers → [[gstack]]**：分支收尾后，代码交给 `/qa` 进行浏览器级验收
+3. **[[gstack]] 内部闭环**：QA 通过后经安全审计到发布，形成完整 Sprint
 
 ## 场景演示：从想法到上线
 
@@ -85,7 +85,7 @@ Claude: 让我先理解痛点。你目前是怎么把待办事项分享给别人
         有没有具体的场景——不是假设的，是你自己遇到过的？
 ```
 
-> [!important] 为什么从 gstack 开始而不是 Superpowers？
+> [!important] 为什么从 [[gstack]] 开始而不是 Superpowers？
 > `/brainstorming` 擅长打磨**技术设计**，但不会挑战你的**产品前提**。先让 `/office-hours` 验证"这个功能值不值得做"，再让 `/brainstorming` 决定"怎么做"——避免精心设计了一个没人要的功能。
 
 ### 第 2 站：多角色审查（gstack）
@@ -118,7 +118,7 @@ Claude: 我读了工程审查的输出。有几个技术决策需要确认：
            - 异步任务：需要引入队列，但支持大规模导出
 ```
 
-**产出：** 最终设计文档，包含所有技术决策和约束。
+**产出：** 最终[[设计文档]]，包含所有技术决策和约束。
 
 ### 第 4 站：隔离工作区（Superpowers）
 
@@ -129,12 +129,12 @@ Claude: 创建隔离工作区 feature/markdown-export
         分支基于 main，测试基线验证通过：42 tests, 0 failures
 ```
 
-> [!note] 为什么不用 gstack 的 freeze？
+> [!note] 为什么不用 [[gstack]] 的 freeze？
 > `/freeze` 是调试时的应急手段——临时限制编辑范围。`worktree` 是正式开发的结构化隔离——独立分支、独立目录、独立测试基线。**开发用 worktree，调试用 freeze。**
 
 ### 第 5 站：任务拆解（Superpowers）
 
-`/writing-plans` 将设计文档拆成 2-5 分钟的小任务：
+`/writing-plans` 将[[设计文档]]拆成 2-5 分钟的小任务：
 
 ```
 Claude: 实施计划已生成（8 个任务）：
@@ -211,7 +211,7 @@ Claude: [打开真实 Chromium 浏览器]
         Bug 已修复并验证 ✓
 ```
 
-> [!important] 为什么 QA 用 gstack 而不是 Superpowers？
+> [!important] 为什么 QA 用 [[gstack]] 而不是 Superpowers？
 > [[Superpowers]] 的审查基于**代码静态分析**——读代码找问题。[[gstack]] 的 `/qa` 基于**真实浏览器操作**——点击、截图、看实际效果。两者互补，不能互相替代。
 
 ### 第 9 站：发布上线（gstack）
@@ -257,9 +257,9 @@ Claude: PR 已合并 → CI 通过 → 部署完成 → 生产环境健康 ✓
 
 ### 误区 2："两个工具的审查是重复的"
 
-❌ `/requesting-code-review`（Superpowers）和 `/review`（gstack）做的是同一件事
+❌ `/requesting-code-review`（Superpowers）和 `/review`（[[gstack]]）做的是同一件事
 
-✅ Superpowers 审查关注**任务粒度**（每个小任务是否正确），gstack 审查关注**全局质量**（跨任务的一致性、生产环境风险）。先细后粗，不重复。
+✅ Superpowers 审查关注**任务粒度**（每个小任务是否正确），[[gstack]] 审查关注**全局质量**（跨任务的一致性、生产环境风险）。先细后粗，不重复。
 
 ### 误区 3："TDD 太慢了，先写完代码再补测试"
 
@@ -278,5 +278,5 @@ Claude: PR 已合并 → CI 通过 → 部署完成 → 生产环境健康 ✓
 - [[Superpowers README]] — 工具概览与安装
 - [[gstack]] — 工具概览与安装
 - [[Superpowers 使用手册与最佳实践]] — Superpowers 完整教学
-- [[gstack 使用手册与最佳实践]] — gstack 完整教学
+- [[gstack 使用手册与最佳实践]] — [[gstack]] 完整教学
 - [[Superpowers 实战：用 TDD 工作流构建生产功能]] — TDD 深度实战

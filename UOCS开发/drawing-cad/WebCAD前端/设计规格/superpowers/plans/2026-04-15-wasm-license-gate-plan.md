@@ -1,6 +1,6 @@
 # WASM License Gate Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use [[superpower]]s:subagent-driven-development (recommended) or [[superpower]]s:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 让 `DrawingJs.wasm` 必须连接厂商签发的 License + 后端 Server 才能打开/新建图纸。已打开图纸继续可编辑；新建/再次打开需要有效授权。
 
@@ -3206,3 +3206,14 @@ docker compose up
 - 防时钟回滚（WASM 端记录 "已见到的最大 issued_at"）— P2
 - LLM Provider 初始化失败与 License 校验失败的日志区分 — 小打扫
 - LicenseStore 里的 `expiresAt` 填充 (目前 Task 5.2 留空, 需从 /api/license/info 的 payload 再读)
+
+## 相关笔记
+
+- [[Legend Analysis Redesign Implementation Plan]]
+- [[GIS 导入实体类型透传 — 实现计划]]
+- [[quzhen 审查批注功能同步 Implementation Plan]]
+- [[plans]]
+- [[GIS File Import Implementation Plan]]
+- [[UAOdcadCore GIS Service Implementation Plan]]
+- [[DWG 导出 GIS 按 CAD 图层过滤 — 实施计划]]
+- [[GIS 目录面板 + 调图/属性查询 Implementation Plan]]
