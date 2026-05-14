@@ -26,11 +26,12 @@ tags:
 
 ## 包含的三个 Skill
 
-| Skill | 输出格式 | 核心能力 | 详见 |
-|-------|---------|---------|------|
-| [[excalidraw-diagram skill]] | `.md`（内嵌 Excalidraw JSON） | 手绘风格图表，8 种图表类型 | 手绘美学，[[Obsidian]] 原生打开 |
-| [[mermaid-visualizer skill]] | ````mermaid` 代码块 | 专业图表，内置语法错误预防 | 6 种图表，跨平台兼容 |
-| [[obsidian-canvas-creator skill]] | `.canvas`（JSON Canvas） | 交互式画布，思维导图/自由布局 | 节点分组，颜色编码 |
+| Skill                             | 输出格式                      | 核心能力            | 详见                     |
+| --------------------------------- | ------------------------- | --------------- | ---------------------- |
+| [[excalidraw-diagram skill]]      | `.md`（内嵌 Excalidraw JSON） | 手绘风格图表，8 种图表类型  | 手绘美学，[[Obsidian]] 原生打开 |
+| [[mermaid-visualizer skill]]      | ````mermaid` 代码块          | 专业图表，内置语法错误预防   | 6 种图表，跨平台兼容            |
+| [[obsidian-canvas-creator skill]] | `.canvas`（JSON Canvas）    | 交互式画布，思维导图/自由布局 | 节点分组，颜色编码              |
+|                                   |                           |                 |                        |
 
 ## 安装
 
