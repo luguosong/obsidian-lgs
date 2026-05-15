@@ -1,14 +1,13 @@
 ---
-title: "GBrain：AI Agent 知识大脑"
-source: "https://github.com/garrytan/gbrain"
-description: "Garry 打造的 AI Agent 知识大脑，为 OpenClaw/Hermes 等 Agent 提供持久记忆与知识图谱能力。"
+title: GBrain：AI Agent 知识大脑
+source: https://github.com/garrytan/gbrain/blob/master/README.md
+description: Garry 打造的 AI Agent 知识大脑，为 OpenClaw/Hermes 等 Agent 提供持久记忆与知识图谱能力。
 author:
 tags:
   - ai
   - 扩展
-
 ---
-字数：6638
+字数：8100
 ## GBrain
 
 你的 AI Agent 很聪明，但容易遗忘。GBrain 为它装上大脑。
@@ -30,6 +29,12 @@ GBrain 将这些模式通用化，包含 34 个 skill，30 分钟内完成安装
 
 > [!info] 文档说明
 > **LLM 用户：** 获取 [`llms.txt`](https://github.com/garrytan/gbrain/blob/master/llms.txt) 查看文档地图，或获取 [`llms-full.txt`](https://github.com/garrytan/gbrain/blob/master/llms-full.txt) 获取内联了核心文档的完整地图（一次请求）。**Agent 用户：** 从 [`AGENTS.md`](https://github.com/garrytan/gbrain/blob/master/AGENTS.md) 开始（若你是 [[Claude Code]]，则看 [`CLAUDE.md`](https://github.com/garrytan/gbrain/blob/master/CLAUDE.md)）。
+
+> [!info] Embedding 提供商
+> OpenAI 是默认选项，但 gbrain 内置 **14 种方案**，覆盖 Voyage、Google Gemini、Azure OpenAI、MiniMax、阿里云 DashScope、智谱、Ollama（本地）、llama.cpp llama-server（本地）、LiteLLM proxy（通用）等。运行 `gbrain providers list` 查看全部，或阅读 [`docs/integrations/embedding-providers.md`](https://github.com/garrytan/gbrain/blob/master/docs/integrations/embedding-providers.md) 了解设置、定价和决策树。`gbrain doctor` 会自动发现你已配置环境变量的替代提供商。
+
+> [!info] v0.32.3.0 新特性 — AGENTS.md 压缩
+> 如果你的下游 Agent fork 已膨胀到 25KB+ 的 `AGENTS.md` / `RESOLVER.md`，新增的 [`functional-area-resolver`](https://github.com/garrytan/gbrain/blob/master/skills/functional-area-resolver/SKILL.md) skill 提供两层分派模式，可将 25KB 压缩至 13KB（缩小 48%），同时在 Opus 4.7、Sonnet 4.6 和 Haiku 4.5 上**超越**完整基线 +13 至 +17 个百分点。A/B 评估工具、跨模型回执和复现说明见 [`evals/functional-area-resolver/`](https://github.com/garrytan/gbrain/blob/master/evals/functional-area-resolver/)。静态提示词版的 AnyTool / RAG-MCP / Anthropic Agent Skills 渐进式披露——单次 LLM 调用完成分派，无需二次路由。
 
 ## 安装
 
@@ -54,9 +59,22 @@ https://raw.githubusercontent.com/garrytan/gbrain/master/INSTALL_FOR_AGENTS.md
 ```
 git clone https://github.com/garrytan/gbrain.git && cd gbrain && bun install && bun link
 gbrain init                     # 本地大脑，2 秒内就绪
+                                # 选择搜索模式（conservative / balanced / tokenmax）
 gbrain import ~/notes/          # 索引你的 markdown 笔记
 gbrain query "what themes show up across my notes?"
+gbrain search modes             # 查看当前搜索模式及各旋钮归因
+gbrain search stats             # 使用后的缓存命中率 + 意图分布
 ```
+
+**v0.32.3 — 命名搜索模式。** `gbrain init` 会询问一次适合你工作负载的模式。成本取决于**模式和下游模型两者**——极端差距可达 25 倍。按每月 1 万次查询的每查询成本（典型单用户量级；重度/多用户集群 ×10）：
+
+| 模式 \ 下游模型 | Haiku 4.5 ($1/M) | Sonnet 4.6 ($3/M) | Opus 4.7 ($5/M) |
+|---|---|---|---|
+| `conservative` (~4K) | **$40/月** | $120/月 | $200/月 |
+| `balanced` (~10K) | $100/月 | $300/月 | $500/月 |
+| `tokenmax` (~20K) | $200/月 | $600/月 | **$1,000/月** |
+
+自然配对（对角线）在现实单用户量级跨约 4 倍。根据你配置的 `models.tier.subagent` 自动推荐。非 TTY 安装自动选择 `balanced` 并打印提示指向 `gbrain config set search.mode <m>`。使用一段时间后，运行 `gbrain search stats` 查看可观测性数据，运行 `gbrain search tune` 获取数据驱动的推荐。方法论和评估结果见 [docs/eval/SEARCH_MODE_METHODOLOGY.md](https://github.com/garrytan/gbrain/blob/master/docs/eval/SEARCH_MODE_METHODOLOGY.md)。
 
 > [!warning] 安装注意事项
 > **不要使用 `bun install -g github:garrytan/gbrain`。** Bun 会阻止全局安装时的顶层 postinstall hook，导致 schema 迁移从不运行，CLI 在第一次打开 PGLite 时报 `Aborted()`。请使用上方的 `git clone + bun install && bun link`。详见 [#218](https://github.com/garrytan/gbrain/issues/218)。
@@ -114,7 +132,9 @@ claude mcp add gbrain -t http https://your-brain.ngrok.app/mcp -H "Authorization
 
 在 `/admin` 面板注册 OAuth 客户端——点击 **Register client**，选择作用域，在弹出窗口中保存一次性显示的凭证。也可通过 `oauthProvider.registerClientManual(...)` 或 `gbrain auth register-client` CLI 以编程方式注册。
 
-- **通过 MCP SDK 实现 OAuth 2.1** — 客户端凭证（机器对机器：Perplexity、Claude）、授权码 + PKCE（浏览器：ChatGPT）、refresh token 轮换、撤销、受保护资源元数据。可选的动态客户端注册（DCR）在 `--enable-dcr` 后启用（DCR redirect_uris 须为 `https://` 或回环地址，符合 RFC 6749 §3.1.2.1）。
+- **通过 MCP SDK 实现 OAuth 2.1** — 客户端凭证（机器对机器：Perplexity、Claude）、授权码 + PKCE（浏览器：ChatGPT）、refresh token 轮换、撤销、受保护资源元数据。PKCE-only 公开客户端（`token_endpoint_auth_method: "none"`）无需密钥即可注册，符合 RFC 7591 §3.2.1（v0.34）。可选的动态客户端注册（DCR）在 `--enable-dcr` 后启用（DCR redirect_uris 须为 `https://` 或回环地址，符合 RFC 6749 §3.1.2.1）。
+- **Source-scoped OAuth 客户端（v0.34）** — `gbrain auth register-client my-agent --source dept-x` 将客户端的写入权限绑定到单个 source；读取路径只返回匹配该 source 的行。`--federated-read S1,S2,S3` 添加正交的读取范围轴，适用于共享大脑（各部门写入自己的正典，读取联合数据）。v0.34 之前的客户端在升级时自动回填为 `source_id='default'`。
+- **Loopback 默认绑定（v0.34）** — `serve --http` 默认监听 `127.0.0.1`，除非指定 `--bind 0.0.0.0`（或特定接口 IP）。个人笔记本安装不再意外将大脑暴露到局域网。当设置了 `--public-url` 但未设 `--bind` 时会输出 stderr 警告。
 - **作用域操作** — 30 个操作标记为 `read | write | admin`。`sync_brain` 和 `file_upload` 为 `localOnly`，HTTP 请求时会被拒绝。
 - **React 管理员面板** — 7 个页面内嵌于二进制文件（~65KB gzip）。实时 SSE 活动流、Agent 列表、凭证查看、可过滤的请求日志、每客户端配置导出。
 - **传统 [[Bearer Token]] 仍然有效** — v0.26 之前通过 `gbrain auth create` 创建的 token 继续以 `read+write+admin` 身份认证。v0.22.7 的简化 `src/mcp/http-transport.ts` 路径保留编译以向后兼容；v0.26+ 部署使用支持 OAuth 的 `serve-http.ts`。
@@ -702,14 +722,31 @@ ADMIN（管理）
   gbrain doctor --fix [--dry-run]       自动修复 DRY 违规（将内联规则委托给约定）
   gbrain doctor --locks                 列出空闲 in-tx 后端（57014 诊断，仅 Postgres）
   gbrain stats                          大脑统计信息
+  gbrain models                         显示实时模型路由（层级默认值、
+                                        按任务覆盖、别名映射、事实来源）。
+                                        v0.31.12: 层级系统 + recipe-models 合并。
+                                        高级用户覆盖：
+                                          gbrain config set models.default opus
+                                          gbrain config set models.tier.deep opus
+  gbrain models doctor                  对每个已配置的 chat/expansion 模型执行
+                                        1-token 可达性探测 + embedding_config
+                                        零 token 探测（在首次 embed 前捕获
+                                        Voyage flexible-dim 配置错误）。
+                                        在下次 agent 运行静默降级前捕获
+                                        `model_not_found`。
+                                        [--skip=<provider>] [--json]
   gbrain serve                          MCP server（stdio）
   gbrain serve --http [--port 3131]     带 OAuth 2.1 + 管理仪表盘的 HTTP MCP server
+                                        [--bind HOST]（v0.34: 默认 127.0.0.1；
+                                        传入 --bind 0.0.0.0 用于局域网/远程访问）
                                         [--token-ttl 3600] [--enable-dcr]
                                         [--public-url URL] [--log-full-params]
   gbrain auth create|list|revoke|test   传统 Bearer Token 管理
   gbrain auth register-client <name>    注册 OAuth 2.1 客户端
         --grant-types client_credentials,authorization_code
         --scopes "read write admin"
+        --source <id>                   v0.34: source-scoped 客户端的写入权限
+        --federated-read <S1,S2,...>    v0.34: 跨多个 source 的读取范围
   gbrain auth revoke-client <client_id> 撤销 OAuth 2.1 客户端（级联清除
                                         活动 token + auth code，via FK CASCADE）
   # OAuth 2.1 客户端也可通过 /admin 仪表盘注册，
@@ -720,13 +757,26 @@ ADMIN（管理）
                                         clone 自动管理在 $GBRAIN_HOME/clones/<id>/ 下，
                                         同步时若丢失则自动重新克隆。也通过 MCP 暴露，
                                         供远程 agent 配置（whoami + sources_{add,list,remove,status}）。
-  gbrain dream [--dry-run] [--phase N]  9 阶段维护周期（lint→backlinks→sync→synthesize
-                                        →extract→patterns→recompute_emotional_weight→embed→orphans）。
-                                        v0.23 新增 synthesize + patterns。v0.29 新增 emotional-weight
-                                        重算。v0.30.2: synthesize 现可分块处理大型会议记录
-                                        （配置: dream.synthesize.max_prompt_tokens, max_chunks_per_transcript）。
+  gbrain dream [--dry-run] [--phase N]  11 阶段维护周期（lint→backlinks→sync→synthesize
+                                        →extract→patterns→recompute_emotional_weight→consolidate
+                                        →embed→orphans→purge）。v0.23 新增 synthesize + patterns。
+                                        v0.29 新增 emotional-weight 重算。v0.30.2: synthesize
+                                        现可分块处理大型会议记录。v0.31: consolidate 在夜间
+                                        将热点事实提升为 takes。
   gbrain dream --input <file>           临时会议记录综合（隐含 --phase synthesize）
   gbrain dream --date YYYY-MM-DD        综合单日内容；--from/--to 用于历史回填
+
+  # v0.31 Hot Memory：跨会话事实可实时查询。
+  gbrain recall <entity>                列出某实体的活跃事实（最新优先）
+  gbrain recall --since "1h ago"        按时间过滤的召回
+  gbrain recall --session <id>          某会话 ID 中捕获的事实
+  gbrain recall --today                 Markdown 渲染，含类型图标（📅🎯🤝💭📌）
+  gbrain recall --supersessions         自动覆盖事实的审计日志
+  gbrain recall --grep <text>           子串过滤（不区分大小写）
+  gbrain recall --as-context            适配无头 Agent 的提示注入安全 Markdown
+  gbrain recall --json                  结构化输出，含每行的 effective_confidence
+  gbrain forget <fact-id>               过期某条事实（软删除；永不硬 DELETE）
+
   gbrain check-backlinks check|fix      反向链接强制检查
   gbrain lint [--fix]                   LLM 构件检测
   gbrain repair-jsonb [--dry-run]       修复 v0.12.0 双重编码的 JSONB（Postgres）
