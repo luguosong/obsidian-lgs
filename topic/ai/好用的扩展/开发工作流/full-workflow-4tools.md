@@ -73,11 +73,11 @@ QA              —                 —                verification     /qa /bro
 
 **目标**：在写 spec 前把真正的问题搞清楚。
 
-| 步骤 | 工具 | 命令/Skill | 作用 |
-|------|------|-----------|------|
-| 1 | GStack | `/office-hours` | 6 个逼问问题，挑战需求前提 |
-| 2 | GStack | `/plan-ceo-review` | 产品视角挑战范围（可选，大功能时用） |
-| 3 | Superpowers | `brainstorming` | Socratic 式追问细化，自动触发 |
+| 步骤  | 工具          | 命令/Skill           | 作用                  |
+| --- | ----------- | ------------------ | ------------------- |
+| 1   | GStack      | `/office-hours`    | 6 个逼问问题，挑战需求前提      |
+| 2   | GStack      | `/plan-ceo-review` | 产品视角挑战范围（可选，大功能时用）  |
+| 3   | Superpowers | `brainstorming`    | Socratic 式追问细化，自动触发 |
 
 **产出**：清晰的 feature 意图，喂给下一阶段。
 
@@ -100,13 +100,13 @@ QA              —                 —                verification     /qa /bro
 
 **目标**：技术方案落地，形成可执行计划。
 
-| 步骤 | 工具 | 命令/Skill | 作用 |
-|------|------|-----------|------|
-| 1 | Superpowers | `using-git-worktrees` | 创建隔离 worktree 分支 |
-| 2 | GSD | `/gsd-plan-phase N` | Research + 生成任务计划 + 自验证循环 |
-| 3 | Superpowers | `writing-plans` | 将计划细化为 2-5 分钟粒度任务（含文件路径、验证步骤） |
-| 4 | GStack | `/plan-eng-review` | 数据流 ASCII 图、状态机、错误路径、测试矩阵 |
-| 5 | GStack | `/plan-design-review` | UI 维度 0-10 评分（仅前端任务） |
+| 步骤  | 工具          | 命令/Skill              | 作用                            |     |
+| --- | ----------- | --------------------- | ----------------------------- | --- |
+| 1   | Superpowers | `using-git-worktrees` | 创建隔离 worktree 分支              |     |
+| 2   | GSD         | `/gsd-plan-phase N`   | Research + 生成任务计划 + 自验证循环     |     |
+| 3   | Superpowers | `writing-plans`       | 将计划细化为 2-5 分钟粒度任务（含文件路径、验证步骤） |     |
+| 4   | GStack      | `/plan-eng-review`    | 数据流 ASCII 图、状态机、错误路径、测试矩阵     |     |
+| 5   | GStack      | `/plan-design-review` | UI 维度 0-10 评分（仅前端任务）          |     |
 
 **串联关系**：GSD 生成的 `tasks.md` → Superpowers `writing-plans` 进一步细化 → GStack review 补充技术视角。
 
