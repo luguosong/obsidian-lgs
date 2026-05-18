@@ -184,14 +184,14 @@ QA              —                 —                verification     /qa /bro
 
 **目标**：从验证到生产的全自动化。
 
-| 步骤 | 工具 | 命令/Skill | 作用 |
-|------|------|-----------|------|
-| 1 | OpenSpec | `/opsx:archive` | 归档 feature spec 制品到 `openspec/changes/archive/` |
-| 2 | Superpowers | `finishing-a-development-branch` | 验证测试，提供 merge/PR/keep/discard 选项，清理 worktree |
-| 3 | GStack | `/ship` | 同步 main，跑测试，开 PR，自动触发 `/document-release` |
-| 4 | GSD | `/gsd-ship N` | 从已验证工作创建 PR（GSD 视角的 ship） |
-| 5 | GStack | `/land-and-deploy` | 合并 PR，等待 CI，验证生产健康 |
-| 6 | GStack | `/canary` | 部署后监控，控制台错误/性能回归/页面故障 |
+| 步骤  | 工具          | 命令/Skill                         | 作用                                              |
+| --- | ----------- | -------------------------------- | ----------------------------------------------- |
+| 1   | OpenSpec    | `/opsx:archive`                  | 归档 feature spec 制品到 `openspec/changes/archive/` |
+| 2   | Superpowers | `finishing-a-development-branch` | 验证测试，提供 merge/PR/keep/discard 选项，清理 worktree    |
+| 3   | GStack      | `/ship`                          | 同步 main，跑测试，开 PR，自动触发 `/document-release`       |
+| 4   | GSD         | `/gsd-ship N`                    | 从已验证工作创建 PR（GSD 视角的 ship）                       |
+| 5   | GStack      | `/land-and-deploy`               | 合并 PR，等待 CI，验证生产健康                              |
+| 6   | GStack      | `/canary`                        | 部署后监控，控制台错误/性能回归/页面故障                           |
 
 **GStack `/ship` 与 GSD `/gsd-ship` 选其一**，取决于哪个工具管理了本次 phase 的执行。
 
