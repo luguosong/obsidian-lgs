@@ -12,12 +12,12 @@ created: 2026-05-13
 
 ## 四者定位一句话
 
-| 工具 | 本质 | 解决什么问题 |
-|------|------|-------------|
-| **GSD** | 上下文工程 + 多 Agent 编排 | 防止 context rot，管理跨会话状态，phase 级并行执行 |
-| **OpenSpec** | Spec 驱动开发 (SDD) | 每个 feature 有结构化制品（proposal/specs/design/tasks），人与 AI 先对齐再动手 |
-| **Superpowers** | 工程纪律 skill 库 | TDD、subagent 执行、code review 流程自动触发 |
-| **GStack** | 虚拟角色视角 | CEO/设计师/安全官/QA 各自审视，真实浏览器测试 |
+| 工具              | 本质                 | 解决什么问题                                                      |     |
+| --------------- | ------------------ | ----------------------------------------------------------- | --- |
+| **GSD**         | 上下文工程 + 多 Agent 编排 | 防止 context rot，管理跨会话状态，phase 级并行执行                          |     |
+| **OpenSpec**    | Spec 驱动开发 (SDD)    | 每个 feature 有结构化制品（proposal/specs/design/tasks），人与 AI 先对齐再动手 |     |
+| **Superpowers** | 工程纪律 skill 库       | TDD、subagent 执行、code review 流程自动触发                          |     |
+| **GStack**      | 虚拟角色视角             | CEO/设计师/安全官/QA 各自审视，真实浏览器测试                                 |     |
 
 ---
 
@@ -135,14 +135,18 @@ QA              —                 —                verification     /qa /bro
 
 **目标**：多视角发现问题，人工批准关键决策。
 
-| 步骤 | 工具 | 命令/Skill | 作用 |
-|------|------|-----------|------|
-| 1 | GSD | `/gsd-verify-work N` | 计划符合性验证，失败自动生成 fix plan |
-| 2 | Superpowers | `requesting-code-review` | 按严重程度分类报告 |
-| 3 | Superpowers | `receiving-code-review` | 标准化处理 review 反馈 |
-| 4 | GStack | `/review` | Staff Engineer 视角，自动修复明显问题 |
-| 5 | GStack | `/codex` | OpenAI Codex 独立 review（可选，重要 PR 用） |
-| 6 | Superpowers | `verification-before-completion` | 确认实际修复而非仅声称修复 |
+| 步骤  | 工具          | 命令/Skill                         | 作用                                 |
+| --- | ----------- | -------------------------------- | ---------------------------------- |
+| 1   | GSD         | `/gsd-verify-work N`             | 计划符合性验证，失败自动生成 fix plan            |
+| 2   | Superpowers | `requesting-code-review`         | 按严重程度分类报告                          |
+| 3   | Superpowers | `receiving-code-review`          | 标准化处理 review 反馈                    |
+| 4   | GStack      | `/review`                        | Staff Engineer 视角，自动修复明显问题         |
+| 5   | GStack      | `/codex`                         | OpenAI Codex 独立 review（可选，重要 PR 用） |
+| 6   | Superpowers | `verification-before-completion` | 确认实际修复而非仅声称修复                      |
+|     |             |                                  |                                    |
+|     |             |                                  |                                    |
+|     |             |                                  |                                    |
+|     |             |                                  |                                    |
 
 ---
 
@@ -150,13 +154,13 @@ QA              —                 —                verification     /qa /bro
 
 **目标**：真实验证行为，E2E 覆盖，生成回归测试。
 
-| 步骤 | 工具 | 命令/Skill | 作用 |
-|------|------|-----------|------|
-| 1 | Superpowers | `test-driven-development` | 单元/集成测试覆盖（已在实现阶段完成大部分） |
-| 2 | GStack | `/qa` | 真实 Chromium E2E，找到 bug → 修复 → 生成回归测试 |
-| 3 | GStack | `/qa-only` | 纯报告模式，不修改代码（用于阶段性评估） |
-| 4 | GStack | `/browse` | Agent 获取浏览器视觉能力 |
-| 5 | Superpowers | `systematic-debugging` | 4 阶段根因分析（bug 修复时触发） |
+| 步骤  | 工具          | 命令/Skill                  | 作用                                   |
+| --- | ----------- | ------------------------- | ------------------------------------ |
+| 1   | Superpowers | `test-driven-development` | 单元/集成测试覆盖（已在实现阶段完成大部分）               |
+| 2   | GStack      | `/qa`                     | 真实 Chromium E2E，找到 bug → 修复 → 生成回归测试 |
+| 3   | GStack      | `/qa-only`                | 纯报告模式，不修改代码（用于阶段性评估）                 |
+| 4   | GStack      | `/browse`                 | Agent 获取浏览器视觉能力                      |
+| 5   | Superpowers | `systematic-debugging`    | 4 阶段根因分析（bug 修复时触发）                  |
 
 **分工**：Superpowers 负责代码层测试，GStack `/qa` 负责浏览器行为层测试。
 
@@ -166,9 +170,11 @@ QA              —                 —                verification     /qa /bro
 
 **目标**：Ship 前发现安全漏洞，适合每 Sprint 末执行。
 
-| 步骤 | 工具 | 命令 | 作用 |
-|------|------|------|------|
-| 1 | GStack | `/cso` | OWASP Top 10 + STRIDE 威胁建模，8/10+ 置信度门控，含 17 个误报排除规则 |
+| 步骤  | 工具     | 命令     | 作用                                                  |
+| --- | ------ | ------ | --------------------------------------------------- |
+| 1   | GStack | `/cso` | OWASP Top 10 + STRIDE 威胁建模，8/10+ 置信度门控，含 17 个误报排除规则 |
+|     |        |        |                                                     |
+|     |        |        |                                                     |
 
 **对 WebUACAD 的重点**：OAuth2/BFF 端点、GM/T 签名流程、Qdrant 向量库访问控制。
 
