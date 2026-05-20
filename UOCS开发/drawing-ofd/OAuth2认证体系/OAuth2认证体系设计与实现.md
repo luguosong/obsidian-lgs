@@ -64,31 +64,46 @@ UOCS 通过 [[OAuth2]] 授权框架 + 两种对接模式（Mode A 托管 / Mode 
 UOCS 平台由以下核心服务组成，第三方系统通过 [[OAuth2]] 协议接入：
 
 ```mermaid
-graph TD
-    subgraph third["第三方业务系统"]
-        BizFE["业务前端 SPA"]
+graph LR
+    subgraph third["第三方业务系统（Mode A / B 对接）"]
+        direction TB
         BizBE["业务后端服务"]
+        BizFE["业务前端 SPA"]
+    end
+
+    subgraph ofd["drawing-ofd（集成案例）"]
+        direction TB
+        OfdApp["drawing-ofd-app<br/>React SPA · :5201"]
+        OfdSvr["drawing-ofd-server<br/>:5212"]
     end
 
     subgraph uocs["UOCS 平台"]
+        direction TB
         Auth["Auth Server<br/>认证 + Token 颁发<br/>:18011"]
+        Signer["service-signer<br/>独立签章代理"]
         GW["Gateway<br/>:18010"]
         Seal["service-seal<br/>签章服务"]
-        Signer["service-signer<br/>独立签章代理"]
     end
 
-    BizBE -->|"构造签名 URL"| BizFE
+    BizBE -->|"① 构造签名 URL"| BizFE
     BizFE -->|"OAuth2 PKCE 登录"| Auth
     BizFE -->|"打开签章页面"| Signer
-    Signer -->|"OAuth2 Token 验证"| Auth
+    Signer -->|"Token 验证"| Auth
     Signer -->|"代理签章 API"| GW
     GW --> Seal
-    Signer -->|"HMAC 回调"| BizBE
+    Signer -.->|"HMAC 回调"| BizBE
 
-    classDef biz fill:none,stroke:#f57c00,stroke-width:2px
-    classDef uocs fill:none,stroke:#0288d1,stroke-width:2px
-    class BizFE,BizBE biz
-    class Auth,GW,Seal,Signer uocs
+    OfdApp -->|"OAuth2 PKCE 登录"| Auth
+    OfdApp -->|"seal list · sign"| OfdSvr
+    OfdSvr -->|"JWT 验证 / client_credentials"| Auth
+    OfdSvr -->|"代理签章 API"| GW
+
+    classDef bizStyle fill:none,stroke:#f57c00,stroke-width:2px
+    classDef uocsStyle fill:none,stroke:#0288d1,stroke-width:2px
+    classDef ofdStyle fill:none,stroke:#388e3c,stroke-width:2px
+    class BizFE,BizBE bizStyle
+    class Auth,GW,Seal,Signer uocsStyle
+    class OfdApp,OfdSvr ofdStyle
 ```
 
 **核心组件说明**：
