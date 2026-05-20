@@ -5,76 +5,63 @@
 
 ---
 
-## 快速入门（5 分钟上手）
-
-不熟悉 [[OAuth2]]？先看 [OAuth2 认证说明](#oauth2-认证说明) 了解原理。已熟悉的开发者按下表快速推进：
-
-### 对接 Checklist
-
-**准备阶段（联系 UOCS 管理员）**
-
-- [ ] 确认对接模式：Mode B（用户主动登录绑定）还是 Mode A（无感知托管）→ 参见 [对接模式选择](#对接模式选择)
-- [ ] 提供：应用名称 / 回调地址（Mode B）/ 申请 Scope
-- [ ] 获得：`clientId` / `urlSignatureKey` / `callbackHmacKey`（Mode A 还需 `clientSecret`）
-
-**Mode B 对接（3 步）**
-
-- [ ] **Step 1**：后端构造 HMAC-SM3 签名 URL → [Mode B 对接步骤](#对接步骤)
-- [ ] **Step 2**：引导用户打开签章 URL（用户在 UOCS 登录并绑定账号）
-- [ ] **Step 3**：实现回调接口，验证 `X-Signature`（HMAC-SM3 文件字节）→ [G.9 回调接口规范](#g9-回调接口规范)
-
-**Mode A 对接（5 步）**
-
-- [ ] **Step 1**：后端调用 Provision API，预置用户账号 → [G.2 用户预置](#g2-用户预置-mode-a)
-- [ ] **Step 2**：后端调用 [[Token Exchange]]，获取用户 Token（无需用户感知）→ [Mode A Token Exchange 说明](#token-exchange-说明)
-- [ ] **Step 3**：后端调用 Create Session API，创建托管签章会话 → [G.1 会话管理](#g1-会话管理)
-- [ ] **Step 4**：引导用户打开签章 URL（已自动登录，用户无感知）
-- [ ] **Step 5**：实现回调接口，验证 `X-Signature` → [G.9 回调接口规范](#g9-回调接口规范)
-
-**通用（两种模式都需要）**
-
-- [ ] 使用 **BouncyCastle** 实现 HMAC-SM3（不是标准 JDK 的 HMAC-SHA256）→ [G.8 HMAC-SM3 签名算法](#g8-hmac-sm3-签名算法)
-- [ ] URL 签名串使用 `externalUserId`（全称），URL 参数使用 `extUserId`（缩写）→ **两者混淆会导致验签失败**
-- [ ] 配置 HTTPS，所有密钥使用环境变量，不可硬编码
-
-### 关键端点速查
-
-| 端点 | 地址 | 用途 |
-|------|------|------|
-| [[OAuth2]] 授权 | `http://localhost:18011/oauth2/authorize` | 用户登录跳转 |
-| [[OAuth2]] Token | `http://localhost:18011/oauth2/token` | 换 Token / 续期 |
-| UOCS Gateway | `http://localhost:18010` | 所有 API 入口 |
-| service-signer | `http://localhost:18010/signer` | 签章功能 |
-
-### 最常见的 3 个陷阱
-
-| 陷阱 | 症状 | 解决方案 |
-|------|------|---------|
-| HMAC 算法错误 | 验签始终失败 | 必须用 BouncyCastle `SM3Digest`，不能用 JDK `HmacSHA256` |
-| 字段名混淆 | URL 打开后无法验证身份 | 签名串用 `externalUserId`，URL 参数用 `extUserId` |
-| 回调验签对象错误 | 回调始终 401 | 回调签名对象是**文件字节**，不是 JSON 字符串 |
-
----
-
 ## 目录
 
-- [平台架构简介](#平台架构简介)
-- [OAuth2 认证说明](#oauth2-认证说明)（原理：为何需要 / 四个角色 / 授权码流 / PKCE / Token 生命周期）
+### 第一部分：认识 UOCS
+- [项目定位与核心能力](#项目定位与核心能力)
+- [平台架构总览](#平台架构总览)
+
+### 第二部分：理解 OAuth2
+- [为什么需要 OAuth2](#为什么需要-oauth2)
+- [OAuth2 不是什么](#oauth2-不是什么)
+- [四个角色](#四个角色)
+- [授权码流程（Authorization Code Flow）](#授权码流程authorization-code-flow)
+- [PKCE 扩展原理](#pkce-扩展原理)
+- [Token 类型与生命周期](#token-类型与生命周期)
+- [可用 Scope](#可用-scope)
+
+### 第三部分：准备对接
 - [应用注册](#应用注册)
 - [对接模式选择](#对接模式选择)
-- [Mode B 自助模式对接](#mode-b-自助模式对接)（含 demo-biz-system 参考实现）
-- [Mode A 托管模式对接](#mode-a-托管模式对接)（含 demo-biz-system 参考实现）
-- [API 参考](#api-参考)（含 HMAC-SM3 + 回调验签代码示例）
-- [OFD 签章查看器集成](#ofd-签章查看器集成)（含 drawing-ofd-app 参考实现）
-- [安全要求](#安全要求)
-- [配置参考](#配置参考)
-- [常见问题](#常见问题)
+
+### 第四部分：动手对接
+- [Mode B 自助模式对接](#mode-b-自助模式对接)
+- [Mode A 托管模式对接](#mode-a-托管模式对接)
+- [对接 Checklist](#对接-checklist)
+
+### 第五部分：集成案例
+- [OFD 签章查看器集成（drawing-ofd-app）](#ofd-签章查看器集成)
+
+### 附录
+- [A. API 参考](#a-api-参考)
+- [B. 安全要求](#b-安全要求)
+- [C. 配置参考](#c-配置参考)
+- [D. 常见问题](#d-常见问题)
 
 ---
 
-## 平台架构简介
+## 第一部分：认识 UOCS
 
-UOCS 是一个提供 [[OAuth2]] 认证和电子签章能力的云平台。第三方业务系统通过以下架构接入签章功能：
+### 项目定位与核心能力
+
+UOCS（Universal Open Certification & Signing）是一个提供 [[OAuth2]] 统一认证和国密电子签章能力的云平台。它的核心目标是让第三方业务系统无需自建签章基础设施，即可为用户提供合规的 OFD 文件签章服务。
+
+**如果你是第三方系统的开发者**，你可能面临以下场景：
+
+- 你的业务系统需要让用户对 OFD 文件进行电子签章，但不想自己实现证书管理、印章管理、签章算法等底层能力
+- 你需要一种安全的方式让 UOCS 「代表」你的用户执行签章操作，而不是让用户重新注册一个 UOCS 账号
+- 你希望签章流程对用户尽可能透明（无感知），或者让用户主动完成一次账号绑定后自动使用
+
+UOCS 通过 [[OAuth2]] 授权框架 + 两种对接模式（Mode A 托管 / Mode B 自助）解决了这些问题。本文档将按以下顺序帮助你完成对接：
+
+1. 先理解 UOCS 的架构（你对接的是哪些服务）
+2. 再理解 [[OAuth2]] 在这个体系中的作用（为什么需要它、它解决了什么问题）
+3. 然后选择对接模式、完成应用注册
+4. 最后按照步骤实现对接
+
+### 平台架构总览
+
+UOCS 平台由以下核心服务组成，第三方系统通过 [[OAuth2]] 协议接入：
 
 ```mermaid
 graph TD
@@ -112,11 +99,13 @@ graph TD
 | Gateway | `:18010` | 路由转发、[[Bearer Token]] 验证 |
 | service-signer | `/signer/**` | 独立签章代理（账号绑定、[[会话管理]]、文件回调） |
 
+> **关键理解**：第三方系统**不直接调用** service-seal 签章服务，而是通过 service-signer 作为代理。service-signer 负责 [[OAuth2]] 认证、账号绑定、会话管理，签章完成后通过 HMAC 回调把签章文件传回第三方系统。
+
 ---
 
-## OAuth2 认证说明
+## 第二部分：理解 OAuth2
 
-> 本章先讲「为什么」和「是什么」，再讲「怎么用」。如果你已熟悉 [[OAuth2]]，可直接跳到 [应用注册](#应用注册)。
+> 本章先讲「为什么」和「是什么」，再讲「怎么用」。如果你已熟悉 [[OAuth2]]，可直接跳到 [第三部分：准备对接](#第三部分准备对接)。
 
 ### 为什么需要 OAuth2
 
@@ -312,7 +301,11 @@ grant_type=refresh_token&refresh_token=xxx&client_id=your-client-id
 
 ---
 
-## 应用注册
+## 第三部分：准备对接
+
+理解了 UOCS 架构和 [[OAuth2]] 原理后，接下来进入实际的对接准备工作。对接分两步：先注册应用，再选择对接模式。
+
+### 应用注册
 
 联系 UOCS 平台管理员，提供以下信息完成应用注册：
 
@@ -333,9 +326,9 @@ grant_type=refresh_token&refresh_token=xxx&client_id=your-client-id
 
 > API 管理入口：UOCS 管理控制台 → 系统管理 → 第三方应用管理
 
----
+### 对接模式选择
 
-## 对接模式选择
+UOCS 提供两种对接模式，选择取决于你的用户体验需求和技术架构：
 
 | 对比维度 | Mode B（自助模式） | Mode A（托管模式） |
 |---------|-------------------|-------------------|
@@ -346,6 +339,12 @@ grant_type=refresh_token&refresh_token=xxx&client_id=your-client-id
 
 ```mermaid
 graph TD
+    Start["你需要接入 UOCS 签章"] --> Q1{"希望用户无感知<br/>自动签章？"}
+    Q1 -->|"是，用户不应感知 UOCS"| ModeA["Mode A（托管模式）"]
+    Q1 -->|"否，用户可主动登录"| Q2{"有 Java/后端服务<br/>且能安全保管 Secret？"}
+    Q2 -->|"是"| ModeA
+    Q2 -->|"否，纯前端或<br/>后端能力有限"| ModeB["Mode B（自助模式）"]
+
     subgraph modeB["Mode B（自助模式）"]
         B1["第三方构造签名 URL"] --> B2["用户浏览器打开 URL"]
         B2 --> B3["用户 PKCE 登录 UOCS"]
@@ -366,13 +365,19 @@ graph TD
     classDef modeBStyle fill:none,stroke:#f57c00,stroke-width:2px
     class A1,A2,A3,A4,A5,A6 modeAStyle
     class B1,B2,B3,B4,B5,B6 modeBStyle
+    class ModeA modeAStyle
+    class ModeB modeBStyle
 ```
 
 ---
 
-## Mode B 自助模式对接
+## 第四部分：动手对接
 
-### 流程说明
+选择好对接模式后，按照对应的章节完成实现。两种模式在「回调接口」部分是共用的。
+
+### Mode B 自助模式对接
+
+#### 流程说明
 
 ```mermaid
 sequenceDiagram
@@ -392,7 +397,7 @@ sequenceDiagram
     Signer->>BizBE: HMAC-SM3 签名回调（携带签章文件）
 ```
 
-### 对接步骤
+#### 对接步骤
 
 **步骤一：注册 Public Client**
 
@@ -404,13 +409,13 @@ sequenceDiagram
 https://uocs.example.com/signer?clientId={clientId}&extUserId={extUserId}&fileUrl={fileUrl}&callbackUrl={callbackUrl}&state={state}&ts={ts}&nonce={nonce}&sig={sig}
 ```
 
-参数说明见 [HMAC-SM3 签名算法](#g8-hmac-sm3-签名算法)。
+参数说明见 [HMAC-SM3 签名算法](#hmac-sm3-签名算法)。
 
 **步骤三：配置回调接口**
 
-接收签章完成回调，验证 `X-Signature` 头，保存签章后的 OFD 文件。回调格式见 [G.9 回调接口规范](#g9-回调接口规范)。
+接收签章完成回调，验证 `X-Signature` 头，保存签章后的 OFD 文件。回调格式见 [回调接口规范](#回调接口规范)。
 
-### 参考实现：demo-biz-system（Java Spring Boot）
+#### 参考实现：demo-biz-system（Java Spring Boot）
 
 > 参考项目 `demo-biz-system/`，完整代码见 `src/main/java/com/demo/biz/`。
 
@@ -486,11 +491,9 @@ public String buildModeBSignUrl(String extUserId, String fileDownloadUrl, String
 }
 ```
 
----
+### Mode A 托管模式对接
 
-## Mode A 托管模式对接
-
-### 流程说明
+#### 流程说明
 
 ```mermaid
 sequenceDiagram
@@ -510,7 +513,7 @@ sequenceDiagram
     Signer->>BizBE: HMAC 回调
 ```
 
-### Token Exchange 说明
+#### Token Exchange 说明
 
 Mode A 使用 [[RFC 8693 Token Exchange]] 扩展，让第三方后端服务代表用户获取 Token：
 
@@ -532,7 +535,7 @@ grant_type=urn:ietf:params:oauth:grant-type:token-exchange
 { "access_token": "eyJhbGci...", "token_type": "Bearer", "expires_in": 1800 }
 ```
 
-### 对接步骤
+#### 对接步骤
 
 **步骤一：注册 Confidential Client**
 
@@ -562,7 +565,7 @@ POST /signer/session/managed
 
 同 Mode B，验证 `X-Signature` 并保存文件。
 
-### 参考实现：demo-biz-system（Mode A 完整流程）
+#### 参考实现：demo-biz-system（Mode A 完整流程）
 
 > 参考项目 `demo-biz-system/`，完整代码见 `src/main/java/com/demo/biz/`。
 
@@ -641,355 +644,69 @@ public Map<String, Object> initiateModeASign(@RequestBody Map<String, Object> re
         "expiresIn",    sessionResp.getOrDefault("expiresIn", 1800)
     );
 }
+```
+
+### 对接 Checklist
+
+完成上述对接后，用以下清单确认所有关键步骤：
+
+**准备阶段（联系 UOCS 管理员）**
+
+- [ ] 确认对接模式：Mode B（用户主动登录绑定）还是 Mode A（无感知托管）→ 参见 [对接模式选择](#对接模式选择)
+- [ ] 提供：应用名称 / 回调地址（Mode B）/ 申请 Scope
+- [ ] 获得：`clientId` / `urlSignatureKey` / `callbackHmacKey`（Mode A 还需 `clientSecret`）
+
+**Mode B 对接（3 步）**
+
+- [ ] **Step 1**：后端构造 HMAC-SM3 签名 URL → [Mode B 对接步骤](#对接步骤)
+- [ ] **Step 2**：引导用户打开签章 URL（用户在 UOCS 登录并绑定账号）
+- [ ] **Step 3**：实现回调接口，验证 `X-Signature`（HMAC-SM3 文件字节）→ [回调接口规范](#回调接口规范)
+
+**Mode A 对接（5 步）**
+
+- [ ] **Step 1**：后端调用 Provision API，预置用户账号 → [G.2 用户预置](#g2-用户预置-mode-a)
+- [ ] **Step 2**：后端调用 [[Token Exchange]]，获取用户 Token（无需用户感知）→ [Token Exchange 说明](#token-exchange-说明)
+- [ ] **Step 3**：后端调用 Create Session API，创建托管签章会话 → [G.1 会话管理](#g1-会话管理)
+- [ ] **Step 4**：引导用户打开签章 URL（已自动登录，用户无感知）
+- [ ] **Step 5**：实现回调接口，验证 `X-Signature` → [回调接口规范](#回调接口规范)
+
+**通用（两种模式都需要）**
+
+- [ ] 使用 **BouncyCastle** 实现 HMAC-SM3（不是标准 JDK 的 HMAC-SHA256）→ [HMAC-SM3 签名算法](#hmac-sm3-签名算法)
+- [ ] URL 签名串使用 `externalUserId`（全称），URL 参数使用 `extUserId`（缩写）→ **两者混淆会导致验签失败**
+- [ ] 配置 HTTPS，所有密钥使用环境变量，不可硬编码
+
+**最常见的 3 个陷阱**
+
+| 陷阱 | 症状 | 解决方案 |
+|------|------|---------|
+| HMAC 算法错误 | 验签始终失败 | 必须用 BouncyCastle `SM3Digest`，不能用 JDK `HmacSHA256` |
+| 字段名混淆 | URL 打开后无法验证身份 | 签名串用 `externalUserId`，URL 参数用 `extUserId` |
+| 回调验签对象错误 | 回调始终 401 | 回调签名对象是**文件字节**，不是 JSON 字符串 |
 
 ---
 
-## API 参考
+## 第五部分：集成案例
 
-> 所有 API 路径通过 UOCS Gateway 访问，基础路径前缀为 `/signer`。
+本部分展示已经完成 UOCS 对接的参考项目，帮助你理解完整的实现模式。
 
-```mermaid
-graph TD
-    subgraph api["service-signer API 总览"]
-        direction TB
-        S["[[会话管理]]<br/>/session/init · /session/managed · /session/{token}"]
-        P["用户预置（Mode A）<br/>/provision"]
-        B["账号绑定（Mode B）<br/>/binding · /binding/check · /binding/refresh"]
-        F["文件代理<br/>/file/download · /file/upload-signed"]
-        R["就绪检查<br/>/readiness/check"]
-        U["URL 签名<br/>/url-signature/verify · /url-signature/generate"]
-        V["用章审核<br/>/usage-review/*"]
-    end
-
-    S --> F
-    P --> S
-    B --> S
-    V -.->|"审核通过后"| F
-
-    classDef session fill:none,stroke:#0288d1,stroke-width:2px
-    classDef provision fill:none,stroke:#f57c00,stroke-width:2px
-    classDef binding fill:none,stroke:#388e3c,stroke-width:2px
-    classDef file fill:none,stroke:#7b1fa2,stroke-width:2px
-    classDef other fill:none,stroke:#757575,stroke-width:1px
-    class S session
-    class P provision
-    class B binding
-    class F file
-    class R,U,V other
-```
-
-### G.1 会话管理
-
-#### `POST /signer/session/init` — 初始化自助会话 (Mode B)
-
-前端在 OAuth2 认证完成后调用。**Headers**: `Authorization: Bearer <access_token>`
-
-**请求体**：
-
-```json
-{
-  "clientId": "string (必填)",
-  "externalUserId": "string (必填)",
-  "fileUrl": "string (可选)",
-  "callbackUrl": "string (可选)",
-  "state": "string (可选)"
-}
-```
-
-**响应体**：
-
-```json
-{ "sessionId": 42, "sessionToken": "st_xxx", "expiresIn": 1800 }
-```
-
-#### `POST /signer/session/managed` — 创建托管会话 (Mode A)
-
-第三方**后端**调用，创建签章会话并获取 sessionToken。
-
-**请求体**：
-
-```json
-{
-  "clientId": "string (必填)",
-  "clientSecret": "string (必填)",
-  "externalUserId": "string (必填)",
-  "fileUrl": "string (必填)",
-  "callbackUrl": "string (可选)",
-  "state": "string (可选)"
-}
-```
-
-**响应体**：
-
-```json
-{
-  "sessionToken": "st_xxx",
-  "signerUrl": "https://signer.uocs.example.com/sign?session=st_xxx",
-  "expiresIn": 1800
-}
-```
-
-#### `GET /signer/session/{token}` — 查询会话信息
-
-通过 sessionToken 查询会话详情（含 accessToken，仅 Mode A）。
-
-**响应体**：
-
-```json
-{
-  "sessionId": 42,
-  "sessionMode": "MANAGED",
-  "accessToken": "eyJhbGci...",
-  "fileUrl": "https://...",
-  "callbackUrl": "https://...",
-  "state": "order-12345",
-  "uocsUserId": "1801234567890",
-  "clientId": "your-client-id",
-  "externalUserId": "employee-001",
-  "certPasswordSet": true,
-  "expiresAt": "2025-01-15T11:00:00"
-}
-```
-
-### G.2 用户预置 (Mode A)
-
-#### `POST /signer/provision` — 预置用户
-
-调用一次即可，重复调用幂等返回。
-
-**请求体**：
-
-```json
-{
-  "clientId": "string (必填)",
-  "clientSecret": "string (必填)",
-  "externalUserId": "string (必填)",
-  "username": "string (必填)",
-  "password": "string (必填)"
-}
-```
-
-**响应体**：
-
-```json
-{
-  "bindingId": 42,
-  "uocsUserId": "1801234567890",
-  "uocsUsername": "emp001@company.com",
-  "provisionStatus": "PROVISIONED | ALREADY_EXISTS"
-}
-```
-
-### G.3 账号绑定 (Mode B)
-
-| 方法 | 端点 | 说明 | 认证 |
-|------|------|------|------|
-| `GET` | `/signer/binding/check` | 检查绑定状态 | 公开（参数: `clientId`, `externalUserId`） |
-| `POST` | `/signer/binding` | 创建绑定 | 需 JWT |
-| `DELETE` | `/signer/binding/{id}` | 解除绑定 | 需 JWT |
-| `POST` | `/signer/binding/refresh` | 刷新 Token | 需 JWT |
-
-### G.4 文件代理
-
-| 方法 | 端点 | 说明 | 认证 |
-|------|------|------|------|
-| `GET` | `/signer/file/download` | 代理下载文件 | 需 JWT（参数: `sessionId` 或 `url`） |
-| `POST` | `/signer/file/upload-signed` | 上传签章文件并触发回调 | 需 JWT（multipart: `file`, `sessionId`） |
-
-### G.5 签章就绪检查
-
-`GET /signer/readiness/check` — 检查当前用户就绪状态（需 JWT）
-
-### G.6 URL 签名（开发调试）
-
-| 方法 | 端点 | 说明 |
-|------|------|------|
-| `POST` | `/signer/url-signature/verify` | 验证签名（参数: 所有 URL 参数） |
-| `POST` | `/signer/url-signature/generate` | 生成签名（仅调试，返回 `{ "signature": "hex..." }`） |
-
-### G.7 用章审核
-
-| 方法 | 端点 | 说明 |
-|------|------|------|
-| `GET` | `/signer/usage-review/policy` | 查询策略 |
-| `PUT` | `/signer/usage-review/policy` | 设置策略（管理员） |
-| `POST` | `/signer/usage-review` | 创建审核申请 |
-| `GET` | `/signer/usage-review/{requestId}/status` | 查询审核状态 |
-| `POST` | `/signer/usage-review/{requestId}/cancel` | 取消申请 |
-| `GET` | `/signer/usage-review/pending` | 待审核列表（审核员） |
-| `POST` | `/signer/usage-review/{requestId}/approve` | 审批通过 |
-| `POST` | `/signer/usage-review/{requestId}/reject` | 审批拒绝 |
-
-### G.8 HMAC-SM3 签名算法
-
-#### Mode B 签章 URL 签名
-
-**URL 参数**：
-
-| 参数 | 必填 | 说明 |
-|------|------|------|
-| `clientId` | ✅ | OAuth2 Client ID |
-| `extUserId` | ✅ | 第三方用户标识 |
-| `fileUrl` | ✅ | 待签章 OFD 文件下载地址 |
-| `callbackUrl` | ✅ | 签章完成后文件回传地址 |
-| `state` | ❌ | 透传业务标识 |
-| `ts` | ✅ | UNIX 时间戳（秒），有效期 300 秒 |
-| `nonce` | ✅ | 随机字符串（建议 UUID） |
-| `sig` | ✅ | HMAC-SM3 签名 |
-
-**签名字符串构造规则**：参数按**字母序**拼接。⚠️ 签名字符串中使用全称 `externalUserId`（不是 URL 中的缩写 `extUserId`）。
-
-```
-signPayload = "callbackUrl={callbackUrl}&clientId={clientId}&externalUserId={extUserId的值}&fileUrl={fileUrl}&nonce={nonce}&state={state}&ts={ts}"
-```
-
-**完整示例**：
-
-```
-URL 参数：clientId=demo-app&extUserId=emp001&fileUrl=https://example.com/doc.ofd
-         &callbackUrl=https://example.com/callback&state=order-123&ts=1711929600&nonce=uuid-abc-123
-
-签名字符串：callbackUrl=https://example.com/callback&clientId=demo-app&externalUserId=emp001
-            &fileUrl=https://example.com/doc.ofd&nonce=uuid-abc-123&state=order-123&ts=1711929600
-
-sig = HMAC-SM3(signPayload, urlSignatureKey)
-```
-
-**Java 实现（demo-biz-system HmacUtil.java，使用 BouncyCastle）**：
-
-```java
-// 依赖：org.bouncycastle:bcprov-jdk18on:1.78.1
-import org.bouncycastle.crypto.digests.SM3Digest;
-import org.bouncycastle.crypto.macs.HMac;
-import org.bouncycastle.crypto.params.KeyParameter;
-
-/** 对字符串进行 HMAC-SM3 签名，返回十六进制小写 */
-public static String sign(String data, String secret) {
-    HMac hmac = new HMac(new SM3Digest());
-    hmac.init(new KeyParameter(secret.getBytes(StandardCharsets.UTF_8)));
-    byte[] input  = data.getBytes(StandardCharsets.UTF_8);
-    hmac.update(input, 0, input.length);
-    byte[] result = new byte[hmac.getMacSize()];
-    hmac.doFinal(result, 0);
-    // 转十六进制小写
-    StringBuilder sb = new StringBuilder(result.length * 2);
-    for (byte b : result) sb.append(String.format("%02x", b));
-    return sb.toString();
-}
-```
-
-> 完整实现见 `demo-biz-system/src/main/java/com/demo/biz/util/HmacUtil.java`，包含字节数组重载和 `verify()` 方法（用于回调验签）。
-
-#### 回调文件 HMAC 签名
-
-签章完成后回调的 `X-Signature` 头为 `HMAC-SM3(文件字节, callbackHmacKey)`。
-
-**参考实现：demo-biz-system CallbackController.java**：
-
-```java
-// POST /api/callback（Content-Type: multipart/form-data）
-// Headers: X-Signature — HMAC-SM3(文件字节, callbackHmacKey)
-// Parts:   file（签章后 OFD 文件）、state（业务标识）、signInfo（签章信息 JSON）
-@PostMapping
-public Response[[Entity]]<Map<String, Object>> receiveCallback(
-        @RequestHeader(value = "X-Signature", required = false) String signature,
-        @RequestParam(value = "state",    required = false) String state,
-        @RequestParam(value = "signInfo", required = false) String signInfo,
-        @RequestParam(value = "file",     required = false) MultipartFile file) {
-
-    // 1. 读取文件字节（HMAC 验签对象是文件字节，非字符串）
-    byte[] fileBytes = file != null ? file.getBytes() : null;
-
-    // 2. 验证 X-Signature（对文件字节做 HMAC-SM3）
-    boolean hmacValid = signerService.verifyCallbackHmac(signature, fileBytes);
-    if (!hmacValid) {
-        return Response[[Entity]].status(401).body(Map.of("error", "签名验证失败"));
-    }
-
-    // 3. 根据 state 查找签章任务，更新状态
-    SignTask task = taskRepo.findByState(state).orElseThrow(...);
-    task.setStatus("COMPLETED");
-    task.setCallbackPayload(signInfo);
-    taskRepo.save(task);
-
-    // 4. 保存签章后文件（实际系统中持久化到文件系统或对象存储）
-    fileRepo.findById(task.getFileId()).ifPresent(f -> {
-        f.setSignStatus("SIGNED");
-        fileRepo.save(f);
-    });
-
-    return Response[[Entity]].ok(Map.of("status", "received", "taskId", task.getId()));
-}
-```
-
-> 完整实现见 `demo-biz-system/src/main/java/com/demo/biz/controller/CallbackController.java`。
-
-### G.9 回调接口规范
-
-#### 请求格式
-
-```http
-POST {callbackUrl}
-Content-Type: multipart/form-data
-X-Signature: <HMAC-SM3(文件字节, callbackHmacKey)>
-
-file: (签章后的 OFD 文件)
-state: order-12345
-signInfo: {"signTime":"2025-01-15T10:30:00","sessionId":42,"clientId":"your-client-id"}
-```
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `file` | 文件 (multipart) | 签章后的 OFD 文件 |
-| `state` | 字符串 | 透传的业务标识 |
-| `signInfo` | JSON 字符串 | 签章元数据 |
-| `X-Signature` 头 | 字符串 | HMAC-SM3 签名 |
-
-#### 重试机制
-
-| 次数 | 退避时间 | 说明 |
-|------|---------|------|
-| 第 1 次 | 立即 | 签章完成后立即回调 |
-| 第 2 次 | 10 秒 | 首次失败后 |
-| 第 3 次 | 30 秒 | 指数退避 |
-
-回调成功条件：HTTP 响应码 `2xx`。最大重试 3 次（可配置）。
-
-### G.10 错误码
-
-| HTTP 状态码 | 场景 | 说明 |
-|------------|------|------|
-| 400 | 参数错误 | 缺少必填参数、格式不正确 |
-| 401 | 未授权 | JWT 过期 / Token 无效 |
-| 403 | 禁止访问 | 权限不足 / HMAC 验证失败 / Scope 权限不足 |
-| 404 | 未找到 | 会话不存在 / 绑定不存在 |
-| 409 | 冲突 | 签章会话状态已变更（重复提交） |
-
-**错误响应格式**：
-
-```json
-{ "code": 400, "msg": "缺少签名参数 sig", "data": null }
-```
-
----
-
-## OFD 签章查看器集成
+### OFD 签章查看器集成
 
 drawing-ofd 是独立的 OFD 文件查看器，通过 OAuth2 PKCE 接入 UOCS 实现签章功能。
 
-### 架构总览
+#### 架构总览
 
 ```mermaid
 graph TD
     User["用户<br/>浏览器"]
     App["drawing-ofd-app<br/>React SPA<br/>localhost:5201"]
-    Server["drawing-ofd-server<br/>[[Spring Boot]] WebFlux<br/>localhost:5210"]
+    Server["drawing-ofd-server<br/>Spring Boot WebFlux<br/>localhost:5212"]
     Auth["UOCS Auth Server<br/>localhost:18011"]
     GW["UOCS Gateway<br/>localhost:18010"]
     Seal["service-seal<br/>印章服务"]
 
     User -- "访问 OFD 文件" --> App
-    App -- "[[OAuth2]] PKCE 登录" --> Auth
+    App -- "OAuth2 PKCE 登录" --> Auth
     App -- "GET /api/seals/my-list" --> Server
     App -- "POST /api/sign" --> Server
     Server -- "验证 Bearer JWT（JWK URI）" --> Auth
@@ -1005,14 +722,14 @@ graph TD
     class Auth,GW,Seal uocs
 ```
 
-### OAuth2 PKCE 完整登录流程
+#### OAuth2 PKCE 完整登录流程
 
 ```mermaid
 sequenceDiagram
     participant U as 用户（浏览器）
     participant App as drawing-ofd-app<br/>:5201
     participant Auth as UOCS Auth Server<br/>:18011
-    participant Srv as drawing-ofd-server<br/>:5210
+    participant Srv as drawing-ofd-server<br/>:5212
 
     Note over U,Srv: 初始访问（未登录）
     U->>App: 1. 打开 localhost:5201
@@ -1021,7 +738,7 @@ sequenceDiagram
     App->>Auth: 4. 重定向 /oauth2/authorize<br/>client_id=drawing-ofd-client&code_challenge=...
     Auth->>U: 5. 展示 UOCS 登录页
     U->>Auth: 6. 提交 admin / Upda123!
-    Auth-->>App: 7. 重定向 localhost:5201/oauth2/callback?code=xxx
+    Auth-->>App: 7. 重定向 localhost:5201/?code=xxx
 
     Note over U,Srv: Token 获取（跨域 PKCE）
     App->>App: 8. 从 sessionStorage 读取 code_verifier
@@ -1042,7 +759,7 @@ sequenceDiagram
     Srv-->>App: 20. 签章后 OFD 文件
 ```
 
-### drawing-ofd-client 注册信息
+#### drawing-ofd-client 注册信息
 
 在 `RegisteredClientConfig.java` 中自动注册，启动时初始化：
 
@@ -1052,16 +769,16 @@ sequenceDiagram
 | clientName | OFD 签章查看器 |
 | clientAuthenticationMethod | `none`（公开客户端） |
 | authorizationGrantType | `authorization_code` + `refresh_token` |
-| redirectUri | `http://localhost:5201/oauth2/callback` |
+| redirectUri | `http://localhost:5201/`（根路径，通过 Nacos 外部化） |
 | scope | `openid profile seal:sign` |
 | requireAuthorizationConsent | `false` |
 | requireProofKey | `true`（强制 PKCE） |
 
-### 参考实现：drawing-ofd-app（React SPA）
+#### 参考实现：drawing-ofd-app（React SPA）
 
 > 参考项目 `drawing-ofd/drawing-ofd-app/src/auth/`，包含完整 OAuth2 PKCE 客户端实现。
 
-#### pkce.js — OAuth2 PKCE 核心工具
+##### pkce.js — OAuth2 PKCE 核心工具
 
 ```javascript
 // src/auth/pkce.js
@@ -1139,12 +856,13 @@ export async function handleCallback(config) {
 > 完整文件（含 `refreshAccessToken`、`parseJwtPayload`、`isTokenExpiringSoon`）：
 > `drawing-ofd/drawing-ofd-app/src/auth/pkce.js`
 
-#### authStore.js — MobX 认证状态管理
+##### authStore.js — MobX 认证状态管理
 
 ```javascript
 // src/auth/authStore.js（核心逻辑摘要）
 const OAUTH2_CONFIG = {
-    authServerUrl: import.meta.env.VITE_AUTH_SERVER || 'http://localhost:18011',
+    // fallback 默认值 http://localhost:8209（IDEA 本地调试端口），生产环境通过 .env 覆盖为 18011
+    authServerUrl: import.meta.env.VITE_AUTH_SERVER || 'http://localhost:8209',
     clientId:      import.meta.env.VITE_CLIENT_ID   || 'drawing-ofd-client',
     redirectUri:   `${window.location.origin}/`,
 };
@@ -1155,7 +873,7 @@ class AuthStore {
     initialized = false;
 
     /**
-     * 应用启动入口：处理 [[OAuth2]] 回调 → 恢复 token → 自动刷新即将过期的 token
+     * 应用启动入口：处理 OAuth2 回调 → 恢复 token → 自动刷新即将过期的 token
      */
     async initialize() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -1186,13 +904,13 @@ class AuthStore {
 
 > 完整文件：`drawing-ofd/drawing-ofd-app/src/auth/authStore.js`
 
-#### sealApi.js — 调用 drawing-ofd-server
+##### sealApi.js — 调用 drawing-ofd-server
 
 ```javascript
 // src/auth/sealApi.js
-const BASE_URL = import.meta.env.VITE_OFD_SERVER || 'http://localhost:5210';
+const BASE_URL = import.meta.env.VITE_OFD_SERVER || 'http://localhost:5212';
 
-/** 获取当前用户可用印章列表（[[Bearer Token]] 认证） */
+/** 获取当前用户可用印章列表（Bearer Token 认证） */
 export async function fetchSealList(accessToken) {
     const resp = await fetch(`${BASE_URL}/api/seals/my-list`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -1236,7 +954,7 @@ export async function signOfd({ accessToken, file, sealId, pageIndex = 1,
 
 > 完整文件：`drawing-ofd/drawing-ofd-app/src/auth/sealApi.js`
 
-#### App.jsx — 整合 OAuth2 + OFD 签章
+##### App.jsx — 整合 OAuth2 + OFD 签章
 
 ```jsx
 // src/App.jsx（核心逻辑）
@@ -1292,13 +1010,13 @@ const App = observer(() => {
 
 > 完整文件：`drawing-ofd/drawing-ofd-app/src/App.jsx`
 
-### drawing-ofd-server API
+#### drawing-ofd-server API
 
-**基础 URL**: `http://localhost:5210`（开发环境）
+**基础 URL**: `http://localhost:5212`（开发环境）
 
-前端通过 Vite `/api` 代理访问，生产环境直接访问 5210 端口。
+前端通过 Vite `/api` 代理访问（代理目标 `http://localhost:5212`），生产环境直接访问 5212 端口。
 
-#### `GET /api/seals/my-list`
+##### `GET /api/seals/my-list`
 
 获取当前登录用户的可用印章列表。
 
@@ -1317,7 +1035,7 @@ const App = observer(() => {
 ]
 ```
 
-#### `POST /api/sign`
+##### `POST /api/sign`
 
 对 OFD 文件发起签章。
 
@@ -1332,7 +1050,7 @@ const App = observer(() => {
   4. 返回签章后的 OFD 文件
 - **响应**：`application/octet-stream`（签章后 OFD 文件字节）
 
-### 部署配置
+#### 部署配置
 
 **drawing-ofd-app 环境变量**（`.env.development`）：
 
@@ -1345,7 +1063,7 @@ VITE_CLIENT_ID=drawing-ofd-client
 
 ```yaml
 server:
-  port: 5210
+  port: 5212
 
 spring:
   security:
@@ -1356,22 +1074,24 @@ spring:
 
 uocs:
   gateway-url: http://localhost:18010
-  client-id: drawing-ofd-service
-  client-secret: ${UOCS_CLIENT_SECRET}
-  token-endpoint: http://localhost:18011/oauth2/token
+
+cors:
+  allowed-origins: http://localhost:5201
 ```
+
+> **注意**：`uocs.client-id`、`uocs.client-secret`、`uocs.token-endpoint` 等配置通过 Nacos 外部化管理，不在本地 yml 中。
 
 **Vite 代理**（`vite.config.js`）：
 
 ```js
 server: {
   proxy: {
-    '/api': { target: 'http://localhost:5210', changeOrigin: true }
+    '/api': { target: 'http://localhost:5212', changeOrigin: true }
   }
 }
 ```
 
-### E2E 测试覆盖
+#### E2E 测试覆盖
 
 测试文件：`e2e/tests/drawing-ofd-auth.spec.ts`
 
@@ -1393,9 +1113,348 @@ npx playwright test --reporter=list
 
 ---
 
-## 安全要求
+## 附录
 
-### 密钥管理
+### A. API 参考
+
+> 所有 API 路径通过 UOCS Gateway 访问，基础路径前缀为 `/signer`。
+
+```mermaid
+graph TD
+    subgraph api["service-signer API 总览"]
+        direction TB
+        S["会话管理<br/>/session/init · /session/managed · /session/{token}"]
+        P["用户预置（Mode A）<br/>/provision"]
+        B["账号绑定（Mode B）<br/>/binding · /binding/check · /binding/refresh"]
+        F["文件代理<br/>/file/download · /file/upload-signed"]
+        R["就绪检查<br/>/readiness/check"]
+        U["URL 签名<br/>/url-signature/verify · /url-signature/generate"]
+        V["用章审核<br/>/usage-review/*"]
+    end
+
+    S --> F
+    P --> S
+    B --> S
+    V -.->|"审核通过后"| F
+
+    classDef session fill:none,stroke:#0288d1,stroke-width:2px
+    classDef provision fill:none,stroke:#f57c00,stroke-width:2px
+    classDef binding fill:none,stroke:#388e3c,stroke-width:2px
+    classDef file fill:none,stroke:#7b1fa2,stroke-width:2px
+    classDef other fill:none,stroke:#757575,stroke-width:1px
+    class S session
+    class P provision
+    class B binding
+    class F file
+    class R,U,V other
+```
+
+#### G.1 会话管理
+
+##### `POST /signer/session/init` — 初始化自助会话 (Mode B)
+
+前端在 OAuth2 认证完成后调用。**Headers**: `Authorization: Bearer <access_token>`
+
+**请求体**：
+
+```json
+{
+  "clientId": "string (必填)",
+  "externalUserId": "string (必填)",
+  "fileUrl": "string (可选)",
+  "callbackUrl": "string (可选)",
+  "state": "string (可选)"
+}
+```
+
+**响应体**：
+
+```json
+{ "sessionId": 42, "sessionToken": "st_xxx", "expiresIn": 1800 }
+```
+
+##### `POST /signer/session/managed` — 创建托管会话 (Mode A)
+
+第三方**后端**调用，创建签章会话并获取 sessionToken。
+
+**请求体**：
+
+```json
+{
+  "clientId": "string (必填)",
+  "clientSecret": "string (必填)",
+  "externalUserId": "string (必填)",
+  "fileUrl": "string (必填)",
+  "callbackUrl": "string (可选)",
+  "state": "string (可选)"
+}
+```
+
+**响应体**：
+
+```json
+{
+  "sessionToken": "st_xxx",
+  "signerUrl": "https://signer.uocs.example.com/sign?session=st_xxx",
+  "expiresIn": 1800
+}
+```
+
+##### `GET /signer/session/{token}` — 查询会话信息
+
+通过 sessionToken 查询会话详情（含 accessToken，仅 Mode A）。
+
+**响应体**：
+
+```json
+{
+  "sessionId": 42,
+  "sessionMode": "MANAGED",
+  "accessToken": "eyJhbGci...",
+  "fileUrl": "https://...",
+  "callbackUrl": "https://...",
+  "state": "order-12345",
+  "uocsUserId": "1801234567890",
+  "clientId": "your-client-id",
+  "externalUserId": "employee-001",
+  "certPasswordSet": true,
+  "expiresAt": "2025-01-15T11:00:00"
+}
+```
+
+#### G.2 用户预置 (Mode A)
+
+##### `POST /signer/provision` — 预置用户
+
+调用一次即可，重复调用幂等返回。
+
+**请求体**：
+
+```json
+{
+  "clientId": "string (必填)",
+  "clientSecret": "string (必填)",
+  "externalUserId": "string (必填)",
+  "username": "string (必填)",
+  "password": "string (必填)"
+}
+```
+
+**响应体**：
+
+```json
+{
+  "bindingId": 42,
+  "uocsUserId": "1801234567890",
+  "uocsUsername": "emp001@company.com",
+  "provisionStatus": "PROVISIONED | ALREADY_EXISTS"
+}
+```
+
+#### G.3 账号绑定 (Mode B)
+
+| 方法 | 端点 | 说明 | 认证 |
+|------|------|------|------|
+| `GET` | `/signer/binding/check` | 检查绑定状态 | 公开（参数: `clientId`, `externalUserId`） |
+| `GET` | `/signer/binding/me` | 查询当前用户所有绑定 | 需 JWT |
+| `POST` | `/signer/binding` | 创建绑定 | 需 JWT |
+| `DELETE` | `/signer/binding/{id}` | 解除绑定 | 需 JWT |
+| `POST` | `/signer/binding/refresh` | 刷新 Token | 需 JWT |
+
+#### G.4 文件代理
+
+| 方法 | 端点 | 说明 | 认证 |
+|------|------|------|------|
+| `GET` | `/signer/file/download` | 代理下载文件 | 需 JWT（参数: `sessionId` 或 `url`） |
+| `POST` | `/signer/file/upload-signed` | 上传签章文件并触发回调 | 需 JWT（multipart: `file`, `sessionId`） |
+
+#### G.5 签章就绪检查
+
+`GET /signer/readiness/check` — 检查当前用户就绪状态（需 JWT）
+
+#### G.6 URL 签名（开发调试）
+
+| 方法 | 端点 | 说明 |
+|------|------|------|
+| `POST` | `/signer/url-signature/verify` | 验证签名（参数: 所有 URL 参数） |
+| `POST` | `/signer/url-signature/generate` | 生成签名（仅调试，返回 `{ "signature": "hex..." }`） |
+
+#### G.7 用章审核
+
+| 方法 | 端点 | 说明 |
+|------|------|------|
+| `GET` | `/signer/usage-review/policy` | 查询策略 |
+| `PUT` | `/signer/usage-review/policy` | 设置策略（管理员） |
+| `POST` | `/signer/usage-review` | 创建审核申请 |
+| `GET` | `/signer/usage-review/{requestId}/status` | 查询审核状态 |
+| `POST` | `/signer/usage-review/{requestId}/cancel` | 取消申请 |
+| `GET` | `/signer/usage-review/pending` | 待审核列表（审核员） |
+| `POST` | `/signer/usage-review/{requestId}/approve` | 审批通过 |
+| `POST` | `/signer/usage-review/{requestId}/reject` | 审批拒绝 |
+
+#### G.8 HMAC-SM3 签名算法
+
+##### Mode B 签章 URL 签名
+
+**URL 参数**：
+
+| 参数 | 必填 | 说明 |
+|------|------|------|
+| `clientId` | ✅ | OAuth2 Client ID |
+| `extUserId` | ✅ | 第三方用户标识 |
+| `fileUrl` | ✅ | 待签章 OFD 文件下载地址 |
+| `callbackUrl` | ✅ | 签章完成后文件回传地址 |
+| `state` | ❌ | 透传业务标识 |
+| `ts` | ✅ | UNIX 时间戳（秒），有效期 300 秒 |
+| `nonce` | ✅ | 随机字符串（建议 UUID） |
+| `sig` | ✅ | HMAC-SM3 签名 |
+
+**签名字符串构造规则**：参数按**字母序**拼接。⚠️ 签名字符串中使用全称 `externalUserId`（不是 URL 中的缩写 `extUserId`）。
+
+```
+signPayload = "callbackUrl={callbackUrl}&clientId={clientId}&externalUserId={extUserId的值}&fileUrl={fileUrl}&nonce={nonce}&state={state}&ts={ts}"
+```
+
+**完整示例**：
+
+```
+URL 参数：clientId=demo-app&extUserId=emp001&fileUrl=https://example.com/doc.ofd
+         &callbackUrl=https://example.com/callback&state=order-123&ts=1711929600&nonce=uuid-abc-123
+
+签名字符串：callbackUrl=https://example.com/callback&clientId=demo-app&externalUserId=emp001
+            &fileUrl=https://example.com/doc.ofd&nonce=uuid-abc-123&state=order-123&ts=1711929600
+
+sig = HMAC-SM3(signPayload, urlSignatureKey)
+```
+
+**Java 实现（demo-biz-system HmacUtil.java，使用 BouncyCastle）**：
+
+```java
+// 依赖：org.bouncycastle:bcprov-jdk18on:1.78.1
+import org.bouncycastle.crypto.digests.SM3Digest;
+import org.bouncycastle.crypto.macs.HMac;
+import org.bouncycastle.crypto.params.KeyParameter;
+
+/** 对字符串进行 HMAC-SM3 签名，返回十六进制小写 */
+public static String sign(String data, String secret) {
+    HMac hmac = new HMac(new SM3Digest());
+    hmac.init(new KeyParameter(secret.getBytes(StandardCharsets.UTF_8)));
+    byte[] input  = data.getBytes(StandardCharsets.UTF_8);
+    hmac.update(input, 0, input.length);
+    byte[] result = new byte[hmac.getMacSize()];
+    hmac.doFinal(result, 0);
+    // 转十六进制小写
+    StringBuilder sb = new StringBuilder(result.length * 2);
+    for (byte b : result) sb.append(String.format("%02x", b));
+    return sb.toString();
+}
+```
+
+> 完整实现见 `demo-biz-system/src/main/java/com/demo/biz/util/HmacUtil.java`，包含字节数组重载和 `verify()` 方法（用于回调验签）。
+
+##### 回调文件 HMAC 签名
+
+签章完成后回调的 `X-Signature` 头为 `HMAC-SM3(文件字节, callbackHmacKey)`。
+
+**参考实现：demo-biz-system CallbackController.java**：
+
+```java
+// POST /api/callback（Content-Type: multipart/form-data）
+// Headers: X-Signature — HMAC-SM3(文件字节, callbackHmacKey)
+// Parts:   file（签章后 OFD 文件）、state（业务标识）、signInfo（签章信息 JSON）
+@PostMapping
+public ResponseEntity<Map<String, Object>> receiveCallback(
+        @RequestHeader(value = "X-Signature", required = false) String signature,
+        @RequestParam(value = "state",    required = false) String state,
+        @RequestParam(value = "signInfo", required = false) String signInfo,
+        @RequestParam(value = "file",     required = false) MultipartFile file) {
+
+    // 1. 读取文件字节（HMAC 验签对象是文件字节，非字符串）
+    byte[] fileBytes = file != null ? file.getBytes() : null;
+
+    // 2. 验证 X-Signature（对文件字节做 HMAC-SM3）
+    boolean hmacValid = signerService.verifyCallbackHmac(signature, fileBytes);
+    if (!hmacValid) {
+        return ResponseEntity.status(401).body(Map.of("error", "签名验证失败"));
+    }
+
+    // 3. 根据 state 查找签章任务，更新状态
+    SignTask task = taskRepo.findByState(state).orElseThrow(...);
+    task.setStatus("COMPLETED");
+    task.setCallbackPayload(signInfo);
+    taskRepo.save(task);
+
+    // 4. 保存签章后文件（实际系统中持久化到文件系统或对象存储）
+    fileRepo.findById(task.getFileId()).ifPresent(f -> {
+        f.setSignStatus("SIGNED");
+        fileRepo.save(f);
+    });
+
+    return ResponseEntity.ok(Map.of("status", "received", "taskId", task.getId()));
+}
+```
+
+> 完整实现见 `demo-biz-system/src/main/java/com/demo/biz/controller/CallbackController.java`。
+
+#### G.9 回调接口规范
+
+##### 请求格式
+
+```http
+POST {callbackUrl}
+Content-Type: multipart/form-data
+X-Signature: <HMAC-SM3(文件字节, callbackHmacKey)>
+
+file: (签章后的 OFD 文件)
+state: order-12345
+signInfo: {"signTime":"2025-01-15T10:30:00","sessionId":42,"clientId":"your-client-id"}
+```
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `file` | 文件 (multipart) | 签章后的 OFD 文件 |
+| `state` | 字符串 | 透传的业务标识 |
+| `signInfo` | JSON 字符串 | 签章元数据 |
+| `X-Signature` 头 | 字符串 | HMAC-SM3 签名 |
+
+##### 重试机制
+
+| 次数 | 退避时间 | 说明 |
+|------|---------|------|
+| 第 1 次 | 立即 | 签章完成后立即回调 |
+| 第 2 次 | 10 秒 | 首次失败后 |
+| 第 3 次 | 30 秒 | 指数退避 |
+
+回调成功条件：HTTP 响应码 `2xx`。最大重试 3 次（可配置）。
+
+#### G.10 回调管理
+
+| 方法 | 端点 | 说明 |
+|------|------|------|
+| `GET` | `/signer/callback/records` | 查询回调记录 |
+| `POST` | `/signer/callback/{sessionId}/retry` | 手动重试回调 |
+
+#### G.11 错误码
+
+| HTTP 状态码 | 场景 | 说明 |
+|------------|------|------|
+| 400 | 参数错误 | 缺少必填参数、格式不正确 |
+| 401 | 未授权 | JWT 过期 / Token 无效 |
+| 403 | 禁止访问 | 权限不足 / HMAC 验证失败 / Scope 权限不足 |
+| 404 | 未找到 | 会话不存在 / 绑定不存在 |
+| 409 | 冲突 | 签章会话状态已变更（重复提交） |
+
+**错误响应格式**（`ErrorResultDTO`）：
+
+```json
+{ "message": "缺少签名参数 sig", "cause": null, "exceptionName": "com.upda.common.core.exception.BusinessException" }
+```
+
+---
+
+### B. 安全要求
+
+#### 密钥管理
 
 | 密钥 | 用途 | 保管要求 |
 |------|------|---------|
@@ -1403,7 +1462,7 @@ npx playwright test --reporter=list
 | `urlSignatureKey` | URL 签名 | 第三方后端与 UOCS 共享，禁止暴露 |
 | `callbackHmacKey` | 回调文件签名验证 | 第三方后端与 UOCS 共享 |
 
-### 安全清单
+#### 安全清单
 
 - [ ] `clientSecret` 存储在环境变量或密钥管理系统，不硬编码
 - [ ] 回调接口验证 `X-Signature`（HMAC-SM3）
@@ -1414,9 +1473,9 @@ npx playwright test --reporter=list
 
 ---
 
-## 配置参考
+### C. 配置参考
 
-### Auth Server CORS 配置（PKCE SPA 必须）
+#### Auth Server CORS 配置（PKCE SPA 必须）
 
 PKCE SPA 从浏览器直接向 Auth Server 发起 token exchange，属于跨域请求，Auth Server 需配置 CORS：
 
@@ -1429,7 +1488,7 @@ oauth2:
 
 > **注意**：PKCE 公开客户端不使用 Cookie，`allowCredentials` 为 `false`。
 
-### service-signer 关键配置
+#### service-signer 关键配置
 
 ```yaml
 signer:
@@ -1444,7 +1503,7 @@ signer:
 
 ---
 
-## 常见问题
+### D. 常见问题
 
 **Q: Mode B 和 Mode A 可以同时使用吗？**
 
@@ -1470,15 +1529,15 @@ UOCS 自动重试最多 3 次（指数退避）。如仍失败，可通过管理
 
 UOCS 未配置 `url-signature-key` 时自动跳过 URL 验证。正式环境必须配置。
 
-**Q: PKCE [[Token Exchange]] 被浏览器 CORS 阻断怎么排查？**
+**Q: PKCE Token Exchange 被浏览器 CORS 阻断怎么排查？**
 
-现象：[[OAuth2]] 回调成功（URL 带授权码），但 App 随即又跳回授权页，Network 显示 `/oauth2/token` 请求未收到响应。
+现象：OAuth2 回调成功（URL 带授权码），但 App 随即又跳回授权页，Network 显示 `/oauth2/token` 请求未收到响应。
 
 根因：PKCE SPA 在浏览器端直接 POST 到 Auth Server（跨域），Auth Server 未配置 CORS。
 
 解决：参见 [Auth Server CORS 配置](#auth-server-cors-配置pkce-spa-必须)。
 
-**Q: 如何强制下线 [[OAuth2]] 用户的 Token？**
+**Q: 如何强制下线 OAuth2 用户的 Token？**
 
 通过 Auth Server 的 SSO 登出端点 `/sso-logout`，或直接撤销 `oauth2_authorization` 记录中的 Token。
 

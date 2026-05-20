@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<!-- ==================================================================
+     LONG DOCUMENT · UOCS OAuth2 认证体系设计与实现
+     第三方系统对接指南 — 从原理到代码的完整集成方案
+     ================================================================== -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>UOCS OAuth2 认证体系设计与实现</title>
+<meta name="author" content="UOCS 开发团队">
+<meta name="description" content="UOCS 电子签章平台 OAuth2 认证体系的设计原理与第三方系统对接实现指南，涵盖授权码流程、PKCE 扩展、两种对接模式及完整代码示例。">
+<meta name="keywords" content="OAuth2, UOCS, 电子签章, PKCE, Token Exchange, HMAC-SM3, 第三方对接">
+<meta name="generator" content="Kami">
+<style>
+  /* Regular weight */
+  @font-face {
+    font-family: "TsangerJinKai02";
+    src: url("https://cdn.jsdelivr.net/gh/tw93/Kami@main/assets/fonts/TsangerJinKai02-W04.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  /* Bold weight */
+  @font-face {
+    font-family: "TsangerJinKai02";
+    src: url("https://cdn.jsdelivr.net/gh/tw93/Kami@main/assets/fonts/TsangerJinKai02-W05.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @page {
+    size: A4;
+    margin: 20mm 22mm 22mm 22mm;
+    background: #f5f4ed;
+
+    @top-right {
+      content: string(section-title);
+      font-family: "TsangerJinKai02", "Source Han Serif SC",
+                   "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+      font-size: 8pt;
+      color: #6b6a64;
+    }
+
+    @bottom-center {
+      content: counter(page) "  ·  UOCS OAuth2 认证体系设计与实现";
+      font-family: "TsangerJinKai02", "Source Han Serif SC",
+                   "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+      font-size: 9pt;
+      color: #6b6a64;
+    }
+  }
+
+  @page:first {
+    @top-right { content: ""; }
+    @bottom-center { content: ""; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #f5f4ed;
+    --ivory:     #faf9f5;
+    --near-black:#141413;
+    --dark-warm: #3d3d3a;
+    --olive:     #504e49;
+    --stone:     #6b6a64;
+    --brand:     #1B365D;
+    --border:    #e8e6dc;
+    --border-soft:#e5e3d8;
+    --tag-bg:    #E4ECF5;
+    --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+    --sans: var(--serif);
+    --rhythm-module:  14pt;
+    --rhythm-section: 18pt;
+  }
+
+  html, body { background: var(--parchment); }
+
+  @media screen {
+    body { max-width: 210mm; margin: 0 auto; padding: 20mm 22mm 22mm 22mm; }
+  }
+
+  body {
+    color: var(--near-black);
+    font-family: var(--serif);
+    font-size: 10.5pt;
+    line-height: 1.55;
+    letter-spacing: 0.3pt;
+    widows: 3;
+    orphans: 3;
+  }
+
+  .sans { font-family: var(--sans); }
+
+  /* ========== COVER ========== */
+  .cover {
+    min-height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40mm 0 0 0;
+    break-after: page;
+  }
+  .cover-eyebrow {
+    font-family: var(--sans);
+    font-size: 10pt;
+    color: var(--brand);
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    margin-bottom: 18pt;
+  }
+  .cover-title {
+    font-size: 36pt;
+    font-weight: 500;
+    color: var(--near-black);
+    line-height: 1.15;
+    letter-spacing: 0.3pt;
+    margin-bottom: 16pt;
+  }
+  .cover-sub {
+    font-family: var(--sans);
+    font-size: 14pt;
+    color: var(--olive);
+    line-height: 1.5;
+    max-width: 85%;
+    margin-bottom: 30pt;
+  }
+  .cover-meta {
+    font-family: var(--sans);
+    font-size: 10pt;
+    color: var(--stone);
+    line-height: 1.5;
+  }
+  .cover-meta strong {
+    color: var(--dark-warm);
+    font-weight: 500;
+  }
+
+  /* ========== TOC ========== */
+  .toc { break-after: page; }
+  .toc h2 {
+    font-size: 22pt;
+    font-weight: 500;
+    margin-bottom: var(--rhythm-module);
+    border-left: 2.5pt solid var(--brand);
+    border-radius: 1.5pt;
+    padding-left: 8pt;
+  }
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6pt 0;
+    border-bottom: 0.3pt dotted var(--border);
+    font-size: 11pt;
+  }
+  .toc-item:last-of-type { border-bottom: none; }
+  .toc-num {
+    color: var(--brand);
+    font-weight: 500;
+    min-width: 30pt;
+  }
+  .toc-title { flex: 1; color: var(--near-black); padding-left: 6pt; }
+  .toc-page { color: var(--stone); font-variant-numeric: tabular-nums; }
+
+  /* ========== HEADINGS ========== */
+  h1 {
+    font-size: 22pt;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0 0 10pt 0;
+    border-left: 2.5pt solid var(--brand);
+    border-radius: 1.5pt;
+    padding-left: 8pt;
+    color: var(--near-black);
+    break-after: avoid;
+  }
+  h2 {
+    font-size: 16pt;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 24pt 0 8pt 0;
+    color: var(--near-black);
+    break-after: avoid;
+    string-set: section-title content();
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 18pt 0 6pt 0;
+    color: var(--dark-warm);
+    break-after: avoid;
+  }
+  .chapter-num {
+    font-family: var(--sans);
+    font-size: 10pt;
+    color: var(--brand);
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    margin-bottom: 6pt;
+  }
+
+  /* ========== PARAGRAPHS ========== */
+  p {
+    margin: 0 0 10pt 0;
+    line-height: 1.55;
+    color: var(--near-black);
+    widows: 2;
+    orphans: 2;
+  }
+  .lead {
+    font-size: 12pt;
+    line-height: 1.55;
+    color: var(--dark-warm);
+    margin-bottom: var(--rhythm-module);
+  }
+  .hl { color: var(--brand); font-weight: 500; }
+  strong { font-weight: 500; }
+
+  /* ========== LISTS ========== */
+  ul, ol {
+    margin: 6pt 0 10pt 0;
+    padding-left: 20pt;
+    line-height: 1.55;
+  }
+  ul li::marker { color: var(--brand); }
+  ol li::marker { color: var(--brand); font-weight: 500; }
+
+  /* ========== QUOTE ========== */
+  blockquote, .quote {
+    border-left: 2pt solid var(--brand);
+    margin: 12pt 0;
+    padding: 4pt 0 4pt 16pt;
+    color: var(--olive);
+    line-height: 1.55;
+    break-inside: avoid;
+  }
+  blockquote .cite, .quote .cite {
+    display: block;
+    font-size: 9pt;
+    color: var(--stone);
+    margin-top: 4pt;
+  }
+
+  /* ========== CODE ========== */
+  code {
+    font-family: "JetBrains Mono", "SF Mono", Consolas,
+                 "TsangerJinKai02", "Source Han Serif SC",
+                 "Noto Serif CJK SC", "Songti SC", monospace;
+    font-size: 9pt;
+    background: var(--ivory);
+    padding: 1pt 4pt;
+    border-radius: 2pt;
+    color: var(--dark-warm);
+  }
+  pre {
+    font-family: "JetBrains Mono", "SF Mono", Consolas,
+                 "TsangerJinKai02", "Source Han Serif SC",
+                 "Noto Serif CJK SC", "Songti SC", monospace;
+    font-size: 9pt;
+    line-height: 1.5;
+    background: var(--ivory);
+    border-radius: 4pt;
+    padding: 10pt 14pt;
+    margin: 10pt 0;
+    white-space: pre-wrap;
+    color: var(--near-black);
+    break-inside: avoid;
+  }
+  pre code { background: transparent; padding: 0; font-size: inherit; }
+
+  /* ========== TABLE ========== */
+  table, .kami-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 12pt 0;
+    break-inside: avoid;
+  }
+  table th, .kami-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--dark-warm);
+    padding: 6pt 8pt;
+    border-bottom: 1pt solid var(--border);
+    background: transparent;
+  }
+  table td, .kami-table td {
+    padding: 5pt 8pt;
+    border-bottom: 0.3pt solid var(--border-soft);
+    vertical-align: top;
+  }
+  table.compact th, .kami-table.compact th { padding: 3pt 6pt; font-size: 8pt; }
+  table.compact td, .kami-table.compact td { padding: 2pt 6pt; font-size: 8pt; line-height: 1.4; }
+  table.striped tbody tr:nth-child(even) td { background: var(--ivory); }
+  table .total td {
+    font-weight: 500; border-top: 1pt solid var(--brand); border-bottom: none; color: var(--near-black);
+  }
+
+  /* ========== CALLOUT ========== */
+  .callout {
+    background: var(--ivory);
+    border-left: 2pt solid var(--brand);
+    padding: 10pt 14pt;
+    border-radius: 3pt;
+    margin: 12pt 0;
+    line-height: 1.55;
+    break-inside: avoid;
+  }
+  .callout.warning {
+    border-left-color: #d4a574;
+  }
+  .takeaway {
+    background: var(--ivory);
+    border-radius: 4pt;
+    padding: 10pt 14pt;
+    margin: 14pt 0;
+    break-inside: avoid;
+  }
+  .takeaway-label {
+    font-family: var(--sans);
+    font-size: 9pt;
+    color: var(--brand);
+    letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    margin-bottom: 4pt;
+  }
+
+  /* ========== TAG ========== */
+  .tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--brand);
+    font-family: var(--sans);
+    font-size: 9pt;
+    font-weight: 500;
+    padding: 1pt 6pt;
+    border-radius: 3pt;
+    margin-right: 4pt;
+  }
+
+  /* ========== FIGURE ========== */
+  figure {
+    margin: 14pt 0;
+    break-inside: avoid;
+  }
+  figure img { max-width: 100%; border-radius: 4pt; }
+  figcaption {
+    font-family: var(--sans);
+    font-size: 9pt;
+    color: var(--stone);
+    margin-top: 6pt;
+    text-align: center;
+  }
+
+  /* ========== EXECUTIVE SUMMARY ========== */
+  .exec-summary {
+    background: var(--ivory);
+    border-left: 1.4pt solid var(--brand);
+    border-radius: 6pt;
+    padding: 16pt 20pt;
+    margin: 14pt 0;
+    break-inside: avoid;
+  }
+  .exec-summary h2 { margin-top: 0; font-size: 13pt; }
+
+  /* ========== CHAPTER BREAK ========== */
+  .chapter { break-before: page; }
+
+  /* ========== CHECKLIST ========== */
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li {
+    padding: 4pt 0 4pt 18pt;
+    position: relative;
+  }
+  .checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    color: var(--brand);
+    font-size: 10pt;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═════════════ COVER ═════════════ -->
+<section class="cover">
+  <div>
+    <div class="cover-eyebrow">技术白皮书 · 第三方对接指南</div>
+    <div class="cover-title">UOCS 电子签章平台<br>OAuth2 认证体系设计与实现</div>
+    <div class="cover-sub">面向第三方业务系统开发人员，从 OAuth2 原理到代码实现的完整集成方案。覆盖授权码流程、PKCE 扩展、两种对接模式及 HMAC-SM3 签名验证。</div>
+  </div>
+  <div class="cover-meta">
+    <strong>UOCS 开发团队</strong><br>
+    版本 V1.0  ·  2026.05<br>
+    UOCS 电子签章平台
+  </div>
+</section>
+
+<!-- ═════════════ 目录 ═════════════ -->
+<section class="toc">
+  <h2>目录</h2>
+  <div class="toc-item"><span class="toc-num">01</span><span class="toc-title">执行摘要</span><span class="toc-page">3</span></div>
+  <div class="toc-item"><span class="toc-num">02</span><span class="toc-title">OAuth2 认证原理</span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-num">03</span><span class="toc-title">平台架构总览</span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-num">04</span><span class="toc-title">对接模式选择</span><span class="toc-page">9</span></div>
+  <div class="toc-item"><span class="toc-num">05</span><span class="toc-title">Mode B 自助模式对接</span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-num">06</span><span class="toc-title">Mode A 托管模式对接</span><span class="toc-page">13</span></div>
+  <div class="toc-item"><span class="toc-num">07</span><span class="toc-title">API 参考</span><span class="toc-page">16</span></div>
+  <div class="toc-item"><span class="toc-num">08</span><span class="toc-title">OFD 签章查看器集成</span><span class="toc-page">20</span></div>
+  <div class="toc-item"><span class="toc-num">09</span><span class="toc-title">安全要求与配置</span><span class="toc-page">24</span></div>
+  <div class="toc-item"><span class="toc-num">10</span><span class="toc-title">附录</span><span class="toc-page">26</span></div>
+</section>
+
+<!-- ═════════════ Chapter 01：执行摘要 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">01 · Executive Summary</div>
+  <h1>执行摘要</h1>
+
+  <p class="lead">
+    本文档为第三方业务系统开发人员提供 UOCS 电子签章平台的 <span class="hl">OAuth2 认证对接</span> 完整指南。涵盖认证原理、平台架构、两种对接模式（自助/托管）以及从 Java 后端到 React SPA 的代码示例。
+  </p>
+
+  <h2>核心 Takeaways</h2>
+  <ul>
+    <li>UOCS 采用 OAuth2 授权码流程 + PKCE 扩展，密码从不经过第三方系统</li>
+    <li>提供两种对接模式：<span class="hl">Mode B</span>（用户主动登录绑定）和 <span class="hl">Mode A</span>（服务端托管无感知）</li>
+    <li>所有密钥交互使用 HMAC-SM3 国密算法（BouncyCastle 实现），不是标准 JDK 的 HMAC-SHA256</li>
+    <li>签章完成后通过 HMAC 回调通知第三方，支持最多 3 次指数退避重试</li>
+  </ul>
+
+  <div class="takeaway">
+    <div class="takeaway-label">本文档回答的问题</div>
+    <ul>
+      <li>为什么第三方对接需要 OAuth2？直接用密码不行吗？</li>
+      <li>Mode A 和 Mode B 如何选择？各自的对接步骤是什么？</li>
+      <li>如何实现 HMAC-SM3 URL 签名和回调文件验签？</li>
+    </ul>
+  </div>
+
+  <h2>快速入门 Checklist</h2>
+
+  <h3>准备阶段（联系 UOCS 管理员）</h3>
+  <ul class="checklist">
+    <li>确认对接模式：Mode B（用户主动登录）还是 Mode A（无感知托管）</li>
+    <li>提供：应用名称 / 回调地址（Mode B）/ 申请 Scope</li>
+    <li>获得：<code>clientId</code> / <code>urlSignatureKey</code> / <code>callbackHmacKey</code>（Mode A 还需 <code>clientSecret</code>）</li>
+  </ul>
+
+  <h3>最常见的 3 个陷阱</h3>
+  <table>
+    <thead>
+      <tr><th>陷阱</th><th>症状</th><th>解决方案</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>HMAC 算法错误</td>
+        <td>验签始终失败</td>
+        <td>必须用 BouncyCastle <code>SM3Digest</code>，不能用 JDK <code>HmacSHA256</code></td>
+      </tr>
+      <tr>
+        <td>字段名混淆</td>
+        <td>URL 打开后无法验证身份</td>
+        <td>签名串用 <code>externalUserId</code>（全称），URL 参数用 <code>extUserId</code>（缩写）</td>
+      </tr>
+      <tr>
+        <td>回调验签对象错误</td>
+        <td>回调始终 401</td>
+        <td>回调签名对象是<strong>文件字节</strong>，不是 JSON 字符串</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════════ Chapter 02：OAuth2 认证原理 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">02 · OAuth2 Fundamentals</div>
+  <h1>OAuth2 认证原理</h1>
+
+  <p class="lead">
+    本章解释 OAuth2 的核心概念——为什么需要它、四个角色是什么、授权码流程如何工作。如果你已熟悉 OAuth2，可直接跳到第 3 章。
+  </p>
+
+  <h2>为什么需要 OAuth2</h2>
+  <p>
+    在没有 OAuth2 之前，第三方系统若要代表用户调用 UOCS 签章 API，只有一种办法：<strong>让用户把 UOCS 密码交给第三方</strong>。这带来三个根本问题——密码直接暴露、Token 权限不可控、Token 一旦发出无法撤销。OAuth2 建立了一套标准化授权框架：让用户可以安全地<strong>授权</strong>第三方访问自己的资源，而不需要把密码给出去。
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>维度</th><th>旧方案（共享密码）</th><th>OAuth2 方案</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>密码安全</td>
+        <td>密码直接交给第三方</td>
+        <td>密码只在 UOCS Auth Server 输入，第三方从不触碰</td>
+      </tr>
+      <tr>
+        <td>权限控制</td>
+        <td>拿到 Token = 全部权限</td>
+        <td>Scope 精细控制：只能使用签章 API</td>
+      </tr>
+      <tr>
+        <td>Token 生命周期</td>
+        <td>一旦发出无法撤销</td>
+        <td>Access Token 30 分钟过期，支持主动撤销</td>
+      </tr>
+      <tr>
+        <td>身份源扩展</td>
+        <td>接入新身份源需定制开发</td>
+        <td>OIDC 联合认证标准化</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>四个角色</h2>
+  <p>用 UOCS 的实际组件来理解 OAuth2 的四个角色：</p>
+
+  <table>
+    <thead>
+      <tr><th>OAuth2 角色</th><th>定义</th><th>UOCS 对应</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Resource Owner</td><td>拥有受保护资源的用户</td><td>UOCS 平台用户</td></tr>
+      <tr><td>Client</td><td>请求访问资源的第三方应用</td><td>demo-biz-system、drawing-ofd-app</td></tr>
+      <tr><td>Authorization Server</td><td>验证用户身份、颁发 Token</td><td>UOCS Auth Server（<code>:18011</code>）</td></tr>
+      <tr><td>Resource Server</td><td>托管受保护资源</td><td>UOCS Gateway + 签章微服务</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    类比：你去酒店开房。你是 Resource Owner（住客），前台是 Authorization Server（验证身份证、给你房卡），房卡是 Access Token，客房是 Resource，酒店是 Resource Server。
+  </blockquote>
+
+  <h2>授权码流程（Authorization Code Flow）</h2>
+  <p>
+    OAuth2 中最安全、最完整的授权流程。UOCS 采用纯 SPA + PKCE 变体（无后端 BFF 层）。流程分两段：前半段获取授权码，后半段用授权码换 Token。
+  </p>
+
+  <div class="callout">
+    <strong>为什么需要 authorization_code 这个中间凭证？</strong><br>
+    直接把 Token 放在重定向 URL 里会导致：Token 出现在浏览器历史记录中、URL 可能被截获。authorization_code 是一次性的——即使被截获，攻击者没有 code_verifier 也无法换 Token。
+  </div>
+
+  <h2>PKCE 扩展原理</h2>
+  <p>
+    PKCE（Proof Key for Code Exchange）是为<strong>公开客户端</strong>（SPA、移动 App）设计的安全扩展。SPA 代码在浏览器中运行，任何人打开 F12 都能看到源码，Client Secret 的安全价值完全丧失。
+  </p>
+
+  <p>
+    PKCE 的解法：用「一次性随机数的哈希」代替 Client Secret。前端生成随机 <code>code_verifier</code>，计算 <code>code_challenge = Base64URL(SHA256(code_verifier))</code>。授权请求携带 challenge，Token 请求携带 verifier。攻击者截获了 code 和 challenge（hash 值），但无法从 hash 反推 verifier。
+  </p>
+
+  <h3>PKCE 工具函数示例</h3>
+  <pre><code class="language-javascript">// 生成随机 code_verifier
+export function generateVerifier() {
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    return btoa(String.fromCharCode(...array))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
+// 计算 S256 code_challenge
+export async function generateChallenge(verifier) {
+    const data = new TextEncoder().encode(verifier);
+    const digest = await crypto.subtle.digest('SHA-256', data);
+    return btoa(String.fromCharCode(...new Uint8Array(digest)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}</code></pre>
+
+  <h2>Token 类型与生命周期</h2>
+  <table>
+    <thead>
+      <tr><th>Token</th><th>格式</th><th>有效期</th><th>用途</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Access Token</td><td>JWT</td><td>30 分钟</td><td>调用签章 API 的凭证</td></tr>
+      <tr><td>Refresh Token</td><td>不透明字符串</td><td>7 天</td><td>续期 Access Token</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Refresh Token Rotation</strong>：每次续期后旧 Refresh Token 立即失效。如果发现旧 Token 被重复使用，说明 Token 已泄露，Auth Server 会使整个会话失效。
+  </div>
+
+  <p>续期请求：</p>
+  <pre><code>POST /oauth2/token
+grant_type=refresh_token&amp;refresh_token=xxx&amp;client_id=your-client-id</code></pre>
+
+  <h2>可用 Scope</h2>
+  <table>
+    <thead><tr><th>Scope</th><th>功能</th></tr></thead>
+    <tbody>
+      <tr><td><code>openid</code></td><td>基础身份信息</td></tr>
+      <tr><td><code>profile</code></td><td>用户 Profile</td></tr>
+      <tr><td><code>seal:sign</code></td><td>执行签章操作</td></tr>
+      <tr><td><code>seal:verify</code></td><td>验证签章</td></tr>
+      <tr><td><code>file:read</code></td><td>读取文件</td></tr>
+      <tr><td><code>file:write</code></td><td>上传/写入文件</td></tr>
+      <tr><td><code>cert:query</code></td><td>查询证书</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════════ Chapter 03：平台架构总览 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">03 · Platform Architecture</div>
+  <h1>平台架构总览</h1>
+
+  <p class="lead">
+    UOCS 是一个提供 OAuth2 认证和电子签章能力的云平台。第三方业务系统通过以下架构接入签章功能。
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="#E3E2DC"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="#f5f4ed"/>
+      <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/>
+
+      <!-- 第三方业务系统 -->
+      <rect x="32" y="40" width="256" height="120" rx="8" fill="none" stroke="#504e49" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <text x="160" y="68" text-anchor="middle" fill="#504e49" font-size="14" font-weight="500" font-family="sans-serif">第三方业务系统</text>
+      <rect x="56" y="84" width="96" height="52" rx="6" fill="#faf9f5" stroke="#141413" stroke-width="1"/>
+      <text x="104" y="116" text-anchor="middle" fill="#141413" font-size="13" font-family="sans-serif">业务前端 SPA</text>
+      <rect x="168" y="84" width="96" height="52" rx="6" fill="#faf9f5" stroke="#141413" stroke-width="1"/>
+      <text x="216" y="116" text-anchor="middle" fill="#141413" font-size="13" font-family="sans-serif">业务后端服务</text>
+
+      <!-- UOCS 平台 -->
+      <rect x="368" y="28" width="520" height="280" rx="8" fill="none" stroke="#1B365D" stroke-width="1.5"/>
+      <text x="628" y="56" text-anchor="middle" fill="#1B365D" font-size="14" font-weight="500" font-family="sans-serif">UOCS 平台</text>
+
+      <rect x="392" y="76" width="144" height="56" rx="6" fill="#EEF2F7" stroke="#1B365D" stroke-width="1"/>
+      <text x="464" y="100" text-anchor="middle" fill="#1B365D" font-size="12" font-weight="500" font-family="sans-serif">Auth Server</text>
+      <text x="464" y="118" text-anchor="middle" fill="#6b6a64" font-size="9" font-family="monospace">:18011</text>
+
+      <rect x="560" y="76" width="120" height="56" rx="6" fill="#faf9f5" stroke="#141413" stroke-width="1"/>
+      <text x="620" y="100" text-anchor="middle" fill="#141413" font-size="12" font-weight="500" font-family="sans-serif">Gateway</text>
+      <text x="620" y="118" text-anchor="middle" fill="#6b6a64" font-size="9" font-family="monospace">:18010</text>
+
+      <rect x="704" y="76" width="152" height="56" rx="6" fill="#faf9f5" stroke="#141413" stroke-width="1"/>
+      <text x="780" y="100" text-anchor="middle" fill="#141413" font-size="12" font-weight="500" font-family="sans-serif">service-signer</text>
+      <text x="780" y="118" text-anchor="middle" fill="#6b6a64" font-size="9" font-family="sans-serif">独立签章代理</text>
+
+      <rect x="560" y="168" width="120" height="56" rx="6" fill="#faf9f5" stroke="#141413" stroke-width="1"/>
+      <text x="620" y="192" text-anchor="middle" fill="#141413" font-size="12" font-weight="500" font-family="sans-serif">service-seal</text>
+      <text x="620" y="210" text-anchor="middle" fill="#6b6a64" font-size="9" font-family="sans-serif">印章服务</text>
+
+      <!-- 箭头连线 -->
+      <line x1="264" y1="100" x2="392" y2="100" stroke="#504e49" stroke-width="1.2"/>
+      <text x="328" y="92" text-anchor="middle" fill="#6b6a64" font-size="8" font-family="sans-serif">构造签名 URL</text>
+      <path d="M386 97 L392 100 L386 103" fill="none" stroke="#504e49" stroke-width="1.2"/>
+
+      <line x1="152" y1="136" x2="152" y2="230" stroke="#504e49" stroke-width="1.2"/>
+      <line x1="152" y1="230" x2="704" y2="230" stroke="#504e49" stroke-width="1.2"/>
+      <text x="400" y="248" text-anchor="middle" fill="#6b6a64" font-size="8" font-family="sans-serif">OAuth2 PKCE 登录 · 打开签章页面</text>
+      <path d="M698 227 L704 230 L698 233" fill="none" stroke="#504e49" stroke-width="1.2"/>
+
+      <line x1="704" y1="104" x2="536" y2="104" stroke="#1B365D" stroke-width="1.2"/>
+      <text x="620" y="144" text-anchor="middle" fill="#6b6a64" font-size="8" font-family="sans-serif">OAuth2 Token 验证</text>
+      <path d="M542 101 L536 104 L542 107" fill="none" stroke="#1B365D" stroke-width="1.2"/>
+
+      <line x1="680" y1="104" x2="704" y2="104" stroke="#504e49" stroke-width="1.2"/>
+      <path d="M698 101 L704 104 L698 107" fill="none" stroke="#504e49" stroke-width="1.2"/>
+
+      <line x1="620" y1="132" x2="620" y2="168" stroke="#504e49" stroke-width="1.2"/>
+      <path d="M617 162 L620 168 L623 162" fill="none" stroke="#504e49" stroke-width="1.2"/>
+
+      <line x1="216" y1="136" x2="216" y2="290" stroke="#1B365D" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="216" y="308" text-anchor="middle" fill="#1B365D" font-size="8" font-family="sans-serif">HMAC 回调</text>
+      <path d="M213 296 L216 290 L219 296" fill="none" stroke="#1B365D" stroke-width="1.2"/>
+
+      <!-- 图例 -->
+      <rect x="392" y="268" width="8" height="8" rx="1" fill="#EEF2F7" stroke="#1B365D" stroke-width="0.8"/>
+      <text x="408" y="276" fill="#6b6a64" font-size="8" font-family="sans-serif">焦点组件</text>
+      <rect x="480" y="268" width="8" height="8" rx="1" fill="#faf9f5" stroke="#141413" stroke-width="0.8"/>
+      <text x="496" y="276" fill="#6b6a64" font-size="8" font-family="sans-serif">标准组件</text>
+      <line x1="568" y1="272" x2="592" y2="272" stroke="#504e49" stroke-width="1.2" stroke-dasharray="6,4"/>
+      <text x="600" y="276" fill="#6b6a64" font-size="8" font-family="sans-serif">外部系统</text>
+    </svg>
+    <figcaption>图 1. UOCS 平台架构总览 — 第三方业务系统通过 OAuth2 + HMAC-SM3 接入签章功能</figcaption>
+  </figure>
+
+  <h2>核心组件说明</h2>
+  <table>
+    <thead><tr><th>组件</th><th>地址</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>Auth Server</td><td><code>:18011</code></td><td>OAuth2 Token 颁发、用户认证</td></tr>
+      <tr><td>Gateway</td><td><code>:18010</code></td><td>路由转发、Bearer Token 验证</td></tr>
+      <tr><td>service-signer</td><td><code>/signer/**</code></td><td>独立签章代理（账号绑定、会话管理、文件回调）</td></tr>
+      <tr><td>service-seal</td><td>内部服务</td><td>印章管理与签章执行</td></tr>
+    </tbody>
+  </table>
+
+  <h2>关键端点速查</h2>
+  <table>
+    <thead><tr><th>端点</th><th>地址</th><th>用途</th></tr></thead>
+    <tbody>
+      <tr><td>OAuth2 授权</td><td><code>http://localhost:18011/oauth2/authorize</code></td><td>用户登录跳转</td></tr>
+      <tr><td>OAuth2 Token</td><td><code>http://localhost:18011/oauth2/token</code></td><td>换 Token / 续期</td></tr>
+      <tr><td>UOCS Gateway</td><td><code>http://localhost:18010</code></td><td>所有 API 入口</td></tr>
+      <tr><td>service-signer</td><td><code>http://localhost:18010/signer</code></td><td>签章功能</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════════ Chapter 04：对接模式选择 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">04 · Integration Modes</div>
+  <h1>对接模式选择</h1>
+
+  <p class="lead">
+    UOCS 提供两种对接模式，核心区别在于用户感知程度和认证方式。选择取决于你的技术能力和用户体验要求。
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>对比维度</th><th>Mode B（自助模式）</th><th>Mode A（托管模式）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>用户体验</td><td>用户需要 UOCS 账号登录绑定</td><td>用户无感知</td></tr>
+      <tr><td>认证方式</td><td>OAuth2 PKCE（浏览器交互）</td><td>Token Exchange（服务端）</td></tr>
+      <tr><td>OAuth2 Client 类型</td><td>Public（无 Secret）</td><td>Confidential（有 Secret）</td></tr>
+      <tr><td>适用场景</td><td>技术能力有限、用户接受主动登录</td><td>有后端能力、希望无缝签章体验</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    同一个 <code>clientId</code> 下，不同用户可以使用不同模式。但同一用户（<code>clientId + extUserId</code>）只能绑定一种模式。
+  </div>
+
+  <h2>应用注册</h2>
+  <p>联系 UOCS 平台管理员完成注册：</p>
+  <table>
+    <thead><tr><th>信息</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>应用名称</td><td>你的业务系统名称</td></tr>
+      <tr><td>对接模式</td><td>Mode A（托管）或 Mode B（自助）</td></tr>
+      <tr><td>回调地址</td><td>OAuth2 授权成功后的重定向地址（Mode B）</td></tr>
+      <tr><td>申请 Scope</td><td>所需权限范围</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead><tr><th>参数</th><th>Mode A</th><th>Mode B</th></tr></thead>
+    <tbody>
+      <tr><td><code>clientId</code></td><td>公开</td><td>公开</td></tr>
+      <tr><td><code>clientSecret</code></td><td>仅存服务端</td><td>不需要</td></tr>
+      <tr><td><code>urlSignatureKey</code></td><td>共享密钥</td><td>共享密钥</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════════ Chapter 05：Mode B 自助模式对接 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">05 · Mode B Integration</div>
+  <h1>Mode B 自助模式对接</h1>
+
+  <p class="lead">
+    Mode B 适合用户主动登录绑定 UOCS 账号的场景。第三方构造 HMAC-SM3 签名 URL，用户在 UOCS 完成登录后绑定账号，签章完成后通过 HMAC 回调通知第三方。
+  </p>
+
+  <h2>流程说明</h2>
+  <p>Mode B 对接分三步：</p>
+  <ol>
+    <li><strong>后端构造签名 URL</strong>：使用 HMAC-SM3 对 URL 参数签名</li>
+    <li><strong>引导用户打开签章 URL</strong>：用户在 UOCS 登录并绑定账号</li>
+    <li><strong>实现回调接口</strong>：验证 <code>X-Signature</code>（HMAC-SM3 文件字节），保存签章文件</li>
+  </ol>
+
+  <h2>步骤一：构造签章 URL</h2>
+  <p>签章 URL 格式：</p>
+  <pre><code>https://uocs.example.com/signer?clientId={clientId}&amp;extUserId={extUserId}
+&amp;fileUrl={fileUrl}&amp;callbackUrl={callbackUrl}&amp;state={state}
+&amp;ts={ts}&amp;nonce={nonce}&amp;sig={sig}</code></pre>
+
+  <div class="callout warning">
+    签名字符串中使用全称 <code>externalUserId</code>（URL 参数用缩写 <code>extUserId</code>）。两者混淆会导致验签失败。
+  </div>
+
+  <h2>步骤二：参考实现（Java Spring Boot）</h2>
+
+  <h3>application.yml 配置</h3>
+  <pre><code class="language-yaml">signer:
+  base-url: http://localhost:3100          # uocs-signer 前端地址
+  gateway-url: http://localhost:18010      # UOCS Gateway 地址
+  client-id: demo-biz-001                  # 注册的 clientId
+  client-secret: demo-biz-secret-001       # 注册的 clientSecret
+  callback-base-url: http://localhost:9090  # 本系统回调基地址</code></pre>
+
+  <h3>SignController — 发起 Mode B 签章</h3>
+  <pre><code class="language-java">@PostMapping("/mode-b")
+public Map&lt;String, Object&gt; initiateModeBSign(@RequestBody Map&lt;String, Object&gt; req) {
+    Long fileId   = Long.valueOf(req.get("fileId").toString());
+    String extUserId = (String) req.get("extUserId");
+
+    DemoFile file = fileRepo.findById(fileId)
+            .orElseThrow(() -&gt; new ResponseStatusException(NOT_FOUND, "文件不存在"));
+
+    String fileDownloadUrl = signerConfig.getCallbackBaseUrl() + "/api/files/download/" + fileId;
+    String state           = "task-" + System.currentTimeMillis();
+    String signerUrl       = signerService.buildModeBSignUrl(extUserId, fileDownloadUrl, state);
+
+    SignTask task = new SignTask(fileId, extUserId, "MODE_B", signerUrl, state);
+    taskRepo.save(task);
+
+    return Map.of("taskId", task.getId(), "signerUrl", signerUrl, "state", state);
+}</code></pre>
+
+  <h3>SignerIntegrationService — URL HMAC 构造</h3>
+  <pre><code class="language-java">/** 构造 Mode B 签章 URL，包含 HMAC-SM3 签名 */
+public String buildModeBSignUrl(String extUserId, String fileDownloadUrl, String state) {
+    long ts    = Instant.now().getEpochSecond();
+    String nonce = UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+    String callbackUrl = signerConfig.getCallbackBaseUrl() + "/api/callback";
+
+    // 签名字符串中使用全称 externalUserId（URL 参数用缩写 extUserId）
+    String signData = String.join("&amp;",
+            "callbackUrl=" + callbackUrl,
+            "clientId="    + signerConfig.getClientId(),
+            "externalUserId=" + extUserId,   // 全称
+            "fileUrl="     + fileDownloadUrl,
+            "nonce="       + nonce,
+            "state="       + state,
+            "ts="          + ts
+    );
+
+    String sig = HmacUtil.sign(signData, signerConfig.resolveUrlSignatureKey());
+
+    return signerConfig.getBaseUrl() + "/#/sign"
+            + "?mode=self"
+            + "&amp;clientId="    + encode(signerConfig.getClientId())
+            + "&amp;extUserId="   + encode(extUserId)   // URL 参数用缩写
+            + "&amp;fileUrl="     + encode(fileDownloadUrl)
+            + "&amp;callbackUrl=" + encode(callbackUrl)
+            + "&amp;state="       + encode(state)
+            + "&amp;ts="          + ts
+            + "&amp;nonce="       + nonce
+            + "&amp;sig="         + sig;
+}</code></pre>
+
+  <h2>步骤三：配置回调接口</h2>
+  <p>接收签章完成回调，验证 <code>X-Signature</code> 头，保存签章后的 OFD 文件。详细规范见第 7 章 G.9 回调接口规范。</p>
+</section>
+
+<!-- ═════════════ Chapter 06：Mode A 托管模式对接 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">06 · Mode A Integration</div>
+  <h1>Mode A 托管模式对接</h1>
+
+  <p class="lead">
+    Mode A 适合有后端能力、希望用户无感知完成签章的场景。第三方后端通过 Token Exchange 代表用户获取 Token，创建托管签章会话，用户打开 URL 时已自动登录。
+  </p>
+
+  <h2>流程说明</h2>
+  <p>Mode A 对接分五步：</p>
+  <ol>
+    <li><strong>后端调用 Provision API</strong>，预置用户账号（首次使用前调用，幂等）</li>
+    <li><strong>后端调用 Token Exchange</strong>，获取用户 Token（无需用户感知）</li>
+    <li><strong>后端调用 Create Session API</strong>，创建托管签章会话</li>
+    <li><strong>引导用户打开签章 URL</strong>（已自动登录，用户无感知）</li>
+    <li><strong>实现回调接口</strong>，验证 <code>X-Signature</code></li>
+  </ol>
+
+  <h2>Token Exchange 说明</h2>
+  <p>Mode A 使用 RFC 8693 Token Exchange 扩展，让第三方后端服务代表用户获取 Token：</p>
+
+  <pre><code>POST /oauth2/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=urn:ietf:params:oauth:grant-type:token-exchange
+&amp;subject_token={uocsUserId}
+&amp;subject_token_type=urn:uocs:token-type:user-id
+&amp;client_id={clientId}
+&amp;client_secret={clientSecret}
+&amp;scope=seal:sign file:read</code></pre>
+
+  <p>响应：</p>
+  <pre><code class="language-json">{ "access_token": "eyJhbGci...", "token_type": "Bearer", "expires_in": 1800 }</code></pre>
+
+  <h2>参考实现（Java Spring Boot）</h2>
+
+  <h3>步骤 1 — 预置用户</h3>
+  <pre><code class="language-java">/** Mode A: 调用 Provision API 预置用户（首次使用前调用一次，幂等） */
+public Map&lt;String, Object&gt; provisionUser(String extUserId, String extUsername) {
+    String url = signerConfig.getGatewayUrl() + "/signer/provision";
+    Map&lt;String, Object&gt; body = Map.of(
+            "clientId",       signerConfig.getClientId(),
+            "clientSecret",   signerConfig.getClientSecret(),   // 仅服务端调用
+            "externalUserId", extUserId,
+            "username",       extUsername,
+            "password",       signerConfig.getProvisionDefaultPassword()
+    );
+    ResponseEntity&lt;Map&gt; resp = restTemplate.exchange(
+        url, HttpMethod.POST, new HttpEntity&lt;&gt;(body, jsonHeaders()), Map.class);
+    return resp.getBody();
+    // 响应包含 uocsUserId，供后续 Token Exchange 使用
+}</code></pre>
+
+  <h3>步骤 2 — 创建托管签章会话</h3>
+  <pre><code class="language-java">/** Mode A: 创建托管签章会话，返回 sessionToken 和 signerUrl */
+public Map&lt;String, Object&gt; createManagedSession(String extUserId,
+                                                String fileDownloadUrl,
+                                                String state) {
+    String url = signerConfig.getGatewayUrl() + "/signer/session/managed";
+    Map&lt;String, Object&gt; body = Map.of(
+            "clientId",       signerConfig.getClientId(),
+            "clientSecret",   signerConfig.getClientSecret(),
+            "externalUserId", extUserId,
+            "fileUrl",        fileDownloadUrl,
+            "callbackUrl",    signerConfig.getCallbackBaseUrl() + "/api/callback",
+            "state",          state
+    );
+    ResponseEntity&lt;Map&gt; resp = restTemplate.exchange(
+        url, HttpMethod.POST, new HttpEntity&lt;&gt;(body, jsonHeaders()), Map.class);
+    return resp.getBody();
+    // 响应包含 sessionToken, signerUrl, expiresIn
+}</code></pre>
+
+  <h3>步骤 3 — 发起 Mode A 签章请求</h3>
+  <pre><code class="language-java">@PostMapping("/mode-a")
+public Map&lt;String, Object&gt; initiateModeASign(@RequestBody Map&lt;String, Object&gt; req) {
+    Long fileId    = Long.valueOf(req.get("fileId").toString());
+    String extUserId = (String) req.get("extUserId");
+
+    String fileDownloadUrl = signerConfig.getCallbackBaseUrl()
+                           + "/api/files/download/" + fileId;
+    String state = "task-a-" + System.currentTimeMillis();
+
+    Map&lt;String, Object&gt; sessionResp =
+        signerService.createManagedSession(extUserId, fileDownloadUrl, state);
+
+    String sessionToken = (String) sessionResp.get("sessionToken");
+    String signerUrl    = signerConfig.getBaseUrl() + "/#/sign?session=" + sessionToken;
+
+    SignTask task = new SignTask(fileId, extUserId, "MODE_A", signerUrl, state);
+    task.setSessionToken(sessionToken);
+    taskRepo.save(task);
+
+    return Map.of(
+        "taskId",       task.getId(),
+        "signerUrl",    signerUrl,       // 引导用户访问此 URL（已自动登录）
+        "sessionToken", sessionToken,
+        "state",        state,
+        "expiresIn",    sessionResp.getOrDefault("expiresIn", 1800)
+    );
+}</code></pre>
+</section>
+
+<!-- ═════════════ Chapter 07：API 参考 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">07 · API Reference</div>
+  <h1>API 参考</h1>
+
+  <p class="lead">
+    所有 API 路径通过 UOCS Gateway 访问，基础路径前缀为 <code>/signer</code>。本章列出 service-signer 的完整 API 清单、HMAC-SM3 签名算法和回调规范。
+  </p>
+
+  <h2>API 总览</h2>
+  <table class="compact">
+    <thead><tr><th>分类</th><th>端点</th><th>说明</th><th>认证</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3">会话管理</td><td><code>POST /session/init</code></td><td>初始化自助会话 (Mode B)</td><td>需 JWT</td></tr>
+      <tr><td><code>POST /session/managed</code></td><td>创建托管会话 (Mode A)</td><td>clientSecret</td></tr>
+      <tr><td><code>GET /session/{token}</code></td><td>查询会话信息</td><td>公开</td></tr>
+      <tr><td>用户预置</td><td><code>POST /provision</code></td><td>预置用户 (Mode A，幂等)</td><td>clientSecret</td></tr>
+      <tr><td rowspan="3">账号绑定</td><td><code>GET /binding/check</code></td><td>检查绑定状态</td><td>公开</td></tr>
+      <tr><td><code>POST /binding</code></td><td>创建绑定</td><td>需 JWT</td></tr>
+      <tr><td><code>DELETE /binding/{id}</code></td><td>解除绑定</td><td>需 JWT</td></tr>
+      <tr><td rowspan="2">文件代理</td><td><code>GET /file/download</code></td><td>代理下载文件</td><td>需 JWT</td></tr>
+      <tr><td><code>POST /file/upload-signed</code></td><td>上传签章文件并触发回调</td><td>需 JWT</td></tr>
+      <tr><td>就绪检查</td><td><code>GET /readiness/check</code></td><td>检查用户就绪状态</td><td>需 JWT</td></tr>
+      <tr><td rowspan="2">URL 签名</td><td><code>POST /url-signature/verify</code></td><td>验证签名</td><td>公开</td></tr>
+      <tr><td><code>POST /url-signature/generate</code></td><td>生成签名（仅调试）</td><td>公开</td></tr>
+    </tbody>
+  </table>
+
+  <h2>G.1 会话管理</h2>
+
+  <h3>POST /signer/session/init — 初始化自助会话 (Mode B)</h3>
+  <p>前端在 OAuth2 认证完成后调用。Headers: <code>Authorization: Bearer &lt;access_token&gt;</code></p>
+  <p>请求体：</p>
+  <pre><code class="language-json">{
+  "clientId": "string (必填)",
+  "externalUserId": "string (必填)",
+  "fileUrl": "string (可选)",
+  "callbackUrl": "string (可选)",
+  "state": "string (可选)"
+}</code></pre>
+  <p>响应体：</p>
+  <pre><code class="language-json">{ "sessionId": 42, "sessionToken": "st_xxx", "expiresIn": 1800 }</code></pre>
+
+  <h3>POST /signer/session/managed — 创建托管会话 (Mode A)</h3>
+  <p>第三方后端调用。请求体需包含 <code>clientSecret</code>，响应包含 <code>sessionToken</code> 和 <code>signerUrl</code>。</p>
+
+  <h2>G.2 用户预置 (Mode A)</h2>
+  <p><code>POST /signer/provision</code> — 调用一次即可，重复调用幂等返回。</p>
+  <pre><code class="language-json">{
+  "clientId": "string (必填)",
+  "clientSecret": "string (必填)",
+  "externalUserId": "string (必填)",
+  "username": "string (必填)",
+  "password": "string (必填)"
+}</code></pre>
+  <p>响应：</p>
+  <pre><code class="language-json">{
+  "bindingId": 42,
+  "uocsUserId": "1801234567890",
+  "uocsUsername": "emp001@company.com",
+  "provisionStatus": "PROVISIONED | ALREADY_EXISTS"
+}</code></pre>
+
+  <h2>G.8 HMAC-SM3 签名算法</h2>
+
+  <h3>Mode B 签章 URL 签名</h3>
+  <table class="compact">
+    <thead><tr><th>参数</th><th>必填</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><code>clientId</code></td><td>是</td><td>OAuth2 Client ID</td></tr>
+      <tr><td><code>extUserId</code></td><td>是</td><td>第三方用户标识</td></tr>
+      <tr><td><code>fileUrl</code></td><td>是</td><td>待签章 OFD 文件下载地址</td></tr>
+      <tr><td><code>callbackUrl</code></td><td>是</td><td>签章完成后文件回传地址</td></tr>
+      <tr><td><code>state</code></td><td>否</td><td>透传业务标识</td></tr>
+      <tr><td><code>ts</code></td><td>是</td><td>UNIX 时间戳（秒），有效期 300 秒</td></tr>
+      <tr><td><code>nonce</code></td><td>是</td><td>随机字符串（建议 UUID）</td></tr>
+      <tr><td><code>sig</code></td><td>是</td><td>HMAC-SM3 签名</td></tr>
+    </tbody>
+  </table>
+
+  <p>签名字符串构造规则：参数按<strong>字母序</strong>拼接。注意签名字符串中使用全称 <code>externalUserId</code>。</p>
+  <pre><code>signPayload = "callbackUrl={callbackUrl}&amp;clientId={clientId}&amp;externalUserId={extUserId的值}
+&amp;fileUrl={fileUrl}&amp;nonce={nonce}&amp;state={state}&amp;ts={ts}"
+
+sig = HMAC-SM3(signPayload, urlSignatureKey)</code></pre>
+
+  <h3>Java 实现（BouncyCastle）</h3>
+  <pre><code class="language-java">// 依赖：org.bouncycastle:bcprov-jdk18on:1.78.1
+import org.bouncycastle.crypto.digests.SM3Digest;
+import org.bouncycastle.crypto.macs.HMac;
+import org.bouncycastle.crypto.params.KeyParameter;
+
+/** 对字符串进行 HMAC-SM3 签名，返回十六进制小写 */
+public static String sign(String data, String secret) {
+    HMac hmac = new HMac(new SM3Digest());
+    hmac.init(new KeyParameter(secret.getBytes(StandardCharsets.UTF_8)));
+    byte[] input  = data.getBytes(StandardCharsets.UTF_8);
+    hmac.update(input, 0, input.length);
+    byte[] result = new byte[hmac.getMacSize()];
+    hmac.doFinal(result, 0);
+    StringBuilder sb = new StringBuilder(result.length * 2);
+    for (byte b : result) sb.append(String.format("%02x", b));
+    return sb.toString();
+}</code></pre>
+
+  <h2>G.9 回调接口规范</h2>
+
+  <h3>请求格式</h3>
+  <pre><code>POST {callbackUrl}
+Content-Type: multipart/form-data
+X-Signature: &lt;HMAC-SM3(文件字节, callbackHmacKey)&gt;
+
+file: (签章后的 OFD 文件)
+state: order-12345
+signInfo: {"signTime":"2025-01-15T10:30:00","sessionId":42,"clientId":"your-client-id"}</code></pre>
+
+  <table>
+    <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><code>file</code></td><td>文件 (multipart)</td><td>签章后的 OFD 文件</td></tr>
+      <tr><td><code>state</code></td><td>字符串</td><td>透传的业务标识</td></tr>
+      <tr><td><code>signInfo</code></td><td>JSON 字符串</td><td>签章元数据</td></tr>
+      <tr><td><code>X-Signature</code> 头</td><td>字符串</td><td>HMAC-SM3 签名</td></tr>
+    </tbody>
+  </table>
+
+  <h3>重试机制</h3>
+  <table>
+    <thead><tr><th>次数</th><th>退避时间</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>第 1 次</td><td>立即</td><td>签章完成后立即回调</td></tr>
+      <tr><td>第 2 次</td><td>10 秒</td><td>首次失败后</td></tr>
+      <tr><td>第 3 次</td><td>30 秒</td><td>指数退避</td></tr>
+    </tbody>
+  </table>
+  <p>回调成功条件：HTTP 响应码 <code>2xx</code>。最大重试 3 次（可配置）。</p>
+
+  <h3>回调验签参考实现</h3>
+  <pre><code class="language-java">@PostMapping
+public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; receiveCallback(
+        @RequestHeader(value = "X-Signature", required = false) String signature,
+        @RequestParam(value = "state",    required = false) String state,
+        @RequestParam(value = "signInfo", required = false) String signInfo,
+        @RequestParam(value = "file",     required = false) MultipartFile file) {
+
+    // 1. 读取文件字节（HMAC 验签对象是文件字节，非字符串）
+    byte[] fileBytes = file != null ? file.getBytes() : null;
+
+    // 2. 验证 X-Signature（对文件字节做 HMAC-SM3）
+    boolean hmacValid = signerService.verifyCallbackHmac(signature, fileBytes);
+    if (!hmacValid) {
+        return ResponseEntity.status(401).body(Map.of("error", "签名验证失败"));
+    }
+
+    // 3. 根据 state 查找签章任务，更新状态
+    SignTask task = taskRepo.findByState(state).orElseThrow(...);
+    task.setStatus("COMPLETED");
+    task.setCallbackPayload(signInfo);
+    taskRepo.save(task);
+
+    return ResponseEntity.ok(Map.of("status", "received", "taskId", task.getId()));
+}</code></pre>
+
+  <h2>G.10 错误码</h2>
+  <table>
+    <thead><tr><th>HTTP 状态码</th><th>场景</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>400</td><td>参数错误</td><td>缺少必填参数、格式不正确</td></tr>
+      <tr><td>401</td><td>未授权</td><td>JWT 过期 / Token 无效</td></tr>
+      <tr><td>403</td><td>禁止访问</td><td>权限不足 / HMAC 验证失败</td></tr>
+      <tr><td>404</td><td>未找到</td><td>会话不存在 / 绑定不存在</td></tr>
+      <tr><td>409</td><td>冲突</td><td>签章会话状态已变更</td></tr>
+    </tbody>
+  </table>
+  <p>错误响应格式：</p>
+  <pre><code class="language-json">{ "code": 400, "msg": "缺少签名参数 sig", "data": null }</code></pre>
+</section>
+
+<!-- ═════════════ Chapter 08：OFD 签章查看器集成 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">08 · OFD Viewer Integration</div>
+  <h1>OFD 签章查看器集成</h1>
+
+  <p class="lead">
+    drawing-ofd 是独立的 OFD 文件查看器，通过 OAuth2 PKCE 接入 UOCS 实现签章功能。前端 React SPA（:5201）+ 后端 Spring Boot WebFlux（:5210）。
+  </p>
+
+  <h2>架构总览</h2>
+  <table>
+    <thead><tr><th>组件</th><th>技术栈</th><th>地址</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>drawing-ofd-app</td><td>React SPA</td><td><code>:5201</code></td><td>OFD 文件查看 + 签章交互</td></tr>
+      <tr><td>drawing-ofd-server</td><td>Spring Boot WebFlux</td><td><code>:5210</code></td><td>JWT 验证 + 代理签章 API</td></tr>
+      <tr><td>UOCS Auth Server</td><td>Spring Authorization Server</td><td><code>:18011</code></td><td>OAuth2 Token 颁发</td></tr>
+      <tr><td>UOCS Gateway</td><td>Spring Cloud Gateway</td><td><code>:18010</code></td><td>路由转发 + Token 验证</td></tr>
+    </tbody>
+  </table>
+
+  <h2>drawing-ofd-client 注册信息</h2>
+  <table>
+    <thead><tr><th>参数</th><th>值</th></tr></thead>
+    <tbody>
+      <tr><td>clientId</td><td><code>drawing-ofd-client</code></td></tr>
+      <tr><td>clientAuthenticationMethod</td><td><code>none</code>（公开客户端）</td></tr>
+      <tr><td>authorizationGrantType</td><td><code>authorization_code</code> + <code>refresh_token</code></td></tr>
+      <tr><td>redirectUri</td><td><code>http://localhost:5201/oauth2/callback</code></td></tr>
+      <tr><td>scope</td><td><code>openid profile seal:sign</code></td></tr>
+      <tr><td>requireProofKey</td><td><code>true</code>（强制 PKCE）</td></tr>
+    </tbody>
+  </table>
+
+  <h2>参考实现：React SPA 核心代码</h2>
+
+  <h3>pkce.js — OAuth2 PKCE 核心工具</h3>
+  <pre><code class="language-javascript">/** 生成 PKCE code_verifier（64 位 Base64URL 随机字符串） */
+export function generateCodeVerifier() {
+    const array = new Uint8Array(64);
+    crypto.getRandomValues(array);
+    return btoa(String.fromCharCode(...array))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+        .substring(0, 64);
+}
+
+/** 生成 code_challenge（S256 = SHA-256 + Base64URL） */
+export async function generateCodeChallenge(codeVerifier) {
+    const digest = await crypto.subtle.digest(
+        'SHA-256', new TextEncoder().encode(codeVerifier));
+    return btoa(String.fromCharCode(...new Uint8Array(digest)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/** 发起授权跳转 */
+export async function redirectToAuthorize(config) {
+    const verifier  = generateCodeVerifier();
+    const challenge = await generateCodeChallenge(verifier);
+    const state     = generateState();
+
+    sessionStorage.setItem('ofd_pkce_verifier', verifier);
+    sessionStorage.setItem('ofd_pkce_state',    state);
+
+    const params = new URLSearchParams({
+        response_type:         'code',
+        client_id:             config.clientId,
+        redirect_uri:          config.redirectUri,
+        scope:                 'openid profile seal:sign',
+        state,
+        code_challenge:        challenge,
+        code_challenge_method: 'S256',
+    });
+    window.location.href = `${config.authServerUrl}/oauth2/authorize?${params}`;
+}
+
+/** 处理回调：验证 state，用授权码换 Token */
+export async function handleCallback(config) {
+    const params   = new URLSearchParams(window.location.search);
+    const code     = params.get('code');
+    const state    = params.get('state');
+    const verifier = sessionStorage.getItem('ofd_pkce_verifier');
+
+    if (state !== sessionStorage.getItem('ofd_pkce_state')) throw new Error('state 不匹配');
+    if (!verifier) throw new Error('缺少 PKCE verifier');
+
+    const resp = await fetch(`${config.authServerUrl}/oauth2/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            grant_type:    'authorization_code',
+            code,
+            redirect_uri:  config.redirectUri,
+            client_id:     config.clientId,
+            code_verifier: verifier,
+        }).toString(),
+    });
+    const tokens = await resp.json();
+    localStorage.setItem('ofd_access_token',  tokens.access_token);
+    localStorage.setItem('ofd_refresh_token', tokens.refresh_token || '');
+    return { accessToken: tokens.access_token, refreshToken: tokens.refresh_token };
+}</code></pre>
+
+  <h3>sealApi.js — 调用 drawing-ofd-server</h3>
+  <pre><code class="language-javascript">const BASE_URL = import.meta.env.VITE_OFD_SERVER || 'http://localhost:5210';
+
+/** 获取当前用户可用印章列表 */
+export async function fetchSealList(accessToken) {
+    const resp = await fetch(`${BASE_URL}/api/seals/my-list`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const data = await resp.json();
+    return (data?.data?.records || data?.data || []).map(item => ({
+        id:       item.sealId ?? item.id,
+        name:     item.sealName ?? item.name,
+        imageUrl: item.sealImageUrl ?? item.imageUrl ?? null,
+    }));
+}
+
+/** 执行 OFD 在线签章 */
+export async function signOfd({ accessToken, file, sealId, pageIndex = 1,
+                                 positionX = 60, positionY = 60,
+                                 width = 40, height = 40,
+                                 documentName, signPassword = '' }) {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('sealId', String(sealId));
+    form.append('pageIndex', String(pageIndex));
+    form.append('positionX', String(positionX));
+    form.append('positionY', String(positionY));
+    form.append('width', String(width));
+    form.append('height', String(height));
+
+    const resp = await fetch(`${BASE_URL}/api/sign`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}` },
+        body: form,
+    });
+    const signedBytes = await resp.arrayBuffer();
+    return { success: true, signedOfdBytes: signedBytes };
+}</code></pre>
+
+  <h2>drawing-ofd-server API</h2>
+  <table>
+    <thead><tr><th>方法</th><th>端点</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>GET</td><td><code>/api/seals/my-list</code></td><td>获取当前用户印章列表（需 JWT）</td></tr>
+      <tr><td>POST</td><td><code>/api/sign</code></td><td>OFD 签章（multipart，返回签章后 OFD 字节）</td></tr>
+    </tbody>
+  </table>
+
+  <h2>部署配置</h2>
+  <pre><code class="language-yaml"># drawing-ofd-app .env.development
+VITE_AUTH_SERVER=http://localhost:18011
+VITE_CLIENT_ID=drawing-ofd-client
+
+# drawing-ofd-server application.yml
+server:
+  port: 5210
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:18011/oauth2/jwks
+uocs:
+  gateway-url: http://localhost:18010
+  client-id: drawing-ofd-service
+  client-secret: ${UOCS_CLIENT_SECRET}
+  token-endpoint: http://localhost:18011/oauth2/token</code></pre>
+</section>
+
+<!-- ═════════════ Chapter 09：安全要求与配置 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">09 · Security & Configuration</div>
+  <h1>安全要求与配置</h1>
+
+  <p class="lead">
+    OAuth2 只解决 Token 的获取和传递。Token 存储、Scope 控制、CSRF 防护、回调验证等安全措施仍需自行实现。本章列出安全清单和关键配置项。
+  </p>
+
+  <h2>密钥管理</h2>
+  <table>
+    <thead><tr><th>密钥</th><th>用途</th><th>保管要求</th></tr></thead>
+    <tbody>
+      <tr><td><code>clientSecret</code></td><td>Mode A API 认证</td><td>仅存服务端，禁止暴露到前端或日志</td></tr>
+      <tr><td><code>urlSignatureKey</code></td><td>URL 签名</td><td>第三方后端与 UOCS 共享，禁止暴露</td></tr>
+      <tr><td><code>callbackHmacKey</code></td><td>回调文件签名验证</td><td>第三方后端与 UOCS 共享</td></tr>
+    </tbody>
+  </table>
+
+  <h2>安全清单</h2>
+  <ul class="checklist">
+    <li><code>clientSecret</code> 存储在环境变量或密钥管理系统，不硬编码</li>
+    <li>回调接口验证 <code>X-Signature</code>（HMAC-SM3）</li>
+    <li>URL 签名参数包含时间戳（<code>ts</code>）和随机数（<code>nonce</code>），防止重放</li>
+    <li>回调接口使用<strong>常量时间比较</strong>（<code>MessageDigest.isEqual</code>）防时序攻击</li>
+    <li>生产环境 <code>callbackUrl</code> 使用 HTTPS</li>
+    <li>正式环境配置 <code>url-signature-key</code>（开发环境可留空跳过验证）</li>
+  </ul>
+
+  <h2>Auth Server CORS 配置（PKCE SPA 必须）</h2>
+  <p>PKCE SPA 从浏览器直接向 Auth Server 发起 Token Exchange，属于跨域请求：</p>
+  <pre><code class="language-yaml"># Nacos: auth-prod.yaml
+oauth2:
+  cors:
+    allowed-origin-patterns: "https://your-domain.com"</code></pre>
+
+  <div class="callout">
+    PKCE 公开客户端不使用 Cookie，<code>allowCredentials</code> 为 <code>false</code>。
+  </div>
+
+  <h2>service-signer 关键配置</h2>
+  <pre><code class="language-yaml">signer:
+  url-signature-key: ""           # URL HMAC 签名密钥（留空跳过验证）
+  url-signature-ttl-seconds: 300  # URL 签名有效期（秒）
+  callback-hmac-key: ""           # 回调 HMAC 密钥
+  callback-url-allowlist: ""      # 回调域名白名单（逗号分隔）
+  file-url-allowlist: ""          # 文件域名白名单（逗号分隔）
+  session-ttl: 1800               # 会话过期时间（秒）
+  callback-max-retries: 3         # 回调最大重试次数</code></pre>
+</section>
+
+<!-- ═════════════ Chapter 10：附录 ═════════════ -->
+<section class="chapter">
+  <div class="chapter-num">10 · Appendix</div>
+  <h1>附录</h1>
+
+  <h2>A. 常见问题</h2>
+
+  <h3>Mode B 和 Mode A 可以同时使用吗？</h3>
+  <p>可以。同一个 <code>clientId</code> 下，不同用户可以使用不同模式。但同一用户（<code>clientId + extUserId</code>）只能绑定一种模式。</p>
+
+  <h3>用户需要安装客户端吗？</h3>
+  <p>不需要。签章 App 是 Web 应用（SPA），通过浏览器访问。</p>
+
+  <h3>支持哪些文件格式？</h3>
+  <p>目前支持 OFD 格式。PDF 签章需另行集成。</p>
+
+  <h3>签章文件回传失败怎么办？</h3>
+  <p>UOCS 自动重试最多 3 次（指数退避：立即、10 秒、30 秒）。如仍失败，可通过管理后台查看回调记录并手动重试。</p>
+
+  <h3>sessionToken 过期后怎么处理？</h3>
+  <p>重新调用 <code>POST /signer/session/managed</code> 创建新会话。默认过期时间 30 分钟。</p>
+
+  <h3>如何在开发环境跳过 HMAC 签名验证？</h3>
+  <p>UOCS 未配置 <code>url-signature-key</code> 时自动跳过 URL 验证。正式环境必须配置。</p>
+
+  <h3>PKCE Token Exchange 被浏览器 CORS 阻断怎么排查？</h3>
+  <p>现象：OAuth2 回调成功（URL 带授权码），但 App 随即又跳回授权页。根因：PKCE SPA 在浏览器端直接 POST 到 Auth Server（跨域），Auth Server 未配置 CORS。解决：参见第 9 章 Auth Server CORS 配置。</p>
+
+  <h3>如何强制下线 OAuth2 用户的 Token？</h3>
+  <p>通过 Auth Server 的 SSO 登出端点 <code>/sso-logout</code>，或直接撤销 <code>oauth2_authorization</code> 记录中的 Token。</p>
+
+  <h2>B. 参考资料</h2>
+  <ul>
+    <li>OAuth 2.0 授权框架（RFC 6749）</li>
+    <li>OAuth 2.0 PKCE 扩展（RFC 7636）</li>
+    <li>Token Exchange（RFC 8693）</li>
+    <li>JWT Access Token（RFC 9068）</li>
+    <li>BouncyCastle HMAC-SM3 实现</li>
+    <li>Spring Authorization Server 文档</li>
+  </ul>
+
+  <h2>C. 术语表</h2>
+  <table>
+    <thead><tr><th>术语</th><th>定义</th></tr></thead>
+    <tbody>
+      <tr><td>OAuth2</td><td>开放授权协议框架，标准化 Token 的获取和传递</td></tr>
+      <tr><td>PKCE</td><td>Proof Key for Code Exchange，为公开客户端设计的安全扩展</td></tr>
+      <tr><td>JWT</td><td>JSON Web Token，Access Token 的载体格式</td></tr>
+      <tr><td>HMAC-SM3</td><td>基于国密 SM3 哈希算法的消息认证码</td></tr>
+      <tr><td>Token Exchange</td><td>RFC 8693 定义的服务端 Token 交换协议</td></tr>
+      <tr><td>Scope</td><td>OAuth2 权限范围声明</td></tr>
+      <tr><td>OFD</td><td>开放版式文档，中国国家标准电子文件格式</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>
